@@ -16,6 +16,16 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* MyPortsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MyPortsTests.m */; };
+		CBBDAECD221D4059B611D3AC /* SFPD-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BEDE83442E534C94A6A0A8B1 /* SFPD-bold.ttf */; };
+		AA078B159D9840F9BEF5372D /* SFPD-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE8B7F3ED7464E9B85415244 /* SFPD-light.ttf */; };
+		88A5D5BD41FD429C9C087A2D /* SFPD-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E2606A1EEF9425996E26348 /* SFPD-regular.ttf */; };
+		E9324F74A0E94274A71B4C82 /* SFPD-semi-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7EBAD94C8A444A6C93E3149A /* SFPD-semi-bold.ttf */; };
+		EC8E29009FFE4AB6A862CA4A /* SFPT-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4EC10E39CA27405FAE4CA850 /* SFPT-bold.ttf */; };
+		921F05EE70604C648C45A19B /* SFPT-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F93ED0B2CBA845059BB968D6 /* SFPT-light.ttf */; };
+		645BE78C2EDE4A84B2C82AA9 /* SFPT-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D1AF3D2748E845E88E491C60 /* SFPT-medium.ttf */; };
+		4AFF8BCFCBC74C719BC3BD9B /* SFPT-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C0E0F4C70B2842A69619AB57 /* SFPT-regular.ttf */; };
+		1C6689F2879B4DCFA8D45D6F /* SFPT-semi-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C7F80C1F5ED46EDAC5EA0CE /* SFPT-semi-bold.ttf */; };
+		9301BB84CE3C4ECB9A3578FE /* sfpdBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7D33363B70243BDB806395C /* sfpdBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +61,16 @@
 		2D02E4901E0B4A5D006451C7 /* MyPorts-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MyPorts-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		BEDE83442E534C94A6A0A8B1 /* SFPD-bold.ttf */ = {isa = PBXFileReference; name = "SFPD-bold.ttf"; path = "../src/assets/fonts/SFPD-bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DE8B7F3ED7464E9B85415244 /* SFPD-light.ttf */ = {isa = PBXFileReference; name = "SFPD-light.ttf"; path = "../src/assets/fonts/SFPD-light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2E2606A1EEF9425996E26348 /* SFPD-regular.ttf */ = {isa = PBXFileReference; name = "SFPD-regular.ttf"; path = "../src/assets/fonts/SFPD-regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7EBAD94C8A444A6C93E3149A /* SFPD-semi-bold.ttf */ = {isa = PBXFileReference; name = "SFPD-semi-bold.ttf"; path = "../src/assets/fonts/SFPD-semi-bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4EC10E39CA27405FAE4CA850 /* SFPT-bold.ttf */ = {isa = PBXFileReference; name = "SFPT-bold.ttf"; path = "../src/assets/fonts/SFPT-bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F93ED0B2CBA845059BB968D6 /* SFPT-light.ttf */ = {isa = PBXFileReference; name = "SFPT-light.ttf"; path = "../src/assets/fonts/SFPT-light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D1AF3D2748E845E88E491C60 /* SFPT-medium.ttf */ = {isa = PBXFileReference; name = "SFPT-medium.ttf"; path = "../src/assets/fonts/SFPT-medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C0E0F4C70B2842A69619AB57 /* SFPT-regular.ttf */ = {isa = PBXFileReference; name = "SFPT-regular.ttf"; path = "../src/assets/fonts/SFPT-regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7C7F80C1F5ED46EDAC5EA0CE /* SFPT-semi-bold.ttf */ = {isa = PBXFileReference; name = "SFPT-semi-bold.ttf"; path = "../src/assets/fonts/SFPT-semi-bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A7D33363B70243BDB806395C /* sfpdBold.ttf */ = {isa = PBXFileReference; name = "sfpdBold.ttf"; path = "../src/assets/fonts/sfpdBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +160,7 @@
 				00E356EF1AD99517003FC87E /* MyPortsTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				B101EB6DF3EF42ED867992F7 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -156,6 +177,24 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		B101EB6DF3EF42ED867992F7 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				BEDE83442E534C94A6A0A8B1 /* SFPD-bold.ttf */,
+				DE8B7F3ED7464E9B85415244 /* SFPD-light.ttf */,
+				2E2606A1EEF9425996E26348 /* SFPD-regular.ttf */,
+				7EBAD94C8A444A6C93E3149A /* SFPD-semi-bold.ttf */,
+				4EC10E39CA27405FAE4CA850 /* SFPT-bold.ttf */,
+				F93ED0B2CBA845059BB968D6 /* SFPT-light.ttf */,
+				D1AF3D2748E845E88E491C60 /* SFPT-medium.ttf */,
+				C0E0F4C70B2842A69619AB57 /* SFPT-regular.ttf */,
+				7C7F80C1F5ED46EDAC5EA0CE /* SFPT-semi-bold.ttf */,
+				A7D33363B70243BDB806395C /* sfpdBold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -295,6 +334,16 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				CBBDAECD221D4059B611D3AC /* SFPD-bold.ttf in Resources */,
+				AA078B159D9840F9BEF5372D /* SFPD-light.ttf in Resources */,
+				88A5D5BD41FD429C9C087A2D /* SFPD-regular.ttf in Resources */,
+				E9324F74A0E94274A71B4C82 /* SFPD-semi-bold.ttf in Resources */,
+				EC8E29009FFE4AB6A862CA4A /* SFPT-bold.ttf in Resources */,
+				921F05EE70604C648C45A19B /* SFPT-light.ttf in Resources */,
+				645BE78C2EDE4A84B2C82AA9 /* SFPT-medium.ttf in Resources */,
+				4AFF8BCFCBC74C719BC3BD9B /* SFPT-regular.ttf in Resources */,
+				1C6689F2879B4DCFA8D45D6F /* SFPT-semi-bold.ttf in Resources */,
+				9301BB84CE3C4ECB9A3578FE /* sfpdBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
