@@ -1,15 +1,15 @@
 import React from 'react';
 import {View, Text, Button} from 'react-native';
 import {connect} from 'react-redux';
-import {Login} from '../../redux/actions/AuthActions';
+import {logUserIn} from '../../redux/actions/AuthActions';
 
-const LoginScreen = ({Login}) => {
+const LoginScreen = ({logUserIn}) => {
   return (
     <View>
       <Text>Login Screen</Text>
-      <Button title="Login" onPress={() => Login()} />
+      <Button title="Login" onPress={() => logUserIn()} />
     </View>
   );
 };
 
-export default connect(null, {Login})(LoginScreen);
+export default connect(null, {logUserIn})(LoginScreen);
