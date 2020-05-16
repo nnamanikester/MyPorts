@@ -8,7 +8,10 @@ const Stack = createStackNavigator();
 
 const AuthFlow = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        header: () => null,
+      }}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="PasswordReset" component={PasswordResetScreen} />
