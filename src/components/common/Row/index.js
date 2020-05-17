@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {View, ScrollView, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
 const Row = ({children}) => {
   return <View style={styles.container}>{children}</View>;
@@ -9,7 +9,6 @@ const Row = ({children}) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    borderWidth: 1,
     flexWrap: 'wrap',
     flexDirection: 'row',
   },

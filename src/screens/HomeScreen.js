@@ -1,18 +1,24 @@
 import React from 'react';
-import {Text, Layout, Row, Column} from '../components/common';
+import {Text, Layout, Row, Column, Spacer} from '../components/common';
 
 const HomeScreen = () => {
   return (
     <Layout>
       <Row>
         <Column size="3">
-          <Text>Home Screen</Text>
+          <Spacer small>
+            <Text>Screen</Text>
+          </Spacer>
         </Column>
         <Column size="3">
-          <Text>Home Screen</Text>
+          <Spacer medium horizontal>
+            <Text>Home Screen</Text>
+          </Spacer>
         </Column>
         <Column size="3">
-          <Text>Home Screen</Text>
+          <Spacer large vertical>
+            <Text>Home Screen</Text>
+          </Spacer>
         </Column>
         <Column size="3">
           <Text>Home Screen</Text>

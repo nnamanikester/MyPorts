@@ -7,48 +7,49 @@ let width = '';
 const Column = ({children, size}) => {
   switch (size) {
     case '1':
-      width = '10%';
+      width = '8.333333333333333%';
       break;
     case '2':
-      width = '20%';
+      width = '16.66666666666667%';
       break;
     case '3':
-      width = '30%';
+      width = '25%';
       break;
     case '4':
-      width = '40%';
+      width = '33.33333333333333%';
       break;
     case '5':
-      width = '50%';
+      width = '41.66666666666667%';
       break;
     case '6':
-      width = '60%';
+      width = '50%';
       break;
     case '7':
-      width = '70%';
+      width = '58.33333333333333%';
       break;
     case '8':
-      width = '80%';
+      width = '66.66666666666664%';
       break;
     case '9':
-      width = '90%';
+      width = '75%';
       break;
     case '10':
+      width = '83.33333333333333%';
+      break;
+    case '11':
+      width = '91.66666666666666%';
+      break;
+    case '12':
       width = '100%';
       break;
     default:
-      width = '';
+      width = '100%';
       break;
   }
-  return <View style={{...styles.container, width}}>{children}</View>;
+  return <View style={{width}}>{children}</View>;
 };
 
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 2,
-    borderColor: 'red',
-  },
-});
+const styles = StyleSheet.create({});
 
 Column.propTypes = {
   size: PropTypes.string.isRequired,
