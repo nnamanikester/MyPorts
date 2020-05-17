@@ -24,9 +24,7 @@ const Spacer = ({children, large, small, medium, horizontal, vertical}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-  },
+  container: {},
 });
 
 Spacer.propTypes = {
@@ -34,6 +32,7 @@ Spacer.propTypes = {
   medium: PropTypes.bool,
   small: PropTypes.bool,
   horizontal: PropTypes.bool,
+  vertical: PropTypes.bool,
 };
 
 export {Spacer};

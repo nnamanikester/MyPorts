@@ -1,5 +1,13 @@
 import React from 'react';
-import {Text, Layout, Row, Column, Spacer} from '../components/common';
+import {
+  Text,
+  Layout,
+  Row,
+  Column,
+  Spacer,
+  Button,
+  Icon,
+} from '../components/common';
 
 const HomeScreen = () => {
   return (
@@ -27,6 +35,16 @@ const HomeScreen = () => {
           <Text>Home Screen</Text>
         </Column>
       </Row>
+      <Button
+        // iconLeft={<Icon type="Ionicons" name="ios-arrow-back" />}
+        iconRight={
+          <Icon type="Ionicons" name="ios-arrow-forward" color="#fff" />
+        }
+        size="small"
+        type="">
+        <Text style={{color: '#fff'}}>Lists</Text>
+      </Button>
+      <Icon type="Ionicons" name="ios-list" color="red" />
     </Layout>
   );
 };
