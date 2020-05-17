@@ -1,11 +1,27 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {Text, Layout, Row, Column} from '../components/common';
 
 const HomeScreen = () => {
   return (
-    <View>
-      <Text>Home Screen</Text>
-    </View>
+    <Layout>
+      <Row>
+        <Column size="3">
+          <Text>Home Screen</Text>
+        </Column>
+        <Column size="3">
+          <Text>Home Screen</Text>
+        </Column>
+        <Column size="3">
+          <Text>Home Screen</Text>
+        </Column>
+        <Column size="3">
+          <Text>Home Screen</Text>
+        </Column>
+        <Column size="3">
+          <Text>Home Screen</Text>
+        </Column>
+      </Row>
+    </Layout>
   );
 };
 
