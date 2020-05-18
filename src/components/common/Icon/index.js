@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
 });
 
 Icon.propTypes = {
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   color: PropTypes.string,
   size: PropTypes.number,
   name: PropTypes.string.isRequired,

@@ -14,15 +14,7 @@ let color = '#fff';
 let typeStyle = {};
 let disabled = 0.5;
 
-const Button = ({
-  children,
-  onClick,
-  size,
-  type,
-  iconRight,
-  iconLeft,
-  showIconDivider,
-}) => {
+const FloatButton = ({children, onClick, size, type, iconRight, iconLeft}) => {
   switch (type) {
     case 'disabled':
       typeStyle = {
@@ -79,27 +71,11 @@ const Button = ({
         ...typeStyle,
       }}
       activeOpacity={disabled}>
-      {iconLeft ? (
-        <View
-          style={{
-            ...styles.iconLeft,
-            borderRightWidth: showIconDivider ? 1 : 0,
-          }}>
-          {iconLeft}
-        </View>
-      ) : null}
+      {iconLeft ? <View style={styles.iconLeft}>{iconLeft}</View> : null}
       <Text color={color} style={{...styles.title}}>
         {children}
       </Text>
-      {iconRight ? (
-        <View
-          style={{
-            ...styles.iconRight,
-            borderLeftWidth: showIconDivider ? 1 : 0,
-          }}>
-          {iconRight}
-        </View>
-      ) : null}
+      {iconRight ? <View style={styles.iconRight}>{iconRight}</View> : null}
     </TouchableOpacity>
   );
 };
@@ -134,20 +110,18 @@ const styles = StyleSheet.create({
   },
 });
 
-Button.propTypes = {
+FloatButton.propTypes = {
   onClick: PropTypes.func,
   type: PropTypes.string,
   size: PropTypes.string,
   iconLeft: PropTypes.element,
   iconRight: PropTypes.element,
-  showIconDivider: PropTypes.bool,
 };
 
-Button.defaultProps = {
+FloatButton.defaultProps = {
   onClick: () => {},
   size: 'large',
   type: '',
-  showIconDivider: false,
 };
 
-export {Button};
+export {FloatButton};

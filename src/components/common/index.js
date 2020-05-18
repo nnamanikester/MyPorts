@@ -4,4 +4,6 @@ export * from './Row';
 export * from './Column';
 export * from './Spacer';
 export * from './Button';
+export * from './FloatButton';
 export * from './Icon';
+export * from './Rating';
