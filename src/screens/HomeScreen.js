@@ -8,6 +8,7 @@ import {
   Button,
   Icon,
   Rating,
+  FloatButton,
 } from '../components/common';
 
 const HomeScreen = () => {
@@ -46,6 +47,9 @@ const HomeScreen = () => {
       </Button>
       <Icon type="Ionicons" name="ios-list" color="red" />
       <Rating s1={10} s2={10} s3={0} s4={2} s5={25} />
+      <FloatButton size="small">
+        <Icon name="ios-add" color="#fff" />
+      </FloatButton>
     </Layout>
   );
 };

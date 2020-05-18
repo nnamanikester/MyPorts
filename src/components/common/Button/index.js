@@ -22,6 +22,7 @@ const Button = ({
   iconRight,
   iconLeft,
   showIconDivider,
+  style,
 }) => {
   switch (type) {
     case 'disabled':
@@ -141,6 +142,7 @@ Button.propTypes = {
   iconLeft: PropTypes.element,
   iconRight: PropTypes.element,
   showIconDivider: PropTypes.bool,
+  style: PropTypes.object,
 };
 
 Button.defaultProps = {
@@ -148,6 +150,7 @@ Button.defaultProps = {
   size: 'large',
   type: '',
   showIconDivider: false,
+  style: {},
 };
 
 export {Button};

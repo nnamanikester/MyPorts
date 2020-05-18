@@ -23,8 +23,6 @@ const Rating = ({onClick, s1, s2, s3, s4, s5}) => {
 
   const averageRating = averageValue / 20;
 
-  console.log(averageRating);
-
   let stars = {
     star1: '#999999',
     star2: '#999999',
@@ -64,24 +62,28 @@ const Rating = ({onClick, s1, s2, s3, s4, s5}) => {
         activeOpacity={0.5}>
         <Icon name="ios-star-outline" color={stars.star1} />
       </TouchableOpacity>
+
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
         <Icon name="ios-star-outline" color={stars.star2} />
       </TouchableOpacity>
+
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
         <Icon name="ios-star-outline" color={stars.star3} />
       </TouchableOpacity>
+
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
         <Icon name="ios-star-outline" color={stars.star4} />
       </TouchableOpacity>
+
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
