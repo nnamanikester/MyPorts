@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {Layout, Text} from '../components/common';
 
 const SearchScreen = () => {
   return (
-    <View>
-      <Text>Search Screen</Text>
-    </View>
+    <Layout>
+      <Text h2> Search Screen</Text>
+    </Layout>
   );
 };
 

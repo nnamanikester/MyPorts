@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {Layout, Text} from '../../components/common';
 
 const VendorsListScreen = () => {
   return (
-    <View>
-      <Text>Vendors List Screen</Text>
-    </View>
+    <Layout>
+      <Text h2>Vendors List Screen</Text>
+    </Layout>
   );
 };
 
