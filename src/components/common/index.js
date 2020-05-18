@@ -7,3 +7,4 @@ export * from './Button';
 export * from './FloatButton';
 export * from './Icon';
 export * from './Rating';
+export * from './TextInput';

@@ -2,12 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Text} from '../Text';
-import {
-  primaryColor,
-  inactiveColor,
-  dividerColor,
-  textColor,
-} from '../variables';
+import {primaryColor, inactiveColor, grayColor, textColor} from '../variables';
 
 let smallStyle = {};
 let color = '#fff';
@@ -124,13 +119,13 @@ const styles = StyleSheet.create({
   iconLeft: {
     alignItems: 'center',
     borderRightWidth: 1,
-    borderRightColor: dividerColor,
+    borderRightColor: grayColor,
     paddingHorizontal: 15,
   },
   iconRight: {
     alignItems: 'center',
     borderLeftWidth: 1,
-    borderLeftColor: dividerColor,
+    borderLeftColor: grayColor,
     paddingHorizontal: 15,
   },
 });

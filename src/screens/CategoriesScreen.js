@@ -9,7 +9,9 @@ import {
   Icon,
   Rating,
   FloatButton,
+  TextInput,
 } from '../components/common';
+import {grayColor, info} from '../components/common/variables';
 
 const HomeScreen = () => {
   return (
@@ -50,6 +52,11 @@ const HomeScreen = () => {
       <FloatButton size="small">
         <Icon name="ios-add" color="#fff" />
       </FloatButton>
+      <TextInput
+        iconLeft={<Icon name="ios-mail" color={info} />}
+        iconRight={<Icon name="ios-arrow-down" color={grayColor} />}
+        placeholder="Placeholder"
+      />
     </Layout>
   );
 };

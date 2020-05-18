@@ -8,4 +8,4 @@ export const success = '#00C48C';
 export const warning = '#F2994A';
 export const info = '#999999';
 export const danger = '#FF647C';
-export const dividerColor = '#E4E4E4';
+export const grayColor = '#E4E4E4';
