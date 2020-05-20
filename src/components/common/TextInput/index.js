@@ -17,6 +17,7 @@ const TextInput = ({
   autoCorrect,
   placeholder,
   multiline,
+  keyboardType,
   rows,
   iconRight,
   iconLeft,
@@ -105,6 +106,7 @@ const TextInput = ({
         editable={editable}
         multiline={multiline}
         numberOfLines={rows}
+        keyboardType={keyboardType}
         style={{
           ...styles.input,
           ...iconLeftStyle,
@@ -170,6 +172,7 @@ TextInput.propTypes = {
   shape: PropTypes.string,
   multiline: PropTypes.bool,
   numberOfLines: PropTypes.number,
+  keyboardType: PropTypes.string,
 };
 
 TextInput.defaultProps = {
@@ -184,6 +187,7 @@ TextInput.defaultProps = {
   shape: 'normal',
   multiline: false,
   autoFocus: true,
+  keyboardType: 'default',
 };
 
 export {TextInput};

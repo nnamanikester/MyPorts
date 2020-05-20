@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Layout, Text, Icon} from '../components/common';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, StyleSheet, View} from 'react-native';
 
 const SearchScreen = ({navigation}) => {
   const [hideHeader, setHideHeader] = useState(false);
@@ -30,11 +30,20 @@ const SearchScreen = ({navigation}) => {
         onScrollDown={() => setHideHeader(false)}
         onScrollUp={() => setHideHeader(true)}
         itemToFloat={1}>
-        <SearchBar />
-        <Text size={20}> Search Screen</Text>
+        <View style={styles.searchBar}>
+          <SearchBar placeholder="What are you looking for?" />
+        </View>
+        <Text size={20}>Search Screen</Text>
       </Layout>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  searchBar: {
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+  },
+});
 
 export default SearchScreen;

@@ -10,10 +10,8 @@ const SearchBar = ({placeholder, onChangeText}) => {
       <TextInput
         autoFocus={true}
         iconLeft={<Icon name="ios-search" />}
-        placeholder="Article"
-        multiline={true}
+        placeholder={placeholder}
       />
-      {/* <TeIp autoFocus={false} /> */}
     </View>
   );
 };
