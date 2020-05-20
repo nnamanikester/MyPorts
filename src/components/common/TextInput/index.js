@@ -16,6 +16,8 @@ const TextInput = ({
   password,
   autoCorrect,
   placeholder,
+  multiline,
+  rows,
   iconRight,
   iconLeft,
   style,
@@ -85,7 +87,7 @@ const TextInput = ({
       break;
     default:
       shapeStyle = {
-        borderRadius: 50,
+        borderRadius: 5,
       };
       break;
   }
@@ -101,6 +103,8 @@ const TextInput = ({
         onChangeText={onChangeText}
         placeholder={placeholder}
         editable={editable}
+        multiline={multiline}
+        numberOfLines={rows}
         style={{
           ...styles.input,
           ...iconLeftStyle,
@@ -164,6 +168,8 @@ TextInput.propTypes = {
   error: PropTypes.bool,
   type: PropTypes.string,
   shape: PropTypes.string,
+  multiline: PropTypes.bool,
+  numberOfLines: PropTypes.number,
 };
 
 TextInput.defaultProps = {
@@ -176,6 +182,8 @@ TextInput.defaultProps = {
   style: {},
   error: false,
   shape: 'normal',
+  multiline: false,
+  autoFocus: true,
 };
 
 export {TextInput};

@@ -1,64 +1,81 @@
-import React from 'react';
-import {
-  Text,
-  Layout,
-  Row,
-  Column,
-  Spacer,
-  Button,
-  Icon,
-  Rating,
-  FloatButton,
-  TextInput,
-} from '../components/common';
-import {grayColor, info} from '../components/common/variables';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
+import {Layout, Text, Icon} from '../components/common';
+import Header from '../components/Header';
+import {TouchableOpacity} from 'react-native';
 
-const HomeScreen = () => {
+const CategoriesScreen = ({navigation}) => {
+  const [hideHeader, setHideHeader] = useState(false);
+
   return (
-    <Layout>
-      <Row>
-        <Column size="3">
-          <Spacer small>
-            <Text>Screen</Text>
-          </Spacer>
-        </Column>
-        <Column size="3">
-          <Spacer medium horizontal>
-            <Text>Home Screen</Text>
-          </Spacer>
-        </Column>
-        <Column size="3">
-          <Spacer large vertical>
-            <Text>Home Screen</Text>
-          </Spacer>
-        </Column>
-        <Column size="3">
-          <Text>Home Screen</Text>
-        </Column>
-        <Column size="3">
-          <Text>Home Screen</Text>
-        </Column>
-      </Row>
-      <Button
-        // iconLeft={<Icon type="Ionicons" name="ios-arrow-back" />}
-        iconRight={
-          <Icon type="Ionicons" name="ios-arrow-forward" color="#fff" />
+    <>
+      <Header
+        hideHeader={hideHeader}
+        title="Categories"
+        headerLeft={
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => navigation.openDrawer()}>
+            <Icon name="ios-menu" color="#fff" />
+          </TouchableOpacity>
         }
-        showIconDivider>
-        <Text style={{color: '#fff'}}>Lists</Text>
-      </Button>
-      <Icon type="Ionicons" name="ios-list" color="red" />
-      <Rating s1={10} s2={10} s3={0} s4={2} s5={25} />
-      <FloatButton size="small">
-        <Icon name="ios-add" color="#fff" />
-      </FloatButton>
-      <TextInput
-        iconLeft={<Icon name="ios-mail" color={info} />}
-        iconRight={<Icon name="ios-arrow-down" color={grayColor} />}
-        placeholder="Placeholder"
+        headerRight={
+          <TouchableOpacity activeOpacity={0.7}>
+            <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
+          </TouchableOpacity>
+        }
       />
-    </Layout>
+      <Layout
+        onScrollDown={() => setHideHeader(false)}
+        onScrollUp={() => setHideHeader(true)}>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+        <Text size={20}> Categories Screen</Text>
+      </Layout>
+    </>
   );
 };
 
-export default HomeScreen;
+export default CategoriesScreen;

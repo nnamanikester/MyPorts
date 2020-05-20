@@ -1,11 +1,39 @@
-import React from 'react';
-import {Layout, Text} from '../components/common';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
+import {Layout, Text, Icon} from '../components/common';
+import Header from '../components/Header';
+import SearchBar from '../components/SearchBar';
+import {TouchableOpacity} from 'react-native';
 
-const SearchScreen = () => {
+const SearchScreen = ({navigation}) => {
+  const [hideHeader, setHideHeader] = useState(false);
+
   return (
-    <Layout>
-      <Text h2> Search Screen</Text>
-    </Layout>
+    <>
+      <Header
+        hideHeader={hideHeader}
+        title="Search"
+        headerLeft={
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => navigation.openDrawer()}>
+            <Icon name="ios-menu" color="#fff" />
+          </TouchableOpacity>
+        }
+        headerRight={
+          <TouchableOpacity activeOpacity={0.7}>
+            <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
+          </TouchableOpacity>
+        }
+      />
+      <Layout
+        onScrollDown={() => setHideHeader(false)}
+        onScrollUp={() => setHideHeader(true)}
+        itemToFloat={1}>
+        <SearchBar />
+        <Text size={20}> Search Screen</Text>
+      </Layout>
+    </>
   );
 };
 
