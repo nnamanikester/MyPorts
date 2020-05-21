@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {View, TouchableOpacity} from 'react-native';
-import {Layout, Icon, Text} from '../components/common';
+import {View, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {Layout, Icon, Text, ListItem, Spacer} from '../components/common';
 import Header from '../components/Header';
 
 const NotificationsScreen = ({navigation}) => {
@@ -28,10 +28,43 @@ const NotificationsScreen = ({navigation}) => {
         onScrollDown={() => setHideHeader(false)}
         onScrollUp={() => setHideHeader(true)}
         itemToFloat={1}>
-        <Text size={20}>Notifications Screen</Text>
+        <View style={styles.container}>
+          <Text style={styles.title}>Offers</Text>
+          <Spacer medium />
+          <ListItem
+            right={<Text note>2 minutes ago</Text>}
+            body={
+              <>
+                <Text heading>McDonald’s</Text>
+                <Text>Your order has been shipped into your address</Text>
+              </>
+            }
+            left={
+              <Image
+                style={{
+                  width: 35,
+                  height: 35,
+                  borderRadius: 50,
+                }}
+                source={require('../assets/images/Img-Male-08.png')}
+              />
+            }
+          />
+        </View>
       </Layout>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 20,
+    paddingHorizontal: 10,
+  },
+  title: {
+    fontSize: 20,
+    fontFamily: 'SFPD-regular',
+  },
+});
 
 export default NotificationsScreen;
