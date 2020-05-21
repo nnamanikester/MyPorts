@@ -3,12 +3,23 @@ import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {grayColor} from '../variables';
 
-const ListItem = ({children, selected, left, right, body}) => {
+const ListItem = ({children, left, right, body, marked}) => {
+  let markedStyle = {};
+
+  if (marked) {
+    markedStyle = {
+      backgroundColor: '#D0E8FD',
+      borderRadius: 5,
+    };
+  }
+
   return (
-    <TouchableOpacity activeOpacity={0.7} style={styles.container}>
-      <View style={styles.left}>{left}</View>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      style={{...styles.container, ...markedStyle}}>
+      {left && <View style={styles.left}>{left}</View>}
       <View style={styles.body}>{body || children}</View>
-      <View style={styles.right}>{right}</View>
+      {right && <View style={styles.right}>{right}</View>}
     </TouchableOpacity>
   );
 };
@@ -17,8 +28,8 @@ const styles = StyleSheet.create({
   container: {
     borderBottomWidth: 1,
     borderColor: grayColor,
+    paddingTop: 15,
     paddingBottom: 10,
-    marginBottom: 10,
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'center',
@@ -35,7 +46,12 @@ const styles = StyleSheet.create({
   },
 });
 
-ListItem.propTypes = {};
+ListItem.propTypes = {
+  marked: PropTypes.bool,
+  left: PropTypes.element,
+  right: PropTypes.element,
+  body: PropTypes.element,
+};
 
 ListItem.defaultProps = {};
 
