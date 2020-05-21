@@ -3,8 +3,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import CategoriesScreen from '../screens/CategoriesScreen';
 import VendorsListScreen from '../screens/vendorScreens/VendorsListScreen';
 import SearchScreen from '../screens/SearchScreen';
-import AccountScreen from '../screens/AccountScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 import {Icon, Text} from '../components/common';
 
 const Tab = createBottomTabNavigator();
@@ -73,15 +73,15 @@ const TabNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="Account"
-        component={AccountScreen}
+        name="Settings"
+        component={SettingsScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
-            <Icon name="ios-contact" color={color} size={focused ? 32 : 28} />
+            <Icon name="ios-cog" color={color} size={focused ? 32 : 28} />
           ),
           tabBarLabel: ({color}) => (
             <Text size={12} color={color}>
-              Account
+              Settings
             </Text>
           ),
         }}

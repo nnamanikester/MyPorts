@@ -105,7 +105,9 @@ const NotificationsScreen = ({navigation}) => {
         onScrollUp={() => setHideHeader(true)}>
         <View style={styles.container}>
           <Text style={styles.title}>Offers</Text>
+
           <Spacer />
+
           <FlatList
             data={offers}
             renderItem={({item}) => (
@@ -122,8 +124,11 @@ const NotificationsScreen = ({navigation}) => {
               />
             )}
           />
+
           <Spacer medium />
+
           <Text style={styles.title}>Activity</Text>
+
           <FlatList
             data={activities}
             renderItem={({item}) => {
@@ -142,6 +147,7 @@ const NotificationsScreen = ({navigation}) => {
               />;
             }}
           />
+
           <ListItem
             body={
               <>
@@ -155,6 +161,7 @@ const NotificationsScreen = ({navigation}) => {
             }
             left={<Avatar rounded src={female1} />}
           />
+
           <ListItem
             body={
               <>
@@ -168,6 +175,7 @@ const NotificationsScreen = ({navigation}) => {
             }
             left={<Avatar rounded src={female1} />}
           />
+
           <ListItem
             body={
               <>
@@ -181,6 +189,7 @@ const NotificationsScreen = ({navigation}) => {
             }
             left={<Avatar rounded src={female1} />}
           />
+
           <ListItem
             body={
               <>

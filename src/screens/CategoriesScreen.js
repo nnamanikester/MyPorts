@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {Layout, Text, Icon} from '../components/common';
+import {Layout, Text, Spacer, Icon, Card} from '../components/common';
 import Header from '../components/Header';
-import {TouchableOpacity} from 'react-native';
+import Category from '../components/Category';
+import {TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {female1, female2, female3, male1} from '../assets/images';
 
 const CategoriesScreen = ({navigation}) => {
   const [hideHeader, setHideHeader] = useState(false);
@@ -28,54 +30,17 @@ const CategoriesScreen = ({navigation}) => {
       <Layout
         onScrollDown={() => setHideHeader(false)}
         onScrollUp={() => setHideHeader(true)}>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
-        <Text size={20}> Categories Screen</Text>
+        <Spacer medium />
+        <Category title="Women" image={female1} subtitle="346 Items" />
+        <Category title="Men" image={female2} subtitle="465 Items" />
+        <Category title="Kids" image={female3} subtitle="753 Items" />
+        <Category title="Cars" image={male1} subtitle="4387 Items" />
+        <Spacer size={50} />
       </Layout>
     </>
   );
 };
+
+const styles = StyleSheet.create({});
 
 export default CategoriesScreen;
