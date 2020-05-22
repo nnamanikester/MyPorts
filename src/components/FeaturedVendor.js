@@ -8,33 +8,17 @@ const FeaturedVendor = ({name, location, image, onClick}) => {
   return (
     <View>
       <Card style={styles.container}>
-        <View style={styles.imageContanier}>
-          <Image style={styles.image} source={image} />
-        </View>
-        <View style={styles.content}>
-          <Row>
-            <Column size="8">
-              <Text heading style={styles.title}>
-                {name}
-              </Text>
-              <Text note>{location}</Text>
-            </Column>
-            <Column size="4" style={{justifyContent: 'center'}}>
-              <TouchableOpacity onPress={onClick} activeOpacity={0.7}>
-                <Row>
-                  <Text color={primaryColor}>Shop Now</Text>
-                  <Spacer />
-                  <Icon
-                    type="Feather"
-                    name="shopping-cart"
-                    color={primaryColor}
-                    size={25}
-                  />
-                </Row>
-              </TouchableOpacity>
-            </Column>
-          </Row>
-        </View>
+        <TouchableOpacity activeOpacity={0.9}>
+          <View style={styles.imageContanier}>
+            <Image style={styles.image} source={image} />
+          </View>
+          <View style={styles.content}>
+            <Text heading style={styles.title}>
+              {name}
+            </Text>
+            <Text note>{location}</Text>
+          </View>
+        </TouchableOpacity>
       </Card>
     </View>
   );
@@ -42,8 +26,11 @@ const FeaturedVendor = ({name, location, image, onClick}) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 250,
+    height: 200,
     elevation: 5,
+    width: 160,
+    marginRight: 10,
+    zIndex: 10,
   },
   imageContainer: {},
   image: {
@@ -64,7 +51,7 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: 5,
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: 'SFPD-semi-regular',
   },
 });
