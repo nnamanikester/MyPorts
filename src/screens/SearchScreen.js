@@ -1,9 +1,17 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {Layout, Text, Icon} from '../components/common';
+import {
+  Layout,
+  Spacer,
+  Text,
+  Icon,
+  ListItem,
+  Avatar,
+} from '../components/common';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import {TouchableOpacity, StyleSheet, View} from 'react-native';
+import {female1, female2, female3, male1} from '../assets/images';
 
 const SearchScreen = ({navigation}) => {
   const [hideHeader, setHideHeader] = useState(false);
@@ -21,9 +29,15 @@ const SearchScreen = ({navigation}) => {
           </TouchableOpacity>
         }
         headerRight={
-          <TouchableOpacity activeOpacity={0.7}>
-            <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity activeOpacity={0.7}>
+              <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
+            </TouchableOpacity>
+            <Spacer />
+            <TouchableOpacity activeOpacity={0.7}>
+              <Icon name="ios-search" color="#fff" />
+            </TouchableOpacity>
+          </>
         }
       />
       <Layout
@@ -33,7 +47,6 @@ const SearchScreen = ({navigation}) => {
         <View style={styles.searchBar}>
           <SearchBar placeholder="What are you looking for?" />
         </View>
-        <Text size={20}>Search Screen</Text>
       </Layout>
     </>
   );

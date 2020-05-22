@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
-    borderRadius: 10,
+    borderRadius: 5,
   },
   content: {
     position: 'absolute',
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#000',
-    borderRadius: 10,
+    borderRadius: 5,
     opacity: 0.5,
   },
 });

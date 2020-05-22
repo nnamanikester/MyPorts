@@ -4,7 +4,7 @@ import {View, StyleSheet} from 'react-native';
 
 let width = '';
 
-const Column = ({children, size}) => {
+const Column = ({children, size, style}) => {
   switch (size) {
     case '1':
       width = '8.333333333333333%';
@@ -46,7 +46,7 @@ const Column = ({children, size}) => {
       width = '100%';
       break;
   }
-  return <View style={{width}}>{children}</View>;
+  return <View style={{width, ...style}}>{children}</View>;
 };
 
 const styles = StyleSheet.create({});

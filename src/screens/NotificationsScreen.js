@@ -94,9 +94,15 @@ const NotificationsScreen = ({navigation}) => {
           </TouchableOpacity>
         }
         headerRight={
-          <TouchableOpacity activeOpacity={0.7}>
-            <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity activeOpacity={0.7}>
+              <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
+            </TouchableOpacity>
+            <Spacer />
+            <TouchableOpacity activeOpacity={0.7}>
+              <Icon name="ios-search" color="#fff" />
+            </TouchableOpacity>
+          </>
         }
       />
 

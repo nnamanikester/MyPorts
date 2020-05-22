@@ -13,6 +13,20 @@ const TabNavigation = () => {
   return (
     <Tab.Navigator initialRouteName="Vendors">
       <Tab.Screen
+        name="Vendors"
+        component={VendorsListScreen}
+        options={{
+          tabBarIcon: ({focused, color, size}) => (
+            <Icon name="ios-business" color={color} size={focused ? 34 : 28} />
+          ),
+          tabBarLabel: ({color}) => (
+            <Text color={color} size={12}>
+              Vendors
+            </Text>
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Categories"
         component={CategoriesScreen}
         options={{
@@ -41,20 +55,6 @@ const TabNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="Vendors"
-        component={VendorsListScreen}
-        options={{
-          tabBarIcon: ({focused, color, size}) => (
-            <Icon name="ios-business" color={color} size={focused ? 34 : 28} />
-          ),
-          tabBarLabel: ({color}) => (
-            <Text color={color} size={12}>
-              Vendors
-            </Text>
-          ),
-        }}
-      />
-      <Tab.Screen
         name="Notifications"
         component={NotificationsScreen}
         options={{
@@ -77,7 +77,7 @@ const TabNavigation = () => {
         component={SettingsScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
-            <Icon name="ios-cog" color={color} size={focused ? 32 : 28} />
+            <Icon name="ios-settings" color={color} size={focused ? 32 : 28} />
           ),
           tabBarLabel: ({color}) => (
             <Text size={12} color={color}>
