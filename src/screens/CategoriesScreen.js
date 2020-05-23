@@ -40,10 +40,30 @@ const CategoriesScreen = ({navigation}) => {
         onScrollUp={() => setHideHeader(true)}>
         <View style={styles.container}>
           <Spacer medium />
-          <Category title="Women" image={female1} subtitle="346 Items" />
-          <Category title="Men" image={female2} subtitle="465 Items" />
-          <Category title="Kids" image={female3} subtitle="753 Items" />
-          <Category title="Cars" image={male1} subtitle="4387 Items" />
+          <Category
+            onClick={() => navigation.navigate('ProductsByCategory')}
+            title="Women"
+            image={female1}
+            subtitle="346 Items"
+          />
+          <Category
+            onClick={() => navigation.navigate('ProductsByCategory')}
+            title="Men"
+            image={female2}
+            subtitle="465 Items"
+          />
+          <Category
+            onClick={() => navigation.navigate('ProductsByCategory')}
+            title="Kids"
+            image={female3}
+            subtitle="753 Items"
+          />
+          <Category
+            onClick={() => navigation.navigate('ProductsByCategory')}
+            title="Cars"
+            image={male1}
+            subtitle="4387 Items"
+          />
           <Spacer size={50} />
         </View>
       </Layout>

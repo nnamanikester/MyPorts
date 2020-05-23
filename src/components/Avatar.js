@@ -33,7 +33,7 @@ const Avatar = ({src, medium, small, large, size, rounded, style}) => {
         ...styles.image,
         ...typeStyle,
         ...style,
-        borderRadius: rounded ? 100 : 10,
+        borderRadius: rounded ? 100 : 5,
       }}
       source={src}
     />

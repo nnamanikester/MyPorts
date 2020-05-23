@@ -1,22 +1,25 @@
 import React from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {Card, Text} from './common';
+import {} from 'react-native-gesture-handler';
 
-const Category = ({title, subtitle, image}) => {
+const Category = ({title, onClick, subtitle, image}) => {
   return (
     <View container>
-      <Card>
-        <View style={styles.content}>
-          <Text color="#fff" h2>
-            {title}
-          </Text>
-          <Text color="#fff">{subtitle}</Text>
-        </View>
-        <View style={styles.imageContanier}>
-          <View style={styles.overalay} />
-          <Image style={styles.image} source={image} />
-        </View>
-      </Card>
+      <TouchableOpacity onPress={onClick} activeOpacity={0.9}>
+        <Card>
+          <View style={styles.content}>
+            <Text color="#fff" h2>
+              {title}
+            </Text>
+            <Text color="#fff">{subtitle}</Text>
+          </View>
+          <View style={styles.imageContanier}>
+            <View style={styles.overalay} />
+            <Image style={styles.image} source={image} />
+          </View>
+        </Card>
+      </TouchableOpacity>
     </View>
   );
 };

@@ -8,7 +8,7 @@ const FeaturedVendor = ({name, location, image, onClick}) => {
   return (
     <View>
       <Card style={styles.container}>
-        <TouchableOpacity activeOpacity={0.9}>
+        <TouchableOpacity onPress={onClick} activeOpacity={0.9}>
           <View style={styles.imageContanier}>
             <Image style={styles.image} source={image} />
           </View>

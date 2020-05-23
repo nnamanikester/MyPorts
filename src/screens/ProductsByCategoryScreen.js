@@ -6,13 +6,12 @@ import {
   Text,
   Icon,
   ListItem,
-  Avatar,
   Row,
   Column,
 } from '../components/common';
+import Avatar from '../components/Avatar';
 import Header from '../components/Header';
 import Product from '../components/Product';
-import FeaturedProduct from '../components/FeaturedProduct';
 import {TouchableOpacity, ScrollView, StyleSheet, View} from 'react-native';
 import {
   female1,
@@ -23,20 +22,21 @@ import {
   shoe1,
   shoe2,
 } from '../assets/images';
+import {primaryColor} from '../components/common/variables';
 
-const ProductsScreen = ({navigation}) => {
+const ProductsByCategoryScreen = ({navigation}) => {
   const [hideHeader, setHideHeader] = useState(false);
 
   return (
     <>
       <Header
         hideHeader={hideHeader}
-        title="Shop"
+        title="Men"
         headerLeft={
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={() => navigation.openDrawer()}>
-            <Icon name="ios-menu" color="#fff" />
+            onPress={() => navigation.goBack()}>
+            <Icon name="ios-arrow-back" size={25} color="#fff" />
           </TouchableOpacity>
         }
         headerRight={
@@ -57,51 +57,9 @@ const ProductsScreen = ({navigation}) => {
         onScrollDown={() => setHideHeader(false)}
         onScrollUp={() => setHideHeader(true)}>
         <View style={styles.container}>
-          <Spacer>
-            <Text style={styles.title}>Featured Products</Text>
-          </Spacer>
-        </View>
-
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <FeaturedProduct
-            quantity="8"
-            image={bag1}
-            name="Gucci Bag"
-            vendor="Shop And Smile"
-            onClick={() => navigation.navigate('SingleProduct')}
-          />
-          <FeaturedProduct
-            quantity="89"
-            image={shoe1}
-            name="Water Proof Bag"
-            vendor="Ugoski Wears"
-            onClick={() => navigation.navigate('SingleProduct')}
-          />
-          <FeaturedProduct
-            quantity="14"
-            image={shoe2}
-            name="Table Spoon"
-            vendor="Benard Shoes"
-            onClick={() => navigation.navigate('SingleProduct')}
-          />
-          <FeaturedProduct
-            image={female2}
-            name="Female belt holder"
-            vendor="Viky Coperate wears"
-            quantity="31"
-            onClick={() => navigation.navigate('SingleProduct')}
-          />
-          <FeaturedProduct
-            quantity="45"
-            image={female3}
-            name="Balenciaga Shoe"
-            vendor="Kriative Collections"
-            onClick={() => navigation.navigate('SingleProduct')}
-          />
-        </ScrollView>
-
-        <View style={styles.container}>
-          <Text style={styles.title}>Latest Products</Text>
+          <View style={{paddingLeft: 15}}>
+            <Text style={styles.title}>Men</Text>
+          </View>
           <Spacer />
           <Row>
             <Column size="6" style={{alignItems: 'center'}}>
@@ -110,7 +68,6 @@ const ProductsScreen = ({navigation}) => {
                 image={female1}
                 name="Water Proof Bag"
                 vendor="Chiomy Styles"
-                onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
             <Column style={{alignItems: 'center'}} size="6">
@@ -119,7 +76,6 @@ const ProductsScreen = ({navigation}) => {
                 image={male1}
                 name="Table Spoon"
                 vendor="Benson Utilities"
-                onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
             <Column size="6" style={{alignItems: 'center'}}>
@@ -128,7 +84,6 @@ const ProductsScreen = ({navigation}) => {
                 name="Female belt holder"
                 vendor="Genny Collections"
                 quantity="31"
-                onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
             <Column size="6" style={{alignItems: 'center'}}>
@@ -137,7 +92,6 @@ const ProductsScreen = ({navigation}) => {
                 image={female3}
                 name="Balenciaga Shoe"
                 vendor="Chucks Ventiany"
-                onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
             <Column size="6" style={{alignItems: 'center'}}>
@@ -146,7 +100,6 @@ const ProductsScreen = ({navigation}) => {
                 image={shoe1}
                 name="Adidas Shoe"
                 vendor="Adidas"
-                onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
             <Column size="6" style={{alignItems: 'center'}}>
@@ -155,7 +108,6 @@ const ProductsScreen = ({navigation}) => {
                 image={female3}
                 name="Nike Shoe"
                 vendor="Nike"
-                onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
             <Column size="6" style={{alignItems: 'center'}}>
@@ -164,7 +116,6 @@ const ProductsScreen = ({navigation}) => {
                 image={female3}
                 name="Gucci Bag"
                 vendor="Cossy Viantae"
-                onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
           </Row>
@@ -184,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductsScreen;
+export default ProductsByCategoryScreen;
