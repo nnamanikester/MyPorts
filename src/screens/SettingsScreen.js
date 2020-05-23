@@ -13,16 +13,12 @@ const SettingsScreen = ({navigation}) => {
       <Header
         hideHeader={hideHeader}
         title="Privacy and Settings"
-        headerRight={
-          <>
-            <TouchableOpacity activeOpacity={0.7}>
-              <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </TouchableOpacity>
-            <Spacer />
-            <TouchableOpacity activeOpacity={0.7}>
-              <Icon name="ios-search" color="#fff" />
-            </TouchableOpacity>
-          </>
+        headerLeft={
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => navigation.openDrawer()}>
+            <Icon name="ios-menu" color="#fff" />
+          </TouchableOpacity>
         }
       />
       <Layout

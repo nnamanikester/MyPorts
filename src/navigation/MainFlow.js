@@ -7,6 +7,7 @@ import PaymentScreen from '../screens/checkout/PaymentScreen';
 import ShippingScreen from '../screens/checkout/ShippingScreen';
 import CartScreen from '../screens/checkout/CartScreen';
 import OrdersScreen from '../screens/OrdersScreen';
+import SearchScreen from '../screens/SearchScreen';
 import VendorShopReviewScreen from '../screens/vendorScreens/VendorShopReview';
 
 const Stack = createStackNavigator();
@@ -36,6 +37,13 @@ const StackNavigation = () => {
       <Stack.Screen name="Shipping" component={ShippingScreen} />
       <Stack.Screen name="Payment" component={PaymentScreen} />
       <Stack.Screen name="Orders" component={OrdersScreen} />
+      <Stack.Screen
+        options={{
+          header: () => null,
+        }}
+        name="Search"
+        component={SearchScreen}
+      />
       <Stack.Screen
         name="VendorShopReview"
         component={VendorShopReviewScreen}

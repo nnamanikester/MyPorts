@@ -2,7 +2,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import CategoriesScreen from '../screens/CategoriesScreen';
 import VendorsListScreen from '../screens/vendorScreens/VendorsListScreen';
-import SearchScreen from '../screens/SearchScreen';
+import ProductsScreen from '../screens/ProductsScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import {Icon, Text} from '../components/common';
@@ -41,15 +41,20 @@ const TabNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="Search"
-        component={SearchScreen}
+        name="Products"
+        component={ProductsScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
-            <Icon name="ios-search" color={color} size={focused ? 32 : 28} />
+            <Icon
+              name="opencart"
+              type="FontAwesome"
+              color={color}
+              size={focused ? 28 : 24}
+            />
           ),
           tabBarLabel: ({color}) => (
             <Text size={12} color={color}>
-              Search
+              Shop
             </Text>
           ),
         }}

@@ -10,7 +10,6 @@ const Layout = ({children, itemToFloat, style, onScrollUp, onScrollDown}) => {
     const differnce = Math.abs(currentScrollOffset - scrollOffset);
 
     if (scrollOffset > currentScrollOffset && differnce > 3) {
-      console.log(differnce);
       // scrollOffset = currentScrollOffset;
       if (onScrollDown) return onScrollDown();
     }

@@ -13,13 +13,13 @@ const VendorList = ({name, location, image, onClick}) => {
         </View>
         <View style={styles.content}>
           <Row>
-            <Column size="8">
+            <Column size="7">
               <Text heading style={styles.title}>
                 {name}
               </Text>
               <Text note>{location}</Text>
             </Column>
-            <Column size="4" style={{justifyContent: 'center'}}>
+            <Column size="5" style={{justifyContent: 'center'}}>
               <TouchableOpacity onPress={onClick} activeOpacity={0.7}>
                 <Row>
                   <Text color={primaryColor}>Shop Now</Text>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontFamily: 'SFPD-semi-regular',
+    fontFamily: 'SFPD-semi-bold',
   },
 });
 

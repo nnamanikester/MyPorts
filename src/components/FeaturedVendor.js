@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontFamily: 'SFPD-semi-regular',
+    fontFamily: 'SFPD-semi-bold',
   },
 });
 
