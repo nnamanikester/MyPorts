@@ -9,7 +9,7 @@ const FloatButton = ({onClick, children, size, shape, type, style}) => {
   let color = '#fff';
   let typeStyle = {};
   let shapeStyle = {};
-  let disabled = 0.5;
+  let disabled = 0.7;
 
   switch (type) {
     case 'disabled':
@@ -31,7 +31,7 @@ const FloatButton = ({onClick, children, size, shape, type, style}) => {
     case 'ghost':
       typeStyle = {
         backgroundColor: '#fff',
-        elevation: 2,
+        elevation: 1,
       };
       color = textColor;
       break;

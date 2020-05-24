@@ -57,9 +57,8 @@ const ProductsScreen = ({navigation}) => {
         onScrollDown={() => setHideHeader(false)}
         onScrollUp={() => setHideHeader(true)}>
         <View style={styles.container}>
-          <Spacer>
-            <Text style={styles.title}>Featured Products</Text>
-          </Spacer>
+          <Text style={styles.title}>Featured Products</Text>
+          <Spacer />
         </View>
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>

@@ -186,7 +186,7 @@ TextInput.defaultProps = {
   error: false,
   shape: 'normal',
   multiline: false,
-  autoFocus: true,
+  autoFocus: false,
   keyboardType: 'default',
 };
 

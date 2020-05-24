@@ -39,7 +39,7 @@ const Button = ({
     case 'ghost':
       typeStyle = {
         backgroundColor: '#fff',
-        elevation: 2,
+        elevation: 1,
       };
       color = textColor;
       break;
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'space-around',
-    elevation: 4,
+    elevation: 2,
     flexDirection: 'row',
   },
   title: {
