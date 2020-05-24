@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexWrap: 'wrap',
     flexDirection: 'row',
+    justifyContent: 'center',
   },
 });
 

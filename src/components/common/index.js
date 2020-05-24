@@ -10,3 +10,4 @@ export * from './Rating';
 export * from './TextInput';
 export * from './ListItem';
 export * from './Card';
+export * from './Modal';

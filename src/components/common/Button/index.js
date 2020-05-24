@@ -7,7 +7,7 @@ import {primaryColor, inactiveColor, grayColor, textColor} from '../variables';
 let smallStyle = {};
 let color = '#fff';
 let typeStyle = {};
-let disabled = 0.5;
+let disabled = 0.7;
 
 const Button = ({
   children,
