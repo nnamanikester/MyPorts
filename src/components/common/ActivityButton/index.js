@@ -14,7 +14,9 @@ const ActivityButton = ({activeIcon, inActiveIcon, onClick, count}) => {
       </TouchableOpacity>
       <Spacer />
       <View style={styles.iconContainer}>
-        <Text color={info}>{count}</Text>
+        <Text size={14} color={info}>
+          {count}
+        </Text>
       </View>
     </View>
   );

@@ -9,7 +9,6 @@ import {
   Button,
   Column,
   Link,
-  TextInput,
   ListItem,
   Select,
 } from '../components/common';
@@ -46,7 +45,7 @@ const SingleProductScreen = ({navigation}) => {
             <TouchableOpacity activeOpacity={0.7}>
               <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
             </TouchableOpacity>
-            <Spacer />
+            <Spacer medium />
             <TouchableOpacity
               onPress={() => navigation.navigate('Search')}
               activeOpacity={0.7}>
@@ -81,7 +80,7 @@ const SingleProductScreen = ({navigation}) => {
               inActiveIcon={
                 <Icon
                   type="FontAwesome"
-                  size={24}
+                  size={20}
                   name="heart-o"
                   color={info}
                 />
@@ -89,7 +88,7 @@ const SingleProductScreen = ({navigation}) => {
               // activeIcon={
               //   <Icon
               //     type="FontAwesome"
-              //     size={24}
+              //     size={20}
               //     name="heart"
               //     color={danger}
               //   />
@@ -102,7 +101,7 @@ const SingleProductScreen = ({navigation}) => {
               inActiveIcon={
                 <Icon
                   type="Feather"
-                  // size={25}
+                  size={22}
                   name="message-circle"
                   color={info}
                 />
@@ -115,7 +114,7 @@ const SingleProductScreen = ({navigation}) => {
               inActiveIcon={
                 <Icon
                   type="FontAwesome"
-                  size={24}
+                  size={20}
                   name="bookmark-o"
                   color={info}
                 />
@@ -123,7 +122,7 @@ const SingleProductScreen = ({navigation}) => {
               // activeIcon={
               //   <Icon
               //     type="FontAwesome"
-              //     size={24}
+              //     size={20}
               //     name="bookmark"
               //     color={primaryColor}
               //   />
@@ -134,7 +133,7 @@ const SingleProductScreen = ({navigation}) => {
             <Spacer />
             <View style={styles.share}>
               <ActivityButton
-                inActiveIcon={<Icon name="md-share" color={info} />}
+                inActiveIcon={<Icon size={22} name="md-share" color={info} />}
                 onClick={() => setLikeCount(likeCount - 1)}
               />
             </View>
