@@ -1,11 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {Layout, Row, Icon, Spacer, Text} from '../../components/common';
+import {
+  Layout,
+  Row,
+  Icon,
+  Spacer,
+  Text,
+  FloatButton,
+} from '../../components/common';
 import Header from '../../components/Header';
 import {bag1, shoe1, female4, male1} from '../../assets/images';
-import {grayColor, info} from '../../components/common/variables';
+import {grayColor, info, primaryColor} from '../../components/common/variables';
 
 const VendorShopScreen = ({navigation}) => {
+  const [openChat, setOpenChat] = useState(false);
+
   return (
     <>
       <Header
@@ -56,6 +65,21 @@ const VendorShopScreen = ({navigation}) => {
           <Text h3>Vendor Shop Screen</Text>
         </View>
       </Layout>
+
+      <View style={styles.contact}>
+        <FloatButton
+          onClick={() => {
+            setOpenChat(!openChat);
+          }}
+          size="medium"
+          type="outline">
+          {openChat ? (
+            <Icon name="md-close" color={primaryColor} />
+          ) : (
+            <Icon name="ios-chatbubbles" color={primaryColor} />
+          )}
+        </FloatButton>
+      </View>
     </>
   );
 };
@@ -98,6 +122,11 @@ const styles = StyleSheet.create({
   shopDescription: {
     color: info,
     paddingLeft: 10,
+  },
+  contact: {
+    position: 'absolute',
+    right: 20,
+    bottom: 20,
   },
 });
 
