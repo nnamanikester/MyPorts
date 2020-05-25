@@ -7,21 +7,29 @@ import {
   Icon,
   ActivityButton,
   Button,
-  Row,
   Column,
-  Card,
-  FloatButton,
-  Divider,
+  Link,
   TextInput,
   ListItem,
+  Select,
 } from '../components/common';
 import Header from '../components/Header';
 import {bag1, shoe1, female4} from '../assets/images';
 import Swiper from 'react-native-swiper';
 import {grayColor, info, primaryColor} from '../components/common/variables';
 
+const colors = [
+  {label: 'Color', value: ''},
+  {label: 'Red', value: 'red'},
+  {label: 'Blue', value: 'blue'},
+  {label: 'Orange', value: 'orange'},
+  {label: 'Green', value: 'green'},
+];
+
 const SingleProductScreen = ({navigation}) => {
   const [likeCount, setLikeCount] = useState(123);
+  const [selectedColor, setSelectedColor] = useState('');
+
   return (
     <>
       <Header
@@ -183,19 +191,46 @@ const SingleProductScreen = ({navigation}) => {
             right={<Text>3 Days Max.</Text>}
           />
 
+          <Spacer />
+
+          <Link onClick={() => navigation.navigate('VendorShop')}>
+            Vendor Details
+          </Link>
+
           <Spacer medium />
 
           <View>
-            <TextInput placeholder="Color" />
+            <Select
+              type="dropdown"
+              selected={selectedColor}
+              onChange={(item) => {
+                setSelectedColor(item);
+              }}
+              data={colors}
+            />
             <Spacer />
             <View
               style={{flexDirection: 'row', width: '100%', paddingRight: 10}}>
               <Column size="6">
-                <TextInput placeholder="Size" />
+                <Select
+                  type="dropdown"
+                  selected={selectedColor}
+                  onChange={(item) => {
+                    setSelectedColor(item);
+                  }}
+                  data={colors}
+                />
               </Column>
               <Spacer />
               <Column size="6">
-                <TextInput placeholder="QTY" />
+                <Select
+                  type="dropdown"
+                  selected={selectedColor}
+                  onChange={(item) => {
+                    setSelectedColor(item);
+                  }}
+                  data={colors}
+                />
               </Column>
             </View>
           </View>
@@ -211,26 +246,6 @@ const SingleProductScreen = ({navigation}) => {
           </Button>
         </View>
       </Layout>
-      {/* <View style={styles.bottomCart}>
-        <View style={{flexDirection: 'row'}}>
-          <FloatButton type="ghost" shape="rounded" small>
-            <Icon color={primaryColor} name="ios-remove" />
-          </FloatButton>
-          <Spacer />
-          <FloatButton type="disabled">
-            <Text bold>23</Text>
-          </FloatButton>
-          <Spacer />
-          <FloatButton type="ghost" shape="rounded" small>
-            <Icon color={primaryColor} name="ios-add" />
-          </FloatButton>
-        </View>
-        <View style={{flex: 1, alignItems: 'flex-end'}}>
-          <FloatButton shape="rounded">
-            <Icon color="#fff" name="md-cart" />
-          </FloatButton>
-        </View>
-      </View> */}
     </>
   );
 };

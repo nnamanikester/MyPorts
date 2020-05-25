@@ -1,11 +1,16 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import {Layout, Text} from '../../components/common';
 
-const VendorShopScreen = () => {
+const VendorShopScreen = ({navigation}) => {
   return (
-    <View>
-      <Text>Vendor Shop Screen</Text>
-    </View>
+    <>
+      <Layout>
+        <View>
+          <Text>Vendor Shop Screen</Text>
+        </View>
+      </Layout>
+    </>
   );
 };
 

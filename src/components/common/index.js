@@ -13,3 +13,5 @@ export * from './ListItem';
 export * from './Card';
 export * from './Modal';
 export * from './ActivityButton';
+export * from './Link';
+export * from './Select';

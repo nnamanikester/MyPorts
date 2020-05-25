@@ -18,7 +18,6 @@ const NavigationFlows = ({isLogged, isSkipped, isStranger}) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     isLogged: state.auth.isLogged,
     isSkipped: state.auth.isSkipped,

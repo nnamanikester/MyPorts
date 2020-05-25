@@ -79,6 +79,8 @@ target 'MyPorts' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNCPicker', :path => '../node_modules/@react-native-community/picker'
+
   target 'MyPortsTests' do
     inherit! :complete
     # Pods for testing
