@@ -15,3 +15,4 @@ export * from './Modal';
 export * from './ActivityButton';
 export * from './Link';
 export * from './Select';
+export * from './Badge';

@@ -7,10 +7,16 @@ import {
   Spacer,
   Text,
   FloatButton,
+  Badge,
 } from '../../components/common';
 import Header from '../../components/Header';
 import {bag1, shoe1, female4, male1} from '../../assets/images';
-import {grayColor, info, primaryColor} from '../../components/common/variables';
+import {
+  grayColor,
+  info,
+  primaryColor,
+  success,
+} from '../../components/common/variables';
 
 const VendorShopScreen = ({navigation}) => {
   const [openChat, setOpenChat] = useState(false);
@@ -67,18 +73,25 @@ const VendorShopScreen = ({navigation}) => {
       </Layout>
 
       <View style={styles.contact}>
-        <FloatButton
-          onClick={() => {
-            setOpenChat(!openChat);
-          }}
-          size="medium"
-          type="outline">
-          {openChat ? (
-            <Icon name="md-close" color={primaryColor} />
-          ) : (
-            <Icon name="ios-chatbubbles" color={primaryColor} />
-          )}
-        </FloatButton>
+        <View style={styles.chatArena}>
+          <View style={styles.chatHeader}></View>
+          <View style={styles.chatBody}></View>
+        </View>
+        <View style={styles.contactButton}>
+          <FloatButton
+            onClick={() => {
+              setOpenChat(!openChat);
+            }}
+            size="medium"
+            type="outline">
+            {openChat ? (
+              <Icon name="md-close" color={primaryColor} />
+            ) : (
+              <Icon name="ios-chatbubbles" color={primaryColor} />
+            )}
+          </FloatButton>
+          <Badge color={success} />
+        </View>
       </View>
     </>
   );
@@ -128,6 +141,7 @@ const styles = StyleSheet.create({
     right: 20,
     bottom: 20,
   },
+  contactButton: {},
 });
 
 export default VendorShopScreen;
