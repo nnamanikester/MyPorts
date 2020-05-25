@@ -1,15 +1,15 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {Layout, Icon, Spacer, Text} from '../../components/common';
+import {Layout, Row, Icon, Spacer, Text} from '../../components/common';
 import Header from '../../components/Header';
 import {bag1, shoe1, female4, male1} from '../../assets/images';
-import {grayColor} from '../../components/common/variables';
+import {grayColor, info} from '../../components/common/variables';
 
 const VendorShopScreen = ({navigation}) => {
   return (
     <>
       <Header
-        title="Shop and Smile"
+        title="Tiana Rosser"
         headerLeft={
           <TouchableOpacity
             activeOpacity={0.7}
@@ -36,12 +36,24 @@ const VendorShopScreen = ({navigation}) => {
           <View>
             <Image style={styles.coverImage} source={female4} />
           </View>
-          <View style={styles.logoContainer}>
-            <Image style={styles.logo} source={male1} />
-          </View>
+          <Row>
+            <View>
+              <View style={styles.logoContainer}>
+                <Image style={styles.logo} source={male1} />
+              </View>
+            </View>
+            <View style={styles.shopDetails}>
+              <Spacer />
+              <Text style={styles.shopTitle}> Tiana Rosser</Text>
+              <Spacer />
+              <Text style={styles.shopDescription}>
+                I was part of something special. Eventually, you do.
+              </Text>
+            </View>
+          </Row>
         </View>
         <View style={styles.container}>
-          <Text>Vendor Shop Screen</Text>
+          <Text h3>Vendor Shop Screen</Text>
         </View>
       </Layout>
     </>
@@ -70,10 +82,22 @@ const styles = StyleSheet.create({
   logoContainer: {
     width: 80,
     height: 80,
-    marginLeft: 30,
+    marginHorizontal: 30,
     position: 'relative',
     top: -30,
     elevation: 5,
+  },
+  shopTitle: {
+    fontFamily: 'SFPD-regular',
+    fontSize: 20,
+  },
+  shopDetails: {
+    overflow: 'hidden',
+    width: '60%',
+  },
+  shopDescription: {
+    color: info,
+    paddingLeft: 10,
   },
 });
 
