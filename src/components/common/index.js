@@ -16,3 +16,5 @@ export * from './ActivityButton';
 export * from './Link';
 export * from './Select';
 export * from './Badge';
+export * from './ProgressBar';
+export * from './Option';

@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, ScrollView, StylesSheet, TouchableOpacity} from 'react-native';
+import PropTypes from 'prop-types';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import {
   Text,
   Badge,
@@ -8,21 +15,30 @@ import {
   TextInput,
   Column,
   FloatButton,
+  Option,
 } from './common';
-import {grayColor, primaryColor} from './common/variables';
+import {grayColor, primaryColor, success} from './common/variables';
 
-const ContactVendor = ({open: isOpen, onOpen, onClose}) => {
+const ContactVendor = ({
+  isOpen,
+  chatImage,
+  onChatOpen,
+  onChatClose,
+  onEndChat,
+  onChageText,
+  onSendMessage,
+}) => {
   return (
     <View
       style={{
         ...styles.contact,
-        width: openChat ? '100%' : 80,
-        height: openChat ? '100%' : 80,
+        width: isOpen ? '100%' : 80,
+        height: isOpen ? '100%' : 80,
       }}>
       {isOpen && (
         <View style={styles.chatArena}>
           <View style={styles.chatHeader}>
-            <Image style={styles.chatPic} source={male1} />
+            <Image style={styles.chatPic} source={chatImage} />
             <Spacer medium />
             <View style={{flex: 1}}>
               <Text style={styles.chatTitle}>Shop and Smile</Text>
@@ -30,7 +46,8 @@ const ContactVendor = ({open: isOpen, onOpen, onClose}) => {
                 I was part of something special...
               </Text>
             </View>
-            <TouchableOpacity onPress={onClose} activeOpacity={0.7}>
+            {/* <Option /> */}
+            <TouchableOpacity onPress={onChatClose} activeOpacity={0.7}>
               <Icon name="md-close" size={36} color="#fff" />
             </TouchableOpacity>
           </View>
@@ -90,7 +107,7 @@ const ContactVendor = ({open: isOpen, onOpen, onClose}) => {
         {!isOpen && (
           <>
             <Badge color={success} />
-            <FloatButton onClick={onOpen} size="medium" type="outline">
+            <FloatButton onClick={onChatOpen} size="medium" type="outline">
               <Icon name="ios-chatbubbles" color={primaryColor} />
             </FloatButton>
           </>
@@ -100,7 +117,7 @@ const ContactVendor = ({open: isOpen, onOpen, onClose}) => {
   );
 };
 
-const styles = StylesSheet.create({
+const styles = StyleSheet.create({
   contact: {
     position: 'absolute',
     justifyContent: 'center',
@@ -183,5 +200,12 @@ const styles = StylesSheet.create({
     marginBottom: 10,
   },
 });
+
+ContactVendor.propTypes = {};
+
+ContactVendor.defaultProps = {
+  onEndChat: () => {},
+  onOpen: () => {},
+};
 
 export default ContactVendor;

@@ -50,7 +50,7 @@ const Rating = ({onClick, s1, s2, s3, s4, s5}) => {
   } else if (averageRating >= 1.5) {
     stars.star1 = warning;
     stars.star2 = warning;
-  } else {
+  } else if (averageRating >= 0.1) {
     stars.star1 = warning;
   }
 
@@ -60,35 +60,35 @@ const Rating = ({onClick, s1, s2, s3, s4, s5}) => {
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon name="ios-star-outline" color={stars.star1} />
+        <Icon size={24} name="ios-star-outline" color={stars.star1} />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon name="ios-star-outline" color={stars.star2} />
+        <Icon size={24} name="ios-star-outline" color={stars.star2} />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon name="ios-star-outline" color={stars.star3} />
+        <Icon size={24} name="ios-star-outline" color={stars.star3} />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon name="ios-star-outline" color={stars.star4} />
+        <Icon size={24} name="ios-star-outline" color={stars.star4} />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon name="ios-star-outline" color={stars.star5} />
+        <Icon size={24} name="ios-star-outline" color={stars.star5} />
       </TouchableOpacity>
     </View>
   );
@@ -96,7 +96,7 @@ const Rating = ({onClick, s1, s2, s3, s4, s5}) => {
 
 const styles = StyleSheet.create({
   star: {
-    marginHorizontal: 5,
+    marginHorizontal: 2,
   },
   container: {
     flexDirection: 'row',

@@ -1,6 +1,15 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {Layout, Row, Icon, Spacer, Text} from '../../components/common';
+import {
+  Layout,
+  Row,
+  Icon,
+  Spacer,
+  Text,
+  Link,
+  Rating,
+  ProgressBar,
+} from '../../components/common';
 import Header from '../../components/Header';
 import ContactVendor from '../../components/ContactVendor';
 import {bag1, shoe1, female4, male1} from '../../assets/images';
@@ -54,6 +63,28 @@ const VendorShopScreen = ({navigation}) => {
               </Text>
             </View>
           </Row>
+          <Spacer />
+          <Row style={styles.contact}>
+            <View style={styles.contactLeft}>
+              <Icon name="ios-mail" color={primaryColor} />
+              <Spacer />
+              <Link>Email</Link>
+            </View>
+            <View style={styles.contactRight}>
+              <Icon name="ios-call" color={primaryColor} />
+              <Spacer />
+              <Link>Phone</Link>
+            </View>
+          </Row>
+          <View>
+            <View>
+              <Text size={36}>4.0</Text>
+              <Rating s3={1} />
+            </View>
+            <View>
+              <ProgressBar color="#f00" percent={10} />
+            </View>
+          </View>
         </View>
         <View style={styles.container}>
           <Text h3>Vendor Shop Screen</Text>
@@ -62,8 +93,9 @@ const VendorShopScreen = ({navigation}) => {
 
       <ContactVendor
         isOpen={openChat}
-        onOpen={() => setOpenChat(true)}
-        onClose={setOpenChat(false)}
+        onChatOpen={() => setOpenChat(true)}
+        onChatClose={() => setOpenChat(false)}
+        chatImage={male1}
       />
     </>
   );
@@ -107,6 +139,27 @@ const styles = StyleSheet.create({
   shopDescription: {
     color: info,
     paddingLeft: 10,
+  },
+  contact: {
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: grayColor,
+  },
+  contactLeft: {
+    flex: 1,
+    borderRightWidth: 1,
+    borderColor: grayColor,
+    padding: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  contactRight: {
+    flex: 1,
+    padding: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
 });
 
