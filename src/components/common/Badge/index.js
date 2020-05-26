@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: success,
     position: 'absolute',
     right: 7,
-    elevation: 4,
+    elevation: 5,
   },
 });
 
