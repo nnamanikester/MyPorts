@@ -76,13 +76,13 @@ const VendorShopScreen = ({navigation}) => {
               <Link>Phone</Link>
             </View>
           </Row>
-          <View>
+          <View style={styles.rating}>
             <View>
               <Text size={36}>4.0</Text>
               <Rating s3={1} />
             </View>
-            <View>
-              <ProgressBar color="#f00" percent={10} />
+            <View style={{width: '50%', padding: 10}}>
+              <ProgressBar label="5" color="#f00" percent={10} />
             </View>
           </View>
         </View>
@@ -160,6 +160,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+  },
+  rating: {
+    flexDirection: 'row',
+    width: '100%',
+    paddingHorizontal: 10,
   },
 });
 
