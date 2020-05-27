@@ -46,7 +46,6 @@ const ContactVendor = ({
                 I was part of something special...
               </Text>
             </View>
-            {/* <Option /> */}
             <TouchableOpacity onPress={onChatClose} activeOpacity={0.7}>
               <Icon name="md-close" size={36} color="#fff" />
             </TouchableOpacity>

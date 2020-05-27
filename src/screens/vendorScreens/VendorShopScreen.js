@@ -9,14 +9,24 @@ import {
   Link,
   Rating,
   ProgressBar,
+  Divider,
+  Button,
+  Modal,
+  TextInput,
 } from '../../components/common';
 import Header from '../../components/Header';
 import ContactVendor from '../../components/ContactVendor';
 import {bag1, shoe1, female4, male1} from '../../assets/images';
-import {grayColor, info, primaryColor} from '../../components/common/variables';
+import {
+  grayColor,
+  info,
+  primaryColor,
+  success,
+} from '../../components/common/variables';
 
 const VendorShopScreen = ({navigation}) => {
   const [openChat, setOpenChat] = useState(false);
+  const [openReview, setOpenReview] = useState(false);
 
   return (
     <>
@@ -76,14 +86,33 @@ const VendorShopScreen = ({navigation}) => {
               <Link>Phone</Link>
             </View>
           </Row>
-          <View style={styles.rating}>
-            <View>
+          <View style={styles.reviewSection}>
+            <View style={styles.ratingPoint}>
               <Text size={36}>4.0</Text>
               <Rating s3={1} />
+              <Text>
+                <Icon size={20} name="ios-person" /> 10,000 total
+              </Text>
             </View>
-            <View style={{width: '50%', padding: 10}}>
-              <ProgressBar label="5" color="#f00" percent={10} />
+            <View style={styles.ratingGraph}>
+              <ProgressBar label="5" color="#79c9a1" percent={92} />
+              <Spacer size={2} />
+              <ProgressBar label="4" color="#aed888" percent={73} />
+              <Spacer size={2} />
+              <ProgressBar label="3" color="#ffd935" percent={43} />
+              <Spacer size={2} />
+              <ProgressBar label="2" color="#ffb235" percent={55} />
+              <Spacer size={2} />
+              <ProgressBar label="1" color="#ff8c5a" percent={20} />
             </View>
+          </View>
+          <Divider />
+          <View style={{paddingHorizontal: 10}}>
+            <Button onClick={() => setOpenReview(true)}>
+              <Icon size={20} name="md-create" color="#fff" />
+              {'   '}
+              <Text color="#fff">Write a review</Text>
+            </Button>
           </View>
         </View>
         <View style={styles.container}>
@@ -97,6 +126,28 @@ const VendorShopScreen = ({navigation}) => {
         onChatClose={() => setOpenChat(false)}
         chatImage={male1}
       />
+      <Modal show={openReview}>
+        <Text heading>Write a Review</Text>
+        <Spacer medium />
+        <Rating />
+        <Spacer medium />
+        <View style={{width: '100%'}}>
+          <TextInput placeholder="Comment..." autoFocus multiline />
+        </View>
+        <Divider />
+        <Row style={{justifyContent: 'center'}}>
+          <Button
+            onClick={() => setOpenReview(false)}
+            size="small"
+            type="ghost">
+            Cancel
+          </Button>
+          <Spacer />
+          <Button onClick={() => setOpenReview(false)} size="small">
+            <Text color="#fff">Submit</Text>
+          </Button>
+        </Row>
+      </Modal>
     </>
   );
 };
@@ -161,10 +212,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
   },
-  rating: {
+  reviewSection: {
     flexDirection: 'row',
     width: '100%',
     paddingHorizontal: 10,
+    alignItems: 'center',
+  },
+  ratingPoint: {
+    marginRight: 20,
+    alignItems: 'center',
+  },
+  ratingGraph: {
+    width: '65%',
+    padding: 10,
   },
 });
 

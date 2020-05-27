@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   progressBar: {
     height: 20,
     width: '100%',
-    backgroundColor: grayColor,
+    // backgroundColor: grayColor,
   },
 });
 
