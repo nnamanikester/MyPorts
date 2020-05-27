@@ -13,10 +13,21 @@ import {
   Button,
   Modal,
   TextInput,
+  Column,
 } from '../../components/common';
 import Header from '../../components/Header';
+import Product from '../../components/Product';
 import ContactVendor from '../../components/ContactVendor';
-import {bag1, shoe1, female4, male1} from '../../assets/images';
+import SearchBar from '../../components/SearchBar';
+import {
+  bag1,
+  female2,
+  female3,
+  female1,
+  shoe1,
+  female4,
+  male1,
+} from '../../assets/images';
 import {
   grayColor,
   info,
@@ -27,6 +38,7 @@ import {
 const VendorShopScreen = ({navigation}) => {
   const [openChat, setOpenChat] = useState(false);
   const [openReview, setOpenReview] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
 
   return (
     <>
@@ -115,8 +127,85 @@ const VendorShopScreen = ({navigation}) => {
             </Button>
           </View>
         </View>
+        <Divider />
         <View style={styles.container}>
-          <Text h3>Vendor Shop Screen</Text>
+          <Row>
+            <Column size="10">
+              <Text style={styles.title}>Recent Products</Text>
+            </Column>
+            <Column size="2" style={{alignItems: 'flex-end'}}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => setShowSearchBar(!showSearchBar)}>
+                <Icon name={showSearchBar ? 'md-close' : 'ios-search'} />
+              </TouchableOpacity>
+            </Column>
+          </Row>
+
+          {showSearchBar && (
+            <View style={styles.searchBar}>
+              <SearchBar placeholder="What are you looking for?" />
+            </View>
+          )}
+          <Spacer />
+          <Row>
+            <Column size="6" style={{alignItems: 'center'}}>
+              <Product
+                quantity="89"
+                image={female1}
+                name="Water Proof Bag"
+                onClick={() => navigation.navigate('SingleProduct')}
+              />
+            </Column>
+            <Column style={{alignItems: 'center'}} size="6">
+              <Product
+                quantity="14"
+                image={male1}
+                name="Table Spoon"
+                onClick={() => navigation.navigate('SingleProduct')}
+              />
+            </Column>
+            <Column size="6" style={{alignItems: 'center'}}>
+              <Product
+                image={female2}
+                name="Female belt holder"
+                quantity="31"
+                onClick={() => navigation.navigate('SingleProduct')}
+              />
+            </Column>
+            <Column size="6" style={{alignItems: 'center'}}>
+              <Product
+                quantity="45"
+                image={female3}
+                name="Balenciaga Shoe"
+                onClick={() => navigation.navigate('SingleProduct')}
+              />
+            </Column>
+            <Column size="6" style={{alignItems: 'center'}}>
+              <Product
+                quantity="15"
+                image={shoe1}
+                name="Adidas Shoe"
+                onClick={() => navigation.navigate('SingleProduct')}
+              />
+            </Column>
+            <Column size="6" style={{alignItems: 'center'}}>
+              <Product
+                quantity="20"
+                image={female3}
+                name="Nike Shoe"
+                onClick={() => navigation.navigate('SingleProduct')}
+              />
+            </Column>
+            <Column size="6" style={{alignItems: 'center'}}>
+              <Product
+                quantity="8"
+                image={female3}
+                name="Gucci Bag"
+                onClick={() => navigation.navigate('SingleProduct')}
+              />
+            </Column>
+          </Row>
         </View>
       </Layout>
 
@@ -163,6 +252,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
     paddingBottom: 100,
+    paddingTop: 10,
   },
   logo: {
     width: '100%',
@@ -225,6 +315,10 @@ const styles = StyleSheet.create({
   ratingGraph: {
     width: '65%',
     padding: 10,
+  },
+  title: {
+    fontSize: 20,
+    fontFamily: 'SFPD-regular',
   },
 });
 

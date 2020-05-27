@@ -12,7 +12,7 @@ const Product = ({name, vendor, quantity, image, onClick}) => {
         </View>
         <View style={styles.content}>
           <Text style={styles.title}>{name}</Text>
-          <Text note>{vendor}</Text>
+          {vendor && <Text note>{vendor}</Text>}
           <Row>
             <Text style={styles.vendor}>Quantity:</Text>
             <Spacer />
