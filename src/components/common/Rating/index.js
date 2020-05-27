@@ -60,35 +60,35 @@ const Rating = ({onClick, s1, s2, s3, s4, s5}) => {
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon size={24} name="ios-star-outline" color={stars.star1} />
+        <Icon size={20} name="ios-star-outline" color={stars.star1} />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon size={24} name="ios-star-outline" color={stars.star2} />
+        <Icon size={20} name="ios-star-outline" color={stars.star2} />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon size={24} name="ios-star-outline" color={stars.star3} />
+        <Icon size={20} name="ios-star-outline" color={stars.star3} />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon size={24} name="ios-star-outline" color={stars.star4} />
+        <Icon size={20} name="ios-star-outline" color={stars.star4} />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon size={24} name="ios-star-outline" color={stars.star5} />
+        <Icon size={20} name="ios-star-outline" color={stars.star5} />
       </TouchableOpacity>
     </View>
   );

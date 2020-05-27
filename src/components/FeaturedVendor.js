@@ -27,7 +27,7 @@ const FeaturedVendor = ({name, location, image, onClick}) => {
 const styles = StyleSheet.create({
   container: {
     height: 200,
-    elevation: 5,
+    elevation: 2,
     width: 160,
     marginRight: 10,
     zIndex: 10,

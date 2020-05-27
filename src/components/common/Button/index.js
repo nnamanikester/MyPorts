@@ -51,7 +51,7 @@ const Button = ({
   switch (size) {
     case 'small':
       smallStyle = {
-        width: 150,
+        width: 140,
       };
       break;
     case 'large':

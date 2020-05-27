@@ -43,7 +43,7 @@ const VendorList = ({name, location, image, onClick}) => {
 const styles = StyleSheet.create({
   container: {
     height: 250,
-    elevation: 5,
+    elevation: 2,
   },
   imageContainer: {},
   image: {

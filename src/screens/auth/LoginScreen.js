@@ -37,7 +37,13 @@ const LoginScreen = ({logUserIn, skipAuthentication, navigation}) => {
             <View style={styles.inputContainer}>
               <Text heading>Email Address</Text>
               <Spacer />
-              <TextInput placeholder="user@email.com" autoFocus />
+              <TextInput
+                keyboardType="email-address"
+                placeholder="user@email.com"
+                autoFocus
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
             </View>
             <Spacer medium />
             <View style={styles.inputContainer}>

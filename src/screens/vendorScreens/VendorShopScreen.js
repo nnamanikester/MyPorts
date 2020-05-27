@@ -98,9 +98,10 @@ const VendorShopScreen = ({navigation}) => {
               <Link>Phone</Link>
             </View>
           </Row>
+          <Spacer />
           <View style={styles.reviewSection}>
             <View style={styles.ratingPoint}>
-              <Text size={36}>4.0</Text>
+              <Text size={60}>4.0</Text>
               <Rating s3={1} />
               <Text>
                 <Icon size={20} name="ios-person" /> 10,000 total
@@ -118,6 +119,7 @@ const VendorShopScreen = ({navigation}) => {
               <ProgressBar label="1" color="#ff8c5a" percent={20} />
             </View>
           </View>
+          <Spacer />
           <Divider />
           <View style={{paddingHorizontal: 10}}>
             <Button onClick={() => setOpenReview(true)}>
@@ -224,7 +226,7 @@ const VendorShopScreen = ({navigation}) => {
           <TextInput placeholder="Comment..." autoFocus multiline />
         </View>
         <Divider />
-        <Row style={{justifyContent: 'center'}}>
+        <Row style={{justifyContent: 'space-between'}}>
           <Button
             onClick={() => setOpenReview(false)}
             size="small"
