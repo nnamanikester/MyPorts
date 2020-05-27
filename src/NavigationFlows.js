@@ -12,7 +12,7 @@ const NavigationFlows = ({isLogged, isSkipped, isStranger}) => {
 
   return (
     <NavigationContainer>
-      {!isLogged ? <AuthFlow /> : <MainFlow />}
+      {isLogged || isSkipped ? <MainFlow /> : <AuthFlow />}
     </NavigationContainer>
   );
 };

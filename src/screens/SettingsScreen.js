@@ -54,7 +54,7 @@ const SettingsScreen = ({navigation}) => {
           </Text>
 
           <ListItem
-            onClick={() => setShowModal(true)}
+            onClick={() => navigation.navigate('Account')}
             body={<Text size={17}>Manage My Account</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
             left={<Icon color={info} name="ios-person" />}

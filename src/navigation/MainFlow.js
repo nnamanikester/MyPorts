@@ -12,6 +12,7 @@ import Orders from '../screens/OrdersScreen';
 import Search from '../screens/SearchScreen';
 import ProductsByCategory from '../screens/ProductsByCategoryScreen';
 import SingleProduct from '../screens/SingleProductScreen';
+import Account from '../screens/AccountScreen';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ const StackNavigation = () => {
       }}>
       <Stack.Screen name="Home" component={DraweNavigation} />
       <Stack.Screen name="Tab" component={TabNavigation} />
+      <Stack.Screen name="Account" component={Account} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="Shipping" component={Shipping} />
       <Stack.Screen name="Payment" component={Payment} />
