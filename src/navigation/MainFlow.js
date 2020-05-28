@@ -5,9 +5,10 @@ import DraweNavigation from './DrawerNavigation';
 import VendorShopSearch from '../screens/vendorScreens/VendorShopSearchScreen';
 import VendorShopReview from '../screens/vendorScreens/VendorShopReviewScreen';
 import VendorShop from '../screens/vendorScreens/VendorShopScreen';
-import Payment from '../screens/checkout/PaymentScreen';
-import Shipping from '../screens/checkout/ShippingScreen';
-import Cart from '../screens/checkout/CartScreen';
+import Payment from '../screens/checkoutScreens/PaymentScreen';
+import ShippingList from '../screens/checkoutScreens/ShippingListScreen';
+import AddShipping from '../screens/checkoutScreens/AddShippingScreen';
+import Cart from '../screens/checkoutScreens/CartScreen';
 import Orders from '../screens/OrdersScreen';
 import Search from '../screens/SearchScreen';
 import ProductsByCategory from '../screens/ProductsByCategoryScreen';
@@ -27,8 +28,9 @@ const StackNavigation = () => {
       <Stack.Screen name="Tab" component={TabNavigation} />
       <Stack.Screen name="Account" component={Account} />
       <Stack.Screen name="Cart" component={Cart} />
-      <Stack.Screen name="Shipping" component={Shipping} />
+      <Stack.Screen name="ShippingList" component={ShippingList} />
       <Stack.Screen name="Payment" component={Payment} />
+      <Stack.Screen name="AddShipping" component={AddShipping} />
       <Stack.Screen name="Orders" component={Orders} />
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="VendorShopSearch" component={VendorShopSearch} />

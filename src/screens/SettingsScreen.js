@@ -15,7 +15,6 @@ import {TouchableOpacity, StyleSheet, View} from 'react-native';
 import {primaryColor, grayColor, info} from '../components/common/variables';
 
 const SettingsScreen = ({navigation}) => {
-  const [hideHeader, setHideHeader] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -34,7 +33,6 @@ const SettingsScreen = ({navigation}) => {
         </Row>
       </Modal>
       <Header
-        hideHeader={hideHeader}
         title="Privacy and Settings"
         headerLeft={
           <TouchableOpacity
@@ -44,10 +42,7 @@ const SettingsScreen = ({navigation}) => {
           </TouchableOpacity>
         }
       />
-      <Layout
-        onScrollDown={() => setHideHeader(false)}
-        onScrollUp={() => setHideHeader(true)}
-        itemToFloat={1}>
+      <Layout>
         <View style={styles.container}>
           <Text color={primaryColor} style={styles.title}>
             Account
@@ -55,21 +50,67 @@ const SettingsScreen = ({navigation}) => {
 
           <ListItem
             onClick={() => navigation.navigate('Account')}
-            body={<Text size={17}>Manage My Account</Text>}
+            body={<Text size={17}>Account Settings</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
-            left={<Icon color={info} name="ios-person" />}
           />
+
+          <Spacer />
+
           <ListItem
             onClick={() => setShowModal(true)}
-            body={<Text size={17}>Privacy and Safety</Text>}
+            body={<Text size={17}>Notification Settings</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
-            left={<Icon color={info} type="Feather" name="shield" />}
           />
+
+          <Spacer />
+
           <ListItem
             onClick={() => setShowModal(true)}
-            body={<Text size={17}>My Balance</Text>}
+            body={<Text size={17}>Email Settings</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
-            left={<Icon color={info} name="ios-card" />}
+          />
+
+          <Spacer />
+
+          <ListItem
+            onClick={() => setShowModal(true)}
+            body={<Text size={17}>Manage Addresses</Text>}
+            right={<Icon size={20} color={info} name="ios-arrow-forward" />}
+          />
+
+          <Spacer />
+
+          <ListItem
+            onClick={() => setShowModal(true)}
+            body={<Text size={17}>Manage Payments</Text>}
+            right={<Icon size={20} color={info} name="ios-arrow-forward" />}
+          />
+
+          <Spacer medium />
+
+          <Text color={primaryColor} style={styles.title}>
+            Support
+          </Text>
+          <ListItem
+            onClick={() => setShowModal(true)}
+            body={<Text size={17}>Legal and Terms</Text>}
+            right={<Icon size={20} color={info} name="ios-arrow-forward" />}
+          />
+
+          <Spacer />
+
+          <ListItem
+            onClick={() => setShowModal(true)}
+            body={<Text size={17}>Help</Text>}
+            right={<Icon size={20} color={info} name="ios-arrow-forward" />}
+          />
+
+          <Spacer />
+
+          <ListItem
+            onClick={() => setShowModal(true)}
+            body={<Text size={17}>FAQ</Text>}
+            right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
 
           <Spacer medium />
@@ -79,41 +120,19 @@ const SettingsScreen = ({navigation}) => {
           </Text>
           <ListItem
             onClick={() => setShowModal(true)}
-            body={<Text size={17}>Support</Text>}
-            right={<Icon size={20} color={info} name="ios-arrow-forward" />}
-          />
-          <ListItem
-            onClick={() => setShowModal(true)}
-            body={<Text size={17}>Help</Text>}
-            right={<Icon size={20} color={info} name="ios-arrow-forward" />}
-          />
-          <ListItem
-            onClick={() => setShowModal(true)}
-            body={<Text size={17}>FAQ</Text>}
+            body={<Text size={17}>Data Control</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
 
-          <Spacer medium />
-
-          <Text color={primaryColor} style={styles.title}>
-            Support
-          </Text>
+          <Spacer />
 
           <ListItem
             onClick={() => setShowModal(true)}
-            body={<Text size={17}>Support</Text>}
-            right={<Icon size={20} color={info} name="ios-arrow-forward" />}
+            body={<Text size={17}>Logout</Text>}
+            right={<Icon size={20} color={info} name="ios-power" />}
           />
-          <ListItem
-            onClick={() => setShowModal(true)}
-            body={<Text size={17}>Help</Text>}
-            right={<Icon size={20} color={info} name="ios-arrow-forward" />}
-          />
-          <ListItem
-            onClick={() => setShowModal(true)}
-            body={<Text size={17}>FAQ</Text>}
-            right={<Icon size={20} color={info} name="ios-arrow-forward" />}
-          />
+
+          <Spacer large />
           <Spacer large />
         </View>
       </Layout>
