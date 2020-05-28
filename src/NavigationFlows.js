@@ -4,6 +4,10 @@ import {connect} from 'react-redux';
 import MainFlow from './navigation/MainFlow';
 import AuthFlow from './navigation/AuthFlow';
 import WelcomeScreen from './screens/WelcomeScreen';
+import {StyleSheet, Platform, StatusBar, View} from 'react-native';
+import {primaryColor} from './components/common/variables';
+
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 
 const NavigationFlows = ({isLogged, isSkipped, isStranger}) => {
   if (isStranger) {
@@ -11,11 +15,26 @@ const NavigationFlows = ({isLogged, isSkipped, isStranger}) => {
   }
 
   return (
-    <NavigationContainer>
-      {isLogged || isSkipped ? <MainFlow /> : <AuthFlow />}
-    </NavigationContainer>
+    <>
+      <View style={styles.statusBar}>
+        <StatusBar
+          translucent
+          backgroundColor={primaryColor}
+          barStyle="light-content"
+        />
+      </View>
+      <NavigationContainer>
+        {isLogged || isSkipped ? <MainFlow /> : <AuthFlow />}
+      </NavigationContainer>
+    </>
   );
 };
+
+const styles = StyleSheet.create({
+  statusBar: {
+    height: STATUSBAR_HEIGHT,
+  },
+});
 
 const mapStateToProps = (state) => {
   return {

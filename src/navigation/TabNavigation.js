@@ -4,7 +4,7 @@ import CategoriesScreen from '../screens/CategoriesScreen';
 import VendorsListScreen from '../screens/vendorScreens/VendorsListScreen';
 import ProductsScreen from '../screens/ProductsScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import SettingsScreen from '../screens/SettingsScreens/SettingsScreen';
 import {Icon, Text} from '../components/common';
 
 const Tab = createBottomTabNavigator();

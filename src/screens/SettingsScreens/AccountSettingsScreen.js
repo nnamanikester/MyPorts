@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {logUserOut} from '../redux/actions/AuthActions';
-import {Layout, Button, Text, Spacer} from '../components/common';
+import {logUserOut} from '../../redux/actions/AuthActions';
+import {Layout, Button, Text, Spacer} from '../../components/common';
 import {SafeAreaView} from 'react-native';
 
 const AccountScreen = ({navigation, logUserOut}) => {

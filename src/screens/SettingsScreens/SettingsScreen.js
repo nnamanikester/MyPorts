@@ -9,12 +9,13 @@ import {
   ListItem,
   Button,
   Row,
-} from '../components/common';
-import Header from '../components/Header';
+} from '../../components/common';
+import Header from '../../components/Header';
 import {TouchableOpacity, StyleSheet, View} from 'react-native';
-import {primaryColor, grayColor, info} from '../components/common/variables';
+import {primaryColor, info} from '../../components/common/variables';
+import {logUserOut} from '../../redux/actions/AuthActions';
 
-const SettingsScreen = ({navigation}) => {
+const SettingsScreen = ({navigation, logUserOut}) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -49,7 +50,7 @@ const SettingsScreen = ({navigation}) => {
           </Text>
 
           <ListItem
-            onClick={() => navigation.navigate('Account')}
+            onClick={() => navigation.navigate('AccountSettings')}
             body={<Text size={17}>Account Settings</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
@@ -127,7 +128,7 @@ const SettingsScreen = ({navigation}) => {
           <Spacer />
 
           <ListItem
-            onClick={() => setShowModal(true)}
+            onClick={() => logUserOut()}
             body={<Text size={17}>Logout</Text>}
             right={<Icon size={20} color={info} name="ios-power" />}
           />
@@ -151,4 +152,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SettingsScreen;
+export default connect(null, {logUserOut})(SettingsScreen);
