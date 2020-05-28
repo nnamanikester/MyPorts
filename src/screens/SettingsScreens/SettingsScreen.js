@@ -96,7 +96,7 @@ const SettingsScreen = ({navigation, logUserOut}) => {
           <Spacer />
 
           <ListItem
-            onClick={() => setShowModal(true)}
+            onClick={() => navigation.navigate('LegalAndTerms')}
             body={<Text size={17}>Legal and Terms</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
