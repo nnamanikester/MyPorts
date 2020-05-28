@@ -11,7 +11,11 @@ import Orders from '../screens/OrdersScreen';
 import Search from '../screens/SearchScreen';
 import ProductsByCategory from '../screens/ProductsByCategoryScreen';
 import SingleProduct from '../screens/SingleProductScreen';
+
+// Settings Screens
 import AccountSettings from '../screens/SettingsScreens/AccountSettingsScreen';
+import NotificationSettings from '../screens/SettingsScreens/NotificationSettingsScreen';
+import EmailSettings from '../screens/SettingsScreens/EmailSettingsScreen';
 
 const Stack = createStackNavigator();
 
@@ -24,7 +28,6 @@ const StackNavigation = () => {
       }}>
       <Stack.Screen name="Home" component={DraweNavigation} />
       <Stack.Screen name="Tab" component={TabNavigation} />
-      <Stack.Screen name="AccountSettings" component={AccountSettings} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="Payment" component={Payment} />
       <Stack.Screen name="Orders" component={Orders} />
@@ -34,6 +37,14 @@ const StackNavigation = () => {
       <Stack.Screen name="VendorShop" component={VendorShop} />
       <Stack.Screen name="ProductsByCategory" component={ProductsByCategory} />
       <Stack.Screen name="SingleProduct" component={SingleProduct} />
+
+      {/* Settings Screens */}
+      <Stack.Screen name="AccountSettings" component={AccountSettings} />
+      <Stack.Screen name="EmailSettings" component={EmailSettings} />
+      <Stack.Screen
+        name="NotificationSettings"
+        component={NotificationSettings}
+      />
     </Stack.Navigator>
   );
 };

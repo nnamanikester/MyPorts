@@ -58,7 +58,7 @@ const SettingsScreen = ({navigation, logUserOut}) => {
           <Spacer />
 
           <ListItem
-            onClick={() => setShowModal(true)}
+            onClick={() => navigation.navigate('NotificationSettings')}
             body={<Text size={17}>Notification Settings</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
@@ -66,7 +66,7 @@ const SettingsScreen = ({navigation, logUserOut}) => {
           <Spacer />
 
           <ListItem
-            onClick={() => setShowModal(true)}
+            onClick={() => navigation.navigate('EmailSettings')}
             body={<Text size={17}>Email Settings</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
@@ -92,6 +92,9 @@ const SettingsScreen = ({navigation, logUserOut}) => {
           <Text color={primaryColor} style={styles.title}>
             Support
           </Text>
+
+          <Spacer />
+
           <ListItem
             onClick={() => setShowModal(true)}
             body={<Text size={17}>Legal and Terms</Text>}

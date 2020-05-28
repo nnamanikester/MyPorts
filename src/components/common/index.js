@@ -17,4 +17,5 @@ export * from './Link';
 export * from './Select';
 export * from './Badge';
 export * from './ProgressBar';
+export * from './Switch';
 export * from './Option';
