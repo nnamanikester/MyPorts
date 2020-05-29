@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {Layout, Icon} from '../../components/common';
+import {Layout, Icon, ListItem} from '../../components/common';
 import Header from '../../components/Header';
 
 const AddAddressScreen = ({navigation}) => {
@@ -15,19 +15,19 @@ const AddAddressScreen = ({navigation}) => {
             <Icon name="ios-arrow-back" color="#fff" />
           </TouchableOpacity>
         }
-        headerRight={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.navigate('AddAddress')}>
-            <Icon name="md-add" color="#fff" />
-          </TouchableOpacity>
-        }
       />
-      <Layout></Layout>
+      <Layout>
+        <View style={styles.container}></View>
+      </Layout>
     </>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 10,
+    paddingTop: 20,
+  },
+});
 
 export default AddAddressScreen;
