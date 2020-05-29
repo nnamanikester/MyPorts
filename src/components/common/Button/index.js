@@ -73,6 +73,7 @@ const Button = ({
         ...styles.button,
         ...smallStyle,
         ...typeStyle,
+        ...style,
       }}
       activeOpacity={disabled}>
       {iconLeft ? (
