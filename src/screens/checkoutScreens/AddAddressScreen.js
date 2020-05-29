@@ -3,11 +3,11 @@ import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Layout, Icon} from '../../components/common';
 import Header from '../../components/Header';
 
-const ManageAddressesScreen = ({navigation}) => {
+const AddAddressScreen = ({navigation}) => {
   return (
     <>
       <Header
-        title="Manage Addresses"
+        title="Add New Address"
         headerLeft={
           <TouchableOpacity
             activeOpacity={0.7}
@@ -30,4 +30,4 @@ const ManageAddressesScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({});
 
-export default ManageAddressesScreen;
+export default AddAddressScreen;
