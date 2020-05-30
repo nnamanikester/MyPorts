@@ -82,8 +82,8 @@ const SettingsScreen = ({navigation, logUserOut}) => {
           <Spacer />
 
           <ListItem
-            onClick={() => setShowModal(true)}
-            body={<Text size={17}>Manage Payments</Text>}
+            onClick={() => navigation.navigate('ManageWallets')}
+            body={<Text size={17}>Manage Wallet</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
 

@@ -23,6 +23,7 @@ import NotificationSettings from '../screens/SettingsScreens/NotificationSetting
 import EmailSettings from '../screens/SettingsScreens/EmailSettingsScreen';
 import LegalAndTerms from '../screens/SettingsScreens/LegalAndTermsScreen';
 import ManageAddresses from '../screens/SettingsScreens/ManageAdressesScreen';
+import ManageWallets from '../screens/SettingsScreens/ManageWalletsScreen';
 
 // Pages Screen
 import PickupPolicy from '../screens/pages/PickupPolicyScreen';
@@ -69,6 +70,7 @@ const StackNavigation = () => {
       <Stack.Screen name="EmailSettings" component={EmailSettings} />
       <Stack.Screen name="LegalAndTerms" component={LegalAndTerms} />
       <Stack.Screen name="ManageAddresses" component={ManageAddresses} />
+      <Stack.Screen name="ManageWallets" component={ManageWallets} />
       <Stack.Screen
         name="NotificationSettings"
         component={NotificationSettings}
