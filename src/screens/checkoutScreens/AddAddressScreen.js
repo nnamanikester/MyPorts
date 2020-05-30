@@ -91,10 +91,6 @@ const AddAddressScreen = ({navigation}) => {
               <Button>
                 <Text color="#fff">Save</Text>
               </Button>
-              <Spacer />
-              <Button type="ghost">
-                <Text>Delete</Text>
-              </Button>
             </Row>
           </View>
 

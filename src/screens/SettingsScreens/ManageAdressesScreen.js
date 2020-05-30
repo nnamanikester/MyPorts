@@ -59,6 +59,7 @@ const ManageAddressesScreen = ({navigation}) => {
             }
           />
           <ListItem
+            onClick={() => navigation.navigate('EditAddress')}
             left={<Icon name="ios-pin" color={info} />}
             body={
               <>
@@ -79,6 +80,7 @@ const ManageAddressesScreen = ({navigation}) => {
             }
           />
           <ListItem
+            onClick={() => navigation.navigate('EditAddress')}
             left={<Icon name="ios-pin" color={info} />}
             body={
               <>
