@@ -10,10 +10,9 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigation = () => {
   return (
     <Drawer.Navigator
-      lazy={false}
       initialRouteName="Home"
       drawerType="back"
-      drawerContent={DrawerContent}
+      drawerContent={(props) => <DrawerContent {...props} />}
       drawerStyle={{
         width: '80%',
       }}>

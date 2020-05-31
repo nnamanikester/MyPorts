@@ -6,6 +6,7 @@ import Orders from '../screens/OrdersScreen';
 import Search from '../screens/SearchScreen';
 import ProductsByCategory from '../screens/ProductsByCategoryScreen';
 import SingleProduct from '../screens/SingleProductScreen';
+import Profile from '../screens/ProfileScreen';
 
 // Vendor Screens
 import VendorShopSearch from '../screens/vendorScreens/VendorShopSearchScreen';
@@ -55,6 +56,7 @@ const StackNavigation = () => {
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="ProductsByCategory" component={ProductsByCategory} />
       <Stack.Screen name="SingleProduct" component={SingleProduct} />
+      <Stack.Screen name="Profile" component={Profile} />
 
       {/* Vendor Screens */}
       <Stack.Screen name="VendorShopSearch" component={VendorShopSearch} />
