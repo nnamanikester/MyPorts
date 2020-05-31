@@ -3,7 +3,7 @@ import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {grayColor} from '../variables';
 
-const ListItem = ({children, left, right, body, marked, onClick}) => {
+const ListItem = ({children, left, right, body, marked, onClick, style}) => {
   let markedStyle = {};
 
   if (marked) {
@@ -15,6 +15,7 @@ const ListItem = ({children, left, right, body, marked, onClick}) => {
 
   return (
     <TouchableOpacity
+      style={style}
       onPress={onClick}
       activeOpacity={0.7}
       style={{...styles.container, ...markedStyle}}>
@@ -52,6 +53,7 @@ ListItem.propTypes = {
   left: PropTypes.element,
   right: PropTypes.element,
   body: PropTypes.element,
+  style: PropTypes.object,
 };
 
 ListItem.defaultProps = {};

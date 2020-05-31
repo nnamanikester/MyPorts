@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, Linking} from 'react-native';
 import {Text} from '../Text';
 import {primaryColor} from '../variables';
 
-const Link = ({children, onClick, style, color}) => {
+const Link = ({children, to, onClick, style, color}) => {
   return (
-    <TouchableOpacity style={style} onPress={onClick} activeOpacity={0.7}>
+    <TouchableOpacity
+      style={style}
+      onPress={to ? Linking.openURL(to) : onClick}
+      activeOpacity={0.7}>
       <Text color={color || primaryColor}>{children}</Text>
     </TouchableOpacity>
   );
@@ -25,6 +28,14 @@ Link.propTypes = {
    * Accepts a string. Given a color values, changes the link color to the given value.
    */
   color: PropTypes.string,
+  /**
+   * Expects a url with the correct protocol; 'http' or 'https'
+   */
+  to: PropTypes.string,
+};
+
+Link.defaultProps = {
+  onClick: () => {},
 };
 
 export {Link};
