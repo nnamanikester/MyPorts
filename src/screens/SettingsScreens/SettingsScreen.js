@@ -104,7 +104,7 @@ const SettingsScreen = ({navigation, logUserOut}) => {
           <Spacer />
 
           <ListItem
-            onClick={() => setShowModal(true)}
+            onClick={() => navigation.navigate('Help')}
             body={<Text size={17}>Help</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
@@ -112,7 +112,7 @@ const SettingsScreen = ({navigation, logUserOut}) => {
           <Spacer />
 
           <ListItem
-            onClick={() => setShowModal(true)}
+            onClick={() => navigation.navigate('FAQ')}
             body={<Text size={17}>FAQ</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
