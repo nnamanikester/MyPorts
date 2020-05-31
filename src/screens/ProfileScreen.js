@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Text, Layout} from '../components/common';
+import {Text, Layout, Loading} from '../components/common';
+import {primaryColor} from '../components/common/variables';
 
 const ProfileScreen = () => {
   return (
@@ -8,6 +9,7 @@ const ProfileScreen = () => {
       <Layout>
         <Text>Profile Screen</Text>
       </Layout>
+      <Loading show />
     </>
   );
 };
