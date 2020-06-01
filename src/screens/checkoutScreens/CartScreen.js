@@ -1,12 +1,15 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {Text, Layout} from '../../components/common';
 
 const CartScreen = () => {
   return (
-    <View>
-      <Text>Cart Screen</Text>
-    </View>
+    <>
+      <Layout></Layout>
+    </>
   );
 };
+
+const styles = StyleSheet.create({});
 
 export default CartScreen;
