@@ -11,6 +11,9 @@ const Loading = ({
   style,
   color,
 }) => {
+  if (!show) {
+    return null;
+  }
   return (
     <View style={styles.container}>
       <Spinner

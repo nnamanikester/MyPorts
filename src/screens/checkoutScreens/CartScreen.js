@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {
   Text,
@@ -10,6 +10,7 @@ import {
   Row,
   Button,
   Divider,
+  Loading,
 } from '../../components/common';
 import Header from '../../components/Header';
 import Avater from '../../components/Avatar';
@@ -17,8 +18,19 @@ import {female4, female1, female2} from '../../assets/images';
 import {info, primaryColor} from '../../components/common/variables';
 
 const CartScreen = ({navigation}) => {
+  const [loading, setLoading] = useState(false);
+
+  const goToCheckout = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigation.navigate('Checkout');
+    }, 3000);
+  };
+
   return (
     <>
+      <Loading show={loading} />
       <Header
         title="Shopping Bag"
         headerLeft={
@@ -165,7 +177,7 @@ const CartScreen = ({navigation}) => {
 
           <Spacer large />
 
-          <Button onClick={() => navigation.navigate('Checkout')}>
+          <Button onClick={() => goToCheckout()}>
             <Text color="#fff">Place Order</Text>
           </Button>
 
