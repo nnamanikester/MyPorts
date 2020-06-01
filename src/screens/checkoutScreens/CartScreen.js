@@ -14,7 +14,7 @@ import {
 import Header from '../../components/Header';
 import Avater from '../../components/Avatar';
 import {female4, female1, female2} from '../../assets/images';
-import {info} from '../../components/common/variables';
+import {info, primaryColor} from '../../components/common/variables';
 
 const CartScreen = ({navigation}) => {
   return (
@@ -24,8 +24,8 @@ const CartScreen = ({navigation}) => {
         headerLeft={
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={() => navigation.openDrawer()}>
-            <Icon name="ios-menu" color="#fff" />
+            onPress={() => navigation.goBack()}>
+            <Icon name="md-close" color="#fff" />
           </TouchableOpacity>
         }
         headerRight={
@@ -41,6 +41,7 @@ const CartScreen = ({navigation}) => {
       <Layout>
         <Spacer medium />
         <ListItem
+          onClick={() => navigation.navigate('SingleProduct')}
           left={<Avater src={female4} size={100} />}
           body={
             <>
@@ -57,9 +58,18 @@ const CartScreen = ({navigation}) => {
               </Text>
             </>
           }
-          right={<Text>NGN 23,500</Text>}
+          right={
+            <View style={{alignItems: 'flex-end'}}>
+              <TouchableOpacity activeOpacity={0.7}>
+                <Icon name="md-close" />
+              </TouchableOpacity>
+              <Spacer />
+              <Text>NGN 15,400</Text>
+            </View>
+          }
         />
         <ListItem
+          onClick={() => navigation.navigate('SingleProduct')}
           left={<Avater src={female2} size={100} />}
           body={
             <>
@@ -76,9 +86,18 @@ const CartScreen = ({navigation}) => {
               </Text>
             </>
           }
-          right={<Text>NGN 23,500</Text>}
+          right={
+            <View style={{alignItems: 'flex-end'}}>
+              <TouchableOpacity activeOpacity={0.7}>
+                <Icon name="md-close" />
+              </TouchableOpacity>
+              <Spacer />
+              <Text>NGN 2,300</Text>
+            </View>
+          }
         />
         <ListItem
+          onClick={() => navigation.navigate('SingleProduct')}
           left={<Avater src={female1} size={100} />}
           body={
             <>
@@ -95,7 +114,15 @@ const CartScreen = ({navigation}) => {
               </Text>
             </>
           }
-          right={<Text>NGN 23,500</Text>}
+          right={
+            <View style={{alignItems: 'flex-end'}}>
+              <TouchableOpacity activeOpacity={0.7}>
+                <Icon name="md-close" />
+              </TouchableOpacity>
+              <Spacer />
+              <Text>NGN 23,500</Text>
+            </View>
+          }
         />
 
         <Spacer medium />
@@ -122,6 +149,13 @@ const CartScreen = ({navigation}) => {
           </Row>
 
           <Spacer />
+
+          <Row style={{justifyContent: 'space-between'}}>
+            <Text heading>Discount: </Text>
+            <Text color={primaryColor}>- NGN 1,300</Text>
+          </Row>
+
+          <Spacer />
           <Divider />
 
           <Row style={{justifyContent: 'space-between'}}>
@@ -131,7 +165,7 @@ const CartScreen = ({navigation}) => {
 
           <Spacer large />
 
-          <Button>
+          <Button onClick={() => navigation.navigate('Checkout')}>
             <Text color="#fff">Place Order</Text>
           </Button>
 
