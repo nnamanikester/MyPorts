@@ -7,15 +7,12 @@ import {
   ListItem,
   Spacer,
   TextInput,
-  Row,
   Loading,
   Button,
   Divider,
   Link,
 } from '../../components/common';
 import Header from '../../components/Header';
-import Avater from '../../components/Avatar';
-import {female4, female1, female2} from '../../assets/images';
 import {info, primaryColor} from '../../components/common/variables';
 
 const CheckoutScreen = ({navigation}) => {
