@@ -84,7 +84,6 @@ const NotificationsScreen = ({navigation}) => {
   return (
     <>
       <Header
-        hideHeader={hideHeader}
         title="Notifications"
         headerLeft={
           <TouchableOpacity
@@ -95,7 +94,9 @@ const NotificationsScreen = ({navigation}) => {
         }
         headerRight={
           <>
-            <TouchableOpacity activeOpacity={0.7}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Cart')}
+              activeOpacity={0.7}>
               <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
             </TouchableOpacity>
             <Spacer />
@@ -108,9 +109,7 @@ const NotificationsScreen = ({navigation}) => {
         }
       />
 
-      <Layout
-        onScrollDown={() => setHideHeader(false)}
-        onScrollUp={() => setHideHeader(true)}>
+      <Layout>
         <View style={styles.container}>
           <Text style={styles.title}>Offers</Text>
 

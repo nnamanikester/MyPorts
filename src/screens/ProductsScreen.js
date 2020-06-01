@@ -30,7 +30,6 @@ const ProductsScreen = ({navigation}) => {
   return (
     <>
       <Header
-        hideHeader={hideHeader}
         title="Shop"
         headerLeft={
           <TouchableOpacity
@@ -41,7 +40,9 @@ const ProductsScreen = ({navigation}) => {
         }
         headerRight={
           <>
-            <TouchableOpacity activeOpacity={0.7}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Cart')}
+              activeOpacity={0.7}>
               <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
             </TouchableOpacity>
             <Spacer medium />

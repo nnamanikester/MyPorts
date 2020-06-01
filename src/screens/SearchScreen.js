@@ -19,7 +19,6 @@ const SearchScreen = ({navigation}) => {
   return (
     <>
       <Header
-        hideHeader={hideHeader}
         title="Search"
         headerLeft={
           <TouchableOpacity
@@ -30,16 +29,15 @@ const SearchScreen = ({navigation}) => {
         }
         headerRight={
           <>
-            <TouchableOpacity activeOpacity={0.7}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Cart')}
+              activeOpacity={0.7}>
               <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
             </TouchableOpacity>
           </>
         }
       />
-      <Layout
-        onScrollDown={() => setHideHeader(false)}
-        onScrollUp={() => setHideHeader(true)}
-        itemToFloat={1}>
+      <Layout itemToFloat={1}>
         <View style={styles.searchBar}>
           <SearchBar placeholder="What are you looking for?" />
         </View>

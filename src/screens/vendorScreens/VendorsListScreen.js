@@ -23,7 +23,6 @@ const VendorListScreen = ({navigation}) => {
   return (
     <>
       <Header
-        hideHeader={hideHeader}
         title="Vendors"
         headerLeft={
           <TouchableOpacity
@@ -34,7 +33,9 @@ const VendorListScreen = ({navigation}) => {
         }
         headerRight={
           <>
-            <TouchableOpacity activeOpacity={0.7}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Cart')}
+              activeOpacity={0.7}>
               <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
             </TouchableOpacity>
             <Spacer medium />
@@ -46,9 +47,7 @@ const VendorListScreen = ({navigation}) => {
           </>
         }
       />
-      <Layout
-        onScrollDown={() => setHideHeader(false)}
-        onScrollUp={() => setHideHeader(true)}>
+      <Layout>
         <View style={styles.container}>
           <Text style={styles.title}>Featured Vendors</Text>
         </View>

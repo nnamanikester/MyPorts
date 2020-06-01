@@ -30,7 +30,6 @@ const ProductsByCategoryScreen = ({navigation}) => {
   return (
     <>
       <Header
-        hideHeader={hideHeader}
         title="Men"
         headerLeft={
           <TouchableOpacity
@@ -41,7 +40,9 @@ const ProductsByCategoryScreen = ({navigation}) => {
         }
         headerRight={
           <>
-            <TouchableOpacity activeOpacity={0.7}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Cart')}
+              activeOpacity={0.7}>
               <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
             </TouchableOpacity>
             <Spacer medium />
@@ -53,9 +54,7 @@ const ProductsByCategoryScreen = ({navigation}) => {
           </>
         }
       />
-      <Layout
-        onScrollDown={() => setHideHeader(false)}
-        onScrollUp={() => setHideHeader(true)}>
+      <Layout>
         <View style={styles.container}>
           <View style={{paddingLeft: 15}}>
             <Text style={styles.title}>Men</Text>
