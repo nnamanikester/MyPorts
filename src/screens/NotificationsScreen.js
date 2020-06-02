@@ -99,7 +99,7 @@ const NotificationsScreen = ({navigation}) => {
               activeOpacity={0.7}>
               <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
             </TouchableOpacity>
-            <Spacer />
+            <Spacer medium />
             <TouchableOpacity
               onPress={() => navigation.navigate('Search')}
               activeOpacity={0.7}>

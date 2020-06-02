@@ -10,16 +10,22 @@ const FeaturedProduct = ({name, vendor, quantity, image, onClick}) => {
         <View style={styles.imageContanier}>
           <Image style={styles.image} source={image} />
         </View>
-        <View style={styles.content}>
-          <Text style={styles.title}>{name}</Text>
-          <Text note>{vendor}</Text>
-          <Row>
-            <Text style={styles.vendor}>Quantity:</Text>
-            <Spacer />
-            <Text style={styles.vendor}>{quantity}</Text>
-          </Row>
-          <Row></Row>
-        </View>
+        {name && (
+          <View style={styles.content}>
+            <Text style={styles.title}>{name}</Text>
+            <Text note>{vendor}</Text>
+            <Row>
+              {quantity && (
+                <>
+                  <Text style={styles.vendor}>Quantity:</Text>
+                  <Spacer />
+                  <Text style={styles.vendor}>{quantity}</Text>
+                </>
+              )}
+            </Row>
+            <Row></Row>
+          </View>
+        )}
       </TouchableOpacity>
     </View>
   );

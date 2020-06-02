@@ -1,11 +1,11 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import CategoriesScreen from '../screens/CategoriesScreen';
-import VendorsListScreen from '../screens/vendorScreens/VendorsListScreen';
-import ProductsScreen from '../screens/ProductsScreen';
-import NotificationsScreen from '../screens/NotificationsScreen';
-import SettingsScreen from '../screens/SettingsScreens/SettingsScreen';
-import {Icon, Text} from '../components/common';
+import CategoriesScreen from '../../screens/CategoriesScreen';
+import VendorsListScreen from '../../screens/vendorScreens/VendorsListScreen';
+import ProductsScreen from '../../screens/ProductsScreen';
+import NotificationsScreen from '../../screens/NotificationsScreen';
+import SettingsScreen from '../../screens/SettingsScreens/SettingsScreen';
+import {Icon, Text} from '../../components/common';
 
 const Tab = createBottomTabNavigator();
 
