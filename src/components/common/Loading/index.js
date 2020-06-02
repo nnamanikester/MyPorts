@@ -35,8 +35,9 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute',
     width: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: '#fffe',
     zIndex: 99999999999,
+    elevation: 15,
   },
   spinner: {},
 });
