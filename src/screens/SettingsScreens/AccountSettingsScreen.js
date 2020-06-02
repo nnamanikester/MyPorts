@@ -33,7 +33,7 @@ const AccountScreen = ({navigation, logUserOut}) => {
       <Layout>
         <View style={styles.container}>
           <ListItem
-            onClick={() => navigation.navigate('AccountSettings')}
+            onClick={() => navigation.navigate('UpdateProfile')}
             body={<Text size={17}>Update Profile</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
@@ -41,7 +41,7 @@ const AccountScreen = ({navigation, logUserOut}) => {
           <Spacer />
 
           <ListItem
-            onClick={() => navigation.navigate('AccountSettings')}
+            onClick={() => navigation.navigate('ChangeEmailAddress')}
             body={<Text size={17}>Change Email Address</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
@@ -49,7 +49,7 @@ const AccountScreen = ({navigation, logUserOut}) => {
           <Spacer />
 
           <ListItem
-            onClick={() => navigation.navigate('AccountSettings')}
+            onClick={() => navigation.navigate('ChangePassword')}
             body={<Text size={17}>Change Password</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
