@@ -47,7 +47,7 @@ const ChangeEmailAddressScreen = ({navigation, logUserOut}) => {
           <View style={styles.inputContainer}>
             <Text heading>New Email Address</Text>
             <Spacer />
-            <TextInput placeholder="Enter email address" />
+            <TextInput autoFocus placeholder="Enter email address" />
           </View>
 
           <Spacer medium />
@@ -58,11 +58,21 @@ const ChangeEmailAddressScreen = ({navigation, logUserOut}) => {
             <TextInput placeholder="Confirm new email address" />
           </View>
 
+          <Spacer medium />
+
+          <View style={styles.inputContainer}>
+            <Text heading>Password</Text>
+            <Spacer />
+            <TextInput password placeholder="Enter your password" />
+          </View>
+
           <Spacer large />
 
           <Button>
             <Text color="#fff">Save Changes</Text>
           </Button>
+
+          <Spacer large />
         </View>
       </Layout>
     </>

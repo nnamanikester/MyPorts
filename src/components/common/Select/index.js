@@ -1,14 +1,12 @@
 import {Picker} from '@react-native-community/picker';
-import React, {useState} from 'react';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import {grayColor} from '../variables';
-import {Icon} from '../Icon';
 
-const Select = ({data, selected, onChange, disabled, type}) => {
-  const [open, setOpen] = useState(false);
+const Select = ({data, selected, onChange, disabled, type, style}) => {
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, ...style}}>
       <Picker
         itemStyle={styles.items}
         mode={type}
@@ -21,11 +19,6 @@ const Select = ({data, selected, onChange, disabled, type}) => {
             return <Picker.Item key={`${value}`} label={label} value={value} />;
           })}
       </Picker>
-      <Icon
-        size={20}
-        style={styles.icon}
-        name={open ? 'ios-arrow-forward' : 'ios-arrow-down'}
-      />
     </View>
   );
 };
@@ -48,16 +41,13 @@ const styles = StyleSheet.create({
   items: {
     fontFamily: 'SFPD-light',
   },
-  icon: {
-    backgroundColor: '#fff',
-    right: 30,
-  },
 });
 
 Select.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   selected: PropTypes.any,
   onChange: PropTypes.func,
+  style: PropTypes.object,
 };
 
 export {Select};
