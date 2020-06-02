@@ -7,6 +7,7 @@ import {
   Text,
   Spacer,
   Row,
+  TextInput,
 } from '../../components/common';
 import {TouchableOpacity, View, StyleSheet} from 'react-native';
 import Header from '../../components/Header';
@@ -27,7 +28,41 @@ const ChangeEmailAddressScreen = ({navigation, logUserOut}) => {
       />
       <Layout>
         <View style={styles.container}>
-          <Text h1>Change Email Address</Text>
+          <Text heading>Use this form to change your email address.</Text>
+          <Text note>
+            You will need to confirm your new address in an email we will send
+            you.
+          </Text>
+
+          <Spacer large />
+
+          <View style={styles.inputContainer}>
+            <Text heading>Current Email Address</Text>
+            <Spacer />
+            <TextInput type="disabled" value="Nnamanikester@gmail.com" />
+          </View>
+
+          <Spacer medium />
+
+          <View style={styles.inputContainer}>
+            <Text heading>New Email Address</Text>
+            <Spacer />
+            <TextInput placeholder="Enter email address" />
+          </View>
+
+          <Spacer medium />
+
+          <View style={styles.inputContainer}>
+            <Text heading>Confirm Email Address</Text>
+            <Spacer />
+            <TextInput placeholder="Confirm new email address" />
+          </View>
+
+          <Spacer large />
+
+          <Button>
+            <Text color="#fff">Save Changes</Text>
+          </Button>
         </View>
       </Layout>
     </>

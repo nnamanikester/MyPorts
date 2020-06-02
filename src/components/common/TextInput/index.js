@@ -10,6 +10,7 @@ import {
 } from '../variables';
 
 const TextInput = ({
+  value,
   onChangeText,
   autoCapitalize,
   autoFocus,
@@ -97,6 +98,7 @@ const TextInput = ({
     <View style={{...styles.container}}>
       {iconLeft ? <View style={{...styles.iconLeft}}>{iconLeft}</View> : null}
       <TI
+        value={value}
         autoFocus={autoFocus}
         autoCapitalize={autoCapitalize}
         autoCorrect={autoCorrect}
@@ -173,6 +175,7 @@ TextInput.propTypes = {
   multiline: PropTypes.bool,
   numberOfLines: PropTypes.number,
   keyboardType: PropTypes.string,
+  value: PropTypes.any,
 };
 
 TextInput.defaultProps = {
