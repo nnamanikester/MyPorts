@@ -5,7 +5,14 @@ import {Text, Badge} from './common';
 import {primaryColor, lightColor} from './common/variables';
 import {danger} from './common/variables';
 
-const Header = ({onLeftClick, hideHeader, headerRight, headerLeft, title}) => {
+const Header = ({
+  onLeftClick,
+  isCart,
+  hideHeader,
+  headerRight,
+  headerLeft,
+  title,
+}) => {
   if (hideHeader) return null;
 
   return (
@@ -21,7 +28,9 @@ const Header = ({onLeftClick, hideHeader, headerRight, headerLeft, title}) => {
       {headerRight && (
         <View style={styles.rightContainerStyle}>
           {headerRight}
-          <Badge style={{elevation: 1, top: 5}} color={danger} />
+          {isCart && (
+            <Badge style={{elevation: 1, top: 8, left: 30}} color={danger} />
+          )}
         </View>
       )}
     </View>

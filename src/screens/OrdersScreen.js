@@ -8,6 +8,7 @@ const OrdersScreen = ({navigation}) => {
   return (
     <>
       <Header
+        isCart
         title="Order History"
         headerLeft={
           <TouchableOpacity

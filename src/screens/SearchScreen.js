@@ -44,15 +44,6 @@ const SearchScreen = ({navigation}) => {
             <Icon name="ios-arrow-back" size={25} color="#fff" />
           </TouchableOpacity>
         }
-        headerRight={
-          <>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Cart')}
-              activeOpacity={0.7}>
-              <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </TouchableOpacity>
-          </>
-        }
       />
       <Layout itemToFloat={1}>
         <View style={styles.searchBar}>

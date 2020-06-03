@@ -45,9 +45,9 @@ const OrderDetailsScreen = ({navigation}) => {
         headerRight={
           <>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Cart')}
+              onPress={() => navigation.navigate('Search')}
               activeOpacity={0.7}>
-              <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
+              <Icon name="ios-search" color="#fff" />
             </TouchableOpacity>
           </>
         }
