@@ -7,6 +7,7 @@ import {female4} from '../assets/images';
 import {info} from './common/variables';
 import {useRoute} from '@react-navigation/native';
 import {logUserOut} from '../redux/actions/AuthActions';
+import {danger} from './common/variables';
 
 const Drawer = ({navigation, logUserOut}) => {
   const route = useRoute();
@@ -66,7 +67,10 @@ const Drawer = ({navigation, logUserOut}) => {
 
       <DrawerItem
         icon={({size, color}) => (
-          <Icon size={size} color={color} name="ios-home" />
+          <>
+            <Icon size={size} color={color} name="ios-home" />
+            <Badge style={{elevation: 1}} color={danger} />
+          </>
         )}
         // focused={route.name == 'Coupons' ? true : false}
         label={({color, focused}) => (
@@ -77,7 +81,10 @@ const Drawer = ({navigation, logUserOut}) => {
 
       <DrawerItem
         icon={({size, color}) => (
-          <Icon size={size} color={color} name="ios-gift" />
+          <>
+            <Icon size={size} color={color} name="ios-gift" />
+            <Badge style={{elevation: 1}} color={danger} />
+          </>
         )}
         // focused={route.name == 'Gifts' ? true : false}
         label={({color, focused}) => <Text color={color}>Gifts</Text>}

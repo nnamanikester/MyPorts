@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Text, Icon, Spacer} from './common';
+import {Text, Badge} from './common';
 import {primaryColor, lightColor} from './common/variables';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {danger} from './common/variables';
+
 const Header = ({onLeftClick, hideHeader, headerRight, headerLeft, title}) => {
   if (hideHeader) return null;
 
@@ -15,7 +16,10 @@ const Header = ({onLeftClick, hideHeader, headerRight, headerLeft, title}) => {
           {title}
         </Text>
       </View>
-      <View style={styles.rightContainerStyle}>{headerRight}</View>
+      <View style={styles.rightContainerStyle}>
+        {headerRight}
+        <Badge style={{elevation: 1, top: 5}} color={danger} />
+      </View>
     </View>
   );
 };
