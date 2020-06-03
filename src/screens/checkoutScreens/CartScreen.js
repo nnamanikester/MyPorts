@@ -17,6 +17,7 @@ import Avater from '../../components/Avatar';
 import {female4, female1, female2} from '../../assets/images';
 import {info, primaryColor} from '../../components/common/variables';
 import CartItem from '../../components/CartItem';
+import OrderSummary from '../../components/OrderSummary';
 
 const CartScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
@@ -97,32 +98,12 @@ const CartScreen = ({navigation}) => {
 
           <Spacer medium />
 
-          <Row style={{justifyContent: 'space-between'}}>
-            <Text heading>Order: </Text>
-            <Text>NGN 63,000</Text>
-          </Row>
-
-          <Spacer />
-
-          <Row style={{justifyContent: 'space-between'}}>
-            <Text heading>Shipping: </Text>
-            <Text>NGN 3,000</Text>
-          </Row>
-
-          <Spacer />
-
-          <Row style={{justifyContent: 'space-between'}}>
-            <Text heading>Discount: </Text>
-            <Text color={primaryColor}>- NGN 1,300</Text>
-          </Row>
-
-          <Spacer />
-          <Divider />
-
-          <Row style={{justifyContent: 'space-between'}}>
-            <Text bold>Total: </Text>
-            <Text bold>NGN 66,000</Text>
-          </Row>
+          <OrderSummary
+            order="63,000"
+            shipping="3,000"
+            discount="1,300"
+            total="66,000"
+          />
 
           <Spacer large />
 

@@ -13,6 +13,7 @@ import {
   Loading,
 } from '../components/common';
 import Header from '../components/Header';
+import CartItem from '../components/CartItem';
 import Avater from '../components/Avatar';
 import {female4, female1, female2} from '../assets/images';
 import {info, primaryColor} from '../components/common/variables';
@@ -52,89 +53,15 @@ const OrderDetailsScreen = ({navigation}) => {
       />
       <Layout>
         <Spacer medium />
-        <ListItem
+        <CartItem
+          name="Leather Show Bag"
+          color="Red"
+          size="XL"
+          quantity="5"
+          image={female2}
+          price="2,300"
           onClick={() => navigation.navigate('SingleProduct')}
-          left={<Avater src={female4} size={100} />}
-          body={
-            <>
-              <Text heading>Leather Show Bag</Text>
-              <Spacer />
-              <Text>
-                Size: <Text color={info}>XL</Text>
-              </Text>
-              <Text>
-                Color: <Text color={info}>Red</Text>
-              </Text>
-              <Text>
-                Quantity: <Text color={info}>24</Text>
-              </Text>
-            </>
-          }
-          right={
-            <View style={{alignItems: 'flex-end'}}>
-              <TouchableOpacity activeOpacity={0.7}>
-                <Icon name="md-close" />
-              </TouchableOpacity>
-              <Spacer />
-              <Text>NGN 15,400</Text>
-            </View>
-          }
-        />
-        <ListItem
-          onClick={() => navigation.navigate('SingleProduct')}
-          left={<Avater src={female2} size={100} />}
-          body={
-            <>
-              <Text heading>Leather Show Bag</Text>
-              <Spacer />
-              <Text>
-                Size: <Text color={info}>XL</Text>
-              </Text>
-              <Text>
-                Color: <Text color={info}>Red</Text>
-              </Text>
-              <Text>
-                Quantity: <Text color={info}>24</Text>
-              </Text>
-            </>
-          }
-          right={
-            <View style={{alignItems: 'flex-end'}}>
-              <TouchableOpacity activeOpacity={0.7}>
-                <Icon name="md-close" />
-              </TouchableOpacity>
-              <Spacer />
-              <Text>NGN 2,300</Text>
-            </View>
-          }
-        />
-        <ListItem
-          onClick={() => navigation.navigate('SingleProduct')}
-          left={<Avater src={female1} size={100} />}
-          body={
-            <>
-              <Text heading>Leather Show Bag</Text>
-              <Spacer />
-              <Text>
-                Size: <Text color={info}>XL</Text>
-              </Text>
-              <Text>
-                Color: <Text color={info}>Red</Text>
-              </Text>
-              <Text>
-                Quantity: <Text color={info}>24</Text>
-              </Text>
-            </>
-          }
-          right={
-            <View style={{alignItems: 'flex-end'}}>
-              <TouchableOpacity activeOpacity={0.7}>
-                <Icon name="md-close" />
-              </TouchableOpacity>
-              <Spacer />
-              <Text>NGN 23,500</Text>
-            </View>
-          }
+          onCloseButtonClick={() => {}}
         />
 
         <Spacer medium />

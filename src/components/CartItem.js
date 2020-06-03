@@ -1,19 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {
-  Text,
-  Layout,
-  Icon,
-  ListItem,
-  Spacer,
-  TextInput,
-  Row,
-  Button,
-  Divider,
-  Loading,
-} from './common';
+import {Text, Icon, ListItem, Spacer} from './common';
 import Avater from './Avatar';
-import {info, primaryColor} from './common/variables';
+import {info} from './common/variables';
 
 const CartItem = ({
   onClick,
