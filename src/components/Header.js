@@ -10,16 +10,20 @@ const Header = ({onLeftClick, hideHeader, headerRight, headerLeft, title}) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.leftContainerStyle}>{headerLeft}</View>
+      {headerLeft && (
+        <View style={styles.leftContainerStyle}>{headerLeft}</View>
+      )}
       <View style={styles.titleContainerStyle}>
         <Text style={styles.titleStyle} size={17}>
           {title}
         </Text>
       </View>
-      <View style={styles.rightContainerStyle}>
-        {headerRight}
-        <Badge style={{elevation: 1, top: 5}} color={danger} />
-      </View>
+      {headerRight && (
+        <View style={styles.rightContainerStyle}>
+          {headerRight}
+          <Badge style={{elevation: 1, top: 5}} color={danger} />
+        </View>
+      )}
     </View>
   );
 };
