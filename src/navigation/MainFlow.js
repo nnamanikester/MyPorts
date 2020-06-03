@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import TabNavigation from './MainFlows/MainTabNavigation';
 import DraweNavigation from './MainFlows/MainDrawerNavigation';
 import Orders from '../screens/OrdersScreen';
+import OrderDetails from '../screens/OrderDetailsScreen';
 import Search from '../screens/SearchScreen';
 import ProductsByCategory from '../screens/ProductsByCategoryScreen';
 import SingleProduct from '../screens/SingleProductScreen';
@@ -57,6 +58,7 @@ const StackNavigation = () => {
       <Stack.Screen name="Home" component={DraweNavigation} />
       <Stack.Screen name="Tab" component={TabNavigation} />
       <Stack.Screen name="Orders" component={Orders} />
+      <Stack.Screen name="OrderDetails" component={OrderDetails} />
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="ProductsByCategory" component={ProductsByCategory} />
       <Stack.Screen name="SingleProduct" component={SingleProduct} />

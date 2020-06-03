@@ -1,23 +1,7 @@
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {
-  Text,
-  Layout,
-  Icon,
-  Spacer,
-  Card,
-  ListItem,
-  Divider,
-  Row,
-} from '../components/common';
+import {Layout, Icon, Spacer} from '../components/common';
 import Header from '../components/Header';
-import {
-  success,
-  info,
-  primaryColor,
-  grayColor,
-  warning,
-} from '../components/common/variables';
 import Order from '../components/Order';
 
 const OrdersScreen = ({navigation}) => {
@@ -61,6 +45,7 @@ const OrdersScreen = ({navigation}) => {
           />
           <Spacer />
           <Order
+            onClick={() => navigation.navigate('OrderDetails')}
             status="success"
             dateTime="August 29, 2020  3:59 PM"
             orderNo="95793729"
@@ -70,6 +55,7 @@ const OrdersScreen = ({navigation}) => {
           />
           <Spacer />
           <Order
+            onClick={() => navigation.navigate('OrderDetails')}
             status="danger"
             dateTime="August 29, 2020  3:59 PM"
             orderNo="95793729"
@@ -79,6 +65,7 @@ const OrdersScreen = ({navigation}) => {
           />
           <Spacer />
           <Order
+            onClick={() => navigation.navigate('OrderDetails')}
             status="waiting"
             dateTime="August 29, 2020  3:59 PM"
             orderNo="95793729"
@@ -88,6 +75,7 @@ const OrdersScreen = ({navigation}) => {
           />
           <Spacer />
           <Order
+            onClick={() => navigation.navigate('OrderDetails')}
             dateTime="August 29, 2020  3:59 PM"
             orderNo="95793729"
             trackingNo="IW74DH7HF83HD"
