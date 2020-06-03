@@ -42,16 +42,22 @@ const Drawer = ({navigation, logUserOut}) => {
         icon={({size, color}) => (
           <Icon size={size} style={{color}} name="ios-home" />
         )}
-        // focused={route.name == 'Home' ? true : false}
         label={({color, focused}) => <Text color={color}>Home</Text>}
         onPress={() => navigation.navigate('Vendors')}
       />
 
       <DrawerItem
         icon={({size, color}) => (
+          <Icon size={size} style={{color}} name="ios-search" />
+        )}
+        label={({color, focused}) => <Text color={color}>Search</Text>}
+        onPress={() => navigation.navigate('Search')}
+      />
+
+      <DrawerItem
+        icon={({size, color}) => (
           <Icon size={size} color={color} name="md-time" />
         )}
-        // focused={route.name == 'OrderHistory' ? true : false}
         label={({color, focused}) => <Text color={color}>Order History</Text>}
         onPress={() => navigation.navigate('Orders')}
       />
