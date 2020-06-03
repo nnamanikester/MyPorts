@@ -18,7 +18,7 @@ import Payment from '../screens/checkoutScreens/PaymentScreen';
 import Cart from '../screens/checkoutScreens/CartScreen';
 import AddAddress from '../screens/checkoutScreens/AddAddressScreen';
 import EditAddress from '../screens/checkoutScreens/EditAddressScreen';
-import Checkout from '../screens/checkoutScreens/CheckoutScreen';
+import ShippingDetails from '../screens/checkoutScreens/ShippingDetailsScreen';
 
 // Settings Screens
 import AccountSettings from '../screens/SettingsScreens/AccountSettingsScreen';
@@ -69,7 +69,7 @@ const StackNavigation = () => {
 
       {/* Checkout Screens */}
       <Stack.Screen name="Cart" component={Cart} />
-      <Stack.Screen name="Checkout" component={Checkout} />
+      <Stack.Screen name="ShippingDetails" component={ShippingDetails} />
       <Stack.Screen name="Payment" component={Payment} />
       <Stack.Screen name="AddAddress" component={AddAddress} />
       <Stack.Screen name="EditAddress" component={EditAddress} />

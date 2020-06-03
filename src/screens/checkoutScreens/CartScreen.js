@@ -24,7 +24,7 @@ const CartScreen = ({navigation}) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      navigation.navigate('Checkout');
+      navigation.navigate('ShippingDetails');
     }, 3000);
   };
 
