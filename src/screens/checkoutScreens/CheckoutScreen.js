@@ -31,7 +31,7 @@ const CheckoutScreen = ({navigation}) => {
     <>
       <Loading show={loading} />
       <Header
-        title="Shipping Details"
+        title="Checkout"
         headerLeft={
           <TouchableOpacity
             activeOpacity={0.7}
@@ -66,37 +66,92 @@ const CheckoutScreen = ({navigation}) => {
           <Divider />
 
           {!newAddress && (
-            <ListItem
-              left={<Icon name="ios-pin" color={info} />}
-              body={
-                <>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                    }}>
-                    <Text heading>Tiana Rosser</Text>
-                    <Link onClick={() => navigation.navigate('EditAddress')}>
-                      <Icon name="md-create" color={primaryColor} size={16} />
-                      {'  '}
-                      EDIT
-                    </Link>
-                  </View>
-                  <Text>
-                    Suit 13 Romchi plaza, oneday road, Awkunanaw, Enugu, Enugu
-                    State.
-                  </Text>
-                  <Text>Nigeria</Text>
-                  <Text>400252</Text>
-                </>
-              }
-            />
+            <>
+              <ListItem
+                marked={true}
+                left={<Icon name="ios-pin" color={info} />}
+                body={
+                  <>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text heading>Tiana Rosser</Text>
+                      <Link onClick={() => navigation.navigate('EditAddress')}>
+                        <Icon name="md-create" color={primaryColor} size={16} />
+                        {'  '}
+                        Edit
+                      </Link>
+                    </View>
+                    <Text>
+                      Suit 13 Romchi plaza, oneday road, Awkunanaw, Enugu, Enugu
+                      State.
+                    </Text>
+                    <Text>Nigeria</Text>
+                    <Text>400252</Text>
+                  </>
+                }
+              />
+              <ListItem
+                marked={false}
+                left={<Icon name="ios-pin" color={info} />}
+                body={
+                  <>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text heading>Tiana Rosser</Text>
+                      <Link onClick={() => navigation.navigate('EditAddress')}>
+                        <Icon name="md-create" color={primaryColor} size={16} />
+                        {'  '}
+                        Edit
+                      </Link>
+                    </View>
+                    <Text>
+                      Suit 13 Romchi plaza, oneday road, Awkunanaw, Enugu, Enugu
+                      State.
+                    </Text>
+                    <Text>Nigeria</Text>
+                    <Text>400252</Text>
+                  </>
+                }
+              />
+              <ListItem
+                marked={false}
+                left={<Icon name="ios-pin" color={info} />}
+                body={
+                  <>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text heading>Tiana Rosser</Text>
+                      <Link onClick={() => navigation.navigate('EditAddress')}>
+                        <Icon name="md-create" color={primaryColor} size={16} />
+                        {'  '}
+                        Edit
+                      </Link>
+                    </View>
+                    <Text>
+                      Suit 13 Romchi plaza, oneday road, Awkunanaw, Enugu, Enugu
+                      State.
+                    </Text>
+                    <Text>Nigeria</Text>
+                    <Text>400252</Text>
+                  </>
+                }
+              />
+            </>
           )}
 
           <Spacer />
 
           {!newAddress && (
-            <Link onClick={() => setNewAddress(true)}>Use Another Address</Link>
+            <Link onClick={() => setNewAddress(true)}>Add New Address</Link>
           )}
 
           {newAddress && (
