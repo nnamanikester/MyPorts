@@ -5,7 +5,8 @@ import VendorsListScreen from '../../screens/vendorScreens/VendorsListScreen';
 import ProductsScreen from '../../screens/ProductsScreen';
 import NotificationsScreen from '../../screens/NotificationsScreen';
 import SettingsScreen from '../../screens/SettingsScreens/SettingsScreen';
-import {Icon, Text} from '../../components/common';
+import {Icon, Text, Badge} from '../../components/common';
+import {danger} from '../../components/common/variables';
 
 const Tab = createBottomTabNavigator();
 
@@ -64,11 +65,23 @@ const TabNavigation = () => {
         component={NotificationsScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
-            <Icon
-              name={focused ? 'ios-notifications' : 'ios-notifications-outline'}
-              color={color}
-              size={focused ? 32 : 28}
-            />
+            <>
+              <Icon
+                name={
+                  focused ? 'ios-notifications' : 'ios-notifications-outline'
+                }
+                color={color}
+                size={focused ? 32 : 28}
+              />
+              <Badge
+                style={{
+                  right: 25,
+                  top: 5,
+                  elevation: 1,
+                }}
+                color={danger}
+              />
+            </>
           ),
           tabBarLabel: ({color}) => (
             <Text size={12} color={color}>
