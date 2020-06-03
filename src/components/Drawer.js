@@ -52,7 +52,7 @@ const Drawer = ({navigation, logUserOut}) => {
         )}
         // focused={route.name == 'OrderHistory' ? true : false}
         label={({color, focused}) => <Text color={color}>Order History</Text>}
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.navigate('Orders')}
       />
 
       <DrawerItem

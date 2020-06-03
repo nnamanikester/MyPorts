@@ -31,7 +31,7 @@ const CheckoutScreen = ({navigation}) => {
     <>
       <Loading show={loading} />
       <Header
-        title="Checkout"
+        title="Shipping Details"
         headerLeft={
           <TouchableOpacity
             activeOpacity={0.7}
