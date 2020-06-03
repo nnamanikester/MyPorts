@@ -37,48 +37,48 @@ const OrdersScreen = ({navigation}) => {
         <View style={styles.container}>
           <Order
             status="warning"
-            dateTime="August 29, 2020  3:59 PM"
+            date="August 29, 2020"
             orderNo="95793729"
-            trackingNo="IW74DH7HF83HD"
+            vendor="Shop and Smile"
             itemPrice="23,000"
             quantity={34}
           />
-          <Spacer />
+
           <Order
             onClick={() => navigation.navigate('OrderDetails')}
             status="success"
-            dateTime="August 29, 2020  3:59 PM"
+            date="August 29, 2020"
             orderNo="95793729"
-            trackingNo="IW74DH7HF83HD"
+            vendor="Shop and Smile"
             itemPrice="3,000"
             quantity={3}
           />
-          <Spacer />
+
           <Order
             onClick={() => navigation.navigate('OrderDetails')}
             status="danger"
-            dateTime="August 29, 2020  3:59 PM"
+            date="August 29, 2020"
             orderNo="95793729"
-            trackingNo="IW74DH7HF83HD"
+            vendor="Shop and Smile"
             itemPrice="23,000"
             quantity={34}
           />
-          <Spacer />
+
           <Order
             onClick={() => navigation.navigate('OrderDetails')}
             status="waiting"
-            dateTime="August 29, 2020  3:59 PM"
+            date="August 29, 2020"
             orderNo="95793729"
-            trackingNo="IW74DH7HF83HD"
+            vendor="Shop and Smile"
             itemPrice="23,000"
             quantity={34}
           />
-          <Spacer />
+
           <Order
             onClick={() => navigation.navigate('OrderDetails')}
-            dateTime="August 29, 2020  3:59 PM"
+            date="August 29, 2020"
             orderNo="95793729"
-            trackingNo="IW74DH7HF83HD"
+            vendor="Shop and Smile"
             itemPrice="23,000"
             quantity={34}
           />

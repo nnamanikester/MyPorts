@@ -5,9 +5,9 @@ import {primaryColor, info, success, warning, danger} from './common/variables';
 
 const Order = ({
   orderNo,
-  trackingNo,
+  vendor,
   itemPrice,
-  dateTime,
+  date,
   quantity,
   onClick,
   status,
@@ -23,7 +23,7 @@ const Order = ({
       statusColor = success;
       break;
     case 'warning':
-      icon = 'ios-time';
+      icon = 'md-time';
       statusLabel = 'In Progress';
       statusColor = warning;
       break;
@@ -57,7 +57,7 @@ const Order = ({
                 <Spacer />
                 <Text color={statusColor}>{statusLabel.toUpperCase()}</Text>
               </View>
-              <Text color={info}>{dateTime}</Text>
+              <Text color={info}>{date}</Text>
             </Row>
           </View>
           <Divider />
@@ -68,9 +68,9 @@ const Order = ({
             </Text>
             <Spacer />
             <Row>
-              <Text size={18}>Tracking number : </Text>
+              <Text>Vendor : </Text>
               <Spacer />
-              <Text color={info}>{trackingNo}</Text>
+              <Text color={info}>{vendor}</Text>
             </Row>
           </View>
           <Divider />
@@ -79,12 +79,12 @@ const Order = ({
             <Row
               style={{justifyContent: 'space-between', alignItems: 'center'}}>
               <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                <Text>ITEMS' VALUE</Text>
+                <Text color={info}>Items' Value</Text>
                 <Spacer />
                 <Text bold>NGN {itemPrice}</Text>
               </View>
               <Text color={info}>
-                QUANTITY: <Text bold>{quantity}</Text>
+                Quantity: <Text bold>{quantity}</Text>
               </Text>
             </Row>
           </View>

@@ -48,7 +48,7 @@ const Drawer = ({navigation, logUserOut}) => {
 
       <DrawerItem
         icon={({size, color}) => (
-          <Icon size={size} color={color} name="ios-time" />
+          <Icon size={size} color={color} name="md-time" />
         )}
         // focused={route.name == 'OrderHistory' ? true : false}
         label={({color, focused}) => <Text color={color}>Order History</Text>}

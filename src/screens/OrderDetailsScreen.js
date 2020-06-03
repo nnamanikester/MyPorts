@@ -14,6 +14,7 @@ import {
 } from '../components/common';
 import Header from '../components/Header';
 import CartItem from '../components/CartItem';
+import OrderSummary from '../components/OrderSummary';
 import Avater from '../components/Avatar';
 import {female4, female1, female2} from '../assets/images';
 import {info, primaryColor} from '../components/common/variables';
@@ -33,12 +34,12 @@ const OrderDetailsScreen = ({navigation}) => {
     <>
       <Loading show={loading} />
       <Header
-        title="Shopping Bag"
+        title="Order Details"
         headerLeft={
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => navigation.goBack()}>
-            <Icon name="md-close" color="#fff" />
+            <Icon name="ios-arrow-back" color="#fff" />
           </TouchableOpacity>
         }
         headerRight={
@@ -53,6 +54,32 @@ const OrderDetailsScreen = ({navigation}) => {
       />
       <Layout>
         <Spacer medium />
+
+        <View style={styles.container}>
+          <Text style={styles.title}>Order placed: August 25, 2020</Text>
+          <Text>Order No: 2379758</Text>
+
+          <Spacer medium />
+
+          <Text style={styles.title}>Ship to:</Text>
+
+          <Text>Tiana Rosser</Text>
+          <Text>Suit 13 Romchi Plaza, Oneday Road.</Text>
+          <Text>Enugu, Enugu State 400252.</Text>
+          <Text>Nigeria.</Text>
+
+          <Spacer medium />
+
+          <Text style={styles.title}>Payment Method:</Text>
+
+          <Text>Credit Card</Text>
+          <Text>Master Card xxxx6435</Text>
+
+          <Spacer medium />
+
+          <Text style={styles.title}>Items in Order:</Text>
+        </View>
+
         <CartItem
           name="Leather Show Bag"
           color="Red"
@@ -62,51 +89,44 @@ const OrderDetailsScreen = ({navigation}) => {
           price="2,300"
           onClick={() => navigation.navigate('SingleProduct')}
           onCloseButtonClick={() => {}}
+          hideCloseButton
+        />
+        <CartItem
+          name="Leather Show Bag"
+          color="Red"
+          size="XL"
+          quantity="5"
+          image={female2}
+          price="2,300"
+          onClick={() => navigation.navigate('SingleProduct')}
+          onCloseButtonClick={() => {}}
+          hideCloseButton
+        />
+        <CartItem
+          name="Leather Show Bag"
+          color="Red"
+          size="XL"
+          quantity="5"
+          image={female2}
+          price="2,300"
+          onClick={() => navigation.navigate('SingleProduct')}
+          onCloseButtonClick={() => {}}
+          hideCloseButton
         />
 
         <Spacer medium />
 
         <View style={styles.container}>
-          <Text heading>Enter your coupon code here</Text>
+          <Text style={styles.title}>Order Summary:</Text>
 
           <Spacer />
 
-          <TextInput placeholder="Coupon Code" />
-
-          <Spacer medium />
-
-          <Row style={{justifyContent: 'space-between'}}>
-            <Text heading>Order: </Text>
-            <Text>NGN 63,000</Text>
-          </Row>
-
-          <Spacer />
-
-          <Row style={{justifyContent: 'space-between'}}>
-            <Text heading>Shipping: </Text>
-            <Text>NGN 3,000</Text>
-          </Row>
-
-          <Spacer />
-
-          <Row style={{justifyContent: 'space-between'}}>
-            <Text heading>Discount: </Text>
-            <Text color={primaryColor}>- NGN 1,300</Text>
-          </Row>
-
-          <Spacer />
-          <Divider />
-
-          <Row style={{justifyContent: 'space-between'}}>
-            <Text bold>Total: </Text>
-            <Text bold>NGN 66,000</Text>
-          </Row>
-
-          <Spacer large />
-
-          <Button onClick={() => goToCheckout()}>
-            <Text color="#fff">Place Order</Text>
-          </Button>
+          <OrderSummary
+            order="63,000"
+            shipping="3,000"
+            discount="1,300"
+            total="66,000"
+          />
 
           <Spacer large />
         </View>
@@ -118,6 +138,10 @@ const OrderDetailsScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
+  },
+  title: {
+    fontFamily: 'SFPD-regular',
+    fontSize: 20,
   },
 });
 
