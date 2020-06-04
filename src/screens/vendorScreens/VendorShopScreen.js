@@ -104,22 +104,16 @@ const VendorShopScreen = ({navigation}) => {
           <Spacer />
           <View style={styles.reviewSection}>
             <View style={styles.ratingPoint}>
-              <Text size={60}>4.0</Text>
-              <Rating s3={1} />
-              <Text>
-                <Icon size={20} name="ios-person" /> 10,000 total
-              </Text>
+              <Text size={50}>4.0</Text>
+              <Rating size={15} s4={1} />
+              <Text>10,000</Text>
             </View>
             <View style={styles.ratingGraph}>
-              <ProgressBar label="5" color="#79c9a1" percent={92} />
-              <Spacer size={2} />
-              <ProgressBar label="4" color="#aed888" percent={73} />
-              <Spacer size={2} />
-              <ProgressBar label="3" color="#ffd935" percent={43} />
-              <Spacer size={2} />
-              <ProgressBar label="2" color="#ffb235" percent={55} />
-              <Spacer size={2} />
-              <ProgressBar label="1" color="#ff8c5a" percent={20} />
+              <ProgressBar label="5" percent={75} />
+              <ProgressBar label="4" percent={15} />
+              <ProgressBar label="3" percent={2} />
+              <ProgressBar label="2" percent={3} />
+              <ProgressBar label="1" percent={5} />
             </View>
           </View>
           <Spacer />
@@ -312,13 +306,14 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 10,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   ratingPoint: {
-    marginRight: 20,
+    marginRight: 30,
     alignItems: 'center',
   },
   ratingGraph: {
-    width: '65%',
+    width: '50%',
     padding: 10,
   },
   title: {

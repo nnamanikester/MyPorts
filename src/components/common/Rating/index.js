@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Icon} from '../Icon';
-import {warning} from '../variables';
+import {primaryColor} from '../variables';
 
-const Rating = ({onClick, s1, s2, s3, s4, s5}) => {
+const Rating = ({onClick, s1, s2, s3, s4, s5, size}) => {
   const totalRatings = s1 + s2 + s3 + s4 + s5;
   const s1Percentage = 0;
   const s2Percentage = 25;
@@ -33,25 +33,25 @@ const Rating = ({onClick, s1, s2, s3, s4, s5}) => {
   };
 
   if (averageRating >= 4.5) {
-    stars.star1 = warning;
-    stars.star2 = warning;
-    stars.star3 = warning;
-    stars.star4 = warning;
-    stars.star5 = warning;
+    stars.star1 = primaryColor;
+    stars.star2 = primaryColor;
+    stars.star3 = primaryColor;
+    stars.star4 = primaryColor;
+    stars.star5 = primaryColor;
   } else if (averageRating >= 3.5) {
-    stars.star1 = warning;
-    stars.star2 = warning;
-    stars.star3 = warning;
-    stars.star4 = warning;
+    stars.star1 = primaryColor;
+    stars.star2 = primaryColor;
+    stars.star3 = primaryColor;
+    stars.star4 = primaryColor;
   } else if (averageRating >= 2.5) {
-    stars.star1 = warning;
-    stars.star2 = warning;
-    stars.star3 = warning;
+    stars.star1 = primaryColor;
+    stars.star2 = primaryColor;
+    stars.star3 = primaryColor;
   } else if (averageRating >= 1.5) {
-    stars.star1 = warning;
-    stars.star2 = warning;
+    stars.star1 = primaryColor;
+    stars.star2 = primaryColor;
   } else if (averageRating >= 0.1) {
-    stars.star1 = warning;
+    stars.star1 = primaryColor;
   }
 
   return (
@@ -60,35 +60,35 @@ const Rating = ({onClick, s1, s2, s3, s4, s5}) => {
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon size={20} name="ios-star-outline" color={stars.star1} />
+        <Icon size={size || 20} name="ios-star" color={stars.star1} />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon size={20} name="ios-star-outline" color={stars.star2} />
+        <Icon size={size || 20} name="ios-star" color={stars.star2} />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon size={20} name="ios-star-outline" color={stars.star3} />
+        <Icon size={size || 20} name="ios-star" color={stars.star3} />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon size={20} name="ios-star-outline" color={stars.star4} />
+        <Icon size={size || 20} name="ios-star" color={stars.star4} />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={onClick}
         style={styles.star}
         activeOpacity={0.5}>
-        <Icon size={20} name="ios-star-outline" color={stars.star5} />
+        <Icon size={size || 20} name="ios-star" color={stars.star5} />
       </TouchableOpacity>
     </View>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Text} from '../Text';
 import PropTypes from 'prop-types';
-import {primaryColor, grayColor} from '../variables';
+import {primaryColor, grayColor, inactiveColor} from '../variables';
 import {Spacer} from '../Spacer';
 
 const ProgressBar = ({color, percent, label}) => {
@@ -14,7 +14,6 @@ const ProgressBar = ({color, percent, label}) => {
         <View
           style={{
             ...styles.progress,
-            backgroundColor: color,
             width: `${percent}%`,
           }}></View>
       </View>
@@ -27,14 +26,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    // marginBottom: -5,
   },
   progress: {
     height: '100%',
+    borderRadius: 10,
+    backgroundColor: primaryColor,
   },
   progressBar: {
-    height: 20,
+    height: 13,
     width: '100%',
-    // backgroundColor: grayColor,
+    backgroundColor: inactiveColor,
+    borderRadius: 10,
   },
 });
 

@@ -1,6 +1,6 @@
 export const primaryColor = '#0084F4';
 export const secondaryColor = '#4EAEFF';
-export const inactiveColor = '#E4E4E4';
+export const inactiveColor = '#E4E4E455';
 export const lightColor = '#A6D6FF';
 export const textColor = '#151522';
 export const success = '#00C48C';
