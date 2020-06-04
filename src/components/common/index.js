@@ -20,3 +20,4 @@ export * from './ProgressBar';
 export * from './Switch';
 export * from './Option';
 export * from './Loading';
+export * from './Alert';

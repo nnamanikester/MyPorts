@@ -7,10 +7,9 @@ import {
   ListItem,
   Spacer,
   TextInput,
+  Alert,
   Loading,
   Button,
-  Divider,
-  Link,
 } from '../../components/common';
 import Header from '../../components/Header';
 import {info, primaryColor} from '../../components/common/variables';
@@ -18,6 +17,7 @@ import {info, primaryColor} from '../../components/common/variables';
 const PaymentScreen = ({navigation}) => {
   const [newAddress, setNewAddress] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(false);
 
   const continueToPayment = () => {
     setLoading(true);
@@ -30,6 +30,15 @@ const PaymentScreen = ({navigation}) => {
   return (
     <>
       <Loading show={loading} />
+      <Alert
+        show={alert}
+        header="Payment Failed! "
+        error
+        buttonText="Review Payment"
+        message={
+          'You have made your first payment. \n Would you like to review the product you ordered?'
+        }
+      />
       <Header
         title="Payment"
         headerLeft={
@@ -60,7 +69,7 @@ const PaymentScreen = ({navigation}) => {
           </Text>
 
           <Button
-            onClick={() => continueToPayment()}
+            onClick={() => setAlert(true)}
             type={newAddress ? 'disabled' : ''}>
             <Text color="#fff">Confirm Payment</Text>
           </Button>
