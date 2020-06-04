@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    // marginBottom: -5,
   },
   progress: {
     height: '100%',
@@ -34,7 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: primaryColor,
   },
   progressBar: {
-    height: 13,
+    height: 12,
     width: '100%',
     backgroundColor: inactiveColor,
     borderRadius: 10,

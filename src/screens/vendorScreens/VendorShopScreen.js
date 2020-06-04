@@ -20,7 +20,6 @@ import Product from '../../components/Product';
 import ContactVendor from '../../components/ContactVendor';
 import SearchBar from '../../components/SearchBar';
 import {
-  bag1,
   female2,
   female3,
   female1,
@@ -46,25 +45,21 @@ const VendorShopScreen = ({navigation}) => {
         isCart
         title="Tiana Rosser"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}>
+          <Link onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" color="#fff" />
-          </TouchableOpacity>
+          </Link>
         }
         headerRight={
           <>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Cart')}
+            <Link
+              onClick={() => navigation.navigate('Cart')}
               activeOpacity={0.7}>
               <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </TouchableOpacity>
+            </Link>
             <Spacer medium />
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Search')}
-              activeOpacity={0.7}>
+            <Link onClick={() => navigation.navigate('Search')}>
               <Icon name="ios-search" color="#fff" />
-            </TouchableOpacity>
+            </Link>
           </>
         }
       />
@@ -79,6 +74,7 @@ const VendorShopScreen = ({navigation}) => {
                 <Image style={styles.logo} source={male1} />
               </View>
             </View>
+
             <View style={styles.shopDetails}>
               <Spacer />
               <Text style={styles.shopTitle}> Tiana Rosser</Text>
@@ -88,26 +84,39 @@ const VendorShopScreen = ({navigation}) => {
               </Text>
             </View>
           </Row>
+
           <Spacer />
+
           <Row style={styles.contact}>
             <View style={styles.contactLeft}>
               <Icon name="ios-mail" color={primaryColor} />
               <Spacer />
               <Link>Email</Link>
             </View>
+
             <View style={styles.contactRight}>
               <Icon name="ios-call" color={primaryColor} />
               <Spacer />
               <Link>Phone</Link>
             </View>
           </Row>
+
           <Spacer />
+
+          <Row style={{justifyContent: 'space-between', paddingHorizontal: 10}}>
+            <Text style={styles.title}>Ratings and Reviews</Text>
+            <Link onClick={() => navigation.navigate('VendorShopReview')}>
+              <Icon name={'ios-arrow-forward'} />
+            </Link>
+          </Row>
+
           <View style={styles.reviewSection}>
             <View style={styles.ratingPoint}>
               <Text size={50}>4.0</Text>
               <Rating size={15} s4={1} />
               <Text>10,000</Text>
             </View>
+
             <View style={styles.ratingGraph}>
               <ProgressBar label="5" percent={75} />
               <ProgressBar label="4" percent={15} />
@@ -116,8 +125,11 @@ const VendorShopScreen = ({navigation}) => {
               <ProgressBar label="1" percent={5} />
             </View>
           </View>
+
           <Spacer />
+
           <Divider />
+
           <View style={{paddingHorizontal: 10}}>
             <Button onClick={() => setOpenReview(true)}>
               <Icon size={20} name="md-create" color="#fff" />
@@ -126,19 +138,15 @@ const VendorShopScreen = ({navigation}) => {
             </Button>
           </View>
         </View>
+
         <Divider />
+
         <View style={styles.container}>
-          <Row>
-            <Column size="10">
-              <Text style={styles.title}>Recent Products</Text>
-            </Column>
-            <Column size="2" style={{alignItems: 'flex-end'}}>
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => setShowSearchBar(!showSearchBar)}>
-                <Icon name={showSearchBar ? 'md-close' : 'ios-search'} />
-              </TouchableOpacity>
-            </Column>
+          <Row style={{justifyContent: 'space-between', paddingHorizontal: 10}}>
+            <Text style={styles.title}>Recent Products</Text>
+            <Link onClick={() => setShowSearchBar(!showSearchBar)}>
+              <Icon name={showSearchBar ? 'md-close' : 'ios-search'} />
+            </Link>
           </Row>
 
           {showSearchBar && (
@@ -146,7 +154,9 @@ const VendorShopScreen = ({navigation}) => {
               <SearchBar placeholder="What are you looking for?" />
             </View>
           )}
+
           <Spacer />
+
           <Row>
             <Column size="6" style={{alignItems: 'center'}}>
               <Product
@@ -156,6 +166,7 @@ const VendorShopScreen = ({navigation}) => {
                 onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
+
             <Column style={{alignItems: 'center'}} size="6">
               <Product
                 quantity="14"
@@ -164,6 +175,7 @@ const VendorShopScreen = ({navigation}) => {
                 onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
+
             <Column size="6" style={{alignItems: 'center'}}>
               <Product
                 image={female2}
@@ -172,6 +184,7 @@ const VendorShopScreen = ({navigation}) => {
                 onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
+
             <Column size="6" style={{alignItems: 'center'}}>
               <Product
                 quantity="45"
@@ -180,6 +193,7 @@ const VendorShopScreen = ({navigation}) => {
                 onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
+
             <Column size="6" style={{alignItems: 'center'}}>
               <Product
                 quantity="15"
@@ -188,6 +202,7 @@ const VendorShopScreen = ({navigation}) => {
                 onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
+
             <Column size="6" style={{alignItems: 'center'}}>
               <Product
                 quantity="20"
@@ -196,6 +211,7 @@ const VendorShopScreen = ({navigation}) => {
                 onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
+
             <Column size="6" style={{alignItems: 'center'}}>
               <Product
                 quantity="8"
@@ -214,6 +230,7 @@ const VendorShopScreen = ({navigation}) => {
         onChatClose={() => setOpenChat(false)}
         chatImage={male1}
       />
+
       <Modal show={openReview}>
         <Text heading>Write a Review</Text>
         <Spacer medium />
