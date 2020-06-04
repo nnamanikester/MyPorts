@@ -10,6 +10,9 @@ import {
   errorBg,
 } from '../../../assets/icons';
 
+/**
+ * A react component that return a success message or error message.
+ */
 const Alert = ({
   show,
   style,
@@ -106,7 +109,7 @@ const styles = StyleSheet.create({
 
 Alert.propTypes = {
   /**
-   * If 'true' displays the Alert. default is false
+   * If 'true' displays the Alert. default is 'false'
    */
   show: PropTypes.bool,
   /**
@@ -114,37 +117,45 @@ Alert.propTypes = {
    */
   style: PropTypes.object,
   /**
-   *
+   * Accepts a function. Called when the button is clicked.
    */
   onButtonClick: PropTypes.func,
   /**
-   *
+   * If 'true', shows error icon and error background. Default is 'false'.
    */
   error: PropTypes.bool,
   /**
-   *
+   * If 'true', shows the success Icon and success background. Default is 'true'.
    */
   success: PropTypes.bool,
   /**
-   *
+   * if 'true', shows the background image. 'success' or 'error' determines the background
+   * color. Default is 'false'.
    */
   showBg: PropTypes.bool,
   /**
-   *
+   * This takes a string of message to be displayed under the header text, giving more detail
+   * about the alert.
    */
   message: PropTypes.string,
   /**
-   *
+   * The Header text to be displayed explaining the type of alert.
    */
   header: PropTypes.string,
   /**
-   *
+   * This is the text shown on the button undert he alert container. if not provided, the button
+   * will be hidden.
    */
   buttonText: PropTypes.string,
 };
 
 Alert.defaultProps = {
   show: false,
+  style: {},
+  error: false,
+  showBg: false,
+  success: true,
+  onButtonClick: () => {},
 };
 
 export {Alert};
