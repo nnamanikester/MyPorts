@@ -4,6 +4,9 @@ import Spinner from 'react-native-spinkit';
 import PropTypes from 'prop-types';
 import {primaryColor} from '../variables';
 
+/**
+ * Displays a loading spinner with a white overlay background
+ */
 const Loading = ({
   show,
   // width,

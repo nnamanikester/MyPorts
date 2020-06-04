@@ -8,7 +8,7 @@ import {
   Card,
   Column,
   Row,
-  ActivityButton,
+  Toast,
 } from '../../components/common';
 import Header from '../../components/Header';
 import VendorList from '../../components/VendorList';
@@ -18,11 +18,17 @@ import FeaturedVendor from '../../components/FeaturedVendor';
 import SearchBar from '../../components/SearchBar';
 
 const VendorListScreen = ({navigation}) => {
-  const [hideHeader, setHideHeader] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
 
   return (
     <>
+      {showSearchBar && (
+        <Toast
+          timeout={10000}
+          onTimeout={() => setShowSearchBar(false)}
+          message="{'here \n I am \n COmmint \n uuib \n'}. Let's learn to write a code that is understandale by other programmers"
+        />
+      )}
       <Header
         isCart
         title="Vendors"
