@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
-import {Card, Text, Button, Row, Icon, Column, Spacer} from './common';
+import {Card, Text, Button, Row, Icon, Spacer, Link} from './common';
 import {primaryColor} from './common/variables';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
@@ -12,27 +12,25 @@ const VendorList = ({name, location, image, onClick}) => {
           <Image style={styles.image} source={image} />
         </View>
         <View style={styles.content}>
-          <Row>
-            <Column size="7">
-              <Text heading style={styles.title}>
-                {name}
-              </Text>
+          <Row style={{justifyContent: 'space-between'}}>
+            <View>
+              <Text heading>{name}</Text>
               <Text note>{location}</Text>
-            </Column>
-            <Column size="5" style={{justifyContent: 'center'}}>
+            </View>
+            <View style={{justifyContent: 'center'}}>
               <TouchableOpacity onPress={onClick} activeOpacity={0.7}>
-                <Row>
+                <Row style={{alignItems: 'center'}}>
                   <Text color={primaryColor}>Shop Now</Text>
-                  <Spacer />
+                  <Spacer size={2} />
                   <Icon
                     type="Feather"
                     name="shopping-cart"
                     color={primaryColor}
-                    size={25}
+                    size={22}
                   />
                 </Row>
               </TouchableOpacity>
-            </Column>
+            </View>
           </Row>
         </View>
       </Card>
@@ -43,7 +41,7 @@ const VendorList = ({name, location, image, onClick}) => {
 const styles = StyleSheet.create({
   container: {
     height: 250,
-    elevation: 2,
+    elevation: 1,
   },
   imageContainer: {},
   image: {
@@ -59,7 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     height: 70,
     justifyContent: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     borderBottomEndRadius: 5,
     borderBottomStartRadius: 5,
   },

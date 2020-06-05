@@ -1,4 +1,5 @@
 export * from './Text';
+export * from './ActivityButton';
 export * from './Layout';
 export * from './Row';
 export * from './Column';
