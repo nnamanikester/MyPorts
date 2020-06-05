@@ -4,13 +4,15 @@ import {TouchableOpacity, Linking} from 'react-native';
 import {Text} from '../Text';
 import {primaryColor} from '../variables';
 
-const Link = ({children, to, onClick, style, color}) => {
+const Link = ({children, to, textStyle, onClick, style, color}) => {
   return (
     <TouchableOpacity
       style={style}
       onPress={to ? Linking.openURL(to) : onClick}
       activeOpacity={0.7}>
-      <Text color={color || primaryColor}>{children}</Text>
+      <Text style={textStyle} color={color || primaryColor}>
+        {children}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -29,9 +31,13 @@ Link.propTypes = {
    */
   color: PropTypes.string,
   /**
-   * Expects a url with the correct protocol; 'http' or 'https'
+   * Expects a url with the correct protocol; `http` or `https`
    */
   to: PropTypes.string,
+  /**
+   * A react StyleSheet Object that is applied to the link's text.
+   */
+  textStyle: PropTypes.object,
 };
 
 Link.defaultProps = {

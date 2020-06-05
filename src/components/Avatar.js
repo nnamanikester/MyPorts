@@ -13,7 +13,7 @@ const Avatar = ({src, medium, small, large, size, rounded, style}) => {
   } else if (medium) {
     typeStyle = {
       width: 50,
-      height: 30,
+      height: 50,
     };
   } else if (large) {
     typeStyle = {

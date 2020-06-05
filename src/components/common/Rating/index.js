@@ -24,12 +24,12 @@ const Rating = ({onClick, s1, s2, s3, s4, s5, size}) => {
   const averageRating = averageValue / 20;
 
   let stars = {
-    star1: '#999999',
-    star2: '#999999',
-    star3: '#999999',
-    star4: '#999999',
-    star5: '#999999',
-    star6: '#999999',
+    star1: '#E8E8E8',
+    star2: '#E8E8E8',
+    star3: '#E8E8E8',
+    star4: '#E8E8E8',
+    star5: '#E8E8E8',
+    star6: '#E8E8E8',
   };
 
   if (averageRating >= 4.5) {

@@ -12,6 +12,7 @@ const Header = ({
   headerRight,
   headerLeft,
   title,
+  subtitle,
 }) => {
   if (hideHeader) return null;
 
@@ -24,6 +25,11 @@ const Header = ({
         <Text style={styles.titleStyle} size={17}>
           {title}
         </Text>
+        {subtitle && (
+          <Text color="#fff" note>
+            {subtitle}
+          </Text>
+        )}
       </View>
       {headerRight && (
         <View style={styles.rightContainerStyle}>
@@ -49,7 +55,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   titleContainerStyle: {
-    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
     marginHorizontal: 10,

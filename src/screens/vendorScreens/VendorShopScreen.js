@@ -136,6 +136,14 @@ const VendorShopScreen = ({navigation}) => {
               {'   '}
               <Text color="#fff">Write a review</Text>
             </Button>
+            <Spacer />
+            <View>
+              <Link
+                textStyle={{textAlign: 'center'}}
+                onClick={() => navigation.navigate('VendorShopReview')}>
+                See All Reviews
+              </Link>
+            </View>
           </View>
         </View>
 

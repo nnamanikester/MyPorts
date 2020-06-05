@@ -14,6 +14,7 @@ const Text = ({
   children,
   style,
   color,
+  numberOfLines,
 }) => {
   const styles = StyleSheet.create({
     textStyle: {
@@ -28,7 +29,11 @@ const Text = ({
       color: color,
     },
   });
-  return <TXT style={{...styles.textStyle, ...style}}>{children}</TXT>;
+  return (
+    <TXT numberOfLines={numberOfLines} style={{...styles.textStyle, ...style}}>
+      {children}
+    </TXT>
+  );
 };
 
 Text.propTypes = {
