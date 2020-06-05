@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Text, Icon} from '..';
+import {Text, Icon, Layout} from '..';
 import PropTypes from 'prop-types';
-import {primaryColor, grayColor} from '../variables';
+import {grayColor} from '../variables';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 /**
@@ -36,7 +36,7 @@ const ActionBar = ({
             <Icon color={iconColor} name="md-close" />
           </TouchableOpacity>
         </View>
-        <View style={styles.body}>{children}</View>
+        <Layout style={styles.body}>{children}</Layout>
       </View>
     </View>
   );
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     elevation: 999999,
   },
   container: {
-    height: '70%',
+    height: '75%',
     width: '100%',
     bottom: 0,
     position: 'absolute',
@@ -78,7 +78,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   body: {
-    padding: 10,
+    paddingTop: 10,
+    flex: 1,
+    paddingHorizontal: 20,
   },
 });
 

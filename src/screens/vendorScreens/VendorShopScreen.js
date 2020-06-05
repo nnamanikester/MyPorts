@@ -106,7 +106,7 @@ const VendorShopScreen = ({navigation}) => {
           <Row style={{justifyContent: 'space-between', paddingHorizontal: 10}}>
             <Text style={styles.title}>Ratings and Reviews</Text>
             <Link onClick={() => navigation.navigate('VendorShopReview')}>
-              <Icon name={'ios-arrow-forward'} />
+              <Icon name={'md-arrow-forward'} />
             </Link>
           </Row>
 

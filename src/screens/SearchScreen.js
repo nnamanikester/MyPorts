@@ -8,6 +8,11 @@ import {
   Row,
   ListItem,
   Link,
+  ActionBar,
+  TextInput,
+  Button,
+  Select,
+  Radio,
 } from '../components/common';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
@@ -27,6 +32,7 @@ import FeaturedProduct from '../components/FeaturedProduct';
 const SearchScreen = ({navigation}) => {
   const [keyword, setKeyword] = useState('');
   const [searching, setSearching] = useState(false);
+  const [isFilter, setIsFilter] = useState(false);
 
   const handleSearch = (val) => {
     if (!searching) setSearching(true);
@@ -35,6 +41,113 @@ const SearchScreen = ({navigation}) => {
 
   return (
     <>
+      <ActionBar
+        show={isFilter}
+        onCloseButtonClick={() => setIsFilter(false)}
+        headerText="Filter Search">
+        <Text h3>Filter Products By:</Text>
+        <Spacer />
+        <View>
+          <Text heading>Name</Text>
+          <Spacer />
+          <TextInput placeholder="Enter product name" />
+        </View>
+
+        <Spacer />
+
+        <View>
+          <Text heading>Vendor Name</Text>
+          <Spacer />
+          <TextInput placeholder="Enter vendor name" />
+        </View>
+
+        <Spacer />
+
+        <View>
+          <Text heading>Category</Text>
+          <Spacer />
+          <Select
+            type="dropdown"
+            selected={1}
+            data={[
+              {label: '', value: ''},
+              {label: 'Men', value: 1},
+              {label: 'Women', value: 2},
+              {label: 'Babies', value: 3},
+              {label: 'Computer', value: 3},
+              {label: 'Kitchen', value: 4},
+            ]}
+          />
+        </View>
+
+        <Spacer />
+
+        <View>
+          <Text heading>Price range</Text>
+          <Spacer />
+          <Select
+            type="dropdown"
+            selected={1}
+            data={[
+              {label: '', value: ''},
+              {label: '100,000 - 500,000', value: 1},
+              {label: '50,000 - 99,999', value: 2},
+              {label: '10,000 - 49,999', value: 3},
+              {label: '1,000 - 10,999', value: 3},
+              {label: 'Less than 1,000', value: 4},
+            ]}
+          />
+        </View>
+
+        <Spacer />
+
+        <View>
+          <Text heading>State</Text>
+          <Spacer />
+          <Select
+            type="dropdown"
+            selected={1}
+            data={[
+              {label: '', value: ''},
+              {label: 'Abia', value: 1},
+              {label: 'Ebonyi', value: 2},
+              {label: 'Enugu', value: 3},
+              {label: 'Lagos', value: 3},
+              {label: 'Kaduna', value: 4},
+            ]}
+          />
+        </View>
+
+        <Spacer />
+
+        <View>
+          <Text h3>Sort By:</Text>
+          <Spacer />
+          <Radio
+            selected={1}
+            data={[
+              {label: 'Date', value: 1},
+              {label: 'Product Name', value: 2},
+              {label: 'Vendor Name', value: 3},
+              {label: 'Category Name', value: 3},
+              {label: 'State', value: 4},
+            ]}
+          />
+        </View>
+
+        <Spacer />
+
+        <Spacer large />
+        <Row style={{justifyContent: 'space-around'}}>
+          <Button type="ghost" size="small" onClick={() => setIsFilter(false)}>
+            Clear
+          </Button>
+          <Button size="small" onClick={() => setIsFilter(false)}>
+            <Text color="#fff">Apply</Text>
+          </Button>
+        </Row>
+        <Spacer large />
+      </ActionBar>
       <Header
         title="Search"
         headerLeft={
@@ -51,6 +164,7 @@ const SearchScreen = ({navigation}) => {
             onChangeText={handleSearch}
             value={keyword}
             placeholder="What are you looking for?"
+            onFilterClick={() => setIsFilter(true)}
           />
 
           <Spacer medium />

@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {TextInput, Text, Icon} from './common';
+import {TextInput, Text, Icon, Link} from './common';
 import {TextInput as TeIp} from 'react-native';
 import {StyleSheet, View} from 'react-native';
 
-const SearchBar = ({placeholder, onChangeText, value}) => {
+const SearchBar = ({placeholder, onChangeText, value, onFilterClick}) => {
   return (
     <View style={styles.container}>
       <TextInput
@@ -13,6 +13,11 @@ const SearchBar = ({placeholder, onChangeText, value}) => {
         iconLeft={<Icon name="ios-search" />}
         placeholder={placeholder}
         onChangeText={onChangeText}
+        iconRight={
+          <Link onClick={onFilterClick}>
+            <Icon name="ios-options" />
+          </Link>
+        }
       />
     </View>
   );

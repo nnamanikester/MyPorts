@@ -8,7 +8,8 @@ import {
   Card,
   Column,
   Row,
-  Toast,
+  ActionBar,
+  Radio,
 } from '../../components/common';
 import Header from '../../components/Header';
 import VendorList from '../../components/VendorList';
@@ -22,13 +23,12 @@ const VendorListScreen = ({navigation}) => {
 
   return (
     <>
-      {showSearchBar && (
-        <Toast
-          timeout={10000}
-          onTimeout={() => setShowSearchBar(false)}
-          message="{'here \n I am \n COmmint \n uuib \n'}. Let's learn to write a code that is understandale by other programmers"
-        />
-      )}
+      <ActionBar
+        show={showSearchBar}
+        onCloseButtonClick={() => setShowSearchBar(false)}>
+        <Radio selected={2} data={[{label: 'Date'}, {label: 'Month'}]} />
+      </ActionBar>
+
       <Header
         isCart
         title="Vendors"
