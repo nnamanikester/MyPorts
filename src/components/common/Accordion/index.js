@@ -29,6 +29,7 @@ const Accordion = ({children, initialIndex}) => {
                   expanded={true}
                   onExpand={() => expand(children.indexOf(Child))}
                   props={Child.props}
+                  key={`"${children.indexOf(Child)}"`}
                 />
               );
             }
@@ -38,6 +39,7 @@ const Accordion = ({children, initialIndex}) => {
                 children={Child.props.children}
                 onExpand={() => expand(children.indexOf(Child))}
                 props={Child.props}
+                key={`"${children.indexOf(Child)}"`}
                 expanded={false}
               />
             );
@@ -49,6 +51,7 @@ const Accordion = ({children, initialIndex}) => {
           expanded={true}
           onExpand={() => expand(0)}
           props={Child.props}
+          key={`"${children.indexOf(Child)}"`}
           children={Children.props.children}
         />
       )}
@@ -61,6 +64,7 @@ const styles = StyleSheet.create({
     borderColor: primaryColor,
     borderRadius: 5,
     marginBottom: 10,
+    backgroundColor: '#fff',
   },
 });
 

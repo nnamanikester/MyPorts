@@ -146,64 +146,52 @@ const SingleProductScreen = ({navigation}) => {
 
           <Spacer />
 
-          <Text size={20}>Product Description</Text>
-
-          <Spacer />
-
           <View>
             <Accordion initialIndex={0}>
-              <AccordionItem onClick={() => console.log(0)}>
-                <Text>hello Everyone</Text>
+              <AccordionItem headerText="Product Description">
+                <Text>
+                  Enjoy the beauty of italian cotton all over your body. This
+                  item will fit your body and warm you up all over and during
+                  spring. This item will fit your body and warm you up all over
+                  and during spring. {'\n\n'}
+                  And over and over again, this is the text.
+                </Text>
               </AccordionItem>
-              <AccordionItem onClick={() => console.log(1)}>
-                <Text>Yes I can hear you</Text>
+              <AccordionItem headerText="Product Details">
+                <ListItem
+                  left={<Text heading>Quantity</Text>}
+                  right={<Text>29</Text>}
+                />
+                <ListItem
+                  left={<Text heading>Sizes</Text>}
+                  right={<Text>S/M/L/XL/XXL</Text>}
+                />
+                <ListItem
+                  left={<Text heading>Price for 1</Text>}
+                  right={<Text>N 2,500</Text>}
+                />
+                <ListItem
+                  left={<Text heading>Shipping Cost</Text>}
+                  right={<Text>Free</Text>}
+                />
+                <ListItem
+                  left={<Text heading>Discount</Text>}
+                  right={<Text>10% / 20 Pieces</Text>}
+                />
+                <ListItem
+                  left={<Text heading>Location</Text>}
+                  right={<Text>Victoria Island, Lagos.</Text>}
+                />
+                <ListItem
+                  left={<Text heading>Delivery Period</Text>}
+                  right={<Text>3 Days Max.</Text>}
+                />
               </AccordionItem>
             </Accordion>
-            <Text>
-              Enjoy the beauty of italian cotton all over your body. This item
-              will fit your body and warm you up all over and during spring.
-              This item will fit your body and warm you up all over and during
-              spring.
-            </Text>
             <Spacer />
-            <Text>And over and over again, this is the text.</Text>
           </View>
 
           <Spacer medium />
-
-          <Text size={20}>Product Details</Text>
-          <Spacer />
-
-          <ListItem
-            left={<Text heading>Quantity</Text>}
-            right={<Text>29</Text>}
-          />
-          <ListItem
-            left={<Text heading>Sizes</Text>}
-            right={<Text>S/M/L/XL/XXL</Text>}
-          />
-          <ListItem
-            left={<Text heading>Price for 1</Text>}
-            right={<Text>N 2,500</Text>}
-          />
-          <ListItem
-            left={<Text heading>Shipping Cost</Text>}
-            right={<Text>Free</Text>}
-          />
-          <ListItem
-            left={<Text heading>Discount</Text>}
-            right={<Text>10% / 20 Pieces</Text>}
-          />
-          <ListItem
-            left={<Text heading>Location</Text>}
-            right={<Text>Victoria Island, Lagos.</Text>}
-          />
-          <ListItem
-            left={<Text heading>Delivery Period</Text>}
-            right={<Text>3 Days Max.</Text>}
-          />
-
-          <Spacer />
 
           <Link onClick={() => navigation.navigate('VendorShop')}>
             Vendor Details
