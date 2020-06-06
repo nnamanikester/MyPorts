@@ -11,6 +11,8 @@ import {
   Link,
   ListItem,
   Select,
+  Accordion,
+  AccordionItem,
 } from '../components/common';
 import Header from '../components/Header';
 import {bag1, shoe1, female4} from '../assets/images';
@@ -149,6 +151,14 @@ const SingleProductScreen = ({navigation}) => {
           <Spacer />
 
           <View>
+            <Accordion initialIndex={0}>
+              <AccordionItem onClick={() => console.log(0)}>
+                <Text>hello Everyone</Text>
+              </AccordionItem>
+              <AccordionItem onClick={() => console.log(1)}>
+                <Text>Yes I can hear you</Text>
+              </AccordionItem>
+            </Accordion>
             <Text>
               Enjoy the beauty of italian cotton all over your body. This item
               will fit your body and warm you up all over and during spring.

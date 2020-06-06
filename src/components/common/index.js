@@ -25,3 +25,5 @@ export * from './Radio';
 export * from './ActionBar';
 export * from './Toast';
 export * from './FAB';
+export * from './Accordion';
+export * from './AccordionItem';
