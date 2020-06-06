@@ -41,6 +41,7 @@ const SingleProductScreen = ({ navigation }) => {
   const [likeCount, setLikeCount] = useState(123);
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
+  const [showCommentBox, setShowCommentBox] = useState(false);
 
   return (
     <>
@@ -275,6 +276,25 @@ const SingleProductScreen = ({ navigation }) => {
                 <Icon name={'md-arrow-forward'} />
               </Link>
             </Row>
+            <View>
+              <Spacer medium />
+              {showCommentBox && (
+                <TextInput rows={8} placeholder="Write your comment..." />
+              )}
+
+              <Spacer />
+              {!showCommentBox && (
+                <Button onClick={() => setShowCommentBox(true)}>
+                  <Text color="#fff">Write a comment</Text>
+                </Button>
+              )}
+              {showCommentBox && (
+                <Button onClick={() => setShowCommentBox(false)}>
+                  <Text color="#fff">Submit</Text>
+                </Button>
+              )}
+              <Spacer medium />
+            </View>
             <Comment
               date="20/02/2020"
               image={female4}

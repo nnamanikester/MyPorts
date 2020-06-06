@@ -17,7 +17,7 @@ const AccordionItem = ({ children, expanded, index, onExpand, props }) => {
     bodyStyle,
   } = props;
 
-  // Call back functions to be run when the header is clicked.
+  // Callback functions to be run when the header is clicked.
   const callbacks = () => {
     onExpand();
     if (onClick) {
@@ -28,11 +28,12 @@ const AccordionItem = ({ children, expanded, index, onExpand, props }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
+        on
         style={headerContainerStyle}
         onPress={callbacks}
         activeOpacity={0.7}
         style={styles.header}>
-        <Text style={{ ...styles.headerText, headerTextStyle }}>
+        <Text style={{ ...styles.headerText, ...headerTextStyle }}>
           {headerText}
         </Text>
         <Icon
@@ -91,7 +92,7 @@ AccordionItem.propTypes = {
   /**
    * The text to be displayed on the header of the Accordion.
    */
-  headerText: PropTypes.string.isRequired,
+  headerText: PropTypes.string,
   /**
    * A react StyleSheet object to be applied on the `headerText`.
    */
