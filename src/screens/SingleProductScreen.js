@@ -15,8 +15,10 @@ import {
   Accordion,
   AccordionItem,
   TextInput,
+  Row,
 } from '../components/common';
 import Header from '../components/Header';
+import Comment from '../components/Comment';
 import { bag1, shoe1, female4 } from '../assets/images';
 import { grayColor, info } from '../components/common/variables';
 
@@ -81,7 +83,7 @@ const SingleProductScreen = ({ navigation }) => {
           </View>
         </Swiper>
         <View style={styles.titleContainer}>
-          <Text style={styles.title} size={25}>
+          <Text style={styles.title} color="#fff" size={25}>
             Water Proof Watch With Leather Belt
           </Text>
           <Text style={styles.category} heading>
@@ -258,7 +260,43 @@ const SingleProductScreen = ({ navigation }) => {
               <Text>Add to favorites</Text>
             </Button>
           </View>
+
+          <Spacer medium />
+
+          <View style={styles.container}>
+            <Row
+              style={{
+                justifyContent: 'space-between',
+              }}>
+              <Text style={styles.title} size={20}>
+                Comments
+              </Text>
+              <Link onClick={() => navigation.navigate('VendorShopReview')}>
+                <Icon name={'md-arrow-forward'} />
+              </Link>
+            </Row>
+            <Comment
+              date="20/02/2020"
+              image={female4}
+              name="Mark Zukerberg"
+              comment="This poduct is extremely good. i love it. And it shipped within 3 ays like promised."
+            />
+            <Comment
+              date="20/02/2020"
+              image={female4}
+              name="Mark Zukerberg"
+              comment="This poduct is extremely good. i love it. And it shipped within 3 ays like promised."
+            />
+            <Comment
+              date="20/02/2020"
+              image={female4}
+              name="Mark Zukerberg"
+              comment="This poduct is extremely good. i love it. And it shipped within 3 ays like promised."
+            />
+            <Link>See All Comments</Link>
+          </View>
         </View>
+        <Spacer large />
       </Layout>
     </>
   );
@@ -274,7 +312,7 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 10,
-    paddingBottom: 100,
+    paddingBottom: 10,
   },
   titleContainer: {
     position: 'absolute',
@@ -286,7 +324,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'SFPD-regular',
-    color: '#fff',
   },
   activities: {
     height: 60,
