@@ -118,7 +118,7 @@ const Drawer = ({ navigation, logUserOut }) => {
         label={({ color, focused }) => (
           <Text color={color}>Contact Support</Text>
         )}
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.navigate('ContactSupport')}
       />
 
       <DrawerItem

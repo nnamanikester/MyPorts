@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import {
   Layout,
   Modal,
@@ -11,11 +11,11 @@ import {
   Row,
 } from '../../components/common';
 import Header from '../../components/Header';
-import {TouchableOpacity, StyleSheet, View} from 'react-native';
-import {primaryColor, info} from '../../components/common/variables';
-import {logUserOut} from '../../redux/actions/AuthActions';
+import { TouchableOpacity, StyleSheet, View } from 'react-native';
+import { primaryColor, info } from '../../components/common/variables';
+import { logUserOut } from '../../redux/actions/AuthActions';
 
-const SettingsScreen = ({navigation, logUserOut}) => {
+const SettingsScreen = ({ navigation, logUserOut }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -90,22 +90,22 @@ const SettingsScreen = ({navigation, logUserOut}) => {
           <Spacer medium />
 
           <Text color={primaryColor} style={styles.title}>
-            Support
+            About
           </Text>
 
           <Spacer />
 
           <ListItem
-            onClick={() => navigation.navigate('LegalAndTerms')}
-            body={<Text size={17}>Legal and Terms</Text>}
+            onClick={() => navigation.navigate('About')}
+            body={<Text size={17}>About Us</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
 
           <Spacer />
 
           <ListItem
-            onClick={() => navigation.navigate('Help')}
-            body={<Text size={17}>Help</Text>}
+            onClick={() => navigation.navigate('LegalAndTerms')}
+            body={<Text size={17}>Legal and Terms</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
 
@@ -120,21 +120,114 @@ const SettingsScreen = ({navigation, logUserOut}) => {
           <Spacer medium />
 
           <Text color={primaryColor} style={styles.title}>
-            Preferences
+            Help & feedback
           </Text>
+
+          <Spacer />
+
           <ListItem
-            onClick={() => setShowModal(true)}
-            body={<Text size={17}>Data Control</Text>}
+            onClick={() => navigation.navigate('ContactSupport')}
+            body={<Text size={17}>Contact Support</Text>}
             right={<Icon size={20} color={info} name="ios-arrow-forward" />}
           />
 
           <Spacer />
 
           <ListItem
-            onClick={() => logUserOut()}
-            body={<Text size={17}>Logout</Text>}
-            right={<Icon size={20} color={info} name="ios-power" />}
+            onClick={() => navigation.navigate('ContactSupport')}
+            body={
+              <>
+                <Text size={17}>Have an Idea?</Text>
+                <Text note>Suggest a feature</Text>
+              </>
+            }
+            right={
+              <Icon
+                size={20}
+                type="FontAwesome"
+                color={info}
+                name="external-link"
+              />
+            }
           />
+
+          <Spacer />
+
+          <ListItem
+            onClick={() => navigation.navigate('ContactSupport')}
+            body={
+              <>
+                <Text size={17}>Enjoying our app?</Text>
+                <Text note>Rate it</Text>
+              </>
+            }
+            right={
+              <Icon
+                size={20}
+                type="FontAwesome"
+                color={info}
+                name="external-link"
+              />
+            }
+          />
+
+          <Spacer medium />
+
+          <Text color={primaryColor} style={styles.title}>
+            Connect
+          </Text>
+
+          <ListItem
+            onClick={() => {}}
+            body={<Text size={17}>Follow us on Twitter</Text>}
+            right={
+              <Icon
+                size={20}
+                type="FontAwesome"
+                color={info}
+                name="external-link"
+              />
+            }
+          />
+
+          <Spacer />
+
+          <ListItem
+            onClick={() => {}}
+            body={<Text size={17}>Like us on Facebook</Text>}
+            right={
+              <Icon
+                size={20}
+                type="FontAwesome"
+                color={info}
+                name="external-link"
+              />
+            }
+          />
+
+          <Spacer />
+
+          <ListItem
+            onClick={() => {}}
+            body={<Text size={17}>Follow us on Instagram</Text>}
+            right={
+              <Icon
+                size={20}
+                type="FontAwesome"
+                color={info}
+                name="external-link"
+              />
+            }
+          />
+
+          <Spacer />
+
+          <Spacer medium />
+
+          <View>
+            <Text size={20}>Version</Text>
+            <Text note>1.0.0</Text>
+          </View>
 
           <Spacer large />
           <Spacer large />
@@ -155,4 +248,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, {logUserOut})(SettingsScreen);
+export default connect(null, { logUserOut })(SettingsScreen);
