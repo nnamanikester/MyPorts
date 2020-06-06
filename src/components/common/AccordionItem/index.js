@@ -54,7 +54,7 @@ const AccordionItem = ({children, expanded, index, onExpand, props}) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 1,
+    marginBottom: 5,
     borderColor: primaryColor,
     borderRadius: 5,
   },
