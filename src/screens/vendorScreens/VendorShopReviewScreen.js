@@ -1,11 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Text, Layout, Icon, Link} from '../../components/common';
+import {
+  Text,
+  Layout,
+  Icon,
+  Row,
+  Spacer,
+  Divider,
+  Link,
+  FAB,
+  TextInput,
+  Rating,
+  Button,
+  Modal,
+} from '../../components/common';
 import Header from '../../components/Header';
 import Comment from '../../components/Comment';
 import {female4} from '../../assets/images';
 
 const VendorShopReviewScreen = ({navigation}) => {
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <>
       <Header
@@ -77,6 +92,29 @@ const VendorShopReviewScreen = ({navigation}) => {
           />
         </View>
       </Layout>
+      <FAB onClick={() => setOpenModal(true)} size={60}>
+        <Icon color="#fff" name="md-create" />
+      </FAB>
+
+      <Modal show={openModal}>
+        <Text heading>Write a Review</Text>
+        <Spacer medium />
+        <Rating />
+        <Spacer medium />
+        <View style={{width: '100%'}}>
+          <TextInput placeholder="Comment..." autoFocus multiline />
+        </View>
+        <Divider />
+        <Row style={{justifyContent: 'space-between'}}>
+          <Button onClick={() => setOpenModal(false)} size="small" type="ghost">
+            Cancel
+          </Button>
+          <Spacer />
+          <Button onClick={() => setOpenModal(false)} size="small">
+            <Text color="#fff">Submit</Text>
+          </Button>
+        </Row>
+      </Modal>
     </>
   );
 };
