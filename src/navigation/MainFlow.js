@@ -9,7 +9,6 @@ import ProductsByCategory from '../screens/ProductsByCategoryScreen';
 import SingleProduct from '../screens/SingleProductScreen';
 import ProductComments from '../screens/ProductCommentsScreen';
 import Profile from '../screens/ProfileScreen';
-import Favourites from '../screens/FavoritesScreen';
 import ContactSupport from '../screens/ContactSupportScreen';
 import SavedItems from '../screens/SavedItemsScreen';
 import Coupons from '../screens/CouponsScreen';
@@ -70,7 +69,6 @@ const StackNavigation = () => {
       <Stack.Screen name="SingleProduct" component={SingleProduct} />
       <Stack.Screen name="ProductComments" component={ProductComments} />
       <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="Favourites" component={Favourites} />
       <Stack.Screen name="ContactSupport" component={ContactSupport} />
       <Stack.Screen name="ReferAndEarn" component={ReferAndEarn} />
       <Stack.Screen name="Coupons" component={Coupons} />

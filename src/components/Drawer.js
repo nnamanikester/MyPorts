@@ -48,14 +48,6 @@ const Drawer = ({ navigation, logUserOut }) => {
 
       <DrawerItem
         icon={({ size, color }) => (
-          <Icon size={size} style={{ color }} name="ios-heart-empty" />
-        )}
-        label={({ color, focused }) => <Text color={color}>Favourites</Text>}
-        onPress={() => navigation.navigate('Search')}
-      />
-
-      <DrawerItem
-        icon={({ size, color }) => (
           <>
             <Icon size={size} style={{ color }} name="ios-bookmark" />
             <Badge style={{ elevation: 1 }} color={danger} />
