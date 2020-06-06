@@ -196,63 +196,68 @@ const SingleProductScreen = ({ navigation }) => {
                   left={<Text heading>Delivery Period</Text>}
                   right={<Text>3 Days Max.</Text>}
                 />
+                <Spacer />
+                <Link onClick={() => navigation.navigate('VendorShop')}>
+                  Vendor Details
+                </Link>
               </AccordionItem>
             </Accordion>
-            <Spacer />
           </View>
 
-          <Spacer medium />
+          <Spacer />
 
-          <Link onClick={() => navigation.navigate('VendorShop')}>
-            Vendor Details
-          </Link>
+          <View style={styles.container}>
+            <Spacer medium />
 
-          <Spacer medium />
-
-          <View>
-            <Text heading>Color</Text>
-            <Select
-              type="dropdown"
-              selected={selectedColor}
-              onChange={(item) => {
-                setSelectedColor(item);
-              }}
-              data={colors}
-            />
-            <Spacer />
-            <View
-              style={{ flexDirection: 'row', width: '100%', paddingRight: 10 }}>
-              <Column size="6">
-                <Text heading>Size</Text>
-                <Select
-                  type="dropdown"
-                  selected={selectedSize}
-                  onChange={(item) => {
-                    setSelectedSize(item);
-                  }}
-                  data={sizes}
-                />
-              </Column>
+            <View>
+              <Text heading>Color</Text>
+              <Select
+                type="dropdown"
+                selected={selectedColor}
+                onChange={(item) => {
+                  setSelectedColor(item);
+                }}
+                data={colors}
+              />
               <Spacer />
-              <Column size="6">
-                <Text heading>Quantity</Text>
-                <TextInput
-                  keyboardType="number-pad"
-                  placeholder="Enter quantity"
-                />
-              </Column>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                  paddingRight: 10,
+                }}>
+                <Column size="6">
+                  <Text heading>Size</Text>
+                  <Select
+                    type="dropdown"
+                    selected={selectedSize}
+                    onChange={(item) => {
+                      setSelectedSize(item);
+                    }}
+                    data={sizes}
+                  />
+                </Column>
+                <Spacer />
+                <Column size="6">
+                  <Text heading>Quantity</Text>
+                  <TextInput
+                    keyboardType="number-pad"
+                    placeholder="Enter quantity"
+                  />
+                </Column>
+              </View>
             </View>
+
+            <Spacer />
+
+            <Button>
+              <Text color="#fff">Add to cart</Text>
+            </Button>
+            <Spacer />
+            <Button type="outline">
+              <Text>Add to favorites</Text>
+            </Button>
           </View>
-
-          <Spacer />
-
-          <Button>
-            <Text color="#fff">Add to cart</Text>
-          </Button>
-          <Spacer />
-          <Button type="outline">
-            <Text>Add to favorites</Text>
-          </Button>
         </View>
       </Layout>
     </>

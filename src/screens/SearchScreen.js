@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Layout,
   Spacer,
@@ -17,7 +17,7 @@ import {
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import Product from '../components/Product';
-import {TouchableOpacity, ScrollView, StyleSheet, View} from 'react-native';
+import { TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native';
 import {
   female1,
   female2,
@@ -29,7 +29,7 @@ import {
 } from '../assets/images';
 import FeaturedProduct from '../components/FeaturedProduct';
 
-const SearchScreen = ({navigation}) => {
+const SearchScreen = ({ navigation }) => {
   const [keyword, setKeyword] = useState('');
   const [searching, setSearching] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
@@ -70,12 +70,12 @@ const SearchScreen = ({navigation}) => {
             type="dropdown"
             selected={1}
             data={[
-              {label: '', value: ''},
-              {label: 'Men', value: 1},
-              {label: 'Women', value: 2},
-              {label: 'Babies', value: 3},
-              {label: 'Computer', value: 3},
-              {label: 'Kitchen', value: 4},
+              { label: '', value: '' },
+              { label: 'Men', value: 1 },
+              { label: 'Women', value: 2 },
+              { label: 'Babies', value: 3 },
+              { label: 'Computer', value: 3 },
+              { label: 'Kitchen', value: 4 },
             ]}
           />
         </View>
@@ -85,35 +85,31 @@ const SearchScreen = ({navigation}) => {
         <View>
           <Text heading>Price range</Text>
           <Spacer />
-          <Select
-            type="dropdown"
-            selected={1}
-            data={[
-              {label: '', value: ''},
-              {label: '100,000 - 500,000', value: 1},
-              {label: '50,000 - 99,999', value: 2},
-              {label: '10,000 - 49,999', value: 3},
-              {label: '1,000 - 10,999', value: 3},
-              {label: 'Less than 1,000', value: 4},
-            ]}
-          />
+          <Row>
+            <Column size="6">
+              <TextInput keyboardType="number-pad" placeholder="Min" />
+            </Column>
+            <Column size="6">
+              <TextInput keyboardType="number-pad" placeholder="Max" />
+            </Column>
+          </Row>
         </View>
 
         <Spacer />
 
         <View>
-          <Text heading>State</Text>
+          <Text heading>Location</Text>
           <Spacer />
           <Select
             type="dropdown"
             selected={1}
             data={[
-              {label: '', value: ''},
-              {label: 'Abia', value: 1},
-              {label: 'Ebonyi', value: 2},
-              {label: 'Enugu', value: 3},
-              {label: 'Lagos', value: 3},
-              {label: 'Kaduna', value: 4},
+              { label: '', value: '' },
+              { label: 'Abia', value: 1 },
+              { label: 'Ebonyi', value: 2 },
+              { label: 'Enugu', value: 3 },
+              { label: 'Lagos', value: 3 },
+              { label: 'Kaduna', value: 4 },
             ]}
           />
         </View>
@@ -126,11 +122,11 @@ const SearchScreen = ({navigation}) => {
           <Radio
             selected={1}
             data={[
-              {label: 'Date', value: 1},
-              {label: 'Product Name', value: 2},
-              {label: 'Vendor Name', value: 3},
-              {label: 'Category Name', value: 3},
-              {label: 'State', value: 4},
+              { label: 'Date', value: 1 },
+              { label: 'Product Name', value: 2 },
+              { label: 'Vendor Name', value: 3 },
+              { label: 'Category Name', value: 3 },
+              { label: 'State', value: 4 },
             ]}
           />
         </View>
@@ -138,7 +134,7 @@ const SearchScreen = ({navigation}) => {
         <Spacer />
 
         <Spacer large />
-        <Row style={{justifyContent: 'space-around'}}>
+        <Row style={{ justifyContent: 'space-around' }}>
           <Button type="ghost" size="small" onClick={() => setIsFilter(false)}>
             Clear
           </Button>
@@ -175,7 +171,7 @@ const SearchScreen = ({navigation}) => {
                 <Column size="10">
                   <Text heading>Recent Searches</Text>
                 </Column>
-                <Column size="2" style={{alignItems: 'flex-end'}}>
+                <Column size="2" style={{ alignItems: 'flex-end' }}>
                   <Link>View All</Link>
                 </Column>
               </Row>
@@ -203,7 +199,7 @@ const SearchScreen = ({navigation}) => {
                 <Column size="10">
                   <Text heading>Recommended for you</Text>
                 </Column>
-                <Column size="2" style={{alignItems: 'flex-end'}}>
+                <Column size="2" style={{ alignItems: 'flex-end' }}>
                   <Link>View All</Link>
                 </Column>
               </Row>
@@ -238,7 +234,7 @@ const SearchScreen = ({navigation}) => {
           {searching && (
             <View>
               <Row>
-                <Column size="6" style={{alignItems: 'center'}}>
+                <Column size="6" style={{ alignItems: 'center' }}>
                   <Product
                     quantity="89"
                     image={female1}
@@ -247,7 +243,7 @@ const SearchScreen = ({navigation}) => {
                     onClick={() => navigation.navigate('SingleProduct')}
                   />
                 </Column>
-                <Column style={{alignItems: 'center'}} size="6">
+                <Column style={{ alignItems: 'center' }} size="6">
                   <Product
                     quantity="14"
                     image={male1}
@@ -256,7 +252,7 @@ const SearchScreen = ({navigation}) => {
                     onClick={() => navigation.navigate('SingleProduct')}
                   />
                 </Column>
-                <Column size="6" style={{alignItems: 'center'}}>
+                <Column size="6" style={{ alignItems: 'center' }}>
                   <Product
                     image={female2}
                     name="Female belt holder"
@@ -265,7 +261,7 @@ const SearchScreen = ({navigation}) => {
                     onClick={() => navigation.navigate('SingleProduct')}
                   />
                 </Column>
-                <Column size="6" style={{alignItems: 'center'}}>
+                <Column size="6" style={{ alignItems: 'center' }}>
                   <Product
                     quantity="45"
                     image={female3}
@@ -274,7 +270,7 @@ const SearchScreen = ({navigation}) => {
                     onClick={() => navigation.navigate('SingleProduct')}
                   />
                 </Column>
-                <Column size="6" style={{alignItems: 'center'}}>
+                <Column size="6" style={{ alignItems: 'center' }}>
                   <Product
                     quantity="15"
                     image={shoe1}
@@ -283,7 +279,7 @@ const SearchScreen = ({navigation}) => {
                     onClick={() => navigation.navigate('SingleProduct')}
                   />
                 </Column>
-                <Column size="6" style={{alignItems: 'center'}}>
+                <Column size="6" style={{ alignItems: 'center' }}>
                   <Product
                     quantity="20"
                     image={female3}
@@ -292,7 +288,7 @@ const SearchScreen = ({navigation}) => {
                     onClick={() => navigation.navigate('SingleProduct')}
                   />
                 </Column>
-                <Column size="6" style={{alignItems: 'center'}}>
+                <Column size="6" style={{ alignItems: 'center' }}>
                   <Product
                     quantity="8"
                     image={female3}
