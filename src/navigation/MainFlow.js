@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import TabNavigation from './MainFlows/MainTabNavigation';
 import DraweNavigation from './MainFlows/MainDrawerNavigation';
 import Orders from '../screens/OrdersScreen';
@@ -7,6 +7,7 @@ import OrderDetails from '../screens/OrderDetailsScreen';
 import Search from '../screens/SearchScreen';
 import ProductsByCategory from '../screens/ProductsByCategoryScreen';
 import SingleProduct from '../screens/SingleProductScreen';
+import ProductComments from '../screens/ProductCommentsScreen';
 import Profile from '../screens/ProfileScreen';
 
 // Vendor Screens
@@ -62,6 +63,7 @@ const StackNavigation = () => {
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="ProductsByCategory" component={ProductsByCategory} />
       <Stack.Screen name="SingleProduct" component={SingleProduct} />
+      <Stack.Screen name="ProductComments" component={ProductComments} />
       <Stack.Screen name="Profile" component={Profile} />
 
       {/* Vendor Screens */}

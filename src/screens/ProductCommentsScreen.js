@@ -13,19 +13,18 @@ import {
   Rating,
   Button,
   Modal,
-} from '../../components/common';
-import Header from '../../components/Header';
-import Comment from '../../components/Comment';
-import { female4 } from '../../assets/images';
+} from '../components/common';
+import Header from '../components/Header';
+import Comment from '../components/Comment';
+import { female4 } from '../assets/images';
 
-const VendorShopReviewScreen = ({ navigation }) => {
+const ProductCommentsScreen = ({ navigation }) => {
   const [openModal, setOpenModal] = useState(false);
 
   return (
     <>
       <Header
-        title="Shop and Smile"
-        subtitle="Ratings and Reviews"
+        title="Comments"
         headerLeft={
           <Link onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" color="#fff" />
@@ -33,64 +32,56 @@ const VendorShopReviewScreen = ({ navigation }) => {
         }
       />
       <Layout>
-        <Spacer />
-        <Text h2>Shhop and Smile</Text>
-        <Spacer />
         <View style={styles.container}>
+          <Spacer />
+          <Text h2>Leather Bag</Text>
+          <Spacer />
           <Comment
             name="John Kester"
             comment="Similique molestiae placeat qui molestias voluptate. Autem autem aut quo nobis officia illum deleniti omnis dolorum."
             image={female4}
-            s4={3}
             date="02/03/2020"
           />
           <Comment
             name="John Kester"
             comment="Similique molestiae placeat qui molestias voluptate. Autem autem aut quo nobis officia illum deleniti omnis dolorum."
             image={female4}
-            s4={3}
             date="02/03/2020"
           />
           <Comment
             name="John Kester"
             comment="Similique molestiae placeat qui molestias voluptate. Autem autem aut quo nobis officia illum deleniti omnis dolorum."
             image={female4}
-            s4={3}
             date="02/03/2020"
           />
           <Comment
             name="John Kester"
             comment="Similique molestiae placeat qui molestias voluptate. Autem autem aut quo nobis officia illum deleniti omnis dolorum."
             image={female4}
-            s4={3}
             date="02/03/2020"
           />
           <Comment
             name="John Kester"
             comment="Similique molestiae placeat qui molestias voluptate. Autem autem aut quo nobis officia illum deleniti omnis dolorum."
             image={female4}
-            s4={3}
             date="02/03/2020"
           />
           <Comment
             name="John Kester"
             comment="Similique molestiae placeat qui molestias voluptate. Autem autem aut quo nobis officia illum deleniti omnis dolorum."
             image={female4}
-            s4={3}
             date="02/03/2020"
           />
           <Comment
             name="John Kester"
             comment="Similique molestiae placeat qui molestias voluptate. Autem autem aut quo nobis officia illum deleniti omnis dolorum."
             image={female4}
-            s4={3}
             date="02/03/2020"
           />
           <Comment
             name="John Kester"
             comment="Similique molestiae placeat qui molestias voluptate. Autem autem aut quo nobis officia illum deleniti omnis dolorum."
             image={female4}
-            s4={3}
             date="02/03/2020"
           />
         </View>
@@ -128,4 +119,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VendorShopReviewScreen;
+export default ProductCommentsScreen;

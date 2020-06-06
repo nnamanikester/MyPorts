@@ -271,7 +271,7 @@ const SingleProductScreen = ({ navigation }) => {
               <Text style={styles.title} size={20}>
                 Comments
               </Text>
-              <Link onClick={() => navigation.navigate('VendorShopReview')}>
+              <Link onClick={() => navigation.navigate('ProductComments')}>
                 <Icon name={'md-arrow-forward'} />
               </Link>
             </Row>
@@ -293,7 +293,9 @@ const SingleProductScreen = ({ navigation }) => {
               name="Mark Zukerberg"
               comment="This poduct is extremely good. i love it. And it shipped within 3 ays like promised."
             />
-            <Link>See All Comments</Link>
+            <Link onClick={() => navigation.navigate('ProductComments')}>
+              See All Comments
+            </Link>
           </View>
         </View>
         <Spacer large />

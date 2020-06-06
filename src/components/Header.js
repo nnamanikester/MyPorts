@@ -1,19 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Text, Badge} from './common';
-import {primaryColor, lightColor} from './common/variables';
-import {danger} from './common/variables';
+import { View, StyleSheet } from 'react-native';
+import { Text, Badge } from './common';
+import { primaryColor, lightColor } from './common/variables';
+import { danger } from './common/variables';
 
-const Header = ({
-  onLeftClick,
-  isCart,
-  hideHeader,
-  headerRight,
-  headerLeft,
-  title,
-  subtitle,
-}) => {
+const Header = ({ isCart, hideHeader, headerRight, headerLeft, title }) => {
   if (hideHeader) return null;
 
   return (
@@ -25,17 +17,12 @@ const Header = ({
         <Text style={styles.titleStyle} size={17}>
           {title}
         </Text>
-        {subtitle && (
-          <Text color="#fff" note>
-            {subtitle}
-          </Text>
-        )}
       </View>
       {headerRight && (
         <View style={styles.rightContainerStyle}>
           {headerRight}
           {isCart && (
-            <Badge style={{elevation: 1, top: 8, left: 30}} color={danger} />
+            <Badge style={{ elevation: 1, top: 8, left: 30 }} color={danger} />
           )}
         </View>
       )}
@@ -55,6 +42,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   titleContainerStyle: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
