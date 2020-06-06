@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
-import {TouchableOpacity, StyleSheet, View, Image} from 'react-native';
+import React, { useState } from 'react';
+import Swiper from 'react-native-swiper';
+import { TouchableOpacity, StyleSheet, View, Image } from 'react-native';
 import {
   Layout,
   Text,
@@ -13,23 +14,31 @@ import {
   Select,
   Accordion,
   AccordionItem,
+  TextInput,
 } from '../components/common';
 import Header from '../components/Header';
-import {bag1, shoe1, female4} from '../assets/images';
-import Swiper from 'react-native-swiper';
-import {grayColor, info, primaryColor} from '../components/common/variables';
+import { bag1, shoe1, female4 } from '../assets/images';
+import { grayColor, info } from '../components/common/variables';
 
 const colors = [
-  {label: 'Color', value: ''},
-  {label: 'Red', value: 'red'},
-  {label: 'Blue', value: 'blue'},
-  {label: 'Orange', value: 'orange'},
-  {label: 'Green', value: 'green'},
+  { label: '', value: '' },
+  { label: 'Red', value: 'red' },
+  { label: 'Blue', value: 'blue' },
+  { label: 'Orange', value: 'orange' },
+  { label: 'Green', value: 'green' },
 ];
-
-const SingleProductScreen = ({navigation}) => {
+const sizes = [
+  { label: '', value: '' },
+  { label: 'S', value: 's' },
+  { label: 'M', value: 'm' },
+  { label: 'L', value: 'l' },
+  { label: 'XL', value: 'xl' },
+  { label: 'XXL', value: 'xxl' },
+];
+const SingleProductScreen = ({ navigation }) => {
   const [likeCount, setLikeCount] = useState(123);
   const [selectedColor, setSelectedColor] = useState('');
+  const [selectedSize, setSelectedSize] = useState('');
 
   return (
     <>
@@ -153,7 +162,8 @@ const SingleProductScreen = ({navigation}) => {
                   Enjoy the beauty of italian cotton all over your body. This
                   item will fit your body and warm you up all over and during
                   spring. This item will fit your body and warm you up all over
-                  and during spring. {'\n\n'}
+                  and during spring.
+                  {'\n\n'}
                   And over and over again, this is the text.
                 </Text>
               </AccordionItem>
@@ -200,6 +210,7 @@ const SingleProductScreen = ({navigation}) => {
           <Spacer medium />
 
           <View>
+            <Text heading>Color</Text>
             <Select
               type="dropdown"
               selected={selectedColor}
@@ -210,26 +221,24 @@ const SingleProductScreen = ({navigation}) => {
             />
             <Spacer />
             <View
-              style={{flexDirection: 'row', width: '100%', paddingRight: 10}}>
+              style={{ flexDirection: 'row', width: '100%', paddingRight: 10 }}>
               <Column size="6">
+                <Text heading>Size</Text>
                 <Select
                   type="dropdown"
-                  selected={selectedColor}
+                  selected={selectedSize}
                   onChange={(item) => {
-                    setSelectedColor(item);
+                    setSelectedSize(item);
                   }}
-                  data={colors}
+                  data={sizes}
                 />
               </Column>
               <Spacer />
               <Column size="6">
-                <Select
-                  type="dropdown"
-                  selected={selectedColor}
-                  onChange={(item) => {
-                    setSelectedColor(item);
-                  }}
-                  data={colors}
+                <Text heading>Quantity</Text>
+                <TextInput
+                  keyboardType="number-pad"
+                  placeholder="Enter quantity"
                 />
               </Column>
             </View>

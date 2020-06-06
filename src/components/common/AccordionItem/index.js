@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {Text} from '../Text';
-import {Icon} from '../Icon';
-import {primaryColor} from '../variables';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text } from '../Text';
+import { Icon } from '../Icon';
+import { primaryColor, lightColor } from '../variables';
 
 /**
  * An `AccordionItem`, to be used only inside an Accordion.
  */
-const AccordionItem = ({children, expanded, index, onExpand, props}) => {
+const AccordionItem = ({ children, expanded, index, onExpand, props }) => {
   const {
     onClick,
     headerText,
@@ -32,7 +32,7 @@ const AccordionItem = ({children, expanded, index, onExpand, props}) => {
         onPress={callbacks}
         activeOpacity={0.7}
         style={styles.header}>
-        <Text style={{...styles.headerText, headerTextStyle}}>
+        <Text style={{ ...styles.headerText, headerTextStyle }}>
           {headerText}
         </Text>
         <Icon
@@ -44,6 +44,8 @@ const AccordionItem = ({children, expanded, index, onExpand, props}) => {
         style={{
           ...styles.body,
           display: expanded ? 'flex' : 'none',
+          borderBottomWidth: expanded ? 1 : 0,
+          borderColor: '#0001',
           ...bodyStyle,
         }}>
         {children}
@@ -64,13 +66,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     backgroundColor: '#fff',
-    borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: primaryColor,
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
+    borderColor: '#0001',
   },
   headerText: {
     fontFamily: 'SFPD-regular',
@@ -107,4 +106,11 @@ AccordionItem.propTypes = {
   bodyStyle: PropTypes.object,
 };
 
-export {AccordionItem};
+AccordionItem.defaultProps = {
+  headerTextStyle: {},
+  headerContainerStyle: {},
+  bodyStyle: {},
+  onClick: () => {},
+};
+
+export { AccordionItem };

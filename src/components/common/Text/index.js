@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Text as TXT, StyleSheet} from 'react-native';
-import {textColor, info} from '../variables';
+import { Text as TXT, StyleSheet } from 'react-native';
+import { textColor, info } from '../variables';
 
+/**
+ * A component for displaying texts which supports
+ */
 const Text = ({
   h1,
   h2,
@@ -16,28 +19,63 @@ const Text = ({
   color,
   numberOfLines,
 }) => {
-  const styles = StyleSheet.create({
-    textStyle: {
-      fontFamily:
-        h1 || h2 || h3
-          ? 'SFPD-semi-bold'
-          : heading
-          ? 'SFPD-regular'
-          : 'SFPD-light',
-      fontSize: h1 ? 28 : h2 ? 22 : h3 ? 20 : note ? 13 : heading ? 17 : size,
-      fontWeight: bold ? 'bold' : 'normal',
-      color: color,
-    },
-  });
+  const textStyle = {};
+
+  if (h1) {
+    textStyle.fontSize = 28;
+    textStyle.fontFamily = 'SFPD-semi-bold';
+  } else if (h2) {
+    textStyle.fontFamily = 'SFPD-semi-bold';
+    textStyle.fontSize = 22;
+  } else if (h3) {
+    textStyle.fontFamily = 'SFPD-semi-bold';
+    textStyle.fontSize = 18;
+  } else if (note) {
+    textStyle.color = info;
+    textStyle.fontSize = 13;
+  } else if (heading) {
+    textStyle.fontFamily = 'SFPD-regular';
+    textStyle.fontSize = 17;
+  } else if (size) {
+    textStyle.fontSize = size;
+  } else {
+    textStyle.fontSize = 16;
+  }
+
+  if (color) {
+    textStyle.color = color;
+  }
+
+  if (bold) {
+    textStyle.fontFamily = 'SFPD-semi-bold';
+  }
+
   return (
-    <TXT numberOfLines={numberOfLines} style={{...styles.textStyle, ...style}}>
+    <TXT
+      numberOfLines={numberOfLines}
+      style={{ ...styles.text, ...textStyle, ...style }}>
       {children}
     </TXT>
   );
 };
 
+const styles = StyleSheet.create({
+  text: {
+    color: textColor,
+    fontSize: 16,
+    fontFamily: 'SFPD-light',
+    lineHeight: 23,
+  },
+});
+
 Text.propTypes = {
+  /**
+   * Used to change the font size of the `Text`. Default is `16`.
+   */
   size: PropTypes.number,
+  /**
+   *
+   */
   h1: PropTypes.bool,
   h2: PropTypes.bool,
   h3: PropTypes.bool,
@@ -46,6 +84,7 @@ Text.propTypes = {
   color: PropTypes.string,
   note: PropTypes.bool,
   heading: PropTypes.bool,
+  numberOfLines: PropTypes.number,
 };
 
 Text.defaultProps = {
@@ -55,6 +94,10 @@ Text.defaultProps = {
   color: textColor,
   note: false,
   heading: false,
+  h1: false,
+  h2: false,
+  h3: false,
+  numberOfLines: 9999999999,
 };
 
-export {Text};
+export { Text };
