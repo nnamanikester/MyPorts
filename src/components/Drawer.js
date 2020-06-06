@@ -62,7 +62,7 @@ const Drawer = ({ navigation, logUserOut }) => {
           </>
         )}
         label={({ color, focused }) => <Text color={color}>Saved Items</Text>}
-        onPress={() => navigation.navigate('Search')}
+        onPress={() => navigation.navigate('SavedItems')}
       />
 
       <DrawerItem
@@ -80,7 +80,7 @@ const Drawer = ({ navigation, logUserOut }) => {
         label={({ color, focused }) => (
           <Text color={color}>Refer and Earn</Text>
         )}
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.navigate('ReferAndEarn')}
       />
 
       <DrawerItem
@@ -93,7 +93,7 @@ const Drawer = ({ navigation, logUserOut }) => {
         label={({ color, focused }) => (
           <Text color={color}>Available Coupons</Text>
         )}
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.navigate('Coupons')}
       />
 
       <Divider />
@@ -106,7 +106,6 @@ const Drawer = ({ navigation, logUserOut }) => {
             name="ios-information-circle-outline"
           />
         )}
-        // focused={route.name == 'About' ? true : false}
         label={({ color, focused }) => <Text color={color}>About</Text>}
         onPress={() => navigation.navigate('About')}
       />

@@ -11,6 +11,9 @@ import ProductComments from '../screens/ProductCommentsScreen';
 import Profile from '../screens/ProfileScreen';
 import Favourites from '../screens/FavoritesScreen';
 import ContactSupport from '../screens/ContactSupportScreen';
+import SavedItems from '../screens/SavedItemsScreen';
+import Coupons from '../screens/CouponsScreen';
+import ReferAndEarn from '../screens/ReferAndEarnScreen';
 
 // Vendor Screens
 import VendorShopSearch from '../screens/vendorScreens/VendorShopSearchScreen';
@@ -69,6 +72,9 @@ const StackNavigation = () => {
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Favourites" component={Favourites} />
       <Stack.Screen name="ContactSupport" component={ContactSupport} />
+      <Stack.Screen name="ReferAndEarn" component={ReferAndEarn} />
+      <Stack.Screen name="Coupons" component={Coupons} />
+      <Stack.Screen name="SavedItems" component={SavedItems} />
 
       {/* Vendor Screens */}
       <Stack.Screen name="VendorShopSearch" component={VendorShopSearch} />
