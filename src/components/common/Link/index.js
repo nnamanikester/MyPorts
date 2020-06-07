@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {TouchableOpacity, Linking} from 'react-native';
-import {Text} from '../Text';
-import {primaryColor} from '../variables';
+import { TouchableOpacity, Linking } from 'react-native';
+import { Text } from '../Text';
+import { primaryColor } from '../variables';
 
-const Link = ({children, to, textStyle, onClick, style, color}) => {
+const Link = ({ children, to, textStyle, onClick, style, color }) => {
   return (
     <TouchableOpacity
       style={style}
@@ -44,4 +44,4 @@ Link.defaultProps = {
   onClick: () => {},
 };
 
-export {Link};
+export { Link };

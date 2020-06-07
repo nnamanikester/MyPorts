@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import {
   Text,
   Layout,
@@ -13,13 +13,11 @@ import {
   Loading,
 } from '../../components/common';
 import Header from '../../components/Header';
-import Avater from '../../components/Avatar';
-import {female4, female1, female2} from '../../assets/images';
-import {info, primaryColor} from '../../components/common/variables';
+import { female4, female1, female2 } from '../../assets/images';
 import CartItem from '../../components/CartItem';
 import OrderSummary from '../../components/OrderSummary';
 
-const CartScreen = ({navigation}) => {
+const CartScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const goToCheckout = () => {
@@ -107,7 +105,10 @@ const CartScreen = ({navigation}) => {
 
           <Spacer large />
 
-          <Button onClick={() => goToCheckout()}>
+          <Button
+            showIconDivider
+            iconRight={<Icon name="ios-arrow-forward" color="#fff" />}
+            onClick={() => goToCheckout()}>
             <Text color="#fff">Place Order</Text>
           </Button>
 

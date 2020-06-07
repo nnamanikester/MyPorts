@@ -12,6 +12,7 @@ import Avater from '../components/Avatar';
 import { female4 } from '../assets/images';
 import { Link } from '../components/common';
 import Header from '../components/Header';
+import { primaryColor } from '../components/common/variables';
 
 const SavedItemsScreen = ({ navigation }) => {
   return (
@@ -109,7 +110,10 @@ const SavedItemsScreen = ({ navigation }) => {
         <Spacer large />
 
         <View style={styles.container}>
-          <Button iconLeft={<Icon color="#fff" name="md-close" />}>
+          <Button
+            // showIconDivider
+            iconLeft={<Icon color="#fff" name="md-close" />}
+            iconRight={<Icon color={primaryColor} name="md-close" />}>
             <Text color="#fff">Clear Items</Text>
           </Button>
 
