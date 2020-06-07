@@ -60,6 +60,12 @@ const ProfileScreen = ({ navigation }) => {
 
           <Spacer medium />
 
+          <Button>
+            <Text color="#fff">Become a Vendor</Text>
+          </Button>
+
+          <Spacer medium />
+
           <Row
             style={{
               justifyContent: 'center',
