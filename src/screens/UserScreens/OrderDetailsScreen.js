@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import {
   Text,
   Layout,
@@ -11,15 +11,13 @@ import {
   Button,
   Divider,
   Loading,
-} from '../components/common';
-import Header from '../components/Header';
-import CartItem from '../components/CartItem';
-import OrderSummary from '../components/OrderSummary';
-import Avater from '../components/Avatar';
-import {female4, female1, female2} from '../assets/images';
-import {info, primaryColor} from '../components/common/variables';
+} from '../../components/common';
+import Header from '../../components/Header';
+import CartItem from '../../components/CartItem';
+import OrderSummary from '../../components/OrderSummary';
+import { female2 } from '../../assets/images';
 
-const OrderDetailsScreen = ({navigation}) => {
+const OrderDetailsScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const goToCheckout = () => {

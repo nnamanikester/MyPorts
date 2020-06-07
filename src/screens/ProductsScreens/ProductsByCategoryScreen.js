@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import {
   Layout,
   Spacer,
@@ -8,11 +8,11 @@ import {
   ListItem,
   Row,
   Column,
-} from '../components/common';
-import Avatar from '../components/Avatar';
-import Header from '../components/Header';
-import Product from '../components/Product';
-import {TouchableOpacity, ScrollView, StyleSheet, View} from 'react-native';
+} from '../../components/common';
+import Avatar from '../../components/Avatar';
+import Header from '../../components/Header';
+import Product from '../../components/Product';
+import { TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native';
 import {
   female1,
   female2,
@@ -21,10 +21,10 @@ import {
   bag1,
   shoe1,
   shoe2,
-} from '../assets/images';
-import {primaryColor} from '../components/common/variables';
+} from '../../assets/images';
+import { primaryColor } from '../../components/common/variables';
 
-const ProductsByCategoryScreen = ({navigation}) => {
+const ProductsByCategoryScreen = ({ navigation }) => {
   const [hideHeader, setHideHeader] = useState(false);
 
   return (
@@ -57,12 +57,12 @@ const ProductsByCategoryScreen = ({navigation}) => {
       />
       <Layout>
         <View style={styles.container}>
-          <View style={{paddingLeft: 15}}>
+          <View style={{ paddingLeft: 15 }}>
             <Text style={styles.title}>Men</Text>
           </View>
           <Spacer />
           <Row>
-            <Column size="6" style={{alignItems: 'center'}}>
+            <Column size="6" style={{ alignItems: 'center' }}>
               <Product
                 quantity="89"
                 image={female1}
@@ -70,7 +70,7 @@ const ProductsByCategoryScreen = ({navigation}) => {
                 vendor="Chiomy Styles"
               />
             </Column>
-            <Column style={{alignItems: 'center'}} size="6">
+            <Column style={{ alignItems: 'center' }} size="6">
               <Product
                 quantity="14"
                 image={male1}
@@ -78,7 +78,7 @@ const ProductsByCategoryScreen = ({navigation}) => {
                 vendor="Benson Utilities"
               />
             </Column>
-            <Column size="6" style={{alignItems: 'center'}}>
+            <Column size="6" style={{ alignItems: 'center' }}>
               <Product
                 image={female2}
                 name="Female belt holder"
@@ -86,7 +86,7 @@ const ProductsByCategoryScreen = ({navigation}) => {
                 quantity="31"
               />
             </Column>
-            <Column size="6" style={{alignItems: 'center'}}>
+            <Column size="6" style={{ alignItems: 'center' }}>
               <Product
                 quantity="45"
                 image={female3}
@@ -94,7 +94,7 @@ const ProductsByCategoryScreen = ({navigation}) => {
                 vendor="Chucks Ventiany"
               />
             </Column>
-            <Column size="6" style={{alignItems: 'center'}}>
+            <Column size="6" style={{ alignItems: 'center' }}>
               <Product
                 quantity="15"
                 image={shoe1}
@@ -102,7 +102,7 @@ const ProductsByCategoryScreen = ({navigation}) => {
                 vendor="Adidas"
               />
             </Column>
-            <Column size="6" style={{alignItems: 'center'}}>
+            <Column size="6" style={{ alignItems: 'center' }}>
               <Product
                 quantity="20"
                 image={female3}
@@ -110,7 +110,7 @@ const ProductsByCategoryScreen = ({navigation}) => {
                 vendor="Nike"
               />
             </Column>
-            <Column size="6" style={{alignItems: 'center'}}>
+            <Column size="6" style={{ alignItems: 'center' }}>
               <Product
                 quantity="8"
                 image={female3}

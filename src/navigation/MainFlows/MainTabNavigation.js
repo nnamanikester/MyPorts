@@ -1,12 +1,12 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CategoriesScreen from '../../screens/CategoriesScreen';
 import VendorsListScreen from '../../screens/vendorScreens/VendorsListScreen';
-import ProductsScreen from '../../screens/ProductsScreen';
+import ProductsScreen from '../../screens/ProductsScreens/ProductsScreen';
 import NotificationsScreen from '../../screens/NotificationsScreen';
 import SettingsScreen from '../../screens/SettingsScreens/SettingsScreen';
-import {Icon, Text, Badge} from '../../components/common';
-import {danger} from '../../components/common/variables';
+import { Icon, Text, Badge } from '../../components/common';
+import { danger } from '../../components/common/variables';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,10 +17,10 @@ const TabNavigation = () => {
         name="Vendors"
         component={VendorsListScreen}
         options={{
-          tabBarIcon: ({focused, color, size}) => (
+          tabBarIcon: ({ focused, color, size }) => (
             <Icon name="ios-business" color={color} size={focused ? 34 : 28} />
           ),
-          tabBarLabel: ({color}) => (
+          tabBarLabel: ({ color }) => (
             <Text color={color} size={12}>
               Vendors
             </Text>
@@ -31,10 +31,10 @@ const TabNavigation = () => {
         name="Categories"
         component={CategoriesScreen}
         options={{
-          tabBarIcon: ({focused, color, size}) => (
+          tabBarIcon: ({ focused, color, size }) => (
             <Icon name="ios-list" color={color} size={focused ? 32 : 28} />
           ),
-          tabBarLabel: ({color}) => (
+          tabBarLabel: ({ color }) => (
             <Text size={12} color={color}>
               Categories
             </Text>
@@ -45,7 +45,7 @@ const TabNavigation = () => {
         name="Products"
         component={ProductsScreen}
         options={{
-          tabBarIcon: ({focused, color, size}) => (
+          tabBarIcon: ({ focused, color, size }) => (
             <Icon
               name="opencart"
               type="FontAwesome"
@@ -53,7 +53,7 @@ const TabNavigation = () => {
               size={focused ? 28 : 24}
             />
           ),
-          tabBarLabel: ({color}) => (
+          tabBarLabel: ({ color }) => (
             <Text size={12} color={color}>
               Shop
             </Text>
@@ -64,7 +64,7 @@ const TabNavigation = () => {
         name="Notifications"
         component={NotificationsScreen}
         options={{
-          tabBarIcon: ({focused, color, size}) => (
+          tabBarIcon: ({ focused, color, size }) => (
             <>
               <Icon
                 name={
@@ -83,7 +83,7 @@ const TabNavigation = () => {
               />
             </>
           ),
-          tabBarLabel: ({color}) => (
+          tabBarLabel: ({ color }) => (
             <Text size={12} color={color}>
               Notifications
             </Text>
@@ -94,10 +94,10 @@ const TabNavigation = () => {
         name="Settings"
         component={SettingsScreen}
         options={{
-          tabBarIcon: ({focused, color, size}) => (
+          tabBarIcon: ({ focused, color, size }) => (
             <Icon name="ios-settings" color={color} size={focused ? 32 : 28} />
           ),
-          tabBarLabel: ({color}) => (
+          tabBarLabel: ({ color }) => (
             <Text size={12} color={color}>
               Settings
             </Text>

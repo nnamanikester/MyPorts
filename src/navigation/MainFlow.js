@@ -2,17 +2,21 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabNavigation from './MainFlows/MainTabNavigation';
 import DraweNavigation from './MainFlows/MainDrawerNavigation';
-import Orders from '../screens/OrdersScreen';
-import OrderDetails from '../screens/OrderDetailsScreen';
 import Search from '../screens/SearchScreen';
-import ProductsByCategory from '../screens/ProductsByCategoryScreen';
-import SingleProduct from '../screens/SingleProductScreen';
-import ProductComments from '../screens/ProductCommentsScreen';
-import Profile from '../screens/ProfileScreen';
 import ContactSupport from '../screens/ContactSupportScreen';
-import SavedItems from '../screens/SavedItemsScreen';
 import Coupons from '../screens/CouponsScreen';
-import ReferAndEarn from '../screens/ReferAndEarnScreen';
+
+// Product Screens
+import ProductsByCategory from '../screens/ProductsScreens/ProductsByCategoryScreen';
+import SingleProduct from '../screens/ProductsScreens/SingleProductScreen';
+import ProductComments from '../screens/ProductsScreens/ProductCommentsScreen';
+
+// User Screens
+import Profile from '../screens/UserScreens/ProfileScreen';
+import SavedItems from '../screens/UserScreens/SavedItemsScreen';
+import Orders from '../screens/UserScreens/OrdersScreen';
+import OrderDetails from '../screens/UserScreens/OrderDetailsScreen';
+import ReferAndEarn from '../screens/UserScreens/ReferAndEarnScreen';
 
 // Vendor Screens
 import VendorShopSearch from '../screens/vendorScreens/VendorShopSearchScreen';
@@ -62,16 +66,20 @@ const StackNavigation = () => {
       }}>
       <Stack.Screen name="Home" component={DraweNavigation} />
       <Stack.Screen name="Tab" component={TabNavigation} />
-      <Stack.Screen name="Orders" component={Orders} />
-      <Stack.Screen name="OrderDetails" component={OrderDetails} />
       <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="ContactSupport" component={ContactSupport} />
+      <Stack.Screen name="Coupons" component={Coupons} />
+
+      {/* Product Screens */}
       <Stack.Screen name="ProductsByCategory" component={ProductsByCategory} />
       <Stack.Screen name="SingleProduct" component={SingleProduct} />
       <Stack.Screen name="ProductComments" component={ProductComments} />
+
+      {/* User Screens */}
+      <Stack.Screen name="Orders" component={Orders} />
+      <Stack.Screen name="OrderDetails" component={OrderDetails} />
       <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="ContactSupport" component={ContactSupport} />
       <Stack.Screen name="ReferAndEarn" component={ReferAndEarn} />
-      <Stack.Screen name="Coupons" component={Coupons} />
       <Stack.Screen name="SavedItems" component={SavedItems} />
 
       {/* Vendor Screens */}

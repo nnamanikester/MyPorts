@@ -12,11 +12,11 @@ import {
   Column,
   Badge,
   Clickable,
-} from '../components/common';
-import { primaryColor, lightColor } from '../components/common/variables';
-import Header from '../components/Header';
-import Avatar from '../components/Avatar';
-import { female4 } from '../assets/images';
+} from '../../components/common';
+import { primaryColor, lightColor } from '../../components/common/variables';
+import Header from '../../components/Header';
+import Avatar from '../../components/Avatar';
+import { female4 } from '../../assets/images';
 
 const ProfileScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);

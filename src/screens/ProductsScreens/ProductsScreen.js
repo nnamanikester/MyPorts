@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import {
   Layout,
   Spacer,
@@ -9,11 +9,11 @@ import {
   Avatar,
   Row,
   Column,
-} from '../components/common';
-import Header from '../components/Header';
-import Product from '../components/Product';
-import FeaturedProduct from '../components/FeaturedProduct';
-import {TouchableOpacity, ScrollView, StyleSheet, View} from 'react-native';
+} from '../../components/common';
+import Header from '../../components/Header';
+import Product from '../../components/Product';
+import FeaturedProduct from '../../components/FeaturedProduct';
+import { TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native';
 import {
   female1,
   female2,
@@ -22,9 +22,9 @@ import {
   bag1,
   shoe1,
   shoe2,
-} from '../assets/images';
+} from '../../assets/images';
 
-const ProductsScreen = ({navigation}) => {
+const ProductsScreen = ({ navigation }) => {
   const [hideHeader, setHideHeader] = useState(false);
 
   return (
@@ -105,7 +105,7 @@ const ProductsScreen = ({navigation}) => {
           <Text style={styles.title}>Latest Products</Text>
           <Spacer />
           <Row>
-            <Column size="6" style={{alignItems: 'center'}}>
+            <Column size="6" style={{ alignItems: 'center' }}>
               <Product
                 quantity="89"
                 image={female1}
@@ -114,7 +114,7 @@ const ProductsScreen = ({navigation}) => {
                 onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
-            <Column style={{alignItems: 'center'}} size="6">
+            <Column style={{ alignItems: 'center' }} size="6">
               <Product
                 quantity="14"
                 image={male1}
@@ -123,7 +123,7 @@ const ProductsScreen = ({navigation}) => {
                 onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
-            <Column size="6" style={{alignItems: 'center'}}>
+            <Column size="6" style={{ alignItems: 'center' }}>
               <Product
                 image={female2}
                 name="Female belt holder"
@@ -132,7 +132,7 @@ const ProductsScreen = ({navigation}) => {
                 onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
-            <Column size="6" style={{alignItems: 'center'}}>
+            <Column size="6" style={{ alignItems: 'center' }}>
               <Product
                 quantity="45"
                 image={female3}
@@ -141,7 +141,7 @@ const ProductsScreen = ({navigation}) => {
                 onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
-            <Column size="6" style={{alignItems: 'center'}}>
+            <Column size="6" style={{ alignItems: 'center' }}>
               <Product
                 quantity="15"
                 image={shoe1}
@@ -150,7 +150,7 @@ const ProductsScreen = ({navigation}) => {
                 onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
-            <Column size="6" style={{alignItems: 'center'}}>
+            <Column size="6" style={{ alignItems: 'center' }}>
               <Product
                 quantity="20"
                 image={female3}
@@ -159,7 +159,7 @@ const ProductsScreen = ({navigation}) => {
                 onClick={() => navigation.navigate('SingleProduct')}
               />
             </Column>
-            <Column size="6" style={{alignItems: 'center'}}>
+            <Column size="6" style={{ alignItems: 'center' }}>
               <Product
                 quantity="8"
                 image={female3}

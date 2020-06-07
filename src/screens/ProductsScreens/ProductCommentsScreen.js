@@ -13,10 +13,10 @@ import {
   Rating,
   Button,
   Modal,
-} from '../components/common';
-import Header from '../components/Header';
-import Comment from '../components/Comment';
-import { female4 } from '../assets/images';
+} from '../../components/common';
+import Header from '../../components/Header';
+import Comment from '../../components/Comment';
+import { female4 } from '../../assets/images';
 
 const ProductCommentsScreen = ({ navigation }) => {
   const [openModal, setOpenModal] = useState(false);

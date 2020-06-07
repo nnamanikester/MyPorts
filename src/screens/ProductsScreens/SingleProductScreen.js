@@ -16,11 +16,11 @@ import {
   AccordionItem,
   TextInput,
   Row,
-} from '../components/common';
-import Header from '../components/Header';
-import Comment from '../components/Comment';
-import { bag1, shoe1, female4 } from '../assets/images';
-import { grayColor, info } from '../components/common/variables';
+} from '../../components/common';
+import Header from '../../components/Header';
+import Comment from '../../components/Comment';
+import { bag1, shoe1, female4 } from '../../assets/images';
+import { grayColor, info } from '../../components/common/variables';
 
 const colors = [
   { label: '', value: '' },

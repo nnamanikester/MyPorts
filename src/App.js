@@ -1,6 +1,6 @@
 import React from 'react';
-import {createStore, applyMiddleware} from 'redux';
-import {Provider} from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
 import Thunk from 'redux-thunk';
 import reducers from './redux/reducers';
 import NavigationFlows from './NavigationFlows';
