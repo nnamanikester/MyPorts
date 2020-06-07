@@ -9,7 +9,7 @@ const Link = ({ children, to, textStyle, onClick, style, color }) => {
     <TouchableOpacity
       style={style}
       onPress={to ? Linking.openURL(to) : onClick}
-      activeOpacity={0.7}>
+      activeOpacity={0.8}>
       <Text style={textStyle} color={color || primaryColor}>
         {children}
       </Text>

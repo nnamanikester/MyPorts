@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {grayColor} from '../variables';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { grayColor } from '../variables';
 
-const ListItem = ({children, left, right, body, marked, onClick, style}) => {
+const ListItem = ({ children, left, right, body, marked, onClick, style }) => {
   let markedStyle = {};
 
   if (marked) {
@@ -17,8 +17,8 @@ const ListItem = ({children, left, right, body, marked, onClick, style}) => {
     <TouchableOpacity
       style={style}
       onPress={onClick}
-      activeOpacity={0.7}
-      style={{...styles.container, ...markedStyle}}>
+      activeOpacity={0.8}
+      style={{ ...styles.container, ...markedStyle }}>
       {left && <View style={styles.left}>{left}</View>}
       <View style={styles.body}>{body || children}</View>
       {right && <View style={styles.right}>{right}</View>}
@@ -58,4 +58,4 @@ ListItem.propTypes = {
 
 ListItem.defaultProps = {};
 
-export {ListItem};
+export { ListItem };

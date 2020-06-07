@@ -27,7 +27,7 @@ const ProfileScreen = ({ navigation }) => {
         title="Profile"
         headerLeft={
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.8}
             onPress={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" color="#fff" />
           </TouchableOpacity>
@@ -36,13 +36,13 @@ const ProfileScreen = ({ navigation }) => {
           <>
             <TouchableOpacity
               onPress={() => navigation.navigate('Cart')}
-              activeOpacity={0.7}>
+              activeOpacity={0.8}>
               <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
             </TouchableOpacity>
             <Spacer medium />
             <TouchableOpacity
               onPress={() => navigation.navigate('Search')}
-              activeOpacity={0.7}>
+              activeOpacity={0.8}>
               <Icon name="ios-search" color="#fff" />
             </TouchableOpacity>
           </>
@@ -65,25 +65,25 @@ const ProfileScreen = ({ navigation }) => {
                 justifyContent: 'space-between',
               }}>
               <Column style={styles.column} size="6">
-                <TouchableOpacity activeOpacity={0.7}>
+                <TouchableOpacity activeOpacity={0.8}>
                   <Icon name="ios-search" />
                   <Text note>Saved Items</Text>
                 </TouchableOpacity>
               </Column>
               <Column style={styles.column} size="6">
-                <TouchableOpacity activeOpacity={0.7}>
+                <TouchableOpacity activeOpacity={0.8}>
                   <Icon name="ios-search" />
                   <Text note>Order History</Text>
                 </TouchableOpacity>
               </Column>
               <Column style={styles.column} size="6">
-                <TouchableOpacity activeOpacity={0.7}>
+                <TouchableOpacity activeOpacity={0.8}>
                   <Icon name="ios-search" />
                   <Text note>Reviews</Text>
                 </TouchableOpacity>
               </Column>
               <Column style={styles.column} size="6">
-                <TouchableOpacity activeOpacity={0.7}>
+                <TouchableOpacity activeOpacity={0.8}>
                   <Icon name="ios-search" />
                   <Text note>Comments</Text>
                 </TouchableOpacity>
