@@ -28,3 +28,4 @@ export * from './Toast';
 export * from './FAB';
 export * from './Accordion';
 export * from './AccordionItem';
+export * from './TopTab';

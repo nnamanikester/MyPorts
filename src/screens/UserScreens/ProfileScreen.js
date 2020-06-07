@@ -12,11 +12,14 @@ import {
   Column,
   Badge,
   Clickable,
+  TopTab,
 } from '../../components/common';
 import { primaryColor, lightColor } from '../../components/common/variables';
 import Header from '../../components/Header';
 import Avatar from '../../components/Avatar';
 import { female4 } from '../../assets/images';
+import UserComments from './ProfileTabs/UserComments';
+import UserReviews from './ProfileTabs/UserReviews';
 
 const ProfileScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -44,6 +47,8 @@ const ProfileScreen = ({ navigation }) => {
         }
       />
       <Layout>
+        <Spacer medium />
+
         <View style={styles.container}>
           <View style={styles.profilePhoto}>
             <Avatar size={100} rounded src={female4} />
@@ -55,44 +60,36 @@ const ProfileScreen = ({ navigation }) => {
 
           <Spacer medium />
 
-          <Card>
-            <Row
-              style={{
-                justifyContent: 'center',
-                flex: 1,
-              }}>
-              <Column style={styles.column} size="3">
-                <Clickable style={{ alignItems: 'center' }}>
-                  <Icon color={primaryColor} size={40} name="ios-bookmark" />
-                  <Text bold>300</Text>
-                </Clickable>
-              </Column>
-              <Column style={styles.column} size="3">
-                <Clickable style={{ alignItems: 'center' }}>
-                  <Icon color={primaryColor} size={40} name="ios-time" />
-                  <Text bold>12</Text>
-                </Clickable>
-              </Column>
-              <Column style={styles.column} size="3">
-                <Clickable style={{ alignItems: 'center' }}>
-                  <Icon color={primaryColor} size={40} name="ios-star" />
-                  <Text bold>33</Text>
-                </Clickable>
-              </Column>
-              <Column style={styles.column} size="3">
-                <Clickable style={{ alignItems: 'center' }}>
-                  <Icon
-                    color={primaryColor}
-                    type="FontAwesome"
-                    size={40}
-                    name="comments"
-                  />
-                  <Text bold>23</Text>
-                </Clickable>
-              </Column>
-            </Row>
-          </Card>
+          <Row
+            style={{
+              justifyContent: 'center',
+              flex: 1,
+            }}>
+            <Column style={styles.column} size="6">
+              <Clickable style={{ alignItems: 'center' }}>
+                <Icon color={primaryColor} size={30} name="ios-bookmark" />
+                <Text bold>300</Text>
+              </Clickable>
+            </Column>
+
+            <Column style={styles.column} size="6">
+              <Clickable style={{ alignItems: 'center' }}>
+                <Icon color={primaryColor} size={30} name="ios-time" />
+                <Text bold>12</Text>
+              </Clickable>
+            </Column>
+          </Row>
+
+          <Spacer />
         </View>
+
+        <TopTab
+          screens={[
+            { name: 'Reviews', component: UserReviews },
+            { name: 'Comments', component: UserComments },
+          ]}
+        />
+
         <Spacer large />
         <Spacer large />
         <Spacer large />

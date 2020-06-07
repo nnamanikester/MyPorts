@@ -49,6 +49,17 @@ const Drawer = ({ navigation, logUserOut }) => {
       <DrawerItem
         icon={({ size, color }) => (
           <>
+            <Icon size={size} color={color} name="md-cart" />
+            <Badge style={{ elevation: 1 }} color={danger} />
+          </>
+        )}
+        label={({ color, focused }) => <Text color={color}>Shopping Cart</Text>}
+        onPress={() => navigation.navigate('Cart')}
+      />
+
+      <DrawerItem
+        icon={({ size, color }) => (
+          <>
             <Icon size={size} style={{ color }} name="ios-bookmark" />
             <Badge style={{ elevation: 1 }} color={danger} />
           </>
@@ -78,7 +89,7 @@ const Drawer = ({ navigation, logUserOut }) => {
       <DrawerItem
         icon={({ size, color }) => (
           <>
-            <Icon size={size} color={color} name="ios-code" />
+            <Icon size={size} color={color} name="ios-megaphone" />
             <Badge style={{ elevation: 1 }} color={danger} />
           </>
         )}
