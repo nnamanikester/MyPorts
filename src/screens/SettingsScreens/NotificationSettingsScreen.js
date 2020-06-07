@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import {
   Layout,
   Text,
@@ -7,11 +7,12 @@ import {
   Icon,
   Spacer,
   ListItem,
+  Clickable,
 } from '../../components/common';
-import {primaryColor, info} from '../../components/common/variables';
+import { primaryColor } from '../../components/common/variables';
 import Header from '../../components/Header';
 
-const NotificationSettingsScreen = ({navigation}) => {
+const NotificationSettingsScreen = ({ navigation }) => {
   const [value, setValue] = useState(false);
 
   return (
@@ -19,11 +20,9 @@ const NotificationSettingsScreen = ({navigation}) => {
       <Header
         title="Notification Settngs"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}>
+          <Clickable onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
       />
       <Layout>

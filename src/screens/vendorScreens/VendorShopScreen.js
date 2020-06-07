@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import {
   Layout,
   Row,
@@ -107,7 +107,7 @@ const VendorShopScreen = ({ navigation }) => {
             style={{ justifyContent: 'space-between', paddingHorizontal: 10 }}>
             <Text style={styles.title}>Ratings and Reviews</Text>
             <Link onClick={() => navigation.navigate('VendorShopReview')}>
-              <Icon name={'md-arrow-forward'} />
+              See All Reviews
             </Link>
           </Row>
 
@@ -138,13 +138,6 @@ const VendorShopScreen = ({ navigation }) => {
               <Text color="#fff">Write a review</Text>
             </Button>
             <Spacer />
-            <View>
-              <Link
-                textStyle={{ textAlign: 'center' }}
-                onClick={() => navigation.navigate('VendorShopReview')}>
-                See All Reviews
-              </Link>
-            </View>
           </View>
         </View>
 

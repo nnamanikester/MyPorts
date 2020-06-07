@@ -9,9 +9,10 @@ import {
   ListItem,
   Button,
   Row,
+  Clickable,
 } from '../../components/common';
 import Header from '../../components/Header';
-import { TouchableOpacity, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { primaryColor, info } from '../../components/common/variables';
 import { logUserOut } from '../../redux/actions/AuthActions';
 
@@ -36,11 +37,9 @@ const SettingsScreen = ({ navigation, logUserOut }) => {
       <Header
         title="Privacy and Settings"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.openDrawer()}>
+          <Clickable onClick={() => navigation.openDrawer()}>
             <Icon name="ios-menu" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
       />
       <Layout>

@@ -9,11 +9,12 @@ import {
   Avatar,
   Row,
   Column,
+  Clickable,
 } from '../../components/common';
 import Header from '../../components/Header';
 import Product from '../../components/Product';
 import FeaturedProduct from '../../components/FeaturedProduct';
-import { TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import {
   female1,
   female2,
@@ -33,25 +34,19 @@ const ProductsScreen = ({ navigation }) => {
         isCart
         title="Shop"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.openDrawer()}>
+          <Clickable onClick={() => navigation.openDrawer()}>
             <Icon name="ios-menu" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
         headerRight={
           <>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Cart')}
-              activeOpacity={0.7}>
+            <Clickable onClick={() => navigation.navigate('Cart')}>
               <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </TouchableOpacity>
+            </Clickable>
             <Spacer medium />
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Search')}
-              activeOpacity={0.7}>
+            <Clickable onClick={() => navigation.navigate('Search')}>
               <Icon name="ios-search" color="#fff" />
-            </TouchableOpacity>
+            </Clickable>
           </>
         }
       />

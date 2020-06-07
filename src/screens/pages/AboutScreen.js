@@ -1,19 +1,17 @@
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {Layout, Icon, Text} from '../../components/common';
+import { View, StyleSheet } from 'react-native';
+import { Layout, Icon, Text, Clickable } from '../../components/common';
 import Header from '../../components/Header';
 
-const AboutScreen = ({navigation}) => {
+const AboutScreen = ({ navigation }) => {
   return (
     <>
       <Header
         title="About Us"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}>
+          <Clickable activeOpacity={0.7} onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
       />
       <Layout>

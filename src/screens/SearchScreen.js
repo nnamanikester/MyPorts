@@ -13,11 +13,12 @@ import {
   Button,
   Select,
   Radio,
+  Clickable,
 } from '../components/common';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import Product from '../components/Product';
-import { TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import {
   female1,
   female2,
@@ -147,11 +148,9 @@ const SearchScreen = ({ navigation }) => {
       <Header
         title="Search"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}>
+          <Clickable onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" size={25} color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
       />
       <Layout itemToFloat={1}>

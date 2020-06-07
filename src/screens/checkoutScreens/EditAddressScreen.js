@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import {
   Layout,
   Icon,
@@ -9,10 +9,11 @@ import {
   Spacer,
   Switch,
   Row,
+  Clickable,
 } from '../../components/common';
 import Header from '../../components/Header';
 
-const EditAddressScreen = ({navigation}) => {
+const EditAddressScreen = ({ navigation }) => {
   const [defaultAddress, setDefaultAddress] = useState(false);
 
   return (
@@ -20,11 +21,9 @@ const EditAddressScreen = ({navigation}) => {
       <Header
         title="Edit Address"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}>
+          <Clickable onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
       />
       <Layout>
@@ -77,7 +76,7 @@ const EditAddressScreen = ({navigation}) => {
               <Switch
                 onChange={() => setDefaultAddress(!defaultAddress)}
                 value={defaultAddress}
-                style={{alignSelf: 'flex-start'}}
+                style={{ alignSelf: 'flex-start' }}
               />
               <Spacer medium />
               <Text heading>Set As Default</Text>
@@ -86,7 +85,7 @@ const EditAddressScreen = ({navigation}) => {
 
           <Spacer medium />
           <View>
-            <Row style={{justifyContent: 'space-between'}}>
+            <Row style={{ justifyContent: 'space-between' }}>
               <Button>
                 <Text color="#fff">Save</Text>
               </Button>

@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
   Text,
   Layout,
   Icon,
-  ListItem,
   Spacer,
-  TextInput,
-  Row,
-  Button,
-  Divider,
   Loading,
+  Clickable,
 } from '../../components/common';
 import Header from '../../components/Header';
 import CartItem from '../../components/CartItem';
@@ -34,19 +30,17 @@ const OrderDetailsScreen = ({ navigation }) => {
       <Header
         title="Order Details"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}>
+          <Clickable onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
         headerRight={
           <>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Search')}
+            <Clickable
+              onClick={() => navigation.navigate('Search')}
               activeOpacity={0.7}>
               <Icon name="ios-search" color="#fff" />
-            </TouchableOpacity>
+            </Clickable>
           </>
         }
       />

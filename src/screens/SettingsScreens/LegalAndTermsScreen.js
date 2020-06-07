@@ -1,21 +1,26 @@
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
-import {Layout, Text, Icon, Spacer, ListItem} from '../../components/common';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import {
+  Layout,
+  Text,
+  Icon,
+  Spacer,
+  ListItem,
+  Clickable,
+} from '../../components/common';
 import Header from '../../components/Header';
-import {TouchableOpacity, StyleSheet, View} from 'react-native';
-import {primaryColor, info} from '../../components/common/variables';
+import { StyleSheet, View } from 'react-native';
+import { info } from '../../components/common/variables';
 
-const LegalAndTermsScreen = ({navigation}) => {
+const LegalAndTermsScreen = ({ navigation }) => {
   return (
     <>
       <Header
         title="Legal and Terms"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}>
+          <Clickable onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
       />
       <Layout>

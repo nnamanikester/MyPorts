@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Swiper from 'react-native-swiper';
-import { TouchableOpacity, StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import {
   Layout,
   Text,
@@ -16,6 +16,8 @@ import {
   AccordionItem,
   TextInput,
   Row,
+  Divider,
+  Clickable,
 } from '../../components/common';
 import Header from '../../components/Header';
 import Comment from '../../components/Comment';
@@ -49,25 +51,19 @@ const SingleProductScreen = ({ navigation }) => {
         isCart
         title="Water Proof Watch"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}>
+          <Clickable onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
         headerRight={
           <>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Cart')}
-              activeOpacity={0.7}>
+            <Clickable onClick={() => navigation.navigate('Cart')}>
               <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </TouchableOpacity>
+            </Clickable>
             <Spacer medium />
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Search')}
-              activeOpacity={0.7}>
+            <Clickable onClick={() => navigation.navigate('Search')}>
               <Icon name="ios-search" color="#fff" />
-            </TouchableOpacity>
+            </Clickable>
           </>
         }
       />
@@ -160,7 +156,7 @@ const SingleProductScreen = ({ navigation }) => {
 
           <View>
             <Accordion initialIndex={0}>
-              <AccordionItem headerText="Product Description">
+              <AccordionItem headerText="Description">
                 <Text>
                   Enjoy the beauty of italian cotton all over your body. This
                   item will fit your body and warm you up all over and during
@@ -170,7 +166,7 @@ const SingleProductScreen = ({ navigation }) => {
                   And over and over again, this is the text.
                 </Text>
               </AccordionItem>
-              <AccordionItem headerText="Product Details">
+              <AccordionItem headerText="Item Specifications">
                 <ListItem
                   left={<Text heading>Quantity</Text>}
                   right={<Text>29</Text>}
@@ -204,6 +200,8 @@ const SingleProductScreen = ({ navigation }) => {
                   Vendor Details
                 </Link>
               </AccordionItem>
+              <AccordionItem headerText="Shipping Information"></AccordionItem>
+              <AccordionItem headerText="Buyer Guarantee"></AccordionItem>
             </Accordion>
           </View>
 
@@ -262,6 +260,8 @@ const SingleProductScreen = ({ navigation }) => {
             </Button>
           </View>
 
+          <Divider />
+
           <Spacer medium />
 
           <View style={styles.container}>
@@ -273,7 +273,8 @@ const SingleProductScreen = ({ navigation }) => {
                 Comments
               </Text>
               <Link onClick={() => navigation.navigate('ProductComments')}>
-                <Icon name={'md-arrow-forward'} />
+                {/* <Icon name={'md-arrow-forward'} /> */}
+                See All Comments
               </Link>
             </Row>
             <View>
@@ -313,9 +314,6 @@ const SingleProductScreen = ({ navigation }) => {
               name="Mark Zukerberg"
               comment="This poduct is extremely good. i love it. And it shipped within 3 ays like promised."
             />
-            <Link onClick={() => navigation.navigate('ProductComments')}>
-              See All Comments
-            </Link>
           </View>
         </View>
         <Spacer large />

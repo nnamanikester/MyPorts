@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import {
   Text,
   Layout,
@@ -11,11 +11,12 @@ import {
   Button,
   Divider,
   Link,
+  Clickable,
 } from '../../components/common';
 import Header from '../../components/Header';
-import {info, primaryColor} from '../../components/common/variables';
+import { info, primaryColor } from '../../components/common/variables';
 
-const CheckoutScreen = ({navigation}) => {
+const CheckoutScreen = ({ navigation }) => {
   const [newAddress, setNewAddress] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -33,19 +34,15 @@ const CheckoutScreen = ({navigation}) => {
       <Header
         title="Shipping Details"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}>
+          <Clickable onPress={() => navigation.goBack()}>
             <Icon name="md-close" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
         headerRight={
           <>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Search')}
-              activeOpacity={0.7}>
+            <Clickable onClick={() => navigation.navigate('Search')}>
               <Icon name="ios-search" color="#fff" />
-            </TouchableOpacity>
+            </Clickable>
           </>
         }
       />

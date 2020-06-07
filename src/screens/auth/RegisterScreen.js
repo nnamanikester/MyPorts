@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {connect} from 'react-redux';
-import {logUserIn, skipAuthentication} from '../../redux/actions/AuthActions';
+import { View, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import { logUserIn, skipAuthentication } from '../../redux/actions/AuthActions';
 import {
   Layout,
   Icon,
@@ -11,18 +11,16 @@ import {
   TextInput,
   Spacer,
 } from '../../components/common';
-import {info} from '../../components/common/variables';
+import { info } from '../../components/common/variables';
 
-const RegisterScreen = ({logUserIn, skipAuthentication, navigation}) => {
+const RegisterScreen = ({ logUserIn, skipAuthentication, navigation }) => {
   return (
     <>
       <Layout>
         <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => skipAuthentication()}
-            activeOpacity={0.7}>
+          <Clickable onClick={() => skipAuthentication()}>
             <Icon name="md-close" />
-          </TouchableOpacity>
+          </Clickable>
           <Link onClick={() => navigation.navigate('Login')}>Sign In</Link>
         </View>
         <View style={styles.layout}>
@@ -88,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, {logUserIn, skipAuthentication})(RegisterScreen);
+export default connect(null, { logUserIn, skipAuthentication })(RegisterScreen);

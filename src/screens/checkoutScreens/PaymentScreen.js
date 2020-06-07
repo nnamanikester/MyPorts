@@ -1,20 +1,19 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import {
   Text,
   Layout,
   Icon,
-  ListItem,
   Spacer,
-  TextInput,
   Alert,
   Loading,
   Button,
+  Clickable,
 } from '../../components/common';
 import Header from '../../components/Header';
-import {info, primaryColor} from '../../components/common/variables';
+import { primaryColor } from '../../components/common/variables';
 
-const PaymentScreen = ({navigation}) => {
+const PaymentScreen = ({ navigation }) => {
   const [newAddress, setNewAddress] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false);
@@ -42,19 +41,15 @@ const PaymentScreen = ({navigation}) => {
       <Header
         title="Payment"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}>
+          <Clickable onClick={() => navigation.goBack()}>
             <Icon name="md-close" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
         headerRight={
           <>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Search')}
-              activeOpacity={0.7}>
+            <Clickable onClick={() => navigation.navigate('Search')}>
               <Icon name="ios-search" color="#fff" />
-            </TouchableOpacity>
+            </Clickable>
           </>
         }
       />

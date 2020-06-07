@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Layout, Icon, Spacer } from '../../components/common';
+import { View, StyleSheet } from 'react-native';
+import { Layout, Icon, Spacer, Clickable } from '../../components/common';
 import Header from '../../components/Header';
 import Order from '../../components/Order';
 
@@ -11,25 +11,19 @@ const OrdersScreen = ({ navigation }) => {
         isCart
         title="Order History"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}>
+          <Clickable onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
         headerRight={
           <>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Cart')}
-              activeOpacity={0.7}>
+            <Clickable onClick={() => navigation.navigate('Cart')}>
               <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </TouchableOpacity>
+            </Clickable>
             <Spacer medium />
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Search')}
-              activeOpacity={0.7}>
+            <Clickable onClick={() => navigation.navigate('Search')}>
               <Icon name="ios-search" color="#fff" />
-            </TouchableOpacity>
+            </Clickable>
           </>
         }
       />

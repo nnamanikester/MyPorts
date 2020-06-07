@@ -8,22 +8,21 @@ import {
   Spacer,
   Row,
   TextInput,
+  Clickable,
 } from '../../components/common';
-import {TouchableOpacity, View, StyleSheet} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Header from '../../components/Header';
-import {info} from '../../components/common/variables';
+import { info } from '../../components/common/variables';
 
-const ChangeEmailAddressScreen = ({navigation, logUserOut}) => {
+const ChangeEmailAddressScreen = ({ navigation, logUserOut }) => {
   return (
     <>
       <Header
         title="Change Email Address"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}>
+          <Clickable onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
       />
       <Layout>

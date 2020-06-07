@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
   Text,
   Icon,
@@ -7,6 +7,7 @@ import {
   Spacer,
   Layout,
   Button,
+  Clickable,
 } from '../../components/common';
 import Avater from '../../components/Avatar';
 import { female4 } from '../../assets/images';
@@ -21,25 +22,19 @@ const SavedItemsScreen = ({ navigation }) => {
         isCart
         title="Saved Items"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.openDrawer()}>
+          <Clickable onClick={() => navigation.openDrawer()}>
             <Icon name="ios-menu" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
         headerRight={
           <>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Cart')}
-              activeOpacity={0.7}>
+            <Clickable onClick={() => navigation.navigate('Cart')}>
               <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </TouchableOpacity>
+            </Clickable>
             <Spacer medium />
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Search')}
-              activeOpacity={0.7}>
+            <Clickable onClick={() => navigation.navigate('Search')}>
               <Icon name="ios-search" color="#fff" />
-            </TouchableOpacity>
+            </Clickable>
           </>
         }
       />

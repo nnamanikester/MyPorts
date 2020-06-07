@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import {
   Layout,
   Icon,
@@ -8,12 +8,12 @@ import {
   TextInput,
   Spacer,
   Switch,
+  Clickable,
   Row,
 } from '../../components/common';
 import Header from '../../components/Header';
-import {info} from '../../components/common/variables';
 
-const AddAddressScreen = ({navigation}) => {
+const AddAddressScreen = ({ navigation }) => {
   const [defaultAddress, setDefaultAddress] = useState(false);
 
   return (
@@ -21,11 +21,9 @@ const AddAddressScreen = ({navigation}) => {
       <Header
         title="Add New Address"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}>
+          <Clickable onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
       />
       <Layout>
@@ -78,7 +76,7 @@ const AddAddressScreen = ({navigation}) => {
               <Switch
                 onChange={() => setDefaultAddress(!defaultAddress)}
                 value={defaultAddress}
-                style={{alignSelf: 'flex-start'}}
+                style={{ alignSelf: 'flex-start' }}
               />
               <Spacer medium />
               <Text heading>Set As Default</Text>
@@ -87,7 +85,7 @@ const AddAddressScreen = ({navigation}) => {
 
           <Spacer medium />
           <View>
-            <Row style={{justifyContent: 'space-between'}}>
+            <Row style={{ justifyContent: 'space-between' }}>
               <Button>
                 <Text color="#fff">Save</Text>
               </Button>
