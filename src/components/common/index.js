@@ -1,3 +1,4 @@
+export * from './Clickable';
 export * from './Text';
 export * from './ActivityButton';
 export * from './Layout';

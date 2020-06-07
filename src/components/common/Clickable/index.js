@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 const Clickable = (props) => {
   return (
     <TouchableOpacity onPress={props.onClick} activeOpacity={0.8} {...props}>
-      {prop.children}
+      {props.children}
     </TouchableOpacity>
   );
 };

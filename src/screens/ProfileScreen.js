@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import {
   Text,
   Layout,
@@ -11,8 +11,9 @@ import {
   Row,
   Column,
   Badge,
+  Clickable,
 } from '../components/common';
-import { primaryColor } from '../components/common/variables';
+import { primaryColor, lightColor } from '../components/common/variables';
 import Header from '../components/Header';
 import Avatar from '../components/Avatar';
 import { female4 } from '../assets/images';
@@ -26,25 +27,19 @@ const ProfileScreen = ({ navigation }) => {
         isCart
         title="Profile"
         headerLeft={
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => navigation.goBack()}>
+          <Clickable onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" color="#fff" />
-          </TouchableOpacity>
+          </Clickable>
         }
         headerRight={
           <>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Cart')}
-              activeOpacity={0.8}>
+            <Clickable onClick={() => navigation.navigate('Cart')}>
               <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </TouchableOpacity>
+            </Clickable>
             <Spacer medium />
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Search')}
-              activeOpacity={0.8}>
+            <Clickable onClick={() => navigation.navigate('Search')}>
               <Icon name="ios-search" color="#fff" />
-            </TouchableOpacity>
+            </Clickable>
           </>
         }
       />
@@ -52,45 +47,55 @@ const ProfileScreen = ({ navigation }) => {
         <View style={styles.container}>
           <View style={styles.profilePhoto}>
             <Avatar size={100} rounded src={female4} />
+            <Text heading>John Kester</Text>
             <Link onClick={() => navigation.navigate('UpdateProfile')}>
               Edit Profile
             </Link>
           </View>
 
-          <Spacer large />
+          <Spacer medium />
 
-          <Card style={{ height: 200 }}>
+          <Card>
             <Row
               style={{
-                justifyContent: 'space-between',
+                justifyContent: 'center',
+                flex: 1,
               }}>
-              <Column style={styles.column} size="6">
-                <TouchableOpacity activeOpacity={0.8}>
-                  <Icon name="ios-search" />
-                  <Text note>Saved Items</Text>
-                </TouchableOpacity>
+              <Column style={styles.column} size="3">
+                <Clickable style={{ alignItems: 'center' }}>
+                  <Icon color={primaryColor} size={40} name="ios-bookmark" />
+                  <Text bold>300</Text>
+                </Clickable>
               </Column>
-              <Column style={styles.column} size="6">
-                <TouchableOpacity activeOpacity={0.8}>
-                  <Icon name="ios-search" />
-                  <Text note>Order History</Text>
-                </TouchableOpacity>
+              <Column style={styles.column} size="3">
+                <Clickable style={{ alignItems: 'center' }}>
+                  <Icon color={primaryColor} size={40} name="ios-time" />
+                  <Text bold>12</Text>
+                </Clickable>
               </Column>
-              <Column style={styles.column} size="6">
-                <TouchableOpacity activeOpacity={0.8}>
-                  <Icon name="ios-search" />
-                  <Text note>Reviews</Text>
-                </TouchableOpacity>
+              <Column style={styles.column} size="3">
+                <Clickable style={{ alignItems: 'center' }}>
+                  <Icon color={primaryColor} size={40} name="ios-star" />
+                  <Text bold>33</Text>
+                </Clickable>
               </Column>
-              <Column style={styles.column} size="6">
-                <TouchableOpacity activeOpacity={0.8}>
-                  <Icon name="ios-search" />
-                  <Text note>Comments</Text>
-                </TouchableOpacity>
+              <Column style={styles.column} size="3">
+                <Clickable style={{ alignItems: 'center' }}>
+                  <Icon
+                    color={primaryColor}
+                    type="FontAwesome"
+                    size={40}
+                    name="comments"
+                  />
+                  <Text bold>23</Text>
+                </Clickable>
               </Column>
             </Row>
           </Card>
         </View>
+        <Spacer large />
+        <Spacer large />
+        <Spacer large />
       </Layout>
       <Loading show={loading} />
     </>
@@ -109,7 +114,6 @@ const styles = StyleSheet.create({
   column: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 100,
   },
 });
 
