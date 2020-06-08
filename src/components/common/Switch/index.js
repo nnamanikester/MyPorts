@@ -1,7 +1,7 @@
 import React from 'react';
-import {Switch as SW, View, StyleSheet} from 'react-native';
+import { Switch as SW } from 'react-native';
 import PropTypes from 'prop-types';
-import {primaryColor, grayColor} from '../variables';
+import { primaryColor, grayColor } from '../variables';
 
 /**
  * Renders a boolean Input (switch button)
@@ -11,14 +11,14 @@ import {primaryColor, grayColor} from '../variables';
  * updated, the component will continue to render the the supplied `value` prop instead
  * of the expected result of any user actions.
  */
-const Switch = ({onChange, value, style}) => {
+const Switch = ({ onChange, value, style }) => {
   return (
     <SW
-      trackColor={{true: primaryColor, false: grayColor}}
+      trackColor={{ true: primaryColor, false: grayColor }}
       thumbColor={primaryColor}
       onValueChange={onChange}
       value={value}
-      style={{...style}}
+      style={{ ...style }}
     />
   );
 };
@@ -40,4 +40,4 @@ Switch.propTypes = {
 
 Switch.defaultProps = {};
 
-export {Switch};
+export { Switch };

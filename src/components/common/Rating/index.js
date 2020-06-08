@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Icon} from '../Icon';
-import {primaryColor} from '../variables';
+import { StyleSheet, View } from 'react-native';
+import { Icon } from '../Icon';
+import { primaryColor } from '../variables';
+import { Clickable } from '../Clickable';
 
-const Rating = ({onClick, s1, s2, s3, s4, s5, size}) => {
+const Rating = ({ onClick, s1, s2, s3, s4, s5, size }) => {
   const totalRatings = s1 + s2 + s3 + s4 + s5;
   const s1Percentage = 0;
   const s2Percentage = 25;
@@ -56,40 +57,25 @@ const Rating = ({onClick, s1, s2, s3, s4, s5, size}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={onClick}
-        style={styles.star}
-        activeOpacity={0.5}>
+      <Clickable onClick={onClick} style={styles.star}>
         <Icon size={size || 20} name="ios-star" color={stars.star1} />
-      </TouchableOpacity>
+      </Clickable>
 
-      <TouchableOpacity
-        onPress={onClick}
-        style={styles.star}
-        activeOpacity={0.5}>
+      <Clickable onClick={onClick} style={styles.star}>
         <Icon size={size || 20} name="ios-star" color={stars.star2} />
-      </TouchableOpacity>
+      </Clickable>
 
-      <TouchableOpacity
-        onPress={onClick}
-        style={styles.star}
-        activeOpacity={0.5}>
+      <Clickable onClick={onClick} style={styles.star}>
         <Icon size={size || 20} name="ios-star" color={stars.star3} />
-      </TouchableOpacity>
+      </Clickable>
 
-      <TouchableOpacity
-        onPress={onClick}
-        style={styles.star}
-        activeOpacity={0.5}>
+      <Clickable onClick={onClick} style={styles.star}>
         <Icon size={size || 20} name="ios-star" color={stars.star4} />
-      </TouchableOpacity>
+      </Clickable>
 
-      <TouchableOpacity
-        onPress={onClick}
-        style={styles.star}
-        activeOpacity={0.5}>
+      <Clickable onClick={onClick} style={styles.star}>
         <Icon size={size || 20} name="ios-star" color={stars.star5} />
-      </TouchableOpacity>
+      </Clickable>
     </View>
   );
 };
@@ -121,4 +107,4 @@ Rating.defaultProps = {
   s5: 0,
 };
 
-export {Rating};
+export { Rating };

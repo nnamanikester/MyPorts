@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {Text} from '../Text';
+import { View, StyleSheet } from 'react-native';
+import { Text } from '../Text';
 
 const Option = () => {
   return (
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {Option};
+export { Option };

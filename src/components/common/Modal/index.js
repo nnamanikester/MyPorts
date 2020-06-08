@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {Text} from '../Text';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Text } from '../Text';
 
-const Modal = ({children, show}) => {
+const Modal = ({ children, show }) => {
   if (!show) {
     return null;
   }
@@ -13,7 +13,6 @@ const Modal = ({children, show}) => {
       style={{
         ...styles.background,
       }}>
-      <TouchableOpacity></TouchableOpacity>
       <View style={styles.container}>{children}</View>
     </View>
   );
@@ -54,4 +53,4 @@ Modal.defaultProps = {
   show: false,
 };
 
-export {Modal};
+export { Modal };
