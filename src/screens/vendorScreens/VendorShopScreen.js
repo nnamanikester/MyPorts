@@ -31,13 +31,13 @@ import {
   grayColor,
   info,
   primaryColor,
-  success,
 } from '../../components/common/variables';
 
 const VendorShopScreen = ({ navigation }) => {
   const [openChat, setOpenChat] = useState(false);
   const [openReview, setOpenReview] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [verified, setVerified] = useState(false);
 
   return (
     <>
@@ -77,7 +77,24 @@ const VendorShopScreen = ({ navigation }) => {
 
             <View style={styles.shopDetails}>
               <Spacer />
-              <Text style={styles.shopTitle}> Tiana Rosser</Text>
+              <Text style={styles.shopTitle}>
+                Tiana Rosser {'  '}
+                {verified ? (
+                  <Icon
+                    size={20}
+                    type="Octicons"
+                    color={primaryColor}
+                    name="verified"
+                  />
+                ) : (
+                  <Icon
+                    size={20}
+                    type="Octicons"
+                    color={info}
+                    name="unverified"
+                  />
+                )}
+              </Text>
               <Spacer />
               <Text style={styles.shopDescription}>
                 I was part of something special. Eventually, you do.
