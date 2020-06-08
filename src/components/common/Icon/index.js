@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -15,149 +15,144 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Zocial from 'react-native-vector-icons/Zocial';
-import {textColor} from '../variables';
+import { info, grayColor, inactiveColor } from '../variables';
 
-let smallStyle = {};
-let textStyle = {};
-let typeStyle = {};
-let disabled = 0.5;
-
-const Icon = ({size, name, color, type, style}) => {
+const Icon = ({ size, name, color, type, style }) => {
   const IconType = () => {
     switch (type) {
       case 'AntDesign':
         return (
           <AntDesign
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
       case 'Entypo':
         return (
           <Entypo
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
       case 'EvilIcons':
         return (
           <EvilIcons
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
       case 'Feather':
         return (
           <Feather
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
       case 'FontAwesome':
         return (
           <FontAwesome
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
       case 'FontAwesome5':
         return (
           <FontAwesome5
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
       case 'Fontisto':
         return (
           <Fontisto
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
       case 'Foundation':
         return (
           <Foundation
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
       case 'Ionicons':
         return (
           <Ionicons
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
       case 'MaterialIcons':
         return (
           <MaterialIcons
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
       case 'MaterialCommunityIcons':
         return (
           <MaterialCommunityIcons
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
       case 'Octicons':
         return (
           <Octicons
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
       case 'Zocial':
         return (
           <Zocial
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
       case 'SimpleLineIcons':
         return (
           <SimpleLineIcons
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
       default:
         return (
           <Ionicons
             name={name}
-            color={color}
+            color={color || info}
             size={size}
-            style={{...styles.icon, ...style}}
+            style={{ ...styles.icon, ...style }}
           />
         );
     }
@@ -180,8 +175,7 @@ Icon.propTypes = {
 Icon.defaultProps = {
   onClick: () => {},
   size: 28,
-  color: textColor,
   style: {},
 };
 
-export {Icon};
+export { Icon };

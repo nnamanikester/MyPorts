@@ -6,7 +6,7 @@ const FeaturedVendor = ({ name, location, image, onClick }) => {
   return (
     <View>
       <Card style={styles.container}>
-        <Clickable onClick={onClick}>
+        <Clickable activeOpacity={0.99} onClick={onClick}>
           <View style={styles.imageContanier}>
             <Image style={styles.image} source={image} />
           </View>
@@ -25,12 +25,11 @@ const FeaturedVendor = ({ name, location, image, onClick }) => {
 const styles = StyleSheet.create({
   container: {
     height: 200,
-    elevation: 2,
-    width: 160,
+    elevation: 0.2,
+    width: 150,
     marginRight: 10,
     zIndex: 10,
   },
-  imageContainer: {},
   image: {
     width: '100%',
     height: '100%',

@@ -1,8 +1,7 @@
 import React from 'react';
-import {StyleSheet, View, Image} from 'react-native';
-import {Text, Button, Spacer} from '../';
+import { StyleSheet, View, Image } from 'react-native';
+import { Text, Button, Spacer } from '../';
 import PropTypes from 'prop-types';
-import {primaryColor} from '../variables';
 import {
   check,
   successBg,
@@ -41,7 +40,7 @@ const Alert = ({
   }
 
   return (
-    <View style={{...styles.container, ...style}}>
+    <View style={{ ...styles.container, ...style }}>
       <View style={styles.iconContainer}>
         <Image source={icon} />
       </View>
@@ -158,4 +157,4 @@ Alert.defaultProps = {
   onButtonClick: () => {},
 };
 
-export {Alert};
+export { Alert };

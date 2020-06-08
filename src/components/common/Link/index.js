@@ -1,19 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { TouchableOpacity, Linking } from 'react-native';
+import { Linking } from 'react-native';
 import { Text } from '../Text';
 import { primaryColor } from '../variables';
+import { Clickable } from '../Clickable';
 
 const Link = ({ children, to, textStyle, onClick, style, color }) => {
   return (
-    <TouchableOpacity
-      style={style}
-      onPress={to ? Linking.openURL(to) : onClick}
-      activeOpacity={0.8}>
+    <Clickable style={style} onClick={to ? Linking.openURL(to) : onClick}>
       <Text style={textStyle} color={color || primaryColor}>
         {children}
       </Text>
-    </TouchableOpacity>
+    </Clickable>
   );
 };
 

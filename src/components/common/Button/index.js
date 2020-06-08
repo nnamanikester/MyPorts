@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Text } from '../Text';
 import {
   primaryColor,
@@ -8,6 +8,7 @@ import {
   grayColor,
   textColor,
 } from '../variables';
+import { Clickable } from '../Clickable';
 
 let smallStyle = {};
 let color = '#fff';
@@ -72,8 +73,8 @@ const Button = ({
   }
 
   return (
-    <TouchableOpacity
-      onPress={onClick}
+    <Clickable
+      onClick={onClick}
       style={{
         ...styles.button,
         ...smallStyle,
@@ -102,7 +103,7 @@ const Button = ({
           {iconRight}
         </View>
       ) : null}
-    </TouchableOpacity>
+    </Clickable>
   );
 };
 

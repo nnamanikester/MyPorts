@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
-import {primaryColor, inactiveColor, textColor} from '../variables';
-import {Text} from '../Text';
+import { StyleSheet } from 'react-native';
+import { primaryColor, inactiveColor, textColor } from '../variables';
+import { Text } from '../Text';
+import { Clickable } from '../Clickable';
 
-const FloatButton = ({onClick, children, size, shape, type, style}) => {
+const FloatButton = ({ onClick, children, size, shape, type, style }) => {
   let smallStyle = {};
   let color = '#fff';
   let typeStyle = {};
@@ -91,7 +92,7 @@ const FloatButton = ({onClick, children, size, shape, type, style}) => {
   }
 
   return (
-    <TouchableOpacity
+    <Clickable
       activeOpacity={disabled}
       style={{
         ...styles.button,
@@ -100,9 +101,9 @@ const FloatButton = ({onClick, children, size, shape, type, style}) => {
         ...shapeStyle,
         ...style,
       }}
-      onPress={onClick}>
+      onClick={onClick}>
       <Text color={color}>{children}</Text>
-    </TouchableOpacity>
+    </Clickable>
   );
 };
 
@@ -130,4 +131,4 @@ FloatButton.defaultProps = {
   style: {},
 };
 
-export {FloatButton};
+export { FloatButton };

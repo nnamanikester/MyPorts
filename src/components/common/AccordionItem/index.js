@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Text } from '../Text';
 import { Icon } from '../Icon';
-import { primaryColor, lightColor } from '../variables';
+import { primaryColor } from '../variables';
+import { Clickable } from '../Clickable';
 
 /**
  * An `AccordionItem`, to be used only inside an Accordion.
@@ -27,11 +28,9 @@ const AccordionItem = ({ children, expanded, index, onExpand, props }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        on
+      <Clickable
         style={headerContainerStyle}
-        onPress={callbacks}
-        activeOpacity={0.7}
+        onClick={callbacks}
         style={styles.header}>
         <Text style={{ ...styles.headerText, ...headerTextStyle }}>
           {headerText}
@@ -40,7 +39,7 @@ const AccordionItem = ({ children, expanded, index, onExpand, props }) => {
           style={styles.headerIcon}
           name={`ios-arrow-${expanded ? 'up' : 'down'}`}
         />
-      </TouchableOpacity>
+      </Clickable>
       <View
         style={{
           ...styles.body,
