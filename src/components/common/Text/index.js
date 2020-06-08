@@ -43,7 +43,7 @@ const Text = ({
     textStyle.lineHeight = 24;
   } else if (size) {
     textStyle.fontSize = size;
-    textStyle.lineHeight = size + 7;
+    textStyle.lineHeight = size + 10;
   } else {
     textStyle.fontSize = 16;
     textStyle.lineHeight = 23;
