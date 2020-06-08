@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {Text, Icon, ListItem, Spacer} from './common';
+import { StyleSheet, View } from 'react-native';
+import { Text, Icon, ListItem, Spacer, Clickable } from './common';
 import Avater from './Avatar';
-import {info} from './common/variables';
+import { info } from './common/variables';
 
 const CartItem = ({
   onClick,
@@ -42,13 +42,11 @@ const CartItem = ({
           </>
         }
         right={
-          <View style={{alignItems: 'flex-end'}}>
+          <View style={{ alignItems: 'flex-end' }}>
             {!hideCloseButton && (
-              <TouchableOpacity
-                onPress={onCloseButtonClick}
-                activeOpacity={0.7}>
+              <Clickable onCLick={onCloseButtonClick}>
                 <Icon name="md-close" />
-              </TouchableOpacity>
+              </Clickable>
             )}
             <Spacer />
             {price && <Text>NGN {price}</Text>}

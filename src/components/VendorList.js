@@ -1,10 +1,9 @@
 import React from 'react';
-import {View, StyleSheet, Image} from 'react-native';
-import {Card, Text, Button, Row, Icon, Spacer, Link} from './common';
-import {primaryColor} from './common/variables';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { View, StyleSheet, Image } from 'react-native';
+import { Card, Text, Row, Icon, Spacer, Clickable } from './common';
+import { primaryColor } from './common/variables';
 
-const VendorList = ({name, location, image, onClick}) => {
+const VendorList = ({ name, location, image, onClick }) => {
   return (
     <View>
       <Card style={styles.container}>
@@ -12,14 +11,14 @@ const VendorList = ({name, location, image, onClick}) => {
           <Image style={styles.image} source={image} />
         </View>
         <View style={styles.content}>
-          <Row style={{justifyContent: 'space-between'}}>
+          <Row style={{ justifyContent: 'space-between' }}>
             <View>
               <Text heading>{name}</Text>
               <Text note>{location}</Text>
             </View>
-            <View style={{justifyContent: 'center'}}>
-              <TouchableOpacity onPress={onClick} activeOpacity={0.7}>
-                <Row style={{alignItems: 'center'}}>
+            <View style={{ justifyContent: 'center' }}>
+              <Clickable onClick={onClick}>
+                <Row style={{ alignItems: 'center' }}>
                   <Text color={primaryColor}>Shop Now</Text>
                   <Spacer size={2} />
                   <Icon
@@ -29,7 +28,7 @@ const VendorList = ({name, location, image, onClick}) => {
                     size={22}
                   />
                 </Row>
-              </TouchableOpacity>
+              </Clickable>
             </View>
           </Row>
         </View>
@@ -41,7 +40,7 @@ const VendorList = ({name, location, image, onClick}) => {
 const styles = StyleSheet.create({
   container: {
     height: 250,
-    elevation: 1,
+    elevation: 0.2,
   },
   imageContainer: {},
   image: {

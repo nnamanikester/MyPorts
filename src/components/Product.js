@@ -1,12 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {Card, Text, Button, Row, Icon, Column, Spacer} from './common';
-import {primaryColor, info, inactiveColor} from './common/variables';
+import { View, StyleSheet, Image } from 'react-native';
+import { Text, Row, Spacer, Clickable } from './common';
 
-const Product = ({name, vendor, quantity, image, onClick}) => {
+const Product = ({ name, vendor, quantity, image, onClick }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onClick} activeOpacity={0.9}>
+      <Clickable onClick={onClick}>
         <View style={styles.imageContanier}>
           <Image style={styles.image} source={image} />
         </View>
@@ -19,7 +18,7 @@ const Product = ({name, vendor, quantity, image, onClick}) => {
             <Text style={styles.vendor}>{quantity}</Text>
           </Row>
         </View>
-      </TouchableOpacity>
+      </Clickable>
     </View>
   );
 };

@@ -1,7 +1,13 @@
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {Text, Card, Spacer, Icon, Divider, Row} from './common';
-import {primaryColor, info, success, warning, danger} from './common/variables';
+import { View, StyleSheet } from 'react-native';
+import { Text, Card, Spacer, Icon, Divider, Row, Clickable } from './common';
+import {
+  primaryColor,
+  info,
+  success,
+  warning,
+  danger,
+} from './common/variables';
 
 const Order = ({
   orderNo,
@@ -45,14 +51,14 @@ const Order = ({
   }
 
   return (
-    <TouchableOpacity activeOpacity={0.7} onPress={onClick}>
-      <Card style={{elevation: 3}}>
+    <Clickable onClick={onClick}>
+      <Card style={{ elevation: 3 }}>
         <View style={styles.order}>
           <Spacer size={1} />
           <View style={styles.orderHeader}>
             <Row
-              style={{justifyContent: 'space-between', alignItems: 'center'}}>
-              <View style={{alignItems: 'center', flexDirection: 'row'}}>
+              style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+              <View style={{ alignItems: 'center', flexDirection: 'row' }}>
                 <Icon size={20} name={icon} color={statusColor} />
                 <Spacer />
                 <Text color={statusColor}>{statusLabel.toUpperCase()}</Text>
@@ -77,8 +83,8 @@ const Order = ({
 
           <View style={styles.orderFooter}>
             <Row
-              style={{justifyContent: 'space-between', alignItems: 'center'}}>
-              <View style={{alignItems: 'center', flexDirection: 'row'}}>
+              style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+              <View style={{ alignItems: 'center', flexDirection: 'row' }}>
                 <Text color={info}>Items' Value</Text>
                 <Spacer />
                 <Text bold>NGN {itemPrice}</Text>
@@ -90,7 +96,7 @@ const Order = ({
           </View>
         </View>
       </Card>
-    </TouchableOpacity>
+    </Clickable>
   );
 };
 

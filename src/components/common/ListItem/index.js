@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { grayColor } from '../variables';
+import { View, StyleSheet } from 'react-native';
+import { inactiveColor } from '../variables';
+import { Clickable } from '../Clickable';
 
 const ListItem = ({ children, left, right, body, marked, onClick, style }) => {
   let markedStyle = {};
@@ -14,22 +15,21 @@ const ListItem = ({ children, left, right, body, marked, onClick, style }) => {
   }
 
   return (
-    <TouchableOpacity
+    <Clickable
       style={style}
-      onPress={onClick}
-      activeOpacity={0.8}
+      onClick={onClick}
       style={{ ...styles.container, ...markedStyle }}>
       {left && <View style={styles.left}>{left}</View>}
       <View style={styles.body}>{body || children}</View>
       {right && <View style={styles.right}>{right}</View>}
-    </TouchableOpacity>
+    </Clickable>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     borderBottomWidth: 1,
-    borderColor: grayColor,
+    borderColor: inactiveColor,
     paddingTop: 15,
     paddingBottom: 10,
     flexDirection: 'row',

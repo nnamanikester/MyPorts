@@ -21,8 +21,22 @@ import {
 } from '../../components/common';
 import Header from '../../components/Header';
 import Comment from '../../components/Comment';
-import { bag1, shoe1, female4 } from '../../assets/images';
-import { grayColor, info } from '../../components/common/variables';
+import {
+  shoe1,
+  female4,
+  shoe7,
+  shoe6,
+  shoe5,
+  shoe3,
+  shoe2,
+  shoe4,
+} from '../../assets/images';
+import {
+  grayColor,
+  info,
+  danger,
+  primaryColor,
+} from '../../components/common/variables';
 
 const colors = [
   { label: '', value: '' },
@@ -73,39 +87,48 @@ const SingleProductScreen = ({ navigation }) => {
             <Image style={styles.featured} source={shoe1} />
           </View>
           <View>
-            <Image style={styles.featured} source={female4} />
+            <Image style={styles.featured} source={shoe2} />
           </View>
           <View>
-            <Image style={styles.featured} source={bag1} />
+            <Image style={styles.featured} source={shoe3} />
+          </View>
+          <View>
+            <Image style={styles.featured} source={shoe4} />
+          </View>
+          <View>
+            <Image style={styles.featured} source={shoe5} />
+          </View>
+          <View>
+            <Image style={styles.featured} source={shoe6} />
+          </View>
+          <View>
+            <Image style={styles.featured} source={shoe7} />
           </View>
         </Swiper>
         <View style={styles.titleContainer}>
-          <Text style={styles.title} color="#fff" size={25}>
-            Water Proof Watch With Leather Belt
-          </Text>
           <Text style={styles.category} heading>
-            Women
+            Men
           </Text>
         </View>
         <View style={styles.container}>
           <View style={styles.activities}>
             <ActivityButton
-              inActiveIcon={
-                <Icon
-                  type="FontAwesome"
-                  size={20}
-                  name="heart-o"
-                  color={info}
-                />
-              }
-              // activeIcon={
+              // inActiveIcon={
               //   <Icon
               //     type="FontAwesome"
               //     size={20}
-              //     name="heart"
-              //     color={danger}
+              //     name="heart-o"
+              //     color={info}
               //   />
               // }
+              activeIcon={
+                <Icon
+                  type="FontAwesome"
+                  size={20}
+                  name="heart"
+                  color={danger}
+                />
+              }
               count={likeCount}
               onClick={() => setLikeCount(likeCount + 1)}
             />
@@ -124,22 +147,22 @@ const SingleProductScreen = ({ navigation }) => {
             />
             <Spacer medium />
             <ActivityButton
-              inActiveIcon={
-                <Icon
-                  type="FontAwesome"
-                  size={20}
-                  name="bookmark-o"
-                  color={info}
-                />
-              }
-              // activeIcon={
+              // inActiveIcon={
               //   <Icon
               //     type="FontAwesome"
               //     size={20}
-              //     name="bookmark"
-              //     color={primaryColor}
+              //     name="bookmark-o"
+              //     color={info}
               //   />
               // }
+              activeIcon={
+                <Icon
+                  type="FontAwesome"
+                  size={20}
+                  name="bookmark"
+                  color={primaryColor}
+                />
+              }
               count={likeCount}
               onClick={() => setLikeCount(likeCount + 1)}
             />
@@ -153,6 +176,12 @@ const SingleProductScreen = ({ navigation }) => {
           </View>
 
           <Spacer />
+
+          <View style={styles.container}>
+            <Text style={styles.title} size={22}>
+              China Sneakers
+            </Text>
+          </View>
 
           <View>
             <Accordion initialIndex={0}>

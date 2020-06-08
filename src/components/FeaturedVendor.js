@@ -1,14 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, Image} from 'react-native';
-import {Card, Text, Button, Row, Icon, Column, Spacer} from './common';
-import {primaryColor} from './common/variables';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { View, StyleSheet, Image } from 'react-native';
+import { Card, Text, Clickable } from './common';
 
-const FeaturedVendor = ({name, location, image, onClick}) => {
+const FeaturedVendor = ({ name, location, image, onClick }) => {
   return (
     <View>
       <Card style={styles.container}>
-        <TouchableOpacity onPress={onClick} activeOpacity={0.9}>
+        <Clickable onClick={onClick}>
           <View style={styles.imageContanier}>
             <Image style={styles.image} source={image} />
           </View>
@@ -18,7 +16,7 @@ const FeaturedVendor = ({name, location, image, onClick}) => {
             </Text>
             <Text note>{location}</Text>
           </View>
-        </TouchableOpacity>
+        </Clickable>
       </Card>
     </View>
   );

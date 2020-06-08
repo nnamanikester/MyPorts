@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { Card, Text } from './common';
+import { View, StyleSheet, Image } from 'react-native';
+import { Card, Text, Clickable } from './common';
 import {} from 'react-native-gesture-handler';
 
 const Category = ({ title, onClick, subtitle, image }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onClick} activeOpacity={0.9}>
+      <Clickable onClick={onClick}>
         <Card style={{ height: 190 }}>
           <View style={styles.content}>
             <Text color="#fff" h2>
@@ -19,7 +19,7 @@ const Category = ({ title, onClick, subtitle, image }) => {
             <Image style={styles.image} source={image} />
           </View>
         </Card>
-      </TouchableOpacity>
+      </Clickable>
     </View>
   );
 };

@@ -1,12 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {Card, Text, Button, Row, Icon, Column, Spacer} from './common';
-import {primaryColor, info, inactiveColor} from './common/variables';
+import { View, StyleSheet, Image } from 'react-native';
+import { Text, Row, Spacer, Clickable } from './common';
 
-const FeaturedProduct = ({name, vendor, quantity, image, onClick}) => {
+const FeaturedProduct = ({ name, vendor, quantity, image, onClick }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onClick} activeOpacity={0.9}>
+      <Clickable onClick={onClick}>
         <View style={styles.imageContanier}>
           <Image style={styles.image} source={image} />
         </View>
@@ -26,7 +25,7 @@ const FeaturedProduct = ({name, vendor, quantity, image, onClick}) => {
             <Row></Row>
           </View>
         )}
-      </TouchableOpacity>
+      </Clickable>
     </View>
   );
 };
@@ -37,9 +36,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginBottom: 5,
     borderRadius: 5,
-    elevation: 1,
+    elevation: 0.2,
   },
-  imageContainer: {},
   image: {
     width: '100%',
     height: 150,
@@ -48,7 +46,6 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 10,
-    paddingBottom: 10,
   },
   title: {
     fontSize: 17,

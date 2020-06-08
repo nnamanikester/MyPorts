@@ -1,12 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { View, ScrollView, StyleSheet, Image } from 'react-native';
 import {
   Text,
   Badge,
@@ -15,9 +9,9 @@ import {
   TextInput,
   Column,
   FloatButton,
-  Option,
+  Clickable,
 } from './common';
-import {grayColor, primaryColor, success} from './common/variables';
+import { grayColor, primaryColor, success } from './common/variables';
 
 const ContactVendor = ({
   isOpen,
@@ -40,15 +34,15 @@ const ContactVendor = ({
           <View style={styles.chatHeader}>
             <Image style={styles.chatPic} source={chatImage} />
             <Spacer medium />
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <Text style={styles.chatTitle}>Shop and Smile</Text>
               <Text note color="#fff">
                 I was part of something special...
               </Text>
             </View>
-            <TouchableOpacity onPress={onChatClose} activeOpacity={0.7}>
+            <Clickable onClick={onChatClose}>
               <Icon name="md-close" size={36} color="#fff" />
-            </TouchableOpacity>
+            </Clickable>
           </View>
           <View style={styles.chatBody}>
             <ScrollView showsVerticalScrollIndicator={false}>
