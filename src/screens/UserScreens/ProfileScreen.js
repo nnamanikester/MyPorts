@@ -10,7 +10,7 @@ import {
   Card,
   Row,
   Column,
-  Badge,
+  Button,
   Clickable,
   TopTab,
 } from '../../components/common';
@@ -60,9 +60,11 @@ const ProfileScreen = ({ navigation }) => {
 
           <Spacer medium />
 
-          <Button>
-            <Text color="#fff">Become a Vendor</Text>
-          </Button>
+          <View style={{ alignItems: 'center' }}>
+            <Button size="small" style={{ width: 200 }}>
+              <Text color="#fff">Become a Vendor</Text>
+            </Button>
+          </View>
 
           <Spacer medium />
 
