@@ -21,6 +21,7 @@ export * from './ProgressBar';
 export * from './Switch';
 export * from './Option';
 export * from './Loading';
+export * from './Spinner';
 export * from './Alert';
 export * from './Radio';
 export * from './ActionBar';

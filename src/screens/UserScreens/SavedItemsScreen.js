@@ -22,8 +22,8 @@ const SavedItemsScreen = ({ navigation }) => {
         isCart
         title="Saved Items"
         headerLeft={
-          <Clickable onClick={() => navigation.openDrawer()}>
-            <Icon name="ios-menu" color="#fff" />
+          <Clickable onClick={() => navigation.goBack()}>
+            <Icon name="ios-arrow-back" color="#fff" />
           </Clickable>
         }
         headerRight={
