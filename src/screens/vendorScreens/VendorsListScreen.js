@@ -63,26 +63,31 @@ const VendorListScreen = ({ navigation }) => {
             location="Victoria Island, Lagos. Nigeria"
             name="Shop and Smile"
             image={female1}
+            verified
           />
           <FeaturedVendor
+            verified={false}
             onClick={() => navigation.navigate('VendorShop')}
             location="Victoria Island, Lagos. Nigeria"
             name="Shop and Smile"
             image={female2}
           />
           <FeaturedVendor
+            verified
             onClick={() => navigation.navigate('VendorShop')}
             location="Victoria Island, Lagos. Nigeria"
             name="Shop and Smile"
             image={female3}
           />
           <FeaturedVendor
+            verified={false}
             onClick={() => navigation.navigate('VendorShop')}
             location="Victoria Island, Lagos. Nigeria"
             name="Shop and Smile"
             image={male1}
           />
           <FeaturedVendor
+            verified
             onClick={() => navigation.navigate('VendorShop')}
             location="Victoria Island, Lagos. Nigeria"
             name="Shop and Smile"
@@ -114,32 +119,38 @@ const VendorListScreen = ({ navigation }) => {
             location="Victoria Island, Lagos. Nigeria"
             name="Shop and Smile"
             image={female1}
+            verified
           />
           <VendorList
+            verified={false}
             onClick={() => navigation.navigate('VendorShop')}
             location="Victoria Island, Lagos. Nigeria"
             name="Shop and Smile"
             image={male1}
           />
           <VendorList
+            verified
             onClick={() => navigation.navigate('VendorShop')}
             location="Victoria Island, Lagos. Nigeria"
             name="Shop and Smile"
             image={female2}
           />
           <VendorList
+            verified={false}
             onClick={() => navigation.navigate('VendorShop')}
             location="Victoria Island, Lagos. Nigeria"
             name="Shop and Smile"
             image={female3}
           />
           <VendorList
+            verified={false}
             onClick={() => navigation.navigate('VendorShop')}
             location="Victoria Island, Lagos. Nigeria"
             name="Shop and Smile"
             image={male1}
           />
           <VendorList
+            verified
             onClick={() => navigation.navigate('VendorShop')}
             location="Victoria Island, Lagos. Nigeria"
             name="Shop and Smile"

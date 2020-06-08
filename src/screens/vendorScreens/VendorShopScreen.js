@@ -37,7 +37,7 @@ const VendorShopScreen = ({ navigation }) => {
   const [openChat, setOpenChat] = useState(false);
   const [openReview, setOpenReview] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
-  const [verified, setVerified] = useState(false);
+  const [verified, setVerified] = useState(true);
 
   return (
     <>
@@ -81,14 +81,14 @@ const VendorShopScreen = ({ navigation }) => {
                 Tiana Rosser {'  '}
                 {verified ? (
                   <Icon
-                    size={20}
+                    size={18}
                     type="Octicons"
                     color={primaryColor}
                     name="verified"
                   />
                 ) : (
                   <Icon
-                    size={20}
+                    size={18}
                     type="Octicons"
                     color={info}
                     name="unverified"

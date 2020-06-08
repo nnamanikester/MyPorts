@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
-import { Card, Text, Clickable } from './common';
+import { Card, Text, Clickable, Icon } from './common';
+import { primaryColor, info } from './common/variables';
 
-const FeaturedVendor = ({ name, location, image, onClick }) => {
+const FeaturedVendor = ({ name, location, image, onClick, verified }) => {
   return (
     <View>
       <Card style={styles.container}>
@@ -13,6 +14,22 @@ const FeaturedVendor = ({ name, location, image, onClick }) => {
           <View style={styles.content}>
             <Text heading style={styles.title}>
               {name}
+              {'  '}
+              {verified ? (
+                <Icon
+                  size={13}
+                  type="Octicons"
+                  color={primaryColor}
+                  name="verified"
+                />
+              ) : (
+                <Icon
+                  size={13}
+                  type="Octicons"
+                  color={info}
+                  name="unverified"
+                />
+              )}
             </Text>
             <Text note>{location}</Text>
           </View>

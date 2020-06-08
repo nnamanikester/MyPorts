@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { Card, Text, Row, Icon, Spacer, Clickable } from './common';
-import { primaryColor } from './common/variables';
+import { primaryColor, info } from './common/variables';
 
-const VendorList = ({ name, location, image, onClick }) => {
+const VendorList = ({ name, location, image, onClick, verified }) => {
   return (
     <View>
       <Card style={styles.container}>
@@ -13,7 +13,24 @@ const VendorList = ({ name, location, image, onClick }) => {
         <View style={styles.content}>
           <Row style={{ justifyContent: 'space-between' }}>
             <View>
-              <Text heading>{name}</Text>
+              <Text heading>
+                {name} {'  '}
+                {verified ? (
+                  <Icon
+                    size={16}
+                    type="Octicons"
+                    color={primaryColor}
+                    name="verified"
+                  />
+                ) : (
+                  <Icon
+                    size={16}
+                    type="Octicons"
+                    color={info}
+                    name="unverified"
+                  />
+                )}
+              </Text>
               <Text note>{location}</Text>
             </View>
             <View style={{ justifyContent: 'center' }}>
