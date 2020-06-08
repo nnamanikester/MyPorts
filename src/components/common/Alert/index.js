@@ -28,15 +28,16 @@ const Alert = ({
   }
 
   let bgImage = successBg;
-  let icon = check;
+  let icon = errorCheck;
+
+  if (success) {
+    bgImage = successBg;
+    icon = check;
+  }
 
   if (error) {
     bgImage = errorBg;
     icon = errorCheck;
-  }
-  if (success) {
-    bgImage = successBg;
-    icon = check;
   }
 
   return (
@@ -103,6 +104,8 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 50,
     bottom: 50,
+    elevation: 9999,
+    zIndex: 999999,
   },
 });
 
@@ -153,7 +156,7 @@ Alert.defaultProps = {
   style: {},
   error: false,
   showBg: false,
-  success: true,
+  success: false,
   onButtonClick: () => {},
 };
 

@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   container: {
     elevation: 1,
     minHeight: 100,
-    borderRadius: 10,
+    borderRadius: 5,
     marginVertical: 10,
   },
 });

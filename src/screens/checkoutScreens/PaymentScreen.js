@@ -33,10 +33,12 @@ const PaymentScreen = ({ navigation }) => {
         show={alert}
         header="Payment Failed! "
         error
+        showBg
         buttonText="Review Payment"
         message={
           'You have made your first payment. \n Would you like to review the product you ordered?'
         }
+        onButtonClick={() => setAlert(false)}
       />
       <Header
         title="Payment"

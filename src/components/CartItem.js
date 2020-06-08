@@ -1,14 +1,13 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text, Icon, ListItem, Spacer, Clickable } from './common';
+import { Text, Icon, ListItem, Link } from './common';
 import Avater from './Avatar';
 import { info } from './common/variables';
 
 const CartItem = ({
   onClick,
   price,
-  size,
-  color,
+  shipping,
   quantity,
   name,
   image,
@@ -19,24 +18,18 @@ const CartItem = ({
     <View>
       <ListItem
         onClick={onClick}
-        left={<Avater src={image} size={100} />}
+        left={<Avater src={image} large />}
         body={
           <>
             {name && <Text heading>{name}</Text>}
-            <Spacer />
-            {size && (
-              <Text>
-                Size: <Text color={info}>{size}</Text>
-              </Text>
-            )}
-            {color && (
-              <Text>
-                Color: <Text color={info}>{color}</Text>
-              </Text>
-            )}
             {quantity && (
               <Text>
                 Quantity: <Text color={info}>{quantity}</Text>
+              </Text>
+            )}
+            {shipping && (
+              <Text>
+                Shipping: <Text color={info}>{shipping}</Text>
               </Text>
             )}
           </>
@@ -44,11 +37,10 @@ const CartItem = ({
         right={
           <View style={{ alignItems: 'flex-end' }}>
             {!hideCloseButton && (
-              <Clickable onCLick={onCloseButtonClick}>
+              <Link onCLick={onCloseButtonClick}>
                 <Icon name="md-close" />
-              </Clickable>
+              </Link>
             )}
-            <Spacer />
             {price && <Text>NGN {price}</Text>}
           </View>
         }

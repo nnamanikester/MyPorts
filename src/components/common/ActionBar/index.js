@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Icon, Layout } from '..';
 import PropTypes from 'prop-types';
-import { grayColor } from '../variables';
+import { grayColor, primaryColor } from '../variables';
 import { Clickable } from '../Clickable';
 
 /**
@@ -29,11 +29,11 @@ const ActionBar = ({
         <View style={styles.header}>
           <Text
             style={{ ...styles.headerText, ...headerTextStyle }}
-            color={headerTextColor}>
+            color="#fff">
             {headerText}
           </Text>
           <Clickable onClick={onCloseButtonClick} activeOpacity={0.7}>
-            <Icon color={iconColor} name="md-close" />
+            <Icon color={iconColor || '#fff'} name="md-close" />
           </Clickable>
         </View>
         <Layout style={styles.body}>{children}</Layout>
@@ -71,6 +71,9 @@ const styles = StyleSheet.create({
     width: '100%',
     borderBottomWidth: 1,
     borderBottomColor: grayColor,
+    backgroundColor: primaryColor,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   headerText: {
     flex: 1,

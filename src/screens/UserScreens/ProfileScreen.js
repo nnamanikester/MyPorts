@@ -60,30 +60,33 @@ const ProfileScreen = ({ navigation }) => {
 
           <Spacer medium />
 
-          <View style={{ alignItems: 'center' }}>
-            <Button size="small" style={{ width: 200 }}>
-              <Text color="#fff">Become a Vendor</Text>
-            </Button>
-          </View>
-
-          <Spacer medium />
-
           <Row
             style={{
               justifyContent: 'center',
               flex: 1,
             }}>
-            <Column style={styles.column} size="6">
-              <Clickable style={{ alignItems: 'center' }}>
+            <Column style={styles.column} size="4">
+              <Clickable
+                onClick={() => navigation.navigate('SavedItems')}
+                style={{ alignItems: 'center' }}>
                 <Icon color={primaryColor} size={30} name="ios-bookmark" />
-                <Text bold>300</Text>
+                <Text>300</Text>
               </Clickable>
             </Column>
 
-            <Column style={styles.column} size="6">
-              <Clickable style={{ alignItems: 'center' }}>
+            <Column style={styles.column} size="4">
+              <View style={{ alignItems: 'center' }}>
+                <Icon color={primaryColor} size={30} name="ios-card" />
+                <Text>NGN 1,200</Text>
+              </View>
+            </Column>
+
+            <Column style={styles.column} size="4">
+              <Clickable
+                onClick={() => navigation.navigate('Orders')}
+                style={{ alignItems: 'center' }}>
                 <Icon color={primaryColor} size={30} name="ios-time" />
-                <Text bold>12</Text>
+                <Text>12</Text>
               </Clickable>
             </Column>
           </Row>

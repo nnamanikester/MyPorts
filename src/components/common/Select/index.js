@@ -1,21 +1,21 @@
-import {Picker} from '@react-native-community/picker';
+import { Picker } from '@react-native-community/picker';
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
-import {grayColor} from '../variables';
+import { grayColor } from '../variables';
 
-const Select = ({data, selected, onChange, disabled, type, style}) => {
+const Select = ({ data, selected, onChange, disabled, type, style }) => {
   return (
-    <View style={{...styles.container, ...style}}>
+    <View style={{ ...styles.container, ...style }}>
       <Picker
-        itemStyle={styles.items}
         mode={type}
         enabled={!disabled}
         selectedValue={selected}
+        itemStyle={styles.items}
         style={styles.picker}
         onValueChange={onChange}>
         {data &&
-          data.map(({label, value}) => {
+          data.map(({ label, value }) => {
             return <Picker.Item key={`${value}`} label={label} value={value} />;
           })}
       </Picker>
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   },
   items: {
     fontFamily: 'SFPD-light',
+    fontSize: 30,
   },
 });
 
@@ -50,4 +51,4 @@ Select.propTypes = {
   style: PropTypes.object,
 };
 
-export {Select};
+export { Select };

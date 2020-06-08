@@ -37,7 +37,7 @@ const Button = ({
     case 'outline':
       typeStyle = {
         borderWidth: 1,
-        borderColor: primaryColor,
+        borderColor: primaryColor + '55',
         backgroundColor: '#fff',
       };
       color = textColor;
@@ -45,7 +45,7 @@ const Button = ({
     case 'ghost':
       typeStyle = {
         backgroundColor: '#fff',
-        elevation: 1,
+        elevation: 0.1,
       };
       color = textColor;
       break;
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'space-around',
-    elevation: 2,
+    elevation: 0,
     flexDirection: 'row',
   },
   title: {

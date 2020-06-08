@@ -284,8 +284,8 @@ const SingleProductScreen = ({ navigation }) => {
               <Text color="#fff">Add to cart</Text>
             </Button>
             <Spacer />
-            <Button type="outline">
-              <Text>Add to favorites</Text>
+            <Button type="ghost">
+              <Text>Save for later</Text>
             </Button>
           </View>
 

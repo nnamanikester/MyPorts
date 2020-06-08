@@ -10,7 +10,7 @@ import {
   Clickable,
 } from '../../components/common';
 import Avater from '../../components/Avatar';
-import { female4 } from '../../assets/images';
+import { cloth3, shoe3, food6 } from '../../assets/images';
 import { Link } from '../../components/common';
 import Header from '../../components/Header';
 import { primaryColor } from '../../components/common/variables';
@@ -41,7 +41,7 @@ const SavedItemsScreen = ({ navigation }) => {
       <Layout>
         <ListItem
           onClick={() => navigation.navigate('SingleProduct')}
-          left={<Avater src={female4} size={100} />}
+          left={<Avater src={shoe3} large />}
           body={
             <>
               <Text heading>Bag and Show Item</Text>
@@ -62,7 +62,7 @@ const SavedItemsScreen = ({ navigation }) => {
         />
         <ListItem
           onClick={() => navigation.navigate('SingleProduct')}
-          left={<Avater src={female4} size={100} />}
+          left={<Avater src={cloth3} large />}
           body={
             <>
               <Text heading>Bag and Show Item</Text>
@@ -83,7 +83,7 @@ const SavedItemsScreen = ({ navigation }) => {
         />
         <ListItem
           onClick={() => navigation.navigate('SingleProduct')}
-          left={<Avater src={female4} size={100} />}
+          left={<Avater src={food6} large />}
           body={
             <>
               <Text heading>Bag and Show Item</Text>

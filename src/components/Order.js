@@ -52,7 +52,7 @@ const Order = ({
 
   return (
     <Clickable onClick={onClick}>
-      <Card style={{ elevation: 3 }}>
+      <Card style={{ elevation: 1 }}>
         <View style={styles.order}>
           <Spacer size={1} />
           <View style={styles.orderHeader}>

@@ -48,8 +48,7 @@ const CartScreen = ({ navigation }) => {
         <Spacer medium />
         <CartItem
           name="Leather Show Bag"
-          color="Red"
-          size="XL"
+          shipping="1,000"
           quantity="5"
           image={female2}
           price="2,300"
@@ -59,8 +58,7 @@ const CartScreen = ({ navigation }) => {
 
         <CartItem
           name="Leather Show Bag"
-          color="Red"
-          size="XL"
+          shipping="1,000"
           quantity="5"
           image={female1}
           price="2,300"
@@ -70,8 +68,7 @@ const CartScreen = ({ navigation }) => {
 
         <CartItem
           name="Leather Show Bag"
-          color="Red"
-          size="XL"
+          shipping="1,000"
           quantity="5"
           image={female4}
           price="2,300"
