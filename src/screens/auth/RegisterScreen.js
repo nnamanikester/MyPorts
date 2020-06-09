@@ -12,7 +12,7 @@ import {
   Spacer,
   Clickable,
 } from '../../components/common';
-import { info } from '../../components/common/variables';
+import { info, primaryColor } from '../../components/common/variables';
 
 const RegisterScreen = ({ logUserIn, skipAuthentication, navigation }) => {
   return (
@@ -34,7 +34,7 @@ const RegisterScreen = ({ logUserIn, skipAuthentication, navigation }) => {
             <View style={styles.inputContainer}>
               <Text heading>Username</Text>
               <Spacer />
-              <TextInput placeholder="Johndoe" />
+              <TextInput autoFocus placeholder="Johndoe" />
             </View>
             <Spacer medium />
             <View style={styles.inputContainer}>
@@ -43,7 +43,6 @@ const RegisterScreen = ({ logUserIn, skipAuthentication, navigation }) => {
               <TextInput
                 keyboardType="email-address"
                 placeholder="user@email.com"
-                autoFocus
                 autoCapitalize="none"
                 autoCorrect={false}
               />
@@ -58,6 +57,10 @@ const RegisterScreen = ({ logUserIn, skipAuthentication, navigation }) => {
             <View>
               <Button onClick={() => logUserIn()}>
                 <Text color="#fff">Register</Text>
+              </Button>
+              <Spacer />
+              <Button type="ghost">
+                <Text color={primaryColor}>Register as a vendor</Text>
               </Button>
             </View>
             <Spacer large />
