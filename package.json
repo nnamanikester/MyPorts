@@ -1,11 +1,12 @@
 {
-  "name": "myports",
+  "name": "kesza",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "links": "react-native link",
     "test": "jest",
     "lint": "eslint ."
   },
