@@ -111,102 +111,51 @@ const NotificationsScreen = ({ navigation }) => {
 
           <Spacer />
 
-          <FlatList
-            data={offers}
-            renderItem={({ item }) => (
-              <ListItem
-                marked={!item.isRead}
-                right={<Text note>{item.time}</Text>}
-                body={
-                  <>
-                    <Text heading>{item.heading}</Text>
-                    <Text>{item.desc}</Text>
-                  </>
-                }
-                left={<Avatar rounded src={item.image} />}
-              />
-            )}
-          />
+          <View>
+            <FlatList
+              data={offers}
+              renderItem={({ item }) => (
+                <ListItem
+                  marked={!item.isRead}
+                  right={<Text note>{item.time}</Text>}
+                  body={
+                    <>
+                      <Text heading>{item.heading}</Text>
+                      <Text>{item.desc}</Text>
+                    </>
+                  }
+                  left={<Avatar rounded src={item.image} />}
+                />
+              )}
+            />
+          </View>
 
           <Spacer medium />
 
           <Text style={styles.title}>Activity</Text>
 
-          <FlatList
-            data={activities}
-            renderItem={({ item }) => {
-              <ListItem
-                body={
-                  <>
-                    <Row>
-                      <Text heading>{item.heading}</Text>
-                      <Spacer horizontal />
-                      <Text>{item.desc}</Text>
-                    </Row>
-                    <Text note>{item.time}</Text>
-                  </>
-                }
-                left={<Avatar rounded src={item.image} />}
-              />;
-            }}
-          />
-
-          <ListItem
-            body={
-              <>
-                <Row>
-                  <Text heading>John Kester</Text>
-                  <Spacer horizontal />
-                  <Text>sent you a message</Text>
-                </Row>
-                <Text note>2 minutes ago</Text>
-              </>
-            }
-            left={<Avatar rounded src={female1} />}
-          />
-
-          <ListItem
-            body={
-              <>
-                <Row>
-                  <Text heading>John Kester</Text>
-                  <Spacer horizontal />
-                  <Text>sent you a message</Text>
-                </Row>
-                <Text note>2 minutes ago</Text>
-              </>
-            }
-            left={<Avatar rounded src={female1} />}
-          />
-
-          <ListItem
-            body={
-              <>
-                <Row>
-                  <Text heading>John Kester</Text>
-                  <Spacer horizontal />
-                  <Text>sent you a message</Text>
-                </Row>
-                <Text note>2 minutes ago</Text>
-              </>
-            }
-            left={<Avatar rounded src={female1} />}
-          />
-
-          <ListItem
-            body={
-              <>
-                <Row>
-                  <Text heading>John Kester</Text>
-                  <Spacer horizontal />
-                  <Text>sent you a message</Text>
-                </Row>
-                <Text note>2 minutes ago</Text>
-              </>
-            }
-            left={<Avatar rounded src={female1} />}
-          />
+          <View>
+            <FlatList
+              data={activities}
+              renderItem={({ item }) => (
+                <ListItem
+                  body={
+                    <>
+                      <Row>
+                        <Text heading>{item.heading}</Text>
+                        <Spacer horizontal />
+                        <Text>{item.desc}</Text>
+                      </Row>
+                      <Text note>{item.time}</Text>
+                    </>
+                  }
+                  left={<Avatar rounded src={item.image} />}
+                />
+              )}
+            />
+          </View>
         </View>
+        <Spacer large />
       </Layout>
     </>
   );
