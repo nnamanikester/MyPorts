@@ -1,7 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { logUserIn, skipAuthentication } from '../../redux/actions/AuthActions';
+import {
+  skipAuthentication,
+  logInCustomer,
+  logInVendor,
+} from '../../redux/actions/AuthActions';
 import {
   Layout,
   Icon,
@@ -14,7 +18,12 @@ import {
 } from '../../components/common';
 import { info, primaryColor } from '../../components/common/variables';
 
-const RegisterScreen = ({ logUserIn, skipAuthentication, navigation }) => {
+const RegisterScreen = ({
+  skipAuthentication,
+  navigation,
+  logInCustomer,
+  logInVendor,
+}) => {
   return (
     <>
       <Layout>
@@ -55,11 +64,11 @@ const RegisterScreen = ({ logUserIn, skipAuthentication, navigation }) => {
             </View>
             <Spacer medium />
             <View>
-              <Button onClick={() => logUserIn()}>
+              <Button onClick={() => logInCustomer()}>
                 <Text color="#fff">Register</Text>
               </Button>
               <Spacer />
-              <Button type="ghost">
+              <Button type="ghost" onClick={() => logInVendor()}>
                 <Text color={primaryColor}>Register as a vendor</Text>
               </Button>
             </View>
@@ -90,4 +99,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, { logUserIn, skipAuthentication })(RegisterScreen);
+export default connect(null, {
+  logInVendor,
+  logInCustomer,
+  skipAuthentication,
+})(RegisterScreen);

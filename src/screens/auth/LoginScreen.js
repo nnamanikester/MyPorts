@@ -1,7 +1,10 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { logUserIn, skipAuthentication } from '../../redux/actions/AuthActions';
+import {
+  logInCustomer,
+  skipAuthentication,
+} from '../../redux/actions/AuthActions';
 import {
   Layout,
   Icon,
@@ -14,7 +17,7 @@ import {
 } from '../../components/common';
 import { info } from '../../components/common/variables';
 
-const LoginScreen = ({ logUserIn, skipAuthentication, navigation }) => {
+const LoginScreen = ({ logInCustomer, skipAuthentication, navigation }) => {
   return (
     <>
       <Layout>
@@ -52,7 +55,7 @@ const LoginScreen = ({ logUserIn, skipAuthentication, navigation }) => {
             </View>
             <Spacer medium />
             <View>
-              <Button onClick={() => logUserIn()}>
+              <Button onClick={() => logInCustomer()}>
                 <Text color="#fff">Login</Text>
               </Button>
             </View>
@@ -91,4 +94,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, { logUserIn, skipAuthentication })(LoginScreen);
+export default connect(null, { logInCustomer, skipAuthentication })(
+  LoginScreen,
+);

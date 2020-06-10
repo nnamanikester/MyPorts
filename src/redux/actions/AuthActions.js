@@ -1,9 +1,3 @@
-export const logUserIn = () => {
-  return {
-    type: 'LOG_USER_IN',
-  };
-};
-
 export const logUserOut = () => {
   return {
     type: 'LOG_USER_OUT',
@@ -19,5 +13,17 @@ export const skipAuthentication = () => {
 export const removeStrangerStatus = () => {
   return {
     type: 'REMOVE_STRANGER_STATUS',
+  };
+};
+
+export const logInVendor = () => {
+  return {
+    type: 'LOG_IN_VENDOR',
+  };
+};
+
+export const logInCustomer = () => {
+  return {
+    type: 'LOG_IN_CUSTOMER',
   };
 };
