@@ -11,10 +11,10 @@ const Tab = createMaterialTopTabNavigator();
 const TopTab = (props) => {
   return (
     <Tab.Navigator
-      {...props}
       tabBarOptions={{
         labelStyle: styles.label,
-      }}>
+      }}
+      {...props}>
       {props.screens.map((screen) => {
         return (
           <Tab.Screen

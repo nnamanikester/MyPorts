@@ -5,11 +5,18 @@ import { Text, Badge } from './common';
 import { primaryColor, lightColor } from './common/variables';
 import { danger } from './common/variables';
 
-const Header = ({ isCart, hideHeader, headerRight, headerLeft, title }) => {
+const Header = ({
+  isCart,
+  hideHeader,
+  headerRight,
+  headerLeft,
+  title,
+  style,
+}) => {
   if (hideHeader) return null;
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...style }}>
       {headerLeft && (
         <View style={styles.leftContainerStyle}>{headerLeft}</View>
       )}
