@@ -8,6 +8,7 @@ import { info } from './common/variables';
 import { useRoute } from '@react-navigation/native';
 import { logUserOut } from '../redux/actions/AuthActions';
 import { danger } from './common/variables';
+import Permissions from './Permissions';
 
 const Drawer = ({ navigation, logUserOut }) => {
   const route = useRoute();
@@ -15,27 +16,29 @@ const Drawer = ({ navigation, logUserOut }) => {
   return (
     <DrawerContentScrollView style={styles.drawer}>
       {/* Drawer Header */}
-      <View style={styles.header}>
-        <ListItem
-          onClick={() => navigation.navigate('Profile')}
-          left={
-            <View style={styles.headerAlignment}>
-              <Image style={styles.profileImage} source={female4} />
-            </View>
-          }
-          body={
-            <View style={styles.headerAlignment}>
-              <Text size={20}>Tiana Rosser</Text>
-              <Link>Tianaroser@gmail.com</Link>
-            </View>
-          }
-          right={
-            <View style={styles.headerAlignment}>
-              <Icon color={info} name="ios-arrow-forward" />
-            </View>
-          }
-        />
-      </View>
+      <Permissions.User>
+        <View style={styles.header}>
+          <ListItem
+            onClick={() => navigation.navigate('Profile')}
+            left={
+              <View style={styles.headerAlignment}>
+                <Image style={styles.profileImage} source={female4} />
+              </View>
+            }
+            body={
+              <View style={styles.headerAlignment}>
+                <Text size={20}>Tiana Rosser</Text>
+                <Link>Tianaroser@gmail.com</Link>
+              </View>
+            }
+            right={
+              <View style={styles.headerAlignment}>
+                <Icon color={info} name="ios-arrow-forward" />
+              </View>
+            }
+          />
+        </View>
+      </Permissions.User>
 
       {/* Drawer Body */}
       <DrawerItem

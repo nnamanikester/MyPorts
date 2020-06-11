@@ -6,7 +6,7 @@ class Guest extends Component {
     this.state = {};
   }
   render() {
-    return this.props.children;
+    return this.props.children || null;
   }
 }
 
