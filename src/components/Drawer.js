@@ -5,14 +5,11 @@ import { View, Image, StyleSheet } from 'react-native';
 import { Text, Icon, ListItem, Link, Badge, Divider, Spacer } from './common';
 import { female4 } from '../assets/images';
 import { info } from './common/variables';
-import { useRoute } from '@react-navigation/native';
 import { logUserOut } from '../redux/actions/AuthActions';
 import { danger } from './common/variables';
 import Permissions from './Permissions';
 
 const Drawer = ({ navigation, logUserOut }) => {
-  const route = useRoute();
-
   return (
     <DrawerContentScrollView style={styles.drawer}>
       {/* Drawer Header */}
