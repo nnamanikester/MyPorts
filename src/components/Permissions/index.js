@@ -2,7 +2,9 @@ import Customer from './Customer';
 import { connect } from 'react-redux';
 import Vendor from './Vendor';
 import Guest from './Guest';
-import User from './User';
+import CustomerAndVendor from './CustomerAndVendor';
+import CustomerAndGuest from './CustomerAndGuest';
+import GuestAndVendor from './GuestAndVendor';
 
 const mapStateToProps = (state) => {
   const { isLogged, isCustomer, isVendor, isSkipped } = state.auth;
@@ -30,9 +32,20 @@ const Permissions = {
    */
   Guest: connect(mapStateToProps)(Guest),
   /**
-   * This Renders the Components wrapped in between if user is logged in.
+   * This Renders the Components wrapped in between if user is logged in
+   * and is either a vendor or a customer.
    */
-  User: connect(mapStateToProps)(User),
+  CustomerAndVendor: connect(mapStateToProps)(CustomerAndVendor),
+  /**
+   * This Renders the Components wrapped in between if user is iether a customer
+   * or a Guest
+   */
+  CustomerAndGuest: connect(mapStateToProps)(CustomerAndGuest),
+  /**
+   * This Renders the Components wrapped in between if user is either a Vendor
+   * or a Guest
+   */
+  GuestAndVendor: connect(mapStateToProps)(GuestAndVendor),
 };
 
 export default Permissions;

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class Guest extends Component {
+class GuestAndVendor extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
   render() {
-    const { isGuest } = this.props;
-    if (isGuest) {
+    const { isGuest, isLogged, isVendor } = this.props;
+    if (isGuest || (isVendor && isLogged)) {
       return this.props.children;
     } else {
       return null;
@@ -15,4 +15,4 @@ class Guest extends Component {
   }
 }
 
-export default Guest;
+export default GuestAndVendor;

@@ -13,7 +13,7 @@ const Drawer = ({ navigation, logUserOut }) => {
   return (
     <DrawerContentScrollView style={styles.drawer}>
       {/* Drawer Header */}
-      <Permissions.User>
+      <Permissions.CustomerAndVendor>
         <View style={styles.header}>
           <ListItem
             onClick={() => navigation.navigate('Profile')}
@@ -35,7 +35,7 @@ const Drawer = ({ navigation, logUserOut }) => {
             }
           />
         </View>
-      </Permissions.User>
+      </Permissions.CustomerAndVendor>
 
       {/* Drawer Body */}
       <DrawerItem
@@ -46,35 +46,45 @@ const Drawer = ({ navigation, logUserOut }) => {
         onPress={() => navigation.navigate('Vendors')}
       />
 
-      <DrawerItem
-        icon={({ size, color }) => (
-          <>
-            <Icon size={size} color={color} name="md-cart" />
-            <Badge style={{ elevation: 1 }} color={danger} />
-          </>
-        )}
-        label={({ color, focused }) => <Text color={color}>Shopping Cart</Text>}
-        onPress={() => navigation.navigate('Cart')}
-      />
+      <Permissions.CustomerAndGuest>
+        <DrawerItem
+          icon={({ size, color }) => (
+            <>
+              <Icon size={size} color={color} name="md-cart" />
+              <Badge style={{ elevation: 1 }} color={danger} />
+            </>
+          )}
+          label={({ color, focused }) => (
+            <Text color={color}>Shopping Cart</Text>
+          )}
+          onPress={() => navigation.navigate('Cart')}
+        />
+      </Permissions.CustomerAndGuest>
 
-      <DrawerItem
-        icon={({ size, color }) => (
-          <>
-            <Icon size={size} style={{ color }} name="ios-bookmark" />
-            <Badge style={{ elevation: 1 }} color={danger} />
-          </>
-        )}
-        label={({ color, focused }) => <Text color={color}>Saved Items</Text>}
-        onPress={() => navigation.navigate('SavedItems')}
-      />
+      <Permissions.CustomerAndGuest>
+        <DrawerItem
+          icon={({ size, color }) => (
+            <>
+              <Icon size={size} style={{ color }} name="ios-bookmark" />
+              <Badge style={{ elevation: 1 }} color={danger} />
+            </>
+          )}
+          label={({ color, focused }) => <Text color={color}>Saved Items</Text>}
+          onPress={() => navigation.navigate('SavedItems')}
+        />
+      </Permissions.CustomerAndGuest>
 
-      <DrawerItem
-        icon={({ size, color }) => (
-          <Icon size={size} color={color} name="md-time" />
-        )}
-        label={({ color, focused }) => <Text color={color}>Order History</Text>}
-        onPress={() => navigation.navigate('Orders')}
-      />
+      <Permissions.CustomerAndGuest>
+        <DrawerItem
+          icon={({ size, color }) => (
+            <Icon size={size} color={color} name="md-time" />
+          )}
+          label={({ color, focused }) => (
+            <Text color={color}>Order History</Text>
+          )}
+          onPress={() => navigation.navigate('Orders')}
+        />
+      </Permissions.CustomerAndGuest>
 
       <DrawerItem
         icon={({ size, color }) => (
@@ -86,18 +96,20 @@ const Drawer = ({ navigation, logUserOut }) => {
         onPress={() => navigation.navigate('ReferAndEarn')}
       />
 
-      <DrawerItem
-        icon={({ size, color }) => (
-          <>
-            <Icon size={size} color={color} name="ios-megaphone" />
-            <Badge style={{ elevation: 1 }} color={danger} />
-          </>
-        )}
-        label={({ color, focused }) => (
-          <Text color={color}>Available Coupons</Text>
-        )}
-        onPress={() => navigation.navigate('Coupons')}
-      />
+      <Permissions.CustomerAndGuest>
+        <DrawerItem
+          icon={({ size, color }) => (
+            <>
+              <Icon size={size} color={color} name="ios-megaphone" />
+              <Badge style={{ elevation: 1 }} color={danger} />
+            </>
+          )}
+          label={({ color, focused }) => (
+            <Text color={color}>Available Coupons</Text>
+          )}
+          onPress={() => navigation.navigate('Coupons')}
+        />
+      </Permissions.CustomerAndGuest>
 
       <Divider />
 
