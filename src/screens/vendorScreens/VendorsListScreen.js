@@ -18,7 +18,6 @@ import { StyleSheet, ScrollView, View } from 'react-native';
 import { female1, female2, female3, male1 } from '../../assets/images';
 import FeaturedVendor from '../../components/FeaturedVendor';
 import SearchBar from '../../components/SearchBar';
-import Permissions from '../../components/Permissions';
 
 const VendorListScreen = ({ navigation }) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
@@ -53,9 +52,7 @@ const VendorListScreen = ({ navigation }) => {
       />
       <Layout>
         <View style={styles.container}>
-          <Permissions.Vendor>
-            <Text style={styles.title}>Featured Vendors</Text>
-          </Permissions.Vendor>
+          <Text style={styles.title}>Featured Vendors</Text>
         </View>
         <ScrollView
           style={{ paddingLeft: 10 }}
