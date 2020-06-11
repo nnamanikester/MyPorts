@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import VDHome from '../screens/VDScreens/VDHomeScreen';
+import VDDrawerNavigation from './VDFlows/VendorDrawerNavigation';
 
 const Stack = createStackNavigator();
 
@@ -10,7 +10,7 @@ const VDFlow = () => {
       screenOptions={{
         header: () => null,
       }}>
-      <Stack.Screen name="VDHome" component={VDHome} />
+      <Stack.Screen name="VDHome" component={VDDrawerNavigation} />
     </Stack.Navigator>
   );
 };

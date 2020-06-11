@@ -23,7 +23,7 @@ const VDHome = ({ navigation }) => {
         style={{ elevation: 0 }}
         title="Dashboard"
         headerLeft={
-          <Clickable onClick={() => {}}>
+          <Clickable onClick={() => navigation.openDrawer()}>
             <Icon name="ios-menu" color="#fff" />
           </Clickable>
         }
