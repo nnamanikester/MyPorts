@@ -34,7 +34,10 @@ const VDHome = ({ navigation }) => {
           showLabel: false,
           showIcon: true,
           activeTintColor: '#fff',
-          tabStyle: { backgroundColor: primaryColor },
+          tabStyle: {
+            backgroundColor: primaryColor,
+            height: 60,
+          },
         }}
         screens={[
           {
@@ -85,7 +88,7 @@ const VDHome = ({ navigation }) => {
             options: {
               tabBarIcon: ({ focused, color, size }) => (
                 <Icon
-                  name="ios-shop"
+                  name="ios-settings"
                   style={{ width: 80 }}
                   size={focused ? 30 : size}
                   color={color}
@@ -100,20 +103,6 @@ const VDHome = ({ navigation }) => {
               tabBarIcon: ({ focused, color, size }) => (
                 <Icon
                   name="ios-person"
-                  size={focused ? 30 : size}
-                  color={color}
-                  style={{ width: 80 }}
-                />
-              ),
-            },
-          },
-          {
-            name: 'AccountSet',
-            component: VDAccountSettingsScreen,
-            options: {
-              tabBarIcon: ({ focused, color, size }) => (
-                <Icon
-                  name="ios-settings"
                   size={focused ? 30 : size}
                   color={color}
                   style={{ width: 80 }}
