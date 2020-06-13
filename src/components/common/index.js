@@ -32,3 +32,4 @@ export * from './Accordion';
 export * from './AccordionItem';
 export * from './TopTab';
 export * from './PieChart';
+export * from './ContributionChart';

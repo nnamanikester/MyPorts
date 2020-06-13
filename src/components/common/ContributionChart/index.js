@@ -7,16 +7,21 @@ import PropTypes from 'prop-types';
 
 /**
  * A component that requires it's `data` prop, `height` and `width` prop to
- * display a pie chart on the screen. The data prop takes the below format;
- * [{
- * name: "Seoul",
- * population: 21500000,
- * color: "rgba(131, 167, 234, 1)",
- * legendFontColor: "#7F7F7F",
- * legendFontSize: 15
- * }]
+ * display a github-like contribution chart on the screen. The data prop takes the below format;
+ * [
+ *  { date: "2017-01-02", count: 8 },
+ *  { date: "2017-01-03", count: 4 },
+ * ];
  */
-const ContributionChart = ({ data, width, height, style, bgColor }) => {
+const ContributionChart = ({
+  data,
+  width,
+  height,
+  style,
+  endDate,
+  numberOfDays,
+  onDayPress,
+}) => {
   const chartConfig = {
     backgroundGradientFrom: primaryColor,
     backgroundGradientFromOpacity: 0,
@@ -32,13 +37,13 @@ const ContributionChart = ({ data, width, height, style, bgColor }) => {
     <>
       <View style={style}>
         <ContributionGraph
-          data={data}
+          values={data}
+          endDate={endDate}
+          numDays={numberOfDays}
           width={width || Dimensions.get('window').width}
           height={height || 220}
           chartConfig={chartConfig}
-          accessor="population"
-          paddingLeft="15"
-          backgroundColor={primaryColor || bgColor}
+          onDayPress={onDayPress}
         />
       </View>
     </>
@@ -47,14 +52,12 @@ const ContributionChart = ({ data, width, height, style, bgColor }) => {
 
 ContributionChart.propTypes = {
   /**
-   * An array of object that takes the below data to display the pie chart
-   * [{
-   * name: "Seoul",
-   * population: 21500000,
-   * color: "rgba(131, 167, 234, 1)",
-   * legendFontColor: "#7F7F7F",
-   * legendFontSize: 15
-   * }]
+   * An array of object that takes the below data to display the contribution
+   * chart
+   * [
+   *  { date: "2017-01-02", count: 8 },
+   *  { date: "2017-01-03", count: 4 },
+   * ];
    */
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   /**
@@ -66,13 +69,21 @@ ContributionChart.propTypes = {
    */
   height: PropTypes.number,
   /**
-   * Defines the background Color of the chart.
+   * Accepts a date as a string to define the end date of the last box
    */
-  bgColor: PropTypes.string,
+  endDate: PropTypes.string,
   /**
    * A react StyleSheet Object to be applied to the cahrt container
    */
   style: PropTypes.object,
+  /**
+   * Defines the total number of boxes(days) to be displayed
+   */
+  numberOfDays: PropTypes.number,
+  /**
+   * A function to be called after a box is being clicked on.
+   */
+  onDayPress: PropTypes.func,
 };
 
 export { ContributionChart };
