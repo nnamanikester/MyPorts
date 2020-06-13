@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Text, Row, Column } from '..';
+import { Text, Row, Column, Spacer } from '..';
 import { inactiveColor } from '../variables';
 import PropTypes from 'prop-types';
 
@@ -20,42 +20,45 @@ import PropTypes from 'prop-types';
  * `totalLabel`: `String`,
  * }]
  */
-const ReportBoard = ({ data, containerStyle, headingStyle }) => {
+const ReportBoard = ({ data, containerStyle, titleStyle }) => {
   return (
     <>
       <View style={{ ...styles.container, ...containerStyle }}>
         {data.map((report, index) => {
-          <View key={index}>
-            <Text style={{ ...styles.heading, ...headingStyle }} heading>
-              {report.title}
-            </Text>
-            <Row>
-              <Column style={{ alignItems: 'center' }} size="3">
-                <Text bold>{report.today}</Text>
-                <Text note color="">
-                  {report.todayLabel || 'Today'}
-                </Text>
-              </Column>
-              <Column style={{ alignItems: 'center' }} size="3">
-                <Text bold>{report.week}</Text>
-                <Text note color="">
-                  {report.weekLabel || 'This Week'}
-                </Text>
-              </Column>
-              <Column style={{ alignItems: 'center' }} size="3">
-                <Text bold>{report.month}</Text>
-                <Text note color="">
-                  {report.monthLabel || 'This Month'}
-                </Text>
-              </Column>
-              <Column style={{ alignItems: 'center' }} size="3">
-                <Text bold>{report.total}</Text>
-                <Text note color="">
-                  {report.totalLabel || 'Total'}
-                </Text>
-              </Column>
-            </Row>
-          </View>;
+          return (
+            <View key={index}>
+              <Text style={{ ...styles.title, ...titleStyle }}>
+                {report.title}
+              </Text>
+              <Row>
+                <Column style={{ alignItems: 'center' }} size="3">
+                  <Text bold>{report.today}</Text>
+                  <Text note color="">
+                    {report.todayLabel || 'Today'}
+                  </Text>
+                </Column>
+                <Column style={{ alignItems: 'center' }} size="3">
+                  <Text bold>{report.week}</Text>
+                  <Text note color="">
+                    {report.weekLabel || 'This Week'}
+                  </Text>
+                </Column>
+                <Column style={{ alignItems: 'center' }} size="3">
+                  <Text bold>{report.month}</Text>
+                  <Text note color="">
+                    {report.monthLabel || 'This Month'}
+                  </Text>
+                </Column>
+                <Column style={{ alignItems: 'center' }} size="3">
+                  <Text bold>{report.total}</Text>
+                  <Text note color="">
+                    {report.totalLabel || 'Total'}
+                  </Text>
+                </Column>
+              </Row>
+              <Spacer />
+            </View>
+          );
         })}
       </View>
     </>
@@ -66,11 +69,12 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: inactiveColor,
     padding: 10,
-    borderRadius: 5,
+    flex: 1,
   },
-  heading: {
-    fontSize: 18,
+  title: {
+    fontSize: 16,
     fontFamily: 'SFPD-regular',
+    paddingHorizontal: 20,
   },
 });
 
@@ -97,7 +101,7 @@ ReportBoard.propTypes = {
   /**
    * A react StyleSheet Object that will be used to style the heading text.
    */
-  headingStyle: PropTypes.object,
+  titleStyle: PropTypes.object,
 };
 
 export { ReportBoard };
