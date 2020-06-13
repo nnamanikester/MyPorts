@@ -21,13 +21,15 @@ const VDMessagingScreen = ({ navigation }) => {
   return (
     <>
       <Layout>
+        <Spacer />
         <ListItem
+          marked
           onClick={() => navigation.navigate('VDConversation')}
           left={<Avatar medium rounded src={food3} />}
           body={
             <>
               <Text heading>John Kester</Text>
-              <Text numberOfLines={1} color={primaryColor} note>
+              <Text numberOfLines={1} note>
                 How much can I get the shoes?
               </Text>
             </>
