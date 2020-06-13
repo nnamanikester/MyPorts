@@ -1,7 +1,7 @@
 import { PieChart as PC } from 'react-native-chart-kit';
 import React from 'react';
 import { primaryColor, lightColor } from '../variables';
-import { Dimensions } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import PropTypes from 'prop-types';
 
 /**
@@ -29,15 +29,15 @@ const PieChart = ({ data, width, height, style, bgColor }) => {
 
   return (
     <>
-      <View style={style}>
+      <View>
         <PC
+          style={style}
           data={data}
           width={width || Dimensions.get('window').width}
           height={height || 220}
           chartConfig={chartConfig}
           accessor="population"
-          paddingLeft="15"
-          backgroundColor={primaryColor || bgColor}
+          backgroundColor={bgColor || primaryColor}
         />
       </View>
     </>

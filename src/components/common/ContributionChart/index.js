@@ -1,8 +1,7 @@
 import { ContributionGraph } from 'react-native-chart-kit';
-
 import React from 'react';
 import { primaryColor, lightColor } from '../variables';
-import { Dimensions } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import PropTypes from 'prop-types';
 
 /**
