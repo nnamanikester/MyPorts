@@ -6,6 +6,7 @@ import {
   Spacer,
   Row,
   Column,
+  ReportBoard,
 } from '../../../components/common';
 import {
   lightColor,
@@ -21,35 +22,17 @@ const VDAnalyticsScreen = () => {
       <Layout style={{ padding: 0, margin: 0 }}>
         <Spacer />
 
-        <View style={{ backgroundColor: inactiveColor, padding: 10 }}>
-          <Text heading>Sales(NGN)</Text>
-          <Row>
-            <Column style={{ alignItems: 'center' }} size="3">
-              <Text bold>13</Text>
-              <Text note color="">
-                Today
-              </Text>
-            </Column>
-            <Column style={{ alignItems: 'center' }} size="3">
-              <Text bold>13</Text>
-              <Text note color="">
-                This week
-              </Text>
-            </Column>
-            <Column style={{ alignItems: 'center' }} size="3">
-              <Text bold>13</Text>
-              <Text note color="">
-                This Month
-              </Text>
-            </Column>
-            <Column style={{ alignItems: 'center' }} size="3">
-              <Text bold>13</Text>
-              <Text note color="">
-                Total
-              </Text>
-            </Column>
-          </Row>
-        </View>
+        <ReportBoard
+          data={[
+            {
+              title: 'Sales(NGN)',
+              today: '10',
+              week: '24',
+              month: '93',
+              total: '549',
+            },
+          ]}
+        />
 
         <Spacer />
         <Text heading>Weekly Sales Chart</Text>

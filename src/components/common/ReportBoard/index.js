@@ -70,7 +70,34 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 18,
+    fontFamily: 'SFPD-regular',
   },
 });
+
+ReportBoard.propTypes = {
+  /**
+   * Accepts an array of object with the following structure;
+   * [{
+   * `title`: `String`,
+   * `today`: `String`,
+   * `week`: `String`,
+   * `month`: `String`,
+   * `total`: `String`,
+   * `todayLabel`: `String`,
+   * `weekLabel`: `String`,
+   * `monthLabel`: `String`,
+   * `totalLabel`: `String`,
+   * }]
+   */
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  /**
+   * A react StyleSheet Object that will be used to style the report container.
+   */
+  containerStyle: PropTypes.object,
+  /**
+   * A react StyleSheet Object that will be used to style the heading text.
+   */
+  headingStyle: PropTypes.object,
+};
 
 export { ReportBoard };
