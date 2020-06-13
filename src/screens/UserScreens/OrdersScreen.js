@@ -31,12 +31,11 @@ const OrdersScreen = ({ navigation }) => {
         <Spacer />
         <View style={styles.container}>
           <Order
+            onClick={() => navigation.navigate('OrderDetails')}
             status="warning"
             date="August 29, 2020"
             orderNo="95793729"
-            vendor="Shop and Smile"
             itemPrice="23,000"
-            quantity={34}
           />
 
           <Order
@@ -44,9 +43,7 @@ const OrdersScreen = ({ navigation }) => {
             status="success"
             date="August 29, 2020"
             orderNo="95793729"
-            vendor="Shop and Smile"
             itemPrice="3,000"
-            quantity={3}
           />
 
           <Order
@@ -54,9 +51,7 @@ const OrdersScreen = ({ navigation }) => {
             status="danger"
             date="August 29, 2020"
             orderNo="95793729"
-            vendor="Shop and Smile"
             itemPrice="23,000"
-            quantity={34}
           />
 
           <Order
@@ -64,18 +59,14 @@ const OrdersScreen = ({ navigation }) => {
             status="waiting"
             date="August 29, 2020"
             orderNo="95793729"
-            vendor="Shop and Smile"
             itemPrice="23,000"
-            quantity={34}
           />
 
           <Order
             onClick={() => navigation.navigate('OrderDetails')}
             date="August 29, 2020"
             orderNo="95793729"
-            vendor="Shop and Smile"
             itemPrice="23,000"
-            quantity={34}
           />
         </View>
       </Layout>

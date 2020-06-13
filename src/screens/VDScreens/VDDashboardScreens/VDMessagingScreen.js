@@ -17,11 +17,12 @@ import {
   primaryColor,
 } from '../../../components/common/variables';
 
-const VDMessagingScreen = () => {
+const VDMessagingScreen = ({ navigation }) => {
   return (
     <>
       <Layout>
         <ListItem
+          onClick={() => navigation.navigate('VDConversation')}
           left={<Avatar medium rounded src={food3} />}
           body={
             <>
@@ -40,6 +41,7 @@ const VDMessagingScreen = () => {
           }
         />
         <ListItem
+          onClick={() => navigation.navigate('VDConversation')}
           left={<Avatar medium rounded src={shoe3} />}
           body={
             <>

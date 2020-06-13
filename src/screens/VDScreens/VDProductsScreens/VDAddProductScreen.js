@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from '../../../components/common';
+import { Text, Layout } from '../../../components/common';
 import { View, StyleSheet } from 'react-native';
 
 const VDAddProductScreen = () => {

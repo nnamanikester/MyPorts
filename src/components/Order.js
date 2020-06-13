@@ -1,6 +1,16 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Text, Card, Spacer, Icon, Divider, Row, Clickable } from './common';
+import {
+  Text,
+  Card,
+  Spacer,
+  Icon,
+  Divider,
+  Row,
+  Clickable,
+  ListItem,
+  Avatar,
+} from './common';
 import {
   primaryColor,
   info,
@@ -8,6 +18,7 @@ import {
   warning,
   danger,
 } from './common/variables';
+import { image1 } from '../assets/images';
 
 const Order = ({
   orderNo,
@@ -30,7 +41,7 @@ const Order = ({
       break;
     case 'warning':
       icon = 'md-time';
-      statusLabel = 'In Progress';
+      statusLabel = 'Pending';
       statusColor = warning;
       break;
     case 'danger':
@@ -40,7 +51,7 @@ const Order = ({
       break;
     case 'waiting':
       icon = 'ios-more';
-      statusLabel = 'Waiting';
+      statusLabel = 'Shipping';
       statusColor = primaryColor;
       break;
     default:
@@ -51,73 +62,33 @@ const Order = ({
   }
 
   return (
-    <Clickable onClick={onClick}>
-      <Card style={{ elevation: 1 }}>
-        <View style={styles.order}>
-          <Spacer size={1} />
-          <View style={styles.orderHeader}>
-            <Row
-              style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-              <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                <Icon size={20} name={icon} color={statusColor} />
-                <Spacer />
-                <Text color={statusColor}>{statusLabel.toUpperCase()}</Text>
-              </View>
-              <Text color={info}>{date}</Text>
-            </Row>
+    <>
+      <ListItem
+        onClick={onClick}
+        left={
+          <>
+            <Avatar src={image1} large />
+          </>
+        }
+        body={
+          <>
+            <Text>Order No {orderNo}</Text>
+            <Text note>Value: NGN {itemPrice}</Text>
+            <Text note>Date: {date}</Text>
+          </>
+        }
+        right={
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Icon size={16} name={icon} color={statusColor} />
+            <Spacer size={2} />
+            <Text color={statusColor}>{statusLabel}</Text>
           </View>
-          <Divider />
-
-          <View style={styles.orderBody}>
-            <Text h1 color={primaryColor}>
-              Order No {orderNo}
-            </Text>
-            <Spacer />
-            <Row>
-              <Text>Vendor : </Text>
-              <Spacer />
-              <Text color={info}>{vendor}</Text>
-            </Row>
-          </View>
-          <Divider />
-
-          <View style={styles.orderFooter}>
-            <Row
-              style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-              <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                <Text color={info}>Items' Value</Text>
-                <Spacer />
-                <Text bold>NGN {itemPrice}</Text>
-              </View>
-              <Text color={info}>
-                Quantity: <Text bold>{quantity}</Text>
-              </Text>
-            </Row>
-          </View>
-        </View>
-      </Card>
-    </Clickable>
+        }
+      />
+    </>
   );
 };
 
-const styles = StyleSheet.create({
-  order: {
-    padding: 10,
-  },
-  orderHeader: {
-    paddingHorizontal: 10,
-    height: 25,
-    justifyContent: 'center',
-  },
-  orderBody: {
-    paddingHorizontal: 10,
-    justifyContent: 'center',
-    height: 75,
-  },
-  orderFooter: {
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-  },
-});
+const styles = StyleSheet.create({});
 
 export default Order;

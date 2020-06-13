@@ -5,20 +5,105 @@ import {
   PieChart,
   Spacer,
   ReportBoard,
+  ListItem,
+  Icon,
 } from '../../../components/common';
 import {
   inactiveColor,
   textColor,
   primaryColor,
+  success,
 } from '../../../components/common/variables';
 import { View, StyleSheet } from 'react-native';
 
-const VDAnalyticsScreen = () => {
+const VDAnalyticsScreen = ({ navigation }) => {
   return (
     <>
       <Layout>
         <Spacer />
         <View style={styles.container}>
+          <ListItem
+            left={
+              <View style={styles.list}>
+                <Icon size={35} color="#fff" name="ios-card" />
+              </View>
+            }
+            body={
+              <View style={{ justifyContent: 'center', flex: 1 }}>
+                <Text>Account Balance</Text>
+              </View>
+            }
+            right={
+              <View style={{ flex: 1, justifyContent: 'center' }}>
+                <Text bold note>
+                  NGN 454,000
+                </Text>
+              </View>
+            }
+          />
+
+          <ListItem
+            onClick={() => navigation.navigate('VDNewOrders')}
+            left={
+              <View style={{ ...styles.list, backgroundColor: success }}>
+                <Icon size={35} color={'#fff'} name="ios-time" />
+              </View>
+            }
+            body={
+              <View style={{ justifyContent: 'center', flex: 1 }}>
+                <Text>New Orders</Text>
+              </View>
+            }
+            right={
+              <View style={{ flex: 1, justifyContent: 'center' }}>
+                <Text bold>3</Text>
+              </View>
+            }
+          />
+
+          <ListItem
+            onClick={() => navigation.navigate('VDDeliveredOrders')}
+            left={
+              <View style={styles.list}>
+                <Icon size={35} color="#fff" name="ios-time" />
+              </View>
+            }
+            body={
+              <View style={{ justifyContent: 'center', flex: 1 }}>
+                <Text>Delivered Orders</Text>
+              </View>
+            }
+            right={
+              <View style={{ flex: 1, justifyContent: 'center' }}>
+                <Text bold note>
+                  546
+                </Text>
+              </View>
+            }
+          />
+
+          <ListItem
+            onClick={() => navigation.navigate('VDTransactions')}
+            left={
+              <View style={styles.list}>
+                <Icon type="FontAwesome" color="#fff" name="exchange" />
+              </View>
+            }
+            body={
+              <View style={{ justifyContent: 'center', flex: 1 }}>
+                <Text>Total Transactions</Text>
+              </View>
+            }
+            right={
+              <View style={{ flex: 1, justifyContent: 'center' }}>
+                <Text bold note>
+                  135
+                </Text>
+              </View>
+            }
+          />
+
+          <Spacer />
           <Text heading>Activity Report</Text>
           <Spacer />
           <ReportBoard
@@ -97,6 +182,7 @@ const VDAnalyticsScreen = () => {
             ]}
             bgColor={inactiveColor}
           />
+          <Spacer large />
         </View>
       </Layout>
     </>
@@ -106,6 +192,14 @@ const VDAnalyticsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
+  },
+  list: {
+    backgroundColor: primaryColor,
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
   },
 });
 

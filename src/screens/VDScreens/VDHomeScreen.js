@@ -1,20 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 import Header from '../../components/Header';
-import {
-  Text,
-  TopTab,
-  Layout,
-  Icon,
-  Clickable,
-  Spacer,
-} from '../../components/common';
+import { TopTab, Icon, Clickable, Badge } from '../../components/common';
 import VDAnalyticsScreen from './VDDashboardScreens/VDAnalyticsScreen';
 import VDProductsScreen from './VDDashboardScreens/VDProductsScreen';
-import VDShopSettingsScreen from './VDDashboardScreens/VDShopSettingsScreen';
+import VDSettingsScreen from './VDDashboardScreens/VDSettingsScreen';
 import VDMessagingScreen from './VDDashboardScreens/VDMessagingScreen';
-import VDAccountSettingsScreen from './VDDashboardScreens/VDAccountSettingsScreen';
-import { primaryColor } from '../../components/common/variables';
+import VDOrdersScreen from './VDDashboardScreens/VDOrdersScreen';
+import { primaryColor, danger } from '../../components/common/variables';
 
 const VDHome = ({ navigation }) => {
   return (
@@ -47,7 +40,7 @@ const VDHome = ({ navigation }) => {
               tabBarIcon: ({ focused, color, size }) => (
                 <Icon
                   style={{ width: 80 }}
-                  name="ios-pie"
+                  name="ios-stats"
                   size={focused ? 30 : size}
                   color={color}
                 />
@@ -73,18 +66,38 @@ const VDHome = ({ navigation }) => {
             component: VDMessagingScreen,
             options: {
               tabBarIcon: ({ focused, color, size }) => (
-                <Icon
-                  name="ios-chatbubbles"
-                  style={{ width: 80 }}
-                  size={focused ? 30 : size}
-                  color={color}
-                />
+                <>
+                  <Icon
+                    name="ios-chatbubbles"
+                    style={{ width: 80 }}
+                    size={focused ? 30 : size}
+                    color={color}
+                  />
+                  <Badge color={danger} style={{ elevation: 0, right: -5 }} />
+                </>
+              ),
+            },
+          },
+          {
+            name: 'Orders',
+            component: VDOrdersScreen,
+            options: {
+              tabBarIcon: ({ focused, color, size }) => (
+                <>
+                  <Icon
+                    name="md-cart"
+                    size={focused ? 30 : size}
+                    color={color}
+                    style={{ width: 80 }}
+                  />
+                  <Badge color={danger} style={{ elevation: 0, right: -5 }} />
+                </>
               ),
             },
           },
           {
             name: 'ShopSettings',
-            component: VDShopSettingsScreen,
+            component: VDSettingsScreen,
             options: {
               tabBarIcon: ({ focused, color, size }) => (
                 <Icon
@@ -92,20 +105,6 @@ const VDHome = ({ navigation }) => {
                   style={{ width: 80 }}
                   size={focused ? 30 : size}
                   color={color}
-                />
-              ),
-            },
-          },
-          {
-            name: 'AccountSettings',
-            component: VDAccountSettingsScreen,
-            options: {
-              tabBarIcon: ({ focused, color, size }) => (
-                <Icon
-                  name="ios-person"
-                  size={focused ? 30 : size}
-                  color={color}
-                  style={{ width: 80 }}
                 />
               ),
             },

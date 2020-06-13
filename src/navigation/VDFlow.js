@@ -1,6 +1,17 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import VDDrawerNavigation from './VDFlows/VendorDrawerNavigation';
+import VDConversation from '../screens/VDScreens/VDConversationScreen';
+import VDDeliveredOrders from '../screens/VDScreens/VDDeliveredOrders';
+import VDNewOrders from '../screens/VDScreens/VDNewOrdersScreen';
+import VDSales from '../screens/VDScreens/VDSalesScreen';
+import VDShopPreview from '../screens/VDScreens/VDShopPreviewScreen';
+import VDTransactions from '../screens/VDScreens/VDTransactionsScreen';
+import VDWithdrawalRequest from '../screens/VDScreens/VDWithdrawalRequestScreen';
+
+// VD Product Screens
+import VDAddProduct from '../screens/VDScreens/VDProductsScreens/VDAddProductScreen';
+import VDEditProduct from '../screens/VDScreens/VDProductsScreens/VDEditProductScreen';
 
 // Pages Screen
 import PickupPolicy from '../screens/pages/PickupPolicyScreen';
@@ -25,6 +36,20 @@ const VDFlow = () => {
         header: () => null,
       }}>
       <Stack.Screen name="VDHome" component={VDDrawerNavigation} />
+      <Stack.Screen name="VDConversation" component={VDConversation} />
+      <Stack.Screen name="VDDeliveredOrders" component={VDDeliveredOrders} />
+      <Stack.Screen name="VDSales" component={VDSales} />
+      <Stack.Screen name="VDShopPreview" component={VDShopPreview} />
+      <Stack.Screen
+        name="VDWithdrawalRequest"
+        component={VDWithdrawalRequest}
+      />
+      <Stack.Screen name="VDNewOrders" component={VDNewOrders} />
+      <Stack.Screen name="VDTransactions" component={VDTransactions} />
+
+      {/* VD Product Screens */}
+      <Stack.Screen name="VDAddProduct" component={VDAddProduct} />
+      <Stack.Screen name="VDEditProduct" component={VDEditProduct} />
 
       {/* Pages screens */}
       <Stack.Screen name="PickupPolicy" component={PickupPolicy} />

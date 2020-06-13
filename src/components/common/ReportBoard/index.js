@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Row, Column, Spacer } from '..';
-import { inactiveColor } from '../variables';
+import { inactiveColor, primaryColor } from '../variables';
 import PropTypes from 'prop-types';
 
 /**
@@ -32,26 +32,34 @@ const ReportBoard = ({ data, containerStyle, titleStyle }) => {
               </Text>
               <Row>
                 <Column style={{ alignItems: 'center' }} size="3">
-                  <Text bold>{report.today}</Text>
-                  <Text note color="">
+                  <Text bold color="#fff">
+                    {report.today}
+                  </Text>
+                  <Text note color="#fff">
                     {report.todayLabel || 'Today'}
                   </Text>
                 </Column>
                 <Column style={{ alignItems: 'center' }} size="3">
-                  <Text bold>{report.week}</Text>
-                  <Text note color="">
+                  <Text bold color="#fff">
+                    {report.week}
+                  </Text>
+                  <Text note color="#fff">
                     {report.weekLabel || 'This Week'}
                   </Text>
                 </Column>
                 <Column style={{ alignItems: 'center' }} size="3">
-                  <Text bold>{report.month}</Text>
-                  <Text note color="">
+                  <Text bold color="#fff">
+                    {report.month}
+                  </Text>
+                  <Text note color="#fff">
                     {report.monthLabel || 'This Month'}
                   </Text>
                 </Column>
                 <Column style={{ alignItems: 'center' }} size="3">
-                  <Text bold>{report.total}</Text>
-                  <Text note color="">
+                  <Text bold color="#fff">
+                    {report.total}
+                  </Text>
+                  <Text note color="#fff">
                     {report.totalLabel || 'Total'}
                   </Text>
                 </Column>
@@ -67,14 +75,16 @@ const ReportBoard = ({ data, containerStyle, titleStyle }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: inactiveColor,
+    backgroundColor: primaryColor,
     padding: 10,
     flex: 1,
+    borderRadius: 5,
   },
   title: {
     fontSize: 16,
     fontFamily: 'SFPD-regular',
     paddingHorizontal: 20,
+    color: '#fff',
   },
 });
 
