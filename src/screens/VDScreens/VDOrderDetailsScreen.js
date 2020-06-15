@@ -5,7 +5,9 @@ import { Text, Layout } from '../../components/common';
 const VDOrderDetailsScreen = () => {
   return (
     <View>
-      <Layout></Layout>
+      <Layout>
+        <Text>Order Details Screen</Text>
+      </Layout>
     </View>
   );
 };
