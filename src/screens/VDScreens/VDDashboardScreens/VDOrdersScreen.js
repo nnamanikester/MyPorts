@@ -24,7 +24,7 @@ const VDAccountSettingsScreen = ({ navigation }) => {
         <Spacer />
         <ListItem
           marked
-          onClick={() => navigation.navigate('VDConversation')}
+          onClick={() => navigation.navigate('VDOrderDetails')}
           left={<Avatar medium rounded src={food3} />}
           body={
             <>
@@ -44,7 +44,7 @@ const VDAccountSettingsScreen = ({ navigation }) => {
         />
         <Spacer />
         <ListItem
-          onClick={() => navigation.navigate('VDConversation')}
+          onClick={() => navigation.navigate('VDOrderDetails')}
           left={<Avatar medium rounded src={food3} />}
           body={
             <>
@@ -69,7 +69,7 @@ const VDAccountSettingsScreen = ({ navigation }) => {
         />
         <Spacer />
         <ListItem
-          onClick={() => navigation.navigate('VDConversation')}
+          onClick={() => navigation.navigate('VDOrderDetails')}
           left={<Avatar medium rounded src={food3} />}
           body={
             <>

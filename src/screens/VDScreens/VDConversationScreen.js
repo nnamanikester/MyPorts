@@ -12,7 +12,7 @@ import { primaryColor, grayColor } from '../../components/common/variables';
 import Header from '../../components/Header';
 import { food3 } from '../../assets/images';
 
-const VDConversationScreen = () => {
+const VDConversationScreen = ({ navigation }) => {
   return (
     <>
       <Header
