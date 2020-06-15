@@ -35,7 +35,28 @@ const VDConversationScreen = ({ navigation }) => {
       />
       <Layout>
         <View style={styles.container}>
-          <Message />
+          <Message message="Hello" time="12:45pm" sent right />
+          <Message message="What's up?" time="12:46pm" sent />
+          <Message
+            message="I'm fine. I wanted to ask if you can do me a favor."
+            time="12:47pm"
+            sent
+            right
+          />
+          <Message
+            message="Ok dear. Say it, I'm all ears."
+            time="12:48pm"
+            sent
+          />
+          <Message
+            message="Alright thanks. Please, I need 2k urgently... Please!!! it's really holding me on my neck right now."
+            time="12:49pm"
+            sent
+            right
+          />
+          <Message message="Ok bye!" time="12:50pm" sent />
+          <Message message="Hello!" time="12:51pm" right />
+          <Message message="Are you there?" time="12:52pm" right />
         </View>
       </Layout>
     </>

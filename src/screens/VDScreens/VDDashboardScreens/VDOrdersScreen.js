@@ -48,10 +48,7 @@ const VDAccountSettingsScreen = ({ navigation }) => {
           left={<Avatar medium rounded src={food3} />}
           body={
             <>
-              <Text
-                color={info}
-                style={{ textDecoration: 'line-through' }}
-                heading>
+              <Text color={info} heading>
                 Order No 9875934734
               </Text>
               <Text numberOfLines={1} color="" note>

@@ -3,34 +3,43 @@ import { Text, Layout, Spacer, Clickable, Icon, Avatar } from './common';
 import { View, StyleSheet, Image } from 'react-native';
 import { primaryColor, grayColor, info } from './common/variables';
 
-const Message = () => {
+const Message = ({ onSelect, right, message, time, sent }) => {
   return (
     <>
       <Clickable
         activeOpacity={0.95}
-        onLongPress={() => alert('long pressed')}
+        onLongPress={onSelect}
         style={styles.chatBox}>
-        <View style={styles.chatLeft}>
+        <View style={right ? styles.chatRight : styles.chatLeft}>
           <>
-            <Text style={styles.textLeft}>
-              Hello Sir, like I said, i wanted to buy the slippers, but the
-              money seems to bbe very high.
+            <Text style={right ? styles.textRight : styles.textLeft}>
+              {message}
             </Text>
-            <Text style={styles.timeLeft}>12:45pm</Text>
-          </>
-        </View>
-      </Clickable>
-      <Clickable
-        activeOpacity={0.95}
-        onLongPress={() => alert('long pressed')}
-        style={styles.chatBox}>
-        <View style={styles.chatRight}>
-          <>
-            <Text style={styles.textRight}>
-              I will see what I can do about it. But honestly, it's not within
-              my powers for now.
-            </Text>
-            <Text style={styles.timeRight}>12:46pm</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                alignSelf: right ? 'flex-start' : 'flex-end',
+              }}>
+              <Text style={right ? styles.timeRight : styles.timeLeft}>
+                {time}
+              </Text>
+              <Spacer size={2} />
+              <Icon
+                style={{ marginVertical: -7 }}
+                name={sent ? 'ios-checkmark' : 'ios-time'}
+                color={
+                  right && sent
+                    ? primaryColor
+                    : right && !sent
+                    ? info
+                    : !right && sent
+                    ? '#fff'
+                    : '#555'
+                }
+                size={!sent ? 14 : 28}
+              />
+            </View>
           </>
         </View>
       </Clickable>
@@ -68,16 +77,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 16,
   },
-  timeLeft: {
+  timeRight: {
     fontSize: 11,
     color: '#444',
     lineHeight: 11,
     alignSelf: 'flex-end',
     marginTop: 3,
   },
-  timeRight: {
+  timeLeft: {
     fontSize: 11,
-    color: info,
+    color: '#666',
     marginTop: 3,
     lineHeight: 11,
   },
