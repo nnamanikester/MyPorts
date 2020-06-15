@@ -13,6 +13,7 @@ import VDOrderDetails from '../screens/VDScreens/VDOrderDetailsScreen';
 // VD Product Screens
 import VDAddProduct from '../screens/VDScreens/VDProductsScreens/VDAddProductScreen';
 import VDEditProduct from '../screens/VDScreens/VDProductsScreens/VDEditProductScreen';
+import VDSingleProduct from '../screens/VDScreens/VDProductsScreens/VDSingleProductScreen';
 
 // Pages Screen
 import PickupPolicy from '../screens/pages/PickupPolicyScreen';
@@ -52,6 +53,7 @@ const VDFlow = () => {
       {/* VD Product Screens */}
       <Stack.Screen name="VDAddProduct" component={VDAddProduct} />
       <Stack.Screen name="VDEditProduct" component={VDEditProduct} />
+      <Stack.Screen name="VDSingleProduct" component={VDSingleProduct} />
 
       {/* Pages screens */}
       <Stack.Screen name="PickupPolicy" component={PickupPolicy} />
