@@ -53,7 +53,7 @@ const VDOrderDetailsScreen = ({ navigation }) => {
           quantity="5"
           image={female2}
           price="2,300"
-          onClick={() => navigation.navigate('')}
+          onClick={() => navigation.navigate('VDSingleProduct')}
           onCloseButtonClick={() => {}}
           hideCloseButton
         />
