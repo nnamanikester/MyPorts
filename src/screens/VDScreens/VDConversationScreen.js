@@ -1,23 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  Text,
   Layout,
   Spacer,
   Clickable,
   Icon,
   Avatar,
 } from '../../components/common';
-import { View, StyleSheet, Image } from 'react-native';
-import {
-  primaryColor,
-  grayColor,
-  info,
-} from '../../components/common/variables';
+import { View, StyleSheet } from 'react-native';
 import Header from '../../components/Header';
 import Message from '../../components/Message';
 import { food3 } from '../../assets/images';
 
 const VDConversationScreen = ({ navigation }) => {
+  const [selected, setSelected] = useState(false);
+
+  const onSelectMessage = () => {
+    return setSelected(true);
+  };
+
   return (
     <>
       <Header
@@ -35,28 +35,89 @@ const VDConversationScreen = ({ navigation }) => {
       />
       <Layout>
         <View style={styles.container}>
-          <Message message="Hello" time="12:45pm" sent right />
-          <Message message="What's up?" time="12:46pm" sent />
           <Message
+            onClick={() => {
+              if (selected) setSelected(false);
+            }}
+            onSelect={onSelectMessage}
+            selected={selected}
+            message="Hello"
+            time="12:45pm"
+            sent
+            right
+          />
+          <Message
+            onClick={() => {
+              if (selected) setSelected(false);
+            }}
+            onSelect={onSelectMessage}
+            selected={selected}
+            message="What's up?"
+            time="12:46pm"
+            sent
+          />
+          <Message
+            onClick={() => {
+              if (selected) setSelected(false);
+            }}
+            onSelect={onSelectMessage}
+            selected={selected}
             message="I'm fine. I wanted to ask if you can do me a favor."
             time="12:47pm"
             sent
             right
           />
           <Message
+            onClick={() => {
+              if (selected) setSelected(false);
+            }}
+            onSelect={onSelectMessage}
+            selected={selected}
             message="Ok dear. Say it, I'm all ears."
             time="12:48pm"
             sent
           />
           <Message
+            onClick={() => {
+              if (selected) setSelected(false);
+            }}
+            selected={selected}
             message="Alright thanks. Please, I need 2k urgently... Please!!! it's really holding me on my neck right now."
             time="12:49pm"
+            onSelect={onSelectMessage}
             sent
             right
           />
-          <Message message="Ok bye!" time="12:50pm" sent />
-          <Message message="Hello!" time="12:51pm" right />
-          <Message message="Are you there?" time="12:52pm" right />
+          <Message
+            onClick={() => {
+              if (selected) setSelected(false);
+            }}
+            onSelect={onSelectMessage}
+            selected={selected}
+            message="Ok bye!"
+            time="12:50pm"
+            sent
+          />
+          <Message
+            onClick={() => {
+              if (selected) setSelected(false);
+            }}
+            onSelect={onSelectMessage}
+            selected={selected}
+            message="Hello!"
+            time="12:51pm"
+            right
+          />
+          <Message
+            onClick={() => {
+              if (selected) setSelected(false);
+            }}
+            onSelect={onSelectMessage}
+            selected={selected}
+            message="Are you there?"
+            time="12:52pm"
+            right
+          />
         </View>
       </Layout>
     </>

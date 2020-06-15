@@ -1,15 +1,28 @@
 import React from 'react';
-import { Text, Layout, Spacer, Clickable, Icon, Avatar } from './common';
-import { View, StyleSheet, Image } from 'react-native';
-import { primaryColor, grayColor, info } from './common/variables';
+import { Text, Spacer, Clickable, Icon, Avatar } from './common';
+import { View, StyleSheet } from 'react-native';
+import { primaryColor, info, lightColor } from './common/variables';
 
-const Message = ({ onSelect, right, message, time, sent }) => {
+const Message = ({
+  onSelect,
+  onClick,
+  selected,
+  right,
+  message,
+  time,
+  sent,
+}) => {
   return (
     <>
       <Clickable
+        onClick={onClick}
         activeOpacity={0.95}
         onLongPress={onSelect}
-        style={styles.chatBox}>
+        style={
+          selected
+            ? { ...styles.chatBox, ...styles.selected }
+            : { ...styles.chatBox }
+        }>
         <View style={right ? styles.chatRight : styles.chatLeft}>
           <>
             <Text style={right ? styles.textRight : styles.textLeft}>
@@ -35,7 +48,7 @@ const Message = ({ onSelect, right, message, time, sent }) => {
                     ? info
                     : !right && sent
                     ? '#fff'
-                    : '#555'
+                    : '#ddd'
                 }
                 size={!sent ? 14 : 28}
               />
@@ -49,7 +62,9 @@ const Message = ({ onSelect, right, message, time, sent }) => {
 
 const styles = StyleSheet.create({
   chatBox: {
-    marginBottom: 5,
+    marginBottom: 2,
+    borderRadius: 5,
+    padding: 5,
   },
   chatLeft: {
     backgroundColor: primaryColor,
@@ -86,9 +101,12 @@ const styles = StyleSheet.create({
   },
   timeLeft: {
     fontSize: 11,
-    color: '#666',
+    color: '#ddd',
     marginTop: 3,
     lineHeight: 11,
+  },
+  selected: {
+    backgroundColor: lightColor,
   },
 });
 
