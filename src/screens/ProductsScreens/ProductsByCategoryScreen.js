@@ -31,7 +31,7 @@ const ProductsByCategoryScreen = ({ navigation }) => {
     <>
       <Header
         isCart
-        title="Men"
+        title="Category"
         headerLeft={
           <Clickable onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" size={25} color="#fff" />

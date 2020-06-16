@@ -1,7 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 import Header from '../../components/Header';
-import { TopTab, Icon, Clickable, Badge } from '../../components/common';
+import {
+  TopTab,
+  Icon,
+  Clickable,
+  Badge,
+  Option,
+} from '../../components/common';
 import VDAnalyticsScreen from './VDDashboardScreens/VDAnalyticsScreen';
 import VDProductsScreen from './VDDashboardScreens/VDProductsScreen';
 import VDSettingsScreen from './VDDashboardScreens/VDSettingsScreen';
@@ -20,7 +26,12 @@ const VDHome = ({ navigation }) => {
             <Icon name="ios-menu" color="#fff" />
           </Clickable>
         }
-        headerRight={<></>}
+        headerRight={
+          <Option
+            icon={<Icon name="md-more" color="#fff" />}
+            options={[{ label: 'Report a problem', action: () => {} }]}
+          />
+        }
       />
       <TopTab
         tabBarOptions={{

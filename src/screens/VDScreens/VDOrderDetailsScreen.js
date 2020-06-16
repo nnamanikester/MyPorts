@@ -49,7 +49,7 @@ const VDOrderDetailsScreen = ({ navigation }) => {
             <Text>Tiana Rosser</Text>
             <Text>Suit 13 Romchi Plaza, Oneday Road.</Text>
             <Text>Enugu, Enugu State 400252.</Text>
-            <Text>Nigeria.</Text>
+            <Text>09044758394.</Text>
           </AccordionItem>
 
           <AccordionItem headerText="Items">
