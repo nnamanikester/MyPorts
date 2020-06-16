@@ -5,9 +5,12 @@ import {
   Layout,
   Icon,
   Spacer,
-  Loading,
+  Accordion,
+  AccordionItem,
   Clickable,
   Button,
+  Column,
+  Option,
 } from '../../components/common';
 import Header from '../../components/Header';
 import CartItem from '../../components/CartItem';
@@ -24,61 +27,70 @@ const VDOrderDetailsScreen = ({ navigation }) => {
             <Icon name="ios-arrow-back" color="#fff" />
           </Clickable>
         }
+        headerRight={
+          <Option
+            icon={<Icon name="md-more" color="#fff" />}
+            options={[
+              { label: 'Mark as Delivered', action: () => {} },
+              { label: 'Report a problem', action: () => {} },
+            ]}
+          />
+        }
       />
       <Layout>
         <Spacer medium />
 
         <View style={styles.container}>
-          <Text style={styles.title}>Order placed: August 25, 2020</Text>
-          <Text>Order No: 2379758</Text>
-
-          <Spacer medium />
-
-          <Text style={styles.title}>Ship to:</Text>
-
-          <Text>Tiana Rosser</Text>
-          <Text>Suit 13 Romchi Plaza, Oneday Road.</Text>
-          <Text>Enugu, Enugu State 400252.</Text>
-          <Text>Nigeria.</Text>
-
-          <Spacer medium />
-
-          <Text style={styles.title}>Items in Order:</Text>
+          <Text heading>Order placed: August 25, 2020</Text>
+          <Text style={styles.title}>Order No 2954379758</Text>
         </View>
+        <Accordion>
+          <AccordionItem headerText="Shipping Details">
+            <Text>Tiana Rosser</Text>
+            <Text>Suit 13 Romchi Plaza, Oneday Road.</Text>
+            <Text>Enugu, Enugu State 400252.</Text>
+            <Text>Nigeria.</Text>
+          </AccordionItem>
 
-        <CartItem
-          name="Leather Show Bag"
-          color="Red"
-          size="XL"
-          quantity="5"
-          image={female2}
-          price="2,300"
-          onClick={() => navigation.navigate('VDSingleProduct')}
-          onCloseButtonClick={() => {}}
-          hideCloseButton
-        />
+          <AccordionItem headerText="Items">
+            <CartItem
+              name="Leather Show Bag"
+              color="Red"
+              size="XL"
+              quantity="5"
+              image={female2}
+              price="2,300"
+              onClick={() => navigation.navigate('VDSingleProduct')}
+              onCloseButtonClick={() => {}}
+              hideCloseButton
+            />
+          </AccordionItem>
 
+          <AccordionItem headerText="Order Summary">
+            <OrderSummary
+              order="63,000"
+              shipping="3,000"
+              discount="1,300"
+              total="66,000"
+            />
+          </AccordionItem>
+
+          <AccordionItem headerText="Shipping Terms"></AccordionItem>
+        </Accordion>
         <Spacer medium />
 
         <View style={styles.container}>
-          <Text style={styles.title}>Order Summary:</Text>
-
-          <Spacer />
-
-          <OrderSummary
-            order="63,000"
-            shipping="3,000"
-            discount="1,300"
-            total="66,000"
-          />
-
-          <Spacer medium />
-
-          <Button>
-            <Text color="#fff">Accept</Text>
-          </Button>
-          <Spacer />
-          <Button type="ghost">Cancel</Button>
+          <View style={styles.buttons}>
+            <Column size="6">
+              <Button type="ghost">Cancel</Button>
+            </Column>
+            <Spacer />
+            <Column size="6">
+              <Button>
+                <Text color="#fff">Accept</Text>
+              </Button>
+            </Column>
+          </View>
 
           <Spacer large />
           <Spacer large />
@@ -88,6 +100,18 @@ const VDOrderDetailsScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 10,
+  },
+  title: {
+    fontFamily: 'SFPD-regular',
+    fontSize: 20,
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+});
 
 export default VDOrderDetailsScreen;

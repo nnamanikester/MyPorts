@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontFamily: 'SFPD-regular',
-    fontSize: 20,
+    fontSize: 18,
   },
   headerIcon: {
     fontSize: 22,
