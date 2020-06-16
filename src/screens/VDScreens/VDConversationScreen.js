@@ -9,6 +9,7 @@ import {
 import { View, StyleSheet } from 'react-native';
 import Header from '../../components/Header';
 import Message from '../../components/Message';
+import ConversationEntry from '../../components/ConversationEntry';
 import { food3 } from '../../assets/images';
 
 const VDConversationScreen = ({ navigation }) => {
@@ -120,6 +121,7 @@ const VDConversationScreen = ({ navigation }) => {
           />
         </View>
       </Layout>
+      <ConversationEntry />
     </>
   );
 };
