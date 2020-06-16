@@ -5,6 +5,7 @@ import {
   Clickable,
   Icon,
   Avatar,
+  Option,
 } from '../../components/common';
 import { View, StyleSheet } from 'react-native';
 import Header from '../../components/Header';
@@ -32,7 +33,16 @@ const VDConversationScreen = ({ navigation }) => {
             <Avatar src={food3} rounded />
           </Clickable>
         }
-        headerRight={<View></View>}
+        headerRight={
+          <View>
+            <Option
+              icon={<Icon color="#fff" name="md-more" />}
+              options={[
+                { label: 'End Chat', action: () => alert('Chat ended') },
+              ]}
+            />
+          </View>
+        }
       />
       <Layout>
         <View style={styles.container}>

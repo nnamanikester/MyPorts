@@ -1,15 +1,6 @@
 import React from 'react';
-import {
-  Text,
-  Spacer,
-  Clickable,
-  Icon,
-  Avatar,
-  TextInput,
-  FAB,
-} from './common';
+import { Icon, TextInput, FAB } from './common';
 import { View, StyleSheet } from 'react-native';
-import { primaryColor, info, lightColor } from './common/variables';
 
 const ConversationEntry = () => {
   return (
