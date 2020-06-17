@@ -89,8 +89,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     elevation: 4,
     position: 'absolute',
-    bottom: 30,
-    right: 30,
+    bottom: 15,
+    right: 15,
   },
 });
 
