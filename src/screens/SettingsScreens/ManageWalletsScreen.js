@@ -1,6 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Layout, Icon, Clickable } from '../../components/common';
+import {
+  Layout,
+  Icon,
+  Clickable,
+  Card,
+  Button,
+  Text,
+} from '../../components/common';
 import Header from '../../components/Header';
 
 const ManageAddressesScreen = ({ navigation }) => {
@@ -20,7 +27,16 @@ const ManageAddressesScreen = ({ navigation }) => {
         }
       />
       <Layout>
-        <View style={styles.container}></View>
+        <View style={styles.container}>
+          <Card style={styles.creditCard}>
+            <View style={styles.creditCardHeader}></View>
+            <View style={styles.creditCardBody}></View>
+            <View styles={styles.creditCardFooter}></View>
+          </Card>
+          <Button>
+            <Text color="#fff">Fund Wallet</Text>
+          </Button>
+        </View>
       </Layout>
     </>
   );
@@ -31,6 +47,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 20,
   },
+  creditCard: {},
+  creditCardHeader: {},
+  creditCardBody: {},
+  creditCardFooter: {},
 });
 
 export default ManageAddressesScreen;
