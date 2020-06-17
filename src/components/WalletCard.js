@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { chip, visa, masterCard } from '../assets/icons';
-import { info } from './common/variables';
+import { grayColor, primaryColor } from './common/variables';
 import { Card, Text, Spacer, Avatar } from './common';
 
 const WalletCard = ({ cardNo, name, balance }) => {
@@ -20,23 +20,27 @@ const WalletCard = ({ cardNo, name, balance }) => {
       <Spacer medium />
       <View style={styles.creditCardFooter}>
         <View>
-          <Text note color={info}>
+          <Text note color={grayColor}>
             Card Name
           </Text>
-          <Text color="#fff">{name}</Text>
+          <Text bold color="#fff">
+            {name}
+          </Text>
         </View>
         <View>
-          <Text note color={info}>
+          <Text note color={grayColor}>
             Balance
           </Text>
-          <Text color="#fff">NGN {balance}</Text>
+          <Text bold color="#fff">
+            NGN {balance}
+          </Text>
         </View>
         <View>
           <Avatar medium src={masterCard} />
         </View>
       </View>
       <View>
-        <Text size={10} color={info}>
+        <Text size={10} color={grayColor}>
           NB: This card can only be used to make purchases on this platform
         </Text>
       </View>
@@ -46,7 +50,7 @@ const WalletCard = ({ cardNo, name, balance }) => {
 
 const styles = StyleSheet.create({
   creditCard: {
-    backgroundColor: '#151522',
+    backgroundColor: primaryColor,
     padding: 20,
   },
   creditCardHeader: {
