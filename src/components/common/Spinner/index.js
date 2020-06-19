@@ -7,15 +7,15 @@ import { primaryColor } from '../variables';
 /**
  * Displays a loading spinner with a white overlay background
  */
-const Spinner = ({ show, size, style, color }) => {
+const Spinner = ({ show, area, style, tint }) => {
   if (!show) {
     return null;
   }
   return (
     <Spin
       isVisible={show}
-      size={size || 20}
-      color={color}
+      size={area || 20}
+      color={tint || primaryColor}
       type="Circle"
       style={{ ...styles.spinner, ...style }}
     />
@@ -28,9 +28,9 @@ Spinner.propTypes = {
   /**
    * Given a number, determines the size of the loading.
    */
-  size: PropTypes.number,
+  area: PropTypes.number,
   /**
-   * Given a color as a string, determines the color of the loader.
+   * Given a tint as a string, determines the color of the loader.
    */
   color: PropTypes.string,
   /**
@@ -40,9 +40,8 @@ Spinner.propTypes = {
 };
 
 Spinner.defaultProps = {
-  size: 20,
-  color: primaryColor,
-  // spinner: 'Circle',
+  area: 20,
+  tint: primaryColor,
   show: false,
 };
 
