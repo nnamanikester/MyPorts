@@ -1,81 +1,114 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { useMutation } from '@apollo/react-hooks';
 import { connect } from 'react-redux';
 import {
   skipAuthentication,
   logInCustomer,
   logInVendor,
 } from '../../redux/actions/AuthActions';
-import {
-  Layout,
-  Icon,
-  Text,
-  Button,
-  Link,
-  TextInput,
-  Spacer,
-  Clickable,
-} from '../../components/common';
+import * as UI from '../../components/common';
 import { info, primaryColor } from '../../components/common/variables';
+import { SIGNUP } from '../../apollo/mutations';
 
-const RegisterScreen = ({
-  skipAuthentication,
-  navigation,
-  logInCustomer,
-  logInVendor,
-}) => {
+const RegisterScreen = ({ skipAuthentication, navigation, logInCustomer }) => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [signup, { loading, data, error }] = useMutation(SIGNUP, {
+    variables: {
+      username,
+      email,
+      password,
+    },
+  });
+
+  const handleSignup = () => {};
+
   return (
     <>
-      <Layout>
+      <UI.Layout>
         <View style={styles.header}>
-          <Clickable onClick={() => skipAuthentication()}>
-            <Icon name="md-close" />
-          </Clickable>
-          <Link onClick={() => navigation.navigate('Login')}>Sign In</Link>
+          <UI.Clickable onClick={() => skipAuthentication()}>
+            <UI.Icon name="md-close" />
+          </UI.Clickable>
+          <UI.Link onClick={() => navigation.navigate('Login')}>
+            Sign In
+          </UI.Link>
         </View>
+
         <View style={styles.layout}>
           <View style={styles.pageTitle}>
-            <Text h1>Create An Account</Text>
-            <Text color={info}>Get started by creating an account with us</Text>
+            <UI.Text h1>Create An Account</UI.Text>
+
+            <UI.Text color={info}>
+              Get started by creating an account with us
+            </UI.Text>
           </View>
+
           <View style={styles.form}>
-            <Spacer medium />
+            <UI.Spacer medium />
+
             <View style={styles.inputContainer}>
-              <Text heading>Username</Text>
-              <Spacer />
-              <TextInput autoFocus placeholder="Johndoe" />
+              <UI.Text heading>Username</UI.Text>
+
+              <UI.Spacer />
+
+              <UI.TextInput
+                autoCapitalize="none"
+                autoFocus
+                placeholder="Johndoe"
+                value={username}
+                onChangeText={(value) => setUsername(value)}
+              />
             </View>
-            <Spacer medium />
+
+            <UI.Spacer medium />
+
             <View style={styles.inputContainer}>
-              <Text heading>Email Address</Text>
-              <Spacer />
-              <TextInput
+              <UI.Text heading>Email Address</UI.Text>
+
+              <UI.Spacer />
+
+              <UI.TextInput
                 keyboardType="email-address"
                 placeholder="user@email.com"
                 autoCapitalize="none"
                 autoCorrect={false}
+                value={email}
+                onChangeText={(value) => setEmail(value)}
               />
             </View>
-            <Spacer medium />
+
+            <UI.Spacer medium />
+
             <View style={styles.inputContainer}>
-              <Text heading>Password</Text>
-              <Spacer />
-              <TextInput placeholder="******" password />
+              <UI.Text heading>Password</UI.Text>
+
+              <UI.Spacer />
+
+              <UI.TextInput
+                autoCapitalize="none"
+                placeholder="******"
+                password
+                value={password}
+                onChangeText={(value) => setPassword(value)}
+              />
             </View>
-            <Spacer medium />
+
+            <UI.Spacer medium />
+
             <View>
-              <Button onClick={() => logInCustomer()}>
-                <Text color="#fff">Register</Text>
-              </Button>
-              <Spacer />
-              <Button type="ghost" onClick={() => logInVendor()}>
-                <Text color={primaryColor}>Register as a vendor</Text>
-              </Button>
+              <UI.Button onClick={() => logInCustomer()}>
+                <UI.Text color="#fff">Register</UI.Text>
+              </UI.Button>
             </View>
-            <Spacer large />
+
+            <UI.Spacer large />
           </View>
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
