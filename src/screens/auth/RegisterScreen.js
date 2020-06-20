@@ -4,30 +4,63 @@ import { useMutation } from '@apollo/react-hooks';
 import { connect } from 'react-redux';
 import {
   skipAuthentication,
-  logInCustomer,
-  logInVendor,
+  setStorage,
 } from '../../redux/actions/AuthActions';
 import * as UI from '../../components/common';
-import { info, primaryColor } from '../../components/common/variables';
+import { info, primaryColor, danger } from '../../components/common/variables';
 import { SIGNUP } from '../../apollo/mutations';
+import { validateEmail } from '../../utils';
 
-const RegisterScreen = ({ skipAuthentication, navigation, logInCustomer }) => {
+const RegisterScreen = ({ skipAuthentication, navigation, setStorage }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  const [signup, { loading, data, error }] = useMutation(SIGNUP, {
-    variables: {
-      username,
-      email,
-      password,
-    },
-  });
+  const [signup] = useMutation(SIGNUP);
 
-  const handleSignup = () => {};
+  // Handles Sognup and form validations
+  const handleSignup = () => {
+    setErrors({});
+    setLoading(true);
+
+    if (!username) {
+      return setErrors({ username: 'Username is required!' });
+    }
+    if (username.length < 3) {
+      return setErrors({
+        username: 'Username cannot be less than 3 characters!',
+      });
+    }
+    if (!validateEmail(email)) {
+      return setErrors({ email: 'Invalid email address!' });
+    }
+    if (!password) {
+      return setErrors({ password: 'Password is required' });
+    }
+
+    return signup({
+      variables: {
+        username,
+        email,
+        password,
+      },
+    })
+      .then((res) => {
+        const { token, user } = res.data.signup;
+        setLoading(false);
+        setStorage(user, token);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setErrors({ graphQL: err.graphQLErrors, network: err.networkError });
+      });
+  };
 
   return (
     <>
+      <UI.Loading show={loading} />
       <UI.Layout>
         <View style={styles.header}>
           <UI.Clickable onClick={() => skipAuthentication()}>
@@ -55,6 +88,20 @@ const RegisterScreen = ({ skipAuthentication, navigation, logInCustomer }) => {
 
               <UI.Spacer />
 
+              {errors.username ? (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <UI.Spacer />
+                  <UI.Icon
+                    size={20}
+                    name="ios-close-circle-outline"
+                    color={danger}
+                  />
+                  <UI.Spacer size={3} />
+                  <UI.Text color={danger}>{errors.username}</UI.Text>
+                  <UI.Spacer />
+                </View>
+              ) : null}
+
               <UI.TextInput
                 autoCapitalize="none"
                 autoFocus
@@ -70,6 +117,20 @@ const RegisterScreen = ({ skipAuthentication, navigation, logInCustomer }) => {
               <UI.Text heading>Email Address</UI.Text>
 
               <UI.Spacer />
+
+              {errors.email ? (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <UI.Spacer />
+                  <UI.Icon
+                    size={20}
+                    name="ios-close-circle-outline"
+                    color={danger}
+                  />
+                  <UI.Spacer size={3} />
+                  <UI.Text color={danger}>{errors.email}</UI.Text>
+                  <UI.Spacer />
+                </View>
+              ) : null}
 
               <UI.TextInput
                 keyboardType="email-address"
@@ -88,6 +149,20 @@ const RegisterScreen = ({ skipAuthentication, navigation, logInCustomer }) => {
 
               <UI.Spacer />
 
+              {errors.password ? (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <UI.Spacer />
+                  <UI.Icon
+                    size={20}
+                    name="ios-close-circle-outline"
+                    color={danger}
+                  />
+                  <UI.Spacer size={3} />
+                  <UI.Text color={danger}>{errors.password}</UI.Text>
+                  <UI.Spacer />
+                </View>
+              ) : null}
+
               <UI.TextInput
                 autoCapitalize="none"
                 placeholder="******"
@@ -99,8 +174,22 @@ const RegisterScreen = ({ skipAuthentication, navigation, logInCustomer }) => {
 
             <UI.Spacer medium />
 
+            {errors.graphQL ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <UI.Spacer />
+                <UI.Icon
+                  size={20}
+                  name="ios-close-circle-outline"
+                  color={danger}
+                />
+                <UI.Spacer size={3} />
+                <UI.Text color={danger}>{errors.graphQL[0].message}</UI.Text>
+                <UI.Spacer />
+              </View>
+            ) : null}
+
             <View>
-              <UI.Button onClick={() => logInCustomer()}>
+              <UI.Button onClick={() => handleSignup()}>
                 <UI.Text color="#fff">Register</UI.Text>
               </UI.Button>
             </View>
@@ -109,6 +198,15 @@ const RegisterScreen = ({ skipAuthentication, navigation, logInCustomer }) => {
           </View>
         </View>
       </UI.Layout>
+
+      {errors.network && (
+        <UI.Toast
+          message={
+            'Network Error: Check your network connection and try again!'
+          }
+          onTimeout={() => setErrors({ ...errors, network: null })}
+        />
+      )}
     </>
   );
 };
@@ -133,7 +231,6 @@ const styles = StyleSheet.create({
 });
 
 export default connect(null, {
-  logInVendor,
-  logInCustomer,
+  setStorage,
   skipAuthentication,
 })(RegisterScreen);
