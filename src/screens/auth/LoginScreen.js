@@ -22,6 +22,7 @@ const LoginScreen = ({ setStorage, skipAuthentication, navigation }) => {
       email,
       password,
     },
+    errorPolicy: 'ignore',
   });
 
   // A function called when the loin button is clicked
@@ -38,6 +39,8 @@ const LoginScreen = ({ setStorage, skipAuthentication, navigation }) => {
         email,
         password,
       },
+    }).catch((err) => {
+      setErrors({ graphQL: err.graphQLErrors, network: err.networkError });
     });
   };
 
@@ -139,9 +142,9 @@ const LoginScreen = ({ setStorage, skipAuthentication, navigation }) => {
               />
             </View>
 
-            <UI.Spacer medium />
+            <UI.Spacer />
 
-            {error ? (
+            {errors.graphQL ? (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <UI.Spacer />
                 <UI.Icon
@@ -150,7 +153,7 @@ const LoginScreen = ({ setStorage, skipAuthentication, navigation }) => {
                   color={danger}
                 />
                 <UI.Spacer size={3} />
-                <UI.Text color={danger}>Email or passsword Incorrect</UI.Text>
+                <UI.Text color={danger}>{errors.graphQL[0].message}</UI.Text>
                 <UI.Spacer />
               </View>
             ) : null}
@@ -172,6 +175,15 @@ const LoginScreen = ({ setStorage, skipAuthentication, navigation }) => {
           </View>
         </View>
       </UI.Layout>
+
+      {errors.network && (
+        <UI.Toast
+          message={
+            'Network Error: Check your network connection and try again!'
+          }
+          onTimeout={() => setErrors({ ...errors, network: null })}
+        />
+      )}
     </>
   );
 };
