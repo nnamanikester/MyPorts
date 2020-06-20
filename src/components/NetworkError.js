@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Button, Spacer, Icon } from './common';
+import { info } from './common/variables';
 
 const NetworkError = ({ show, onButtonClick }) => {
   if (!show) {
@@ -10,11 +11,12 @@ const NetworkError = ({ show, onButtonClick }) => {
   return (
     <View style={{ ...styles.container }}>
       <View style={styles.iconContainer}>
-        <Icon size={200} type="Feather" name="wifi-off" />
+        <Icon color={info} size={100} type="Feather" name="wifi-off" />
       </View>
+      <Spacer large />
 
       <View style={styles.headerContanier}>
-        <Text h1>Offline</Text>
+        <Text h1>No Internet</Text>
       </View>
 
       <Spacer />

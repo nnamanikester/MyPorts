@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useApolloClient } from '@apollo/react-hooks';
 import { connect } from 'react-redux';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { SIGNIN } from '../../apollo/mutations';
 import { validateEmail } from '../../utils';
 import {
