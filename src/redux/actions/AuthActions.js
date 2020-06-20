@@ -1,6 +1,10 @@
+import AsyncStorage from '@react-native-community/async-storage';
+
 export const logUserOut = () => {
-  return {
-    type: 'LOG_USER_OUT',
+  return async (dispatch) => {
+    await AsyncStorage.removeItem('@myports/user');
+    await AsyncStorage.removeItem('@myports/token');
+    return dispatch({ type: 'LOG_USER_OUT' });
   };
 };
 
@@ -16,14 +20,7 @@ export const removeStrangerStatus = () => {
   };
 };
 
-export const logInVendor = () => {
-  return {
-    type: 'LOG_IN_VENDOR',
-  };
-};
-
-export const logInCustomer = () => {
-  return {
-    type: 'LOG_IN_CUSTOMER',
-  };
-};
+export const setStorage = (user, token) => ({
+  type: 'SET_STORAGE',
+  payload: { user, token },
+});

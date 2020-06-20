@@ -6,8 +6,8 @@ class CustomerAndGuest extends Component {
     this.state = {};
   }
   render() {
-    const { isGuest, isCustomer, isLogged } = this.props;
-    if (isGuest || (isCustomer && isLogged)) {
+    const { isGuest, user, token } = this.props;
+    if (isGuest || (user && user.isCustomer)) {
       return this.props.children;
     } else {
       return null;

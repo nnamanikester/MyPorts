@@ -7,11 +7,10 @@ import CustomerAndGuest from './CustomerAndGuest';
 import GuestAndVendor from './GuestAndVendor';
 
 const mapStateToProps = (state) => {
-  const { isLogged, isCustomer, isVendor, isSkipped } = state.auth;
+  const { token, user, isSkipped } = state.auth;
   return {
-    isLogged,
-    isCustomer,
-    isVendor,
+    token,
+    user,
     isGuest: isSkipped,
   };
 };

@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import { useApolloClient } from '@apollo/react-hooks';
 import { connect } from 'react-redux';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { SIGNIN } from '../../apollo/mutations';
 import { validateEmail } from '../../utils';
 import {
-  logInCustomer,
   skipAuthentication,
+  setStorage,
 } from '../../redux/actions/AuthActions';
 import * as UI from '../../components/common';
-import { info, primaryColor } from '../../components/common/variables';
+import { info, primaryColor, danger } from '../../components/common/variables';
 
-const LoginScreen = ({ logInCustomer, skipAuthentication, navigation }) => {
+const LoginScreen = ({ setStorage, skipAuthentication, navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  const [signin, { loading, data, error, called }] = useMutation(SIGNIN, {
+  const [signin, { loading, data, error }] = useMutation(SIGNIN, {
     variables: {
       email,
       password,
@@ -25,9 +26,17 @@ const LoginScreen = ({ logInCustomer, skipAuthentication, navigation }) => {
   });
 
   const handleSignin = () => {
-    if (!validateEmail(email))
+    setErrors({});
+
+    if (!validateEmail(email)) {
+      setIsLoading(false);
       return setErrors({ email: 'Invalid email address!' });
-    if (!password) return setErrors({ password: 'Password cannot be empty!' });
+    }
+    if (!password) {
+      setIsLoading(false);
+      return setErrors({ password: 'Password cannot be empty!' });
+    }
+
     return signin({
       variables: {
         email,
@@ -36,14 +45,20 @@ const LoginScreen = ({ logInCustomer, skipAuthentication, navigation }) => {
     });
   };
 
-  if (data) {
-    AsyncStorage.setItem('@myports/token', data.signin.token);
-  }
+  const setData = async (token, user) => {
+    await AsyncStorage.setItem('@myports/token', token);
+    await AsyncStorage.setItem('@myports/user', JSON.stringify(user));
+    setStorage(user, token);
+  };
 
-  if (error) setErrors({ message: error.message });
+  if (data) {
+    const { token, user } = data.signin;
+    setData(token, user);
+  }
 
   return (
     <>
+      <UI.Loading show={loading} />
       <UI.Layout>
         <View style={styles.header}>
           <UI.Clickable onClick={() => skipAuthentication()}>
@@ -71,6 +86,20 @@ const LoginScreen = ({ logInCustomer, skipAuthentication, navigation }) => {
 
               <UI.Spacer />
 
+              {errors.email ? (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <UI.Spacer />
+                  <UI.Icon
+                    size={20}
+                    name="ios-close-circle-outline"
+                    color={danger}
+                  />
+                  <UI.Spacer size={3} />
+                  <UI.Text color={danger}>{errors.email}</UI.Text>
+                  <UI.Spacer />
+                </View>
+              ) : null}
+
               <UI.TextInput
                 keyboardType="email-address"
                 placeholder="user@email.com"
@@ -89,6 +118,20 @@ const LoginScreen = ({ logInCustomer, skipAuthentication, navigation }) => {
 
               <UI.Spacer />
 
+              {errors.password ? (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <UI.Spacer />
+                  <UI.Icon
+                    size={20}
+                    name="ios-close-circle-outline"
+                    color={danger}
+                  />
+                  <UI.Spacer size={3} />
+                  <UI.Text color={danger}>{errors.password}</UI.Text>
+                  <UI.Spacer />
+                </View>
+              ) : null}
+
               <UI.TextInput
                 placeholder="******"
                 password
@@ -100,12 +143,24 @@ const LoginScreen = ({ logInCustomer, skipAuthentication, navigation }) => {
 
             <UI.Spacer medium />
 
+            {error ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <UI.Spacer />
+                <UI.Icon
+                  size={20}
+                  name="ios-close-circle-outline"
+                  color={danger}
+                />
+                <UI.Spacer size={3} />
+                <UI.Text color={danger}>Email or passsword Incorrect</UI.Text>
+                <UI.Spacer />
+              </View>
+            ) : null}
+
+            <UI.Spacer />
             <View>
-              <UI.Button
-                type={loading ? 'disabled' : ''}
-                onClick={() => handleSignin()}>
-                <UI.Spinner area={30} tint={primaryColor} show={loading} />
-                {loading ? null : <UI.Text color="#fff">Login</UI.Text>}
+              <UI.Button onClick={() => handleSignin()}>
+                <UI.Text color="#fff">Login</UI.Text>
               </UI.Button>
             </View>
 
@@ -145,6 +200,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, { logInCustomer, skipAuthentication })(
-  LoginScreen,
-);
+export default connect(null, {
+  skipAuthentication,
+  setStorage,
+})(LoginScreen);

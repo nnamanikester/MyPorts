@@ -6,8 +6,8 @@ class GuestAndVendor extends Component {
     this.state = {};
   }
   render() {
-    const { isGuest, isLogged, isVendor } = this.props;
-    if (isGuest || (isVendor && isLogged)) {
+    const { isGuest, user, token } = this.props;
+    if (isGuest || (user && user.isVendor)) {
       return this.props.children;
     } else {
       return null;

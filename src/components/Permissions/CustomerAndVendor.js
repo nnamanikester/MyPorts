@@ -6,8 +6,8 @@ class CustomerAndVendor extends Component {
     this.state = {};
   }
   render() {
-    const { isLogged, isVendor, isCustomer, children } = this.props;
-    if (isLogged && (isCustomer || isVendor)) {
+    const { user, token, children } = this.props;
+    if (user && (user.isCustomer || user.isVendor)) {
       return children;
     } else {
       return null;

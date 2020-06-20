@@ -1,6 +1,6 @@
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { View, Image, StyleSheet } from 'react-native';
 import { Text, Icon, ListItem, Link, Badge, Divider, Spacer } from './common';
 import { female4 } from '../assets/images';
