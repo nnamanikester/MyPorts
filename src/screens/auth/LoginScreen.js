@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
@@ -10,7 +10,7 @@ import {
   setStorage,
 } from '../../redux/actions/AuthActions';
 import * as UI from '../../components/common';
-import { info, primaryColor, danger } from '../../components/common/variables';
+import { info, danger } from '../../components/common/variables';
 
 const LoginScreen = ({ setStorage, skipAuthentication, navigation }) => {
   const [email, setEmail] = useState('');
@@ -24,17 +24,14 @@ const LoginScreen = ({ setStorage, skipAuthentication, navigation }) => {
     },
   });
 
+  // A function called when the loin button is clicked
   const handleSignin = () => {
     setErrors({});
 
-    if (!validateEmail(email)) {
-      setIsLoading(false);
+    if (!validateEmail(email))
       return setErrors({ email: 'Invalid email address!' });
-    }
-    if (!password) {
-      setIsLoading(false);
-      return setErrors({ password: 'Password cannot be empty!' });
-    }
+
+    if (!password) return setErrors({ password: 'Password cannot be empty!' });
 
     return signin({
       variables: {
@@ -44,12 +41,14 @@ const LoginScreen = ({ setStorage, skipAuthentication, navigation }) => {
     });
   };
 
+  // Setting user and token to async storage
   const setData = async (token, user) => {
     await AsyncStorage.setItem('@myports/token', token);
     await AsyncStorage.setItem('@myports/user', JSON.stringify(user));
     setStorage(user, token);
   };
 
+  // Checking if data is returned after signin and setting the data
   if (data) {
     const { token, user } = data.signin;
     setData(token, user);
