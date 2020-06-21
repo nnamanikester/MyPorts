@@ -38,8 +38,16 @@ const CreateProfileScreen = () => {
       />
 
       <CustomerStep2 show={customerStep === 2} />
+
       <VendorStep1
+        email={vendorEmail}
+        onEmail={(value) => setVendorEmail(value)}
+        phone={vendorPhone}
+        onPhone={(value) => setVendorPhone(value)}
+        shopName={vendorShopName}
+        onShopName={(value) => setVendorShopName(value)}
         onBack={() => setVendorStep(vendorStep - 1)}
+        onNext={() => setVendorStep(vendorStep - 1)}
         show={vendorStep === 1}
       />
       <VendorStep2 show={vendorStep === 2} />

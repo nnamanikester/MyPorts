@@ -32,7 +32,7 @@ const CustomerStep1 = ({
           <UI.Text h1>Complete Your Profile</UI.Text>
 
           <UI.Text color={info}>
-            Fill the form below to complete your profile
+            Fill the form below to complete your profile.
           </UI.Text>
         </View>
         <View style={styles.inputContainer}>
