@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import * as UI from '../../../components/common';
-import { danger, info, lightColor } from '../../../components/common/variables';
-import { StyleSheet, View } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
+import { info, lightColor } from '../../../components/common/variables';
+import { StyleSheet, View, Image } from 'react-native';
+import { profilePhoto } from '../../../assets/images';
 
-const CustomerStep2 = ({ show, onSubmit, onBack }) => {
+const CustomerStep2 = ({ show, onSubmit, onBack, photo, onPhoto }) => {
   if (!show) return null;
 
   return (
@@ -17,9 +19,17 @@ const CustomerStep2 = ({ show, onSubmit, onBack }) => {
           </UI.Text>
         </View>
 
-        <UI.Clickable style={styles.imagePicker}>
-          <UI.Icon color={lightColor} name="ios-add" size={100} />
-        </UI.Clickable>
+        {photo ? (
+          <UI.Clickable style={styles.imagePicker}>
+            <UI.Icon color={lightColor} name="ios-add" size={100} />
+          </UI.Clickable>
+        ) : null}
+
+        <View style={styles.profilePhoto}>
+          <Image style={{ width: 200, height: 200 }} source={profilePhoto} />
+          <UI.Spacer />
+          <UI.Link onClick={() => {}}>Change Image</UI.Link>
+        </View>
 
         <UI.Spacer large />
 
@@ -62,6 +72,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: lightColor,
     borderRadius: 5,
+    height: 200,
+  },
+  profilePhoto: {
+    alignItems: 'center',
+    justifyContent: 'center',
     height: 200,
   },
 });
