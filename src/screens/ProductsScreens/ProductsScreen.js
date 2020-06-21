@@ -5,16 +5,13 @@ import {
   Spacer,
   Text,
   Icon,
-  ListItem,
-  Avatar,
   Row,
-  Column,
   Clickable,
 } from '../../components/common';
 import Header from '../../components/Header';
 import Product from '../../components/Product';
 import FeaturedProduct from '../../components/FeaturedProduct';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View, Image } from 'react-native';
 import {
   female1,
   female2,
@@ -24,10 +21,9 @@ import {
   shoe1,
   shoe2,
 } from '../../assets/images';
+import Swiper from 'react-native-swiper';
 
 const ProductsScreen = ({ navigation }) => {
-  const [hideHeader, setHideHeader] = useState(false);
-
   return (
     <>
       <Header
@@ -50,11 +46,31 @@ const ProductsScreen = ({ navigation }) => {
           </>
         }
       />
-      <Layout
-        onScrollDown={() => setHideHeader(false)}
-        onScrollUp={() => setHideHeader(true)}>
+      <Layout>
         <View style={styles.container}>
-          <Text style={styles.title}>Featured Products</Text>
+          <Swiper
+            paginationStyle={{ bottom: 5 }}
+            animated
+            autoplayTimeout={5}
+            height={100}
+            loop
+            autoplay>
+            <Clickable>
+              <Image style={styles.advert} source={shoe1} />
+            </Clickable>
+            <Clickable>
+              <Image style={styles.advert} source={shoe2} />
+            </Clickable>
+            <Clickable>
+              <Image style={styles.advert} source={bag1} />
+            </Clickable>
+            <Clickable>
+              <Image style={styles.advert} source={female3} />
+            </Clickable>
+          </Swiper>
+        </View>
+        <View style={styles.container}>
+          <Text style={styles.title}>Top Selling Products</Text>
           <Spacer />
         </View>
 
@@ -97,72 +113,82 @@ const ProductsScreen = ({ navigation }) => {
         </ScrollView>
 
         <View style={styles.container}>
+          <Text style={styles.title}>Shop Our Collections</Text>
+          <Spacer />
+        </View>
+
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <FeaturedProduct
+            image={bag1}
+            onClick={() => navigation.navigate('SingleProduct')}
+          />
+          <FeaturedProduct
+            image={shoe1}
+            onClick={() => navigation.navigate('SingleProduct')}
+          />
+          <FeaturedProduct
+            image={shoe2}
+            onClick={() => navigation.navigate('SingleProduct')}
+          />
+          <FeaturedProduct
+            image={female3}
+            onClick={() => navigation.navigate('SingleProduct')}
+          />
+        </ScrollView>
+
+        <View style={styles.container}>
           <Text style={styles.title}>Latest Products</Text>
           <Spacer />
-          <Row>
-            <Column size="6" style={{ alignItems: 'center' }}>
-              <Product
-                quantity="89"
-                image={female1}
-                name="Water Proof Bag"
-                vendor="Chiomy Styles"
-                onClick={() => navigation.navigate('SingleProduct')}
-              />
-            </Column>
-            <Column style={{ alignItems: 'center' }} size="6">
-              <Product
-                quantity="14"
-                image={male1}
-                name="Table Spoon"
-                vendor="Benson Utilities"
-                onClick={() => navigation.navigate('SingleProduct')}
-              />
-            </Column>
-            <Column size="6" style={{ alignItems: 'center' }}>
-              <Product
-                image={female2}
-                name="Female belt holder"
-                vendor="Genny Collections"
-                quantity="31"
-                onClick={() => navigation.navigate('SingleProduct')}
-              />
-            </Column>
-            <Column size="6" style={{ alignItems: 'center' }}>
-              <Product
-                quantity="45"
-                image={female3}
-                name="Balenciaga Shoe"
-                vendor="Chucks Ventiany"
-                onClick={() => navigation.navigate('SingleProduct')}
-              />
-            </Column>
-            <Column size="6" style={{ alignItems: 'center' }}>
-              <Product
-                quantity="15"
-                image={shoe1}
-                name="Adidas Shoe"
-                vendor="Adidas"
-                onClick={() => navigation.navigate('SingleProduct')}
-              />
-            </Column>
-            <Column size="6" style={{ alignItems: 'center' }}>
-              <Product
-                quantity="20"
-                image={female3}
-                name="Nike Shoe"
-                vendor="Nike"
-                onClick={() => navigation.navigate('SingleProduct')}
-              />
-            </Column>
-            <Column size="6" style={{ alignItems: 'center' }}>
-              <Product
-                quantity="8"
-                image={female3}
-                name="Gucci Bag"
-                vendor="Cossy Viantae"
-                onClick={() => navigation.navigate('SingleProduct')}
-              />
-            </Column>
+          <Row style={{ justifyContent: 'space-between' }}>
+            <Product
+              quantity="89"
+              image={female1}
+              name="Water Proof Bag"
+              vendor="Chiomy Styles"
+              onClick={() => navigation.navigate('SingleProduct')}
+            />
+            <Product
+              quantity="14"
+              image={male1}
+              name="Table Spoon"
+              vendor="Benson Utilities"
+              onClick={() => navigation.navigate('SingleProduct')}
+            />
+            <Product
+              image={female2}
+              name="Female belt holder"
+              vendor="Genny Collections"
+              quantity="31"
+              onClick={() => navigation.navigate('SingleProduct')}
+            />
+            <Product
+              quantity="45"
+              image={female3}
+              name="Balenciaga Shoe"
+              vendor="Chucks Ventiany"
+              onClick={() => navigation.navigate('SingleProduct')}
+            />
+            <Product
+              quantity="15"
+              image={shoe1}
+              name="Adidas Shoe"
+              vendor="Adidas"
+              onClick={() => navigation.navigate('SingleProduct')}
+            />
+            <Product
+              quantity="20"
+              image={female3}
+              name="Nike Shoe"
+              vendor="Nike"
+              onClick={() => navigation.navigate('SingleProduct')}
+            />
+            <Product
+              quantity="8"
+              image={female3}
+              name="Gucci Bag"
+              vendor="Cossy Viantae"
+              onClick={() => navigation.navigate('SingleProduct')}
+            />
           </Row>
         </View>
       </Layout>
@@ -177,6 +203,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontFamily: 'SFPD-regular',
+  },
+  advert: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 5,
   },
 });
 

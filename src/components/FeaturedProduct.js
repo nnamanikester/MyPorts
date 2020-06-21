@@ -11,8 +11,12 @@ const FeaturedProduct = ({ name, vendor, quantity, image, onClick }) => {
         </View>
         {name && (
           <View style={styles.content}>
-            <Text style={styles.title}>{name}</Text>
-            <Text note>{vendor}</Text>
+            <Text numberOfLines={1} style={styles.title}>
+              {name}
+            </Text>
+            <Text numberOfLines={1} note>
+              {vendor}
+            </Text>
             <Row>
               {quantity && (
                 <>
@@ -32,16 +36,17 @@ const FeaturedProduct = ({ name, vendor, quantity, image, onClick }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 150,
+    width: 130,
     marginRight: 10,
     marginBottom: 5,
     elevation: 0.2,
   },
   image: {
     width: '100%',
-    height: 150,
+    height: 130,
     borderTopRightRadius: 5,
     borderTopLeftRadius: 5,
+    borderRadius: 5,
   },
   content: {
     paddingHorizontal: 10,
@@ -49,9 +54,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 17,
     fontFamily: 'SFPD-semi-bold',
+    lineHeight: 20,
   },
   vendor: {
     fontSize: 15,
+    lineHeight: 18,
     fontFamily: 'SFPD-regular',
   },
 });

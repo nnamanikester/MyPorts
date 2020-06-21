@@ -10,8 +10,14 @@ const Product = ({ name, vendor, quantity, image, onClick }) => {
           <Image style={styles.image} source={image} />
         </View>
         <View style={styles.content}>
-          <Text style={styles.title}>{name}</Text>
-          {vendor && <Text note>{vendor}</Text>}
+          <Text numberOfLines={1} style={styles.title}>
+            {name}
+          </Text>
+          {vendor && (
+            <Text numberOfLines={1} note>
+              {vendor}
+            </Text>
+          )}
           <Row>
             <Text style={styles.vendor}>Quantity:</Text>
             <Spacer />
@@ -25,13 +31,14 @@ const Product = ({ name, vendor, quantity, image, onClick }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 160,
+    width: 120,
     marginBottom: 10,
   },
   imageContainer: {},
   image: {
     width: '100%',
-    height: 150,
+    height: 120,
+    borderRadius: 5,
   },
   content: {
     width: '100%',
