@@ -8,6 +8,7 @@ import {
   Row,
   Clickable,
 } from '../../components/common';
+import Swiper from 'react-native-swiper';
 import Header from '../../components/Header';
 import Product from '../../components/Product';
 import FeaturedProduct from '../../components/FeaturedProduct';
@@ -21,7 +22,6 @@ import {
   shoe1,
   shoe2,
 } from '../../assets/images';
-import Swiper from 'react-native-swiper';
 
 const ProductsScreen = ({ navigation }) => {
   return (
