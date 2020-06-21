@@ -12,6 +12,7 @@ import { primaryColor } from './components/common/variables';
 import AsyncStorage from '@react-native-community/async-storage';
 import NetworkError from './components/NetworkError';
 import { Network } from './utils';
+import CreateProfileFLow from './navigation/CreateProfileFlow';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 
@@ -81,6 +82,8 @@ const NavigationFlows = ({ isSkipped, isStranger, user, setStorage }) => {
           <VDFlow />
         ) : isSkipped ? (
           <MainFlow />
+        ) : user.id && !user.isVendor && !user.isCustomer ? (
+          <CreateProfileFLow />
         ) : (
           <AuthFlow />
         )}
