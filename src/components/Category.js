@@ -7,7 +7,7 @@ const Category = ({ title, onClick, subtitle, image }) => {
   return (
     <View style={styles.container}>
       <Clickable onClick={onClick}>
-        <Card style={{ height: 190 }}>
+        <Card style={{ height: 150 }}>
           <View style={styles.content}>
             <Text color="#fff" h2>
               {title}
@@ -30,14 +30,14 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: '100%',
+    height: 150,
     borderRadius: 5,
   },
   content: {
     position: 'absolute',
     zIndex: 10,
     width: '100%',
-    height: '100%',
+    height: 150,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
     width: '100%',
-    height: '100%',
+    height: 150,
     backgroundColor: '#000',
     borderRadius: 5,
     opacity: 0.5,

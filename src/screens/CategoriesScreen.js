@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Layout, Clickable, Spacer, Icon, Card } from '../components/common';
+import {
+  Layout,
+  Clickable,
+  Spacer,
+  Icon,
+  Row,
+  Column,
+} from '../components/common';
 import Header from '../components/Header';
 import Category from '../components/Category';
 import { StyleSheet, Image, View } from 'react-native';
@@ -33,25 +40,27 @@ const CategoriesScreen = ({ navigation }) => {
       />
       <Layout>
         <View style={styles.container}>
-          <Spacer medium />
           <Category
             onClick={() => navigation.navigate('ProductsByCategory')}
             title="Women"
             image={female1}
             subtitle="346 Items"
           />
+
           <Category
             onClick={() => navigation.navigate('ProductsByCategory')}
             title="Men"
             image={female2}
             subtitle="465 Items"
           />
+
           <Category
             onClick={() => navigation.navigate('ProductsByCategory')}
             title="Kids"
             image={female3}
             subtitle="753 Items"
           />
+
           <Category
             onClick={() => navigation.navigate('ProductsByCategory')}
             title="Cars"
@@ -67,7 +76,7 @@ const CategoriesScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 10,
+    paddingHorizontal: 5,
   },
 });
 
