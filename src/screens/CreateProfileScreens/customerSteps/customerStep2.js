@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from '../../../components/common';
 
-const customerStep2 = () => {
+const CustomerStep2 = () => {
   return (
     <>
       <Layout>
@@ -11,4 +11,4 @@ const customerStep2 = () => {
   );
 };
 
-export default customerStep2;
+export default CustomerStep2;

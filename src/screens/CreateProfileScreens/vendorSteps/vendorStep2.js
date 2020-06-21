@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from '../../../components/common';
 
-const vendorStep2 = () => {
+const VendorStep2 = () => {
   return (
     <>
       <Layout>description, logo, cover photo</Layout>
@@ -9,4 +9,4 @@ const vendorStep2 = () => {
   );
 };
 
-export default vendorStep2;
+export default VendorStep2;
