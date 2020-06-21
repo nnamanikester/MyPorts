@@ -1,12 +1,40 @@
 import React, { useState } from 'react';
 import * as UI from '../../../components/common';
 import ImagePicker from 'react-native-image-picker';
-import { info, lightColor } from '../../../components/common/variables';
+import {
+  info,
+  lightColor,
+  primaryColor,
+} from '../../../components/common/variables';
 import { StyleSheet, View, Image } from 'react-native';
 import { profilePhoto } from '../../../assets/images';
 
 const CustomerStep2 = ({ show, onSubmit, onBack, photo, onPhoto }) => {
   if (!show) return null;
+  const [error, setError] = useState(null);
+
+  const options = {
+    title: 'Upload Profile Picture',
+    takePhotoButtonTitle: 'Launch camera',
+    chooseFromLibraryButtonTitle: 'Choose image from gallery',
+    storageOptions: {
+      skipBackup: true,
+      path: 'MyPorts',
+    },
+  };
+
+  const handleImageUpload = () => {
+    ImagePicker.showImagePicker(options, (response) => {
+      if (response.didCancel) {
+        return;
+      } else if (response.error) {
+        setError(`Error: ${response.error}`);
+      } else {
+        const source = { uri: response.uri };
+        return onPhoto(source);
+      }
+    });
+  };
 
   return (
     <>
@@ -19,17 +47,19 @@ const CustomerStep2 = ({ show, onSubmit, onBack, photo, onPhoto }) => {
           </UI.Text>
         </View>
 
-        {photo ? (
-          <UI.Clickable style={styles.imagePicker}>
+        {!photo ? (
+          <UI.Clickable
+            onClick={() => handleImageUpload()}
+            style={styles.imagePicker}>
             <UI.Icon color={lightColor} name="ios-add" size={100} />
           </UI.Clickable>
-        ) : null}
-
-        <View style={styles.profilePhoto}>
-          <Image style={{ width: 200, height: 200 }} source={profilePhoto} />
-          <UI.Spacer />
-          <UI.Link onClick={() => {}}>Change Image</UI.Link>
-        </View>
+        ) : (
+          <View style={styles.profilePhoto}>
+            <Image style={{ width: 200, height: 200 }} source={photo} />
+            <UI.Spacer />
+            <UI.Link onClick={() => handleImageUpload()}>Change Image</UI.Link>
+          </View>
+        )}
 
         <UI.Spacer large />
 
