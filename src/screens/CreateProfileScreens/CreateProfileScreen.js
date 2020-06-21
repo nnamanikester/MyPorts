@@ -56,7 +56,7 @@ const CreateProfileScreen = () => {
         shopName={vendorShopName}
         onShopName={(value) => setVendorShopName(value)}
         onBack={() => setVendorStep(vendorStep - 1)}
-        onNext={() => setVendorStep(vendorStep - 1)}
+        onNext={() => setVendorStep(vendorStep + 1)}
         show={vendorStep === 1}
       />
 
