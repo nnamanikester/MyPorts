@@ -22,6 +22,7 @@ const CustomerStep1 = ({
     setError(null);
     if (!firstName || !lastName)
       return setError('First name and Last name is required!');
+    return onNext();
   };
 
   return (
