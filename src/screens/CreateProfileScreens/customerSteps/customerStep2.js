@@ -1,7 +1,8 @@
 import React from 'react';
-import { Layout } from '../../../components/common';
+import { Layout, Text } from '../../../components/common';
 
-const CustomerStep2 = () => {
+const CustomerStep2 = ({ show }) => {
+  if (!show) return null;
   return (
     <>
       <Layout>

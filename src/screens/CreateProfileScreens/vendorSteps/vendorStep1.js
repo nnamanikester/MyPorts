@@ -1,10 +1,14 @@
 import React from 'react';
-import { Layout } from '../../../components/common';
+import { Layout, Text, Button } from '../../../components/common';
 
-const VendorStep1 = () => {
+const VendorStep1 = ({ show, onBack }) => {
+  if (!show) return null;
   return (
     <>
-      <Layout>shoop name, contact email, contact phone,</Layout>
+      <Layout>
+        <Text>shoop name, contact email, contact phone,</Text>
+        <Button onClick={onBack}>GoBack</Button>
+      </Layout>
     </>
   );
 };

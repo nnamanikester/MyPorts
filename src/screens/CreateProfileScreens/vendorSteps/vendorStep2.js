@@ -1,10 +1,13 @@
 import React from 'react';
-import { Layout } from '../../../components/common';
+import { Layout, Text } from '../../../components/common';
 
-const VendorStep2 = () => {
+const VendorStep2 = ({ show }) => {
+  if (!show) return null;
   return (
     <>
-      <Layout>description, logo, cover photo</Layout>
+      <Layout>
+        <Text>description, logo, cover photo</Text>
+      </Layout>
     </>
   );
 };
