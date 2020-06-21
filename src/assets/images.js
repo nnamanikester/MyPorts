@@ -1,3 +1,4 @@
+import profilePhoto from './images/profile-photo.jpg';
 import female1 from './images/image1.jpg';
 import female2 from './images/image2.jpg';
 import female3 from './images/image10.jpg';
@@ -37,6 +38,7 @@ import shoe6 from './images/shoe4.jpg';
 import shoe7 from './images/shoe5.jpg';
 
 export {
+  profilePhoto,
   female1,
   female2,
   female3,

@@ -3,13 +3,15 @@ import React from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { View, Image, StyleSheet } from 'react-native';
 import { Text, Icon, ListItem, Link, Badge, Divider, Spacer } from './common';
-import { female4 } from '../assets/images';
+import { profilePhoto } from '../assets/images';
 import { info } from './common/variables';
 import { logUserOut } from '../redux/actions/AuthActions';
 import { danger } from './common/variables';
 import Permissions from './Permissions';
 
-const Drawer = ({ navigation, logUserOut }) => {
+const Drawer = ({ navigation, user, logUserOut }) => {
+  const { customer, vendor } = user;
+
   return (
     <DrawerContentScrollView style={styles.drawer}>
       {/* Drawer Header */}
@@ -19,13 +21,23 @@ const Drawer = ({ navigation, logUserOut }) => {
             onClick={() => navigation.navigate('Profile')}
             left={
               <View style={styles.headerAlignment}>
-                <Image style={styles.profileImage} source={female4} />
+                <Image
+                  style={styles.profileImage}
+                  source={
+                    customer && customer.imageUrl
+                      ? { uri: customer.imageUrl }
+                      : profilePhoto
+                  }
+                />
               </View>
             }
             body={
               <View style={styles.headerAlignment}>
-                <Text size={20}>Tiana Rosser</Text>
-                <Link>Tianaroser@gmail.com</Link>
+                <Text size={18}>
+                  {customer && customer.firstName}{' '}
+                  {customer && customer.lastName}
+                </Text>
+                <Link to={`mailto:${user.email}`}>{user.email}</Link>
               </View>
             }
             right={
@@ -187,4 +199,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, { logUserOut })(Drawer);
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps, { logUserOut })(Drawer);

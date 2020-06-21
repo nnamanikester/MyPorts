@@ -7,7 +7,7 @@ import { Clickable } from '../Clickable';
 
 const Link = ({ children, to, textStyle, onClick, style, color }) => {
   return (
-    <Clickable style={style} onClick={to ? Linking.openURL(to) : onClick}>
+    <Clickable style={style} onClick={to ? () => Linking.openURL(to) : onClick}>
       <Text style={textStyle} color={color || primaryColor}>
         {children}
       </Text>
