@@ -63,6 +63,7 @@ const CustomerStep1 = ({
           <UI.Spacer />
 
           <UI.TextInput
+            keyboardType="phone-pad"
             placeholder="+2348012345678"
             value={phone}
             onChangeText={onPhone}

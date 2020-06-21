@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link, Text, Layout } from '../../components/common';
 import CustomerStep1 from './customerSteps/CustomerStep1';
 import CustomerStep2 from './customerSteps/CustomerStep2';
 import VendorStep1 from './vendorSteps/VendorStep1';
@@ -9,9 +8,14 @@ import CreateProfileInitial from './CreateProfileInitial';
 const CreateProfileScreen = () => {
   const [customerStep, setCustomerStep] = useState(0);
   const [vendorStep, setVendorStep] = useState(0);
+
   const [customerFirstName, setCustomerFirstName] = useState('');
   const [customerLastName, setCustomerLastName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
+
+  const [vendorShopName, setVendorShopName] = useState('');
+  const [vendorEmail, setVendorEmail] = useState('');
+  const [vendorPhone, setVendorPhone] = useState('');
 
   return (
     <>
