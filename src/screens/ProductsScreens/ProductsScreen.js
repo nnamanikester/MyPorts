@@ -51,7 +51,7 @@ const ProductsScreen = ({ navigation }) => {
           <Swiper
             paginationStyle={{ bottom: 5 }}
             animated
-            autoplayTimeout={5}
+            autoplayTimeout={10}
             height={100}
             loop
             autoplay>

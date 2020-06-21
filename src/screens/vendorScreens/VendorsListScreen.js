@@ -14,8 +14,16 @@ import {
 } from '../../components/common';
 import Header from '../../components/Header';
 import VendorList from '../../components/VendorList';
-import { StyleSheet, ScrollView, View } from 'react-native';
-import { female1, female2, female3, male1 } from '../../assets/images';
+import { StyleSheet, ScrollView, View, Image } from 'react-native';
+import {
+  female1,
+  female2,
+  female3,
+  male1,
+  shoe1,
+  shoe2,
+  bag1,
+} from '../../assets/images';
 import FeaturedVendor from '../../components/FeaturedVendor';
 import SearchBar from '../../components/SearchBar';
 import Swiper from 'react-native-swiper';
@@ -56,7 +64,7 @@ const VendorListScreen = ({ navigation }) => {
           <Swiper
             paginationStyle={{ bottom: 5 }}
             animated
-            autoplayTimeout={5}
+            autoplayTimeout={10}
             height={100}
             loop
             autoplay>

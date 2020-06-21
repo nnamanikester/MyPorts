@@ -177,69 +177,54 @@ const VendorShopScreen = ({ navigation }) => {
 
           <Spacer />
 
-          <Row>
-            <Column size="6" style={{ alignItems: 'center' }}>
-              <Product
-                quantity="89"
-                image={female1}
-                name="Water Proof Bag"
-                onClick={() => navigation.navigate('SingleProduct')}
-              />
-            </Column>
+          <Row style={{ justifyContent: 'space-between' }}>
+            <Product
+              quantity="89"
+              image={female1}
+              name="Water Proof Bag"
+              onClick={() => navigation.navigate('SingleProduct')}
+            />
 
-            <Column style={{ alignItems: 'center' }} size="6">
-              <Product
-                quantity="14"
-                image={male1}
-                name="Table Spoon"
-                onClick={() => navigation.navigate('SingleProduct')}
-              />
-            </Column>
+            <Product
+              quantity="14"
+              image={male1}
+              name="Table Spoon"
+              onClick={() => navigation.navigate('SingleProduct')}
+            />
 
-            <Column size="6" style={{ alignItems: 'center' }}>
-              <Product
-                image={female2}
-                name="Female belt holder"
-                quantity="31"
-                onClick={() => navigation.navigate('SingleProduct')}
-              />
-            </Column>
+            <Product
+              image={female2}
+              name="Female belt holder"
+              quantity="31"
+              onClick={() => navigation.navigate('SingleProduct')}
+            />
 
-            <Column size="6" style={{ alignItems: 'center' }}>
-              <Product
-                quantity="45"
-                image={female3}
-                name="Balenciaga Shoe"
-                onClick={() => navigation.navigate('SingleProduct')}
-              />
-            </Column>
+            <Product
+              quantity="45"
+              image={female3}
+              name="Balenciaga Shoe"
+              onClick={() => navigation.navigate('SingleProduct')}
+            />
 
-            <Column size="6" style={{ alignItems: 'center' }}>
-              <Product
-                quantity="15"
-                image={shoe1}
-                name="Adidas Shoe"
-                onClick={() => navigation.navigate('SingleProduct')}
-              />
-            </Column>
+            <Product
+              quantity="15"
+              image={shoe1}
+              name="Adidas Shoe"
+              onClick={() => navigation.navigate('SingleProduct')}
+            />
+            <Product
+              quantity="20"
+              image={female3}
+              name="Nike Shoe"
+              onClick={() => navigation.navigate('SingleProduct')}
+            />
 
-            <Column size="6" style={{ alignItems: 'center' }}>
-              <Product
-                quantity="20"
-                image={female3}
-                name="Nike Shoe"
-                onClick={() => navigation.navigate('SingleProduct')}
-              />
-            </Column>
-
-            <Column size="6" style={{ alignItems: 'center' }}>
-              <Product
-                quantity="8"
-                image={female3}
-                name="Gucci Bag"
-                onClick={() => navigation.navigate('SingleProduct')}
-              />
-            </Column>
+            <Product
+              quantity="8"
+              image={female3}
+              name="Gucci Bag"
+              onClick={() => navigation.navigate('SingleProduct')}
+            />
           </Row>
         </View>
       </Layout>
