@@ -12,10 +12,13 @@ const CreateProfileScreen = () => {
   const [customerFirstName, setCustomerFirstName] = useState('');
   const [customerLastName, setCustomerLastName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
+  const [customerPhoto, setCustomerPhoto] = useState('');
 
   const [vendorShopName, setVendorShopName] = useState('');
   const [vendorEmail, setVendorEmail] = useState('');
   const [vendorPhone, setVendorPhone] = useState('');
+  const [vendorLogo, setVendorLogo] = useState('');
+  const [vendorCoverPhoto, setVendorCoverPhoto] = useState('');
 
   return (
     <>
@@ -37,7 +40,13 @@ const CreateProfileScreen = () => {
         show={customerStep === 1}
       />
 
-      <CustomerStep2 show={customerStep === 2} />
+      <CustomerStep2
+        show={customerStep === 2}
+        photo={customerPhoto}
+        onPhoto={(value) => setCustomerPhoto(value)}
+        onBack={() => setCustomerStep(customerStep - 1)}
+        onSubmit={() => {}}
+      />
 
       <VendorStep1
         email={vendorEmail}
@@ -50,7 +59,16 @@ const CreateProfileScreen = () => {
         onNext={() => setVendorStep(vendorStep - 1)}
         show={vendorStep === 1}
       />
-      <VendorStep2 show={vendorStep === 2} />
+
+      <VendorStep2
+        coverPhoto={vendorCoverPhoto}
+        onCoverPhoto={(value) => setVendorCoverPhoto(value)}
+        logo={vendorLogo}
+        onLogo={(value) => setCustomerLogo(value)}
+        onBack={() => setCustomerStep(vendorStep - 1)}
+        onSubmit={() => {}}
+        show={vendorStep === 2}
+      />
     </>
   );
 };

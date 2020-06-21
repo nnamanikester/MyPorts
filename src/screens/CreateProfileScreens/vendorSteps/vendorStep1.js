@@ -24,7 +24,7 @@ const VendorStep1 = ({
     if (!shopName || !email || !phone)
       return setError('Shop name, email and phone number is required!');
     if (!validateEmail(email)) return setError('Invalid email address!');
-    // return onNext();
+    return onNext();
   };
 
   return (
