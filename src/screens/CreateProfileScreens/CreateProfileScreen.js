@@ -4,8 +4,10 @@ import CustomerStep2 from './customerSteps/CustomerStep2';
 import VendorStep1 from './vendorSteps/VendorStep1';
 import VendorStep2 from './vendorSteps/VendorStep2';
 import CreateProfileInitial from './CreateProfileInitial';
+import { connect } from 'react-redux';
+import { checkNetworkStatus } from '../../redux/actions/NetworkActions';
 
-const CreateProfileScreen = () => {
+const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
   const [customerStep, setCustomerStep] = useState(0);
   const [vendorStep, setVendorStep] = useState(0);
 
@@ -76,4 +78,10 @@ const CreateProfileScreen = () => {
   );
 };
 
-export default CreateProfileScreen;
+const mapStateToProps = (state) => {
+  return {
+    offline: state.network.isConnected,
+  };
+};
+
+export default connect(null, { checkNetworkStatus })(CreateProfileScreen);
