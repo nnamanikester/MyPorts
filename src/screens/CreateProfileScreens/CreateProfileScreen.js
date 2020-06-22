@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CustomerStep1 from './customerSteps/CustomerStep1';
 import CustomerStep2 from './customerSteps/CustomerStep2';
 import VendorStep1 from './vendorSteps/VendorStep1';
@@ -23,6 +23,10 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
   const [vendorDescription, setVendorDescription] = useState('');
   const [vendorLogo, setVendorLogo] = useState('');
   const [vendorCoverPhoto, setVendorCoverPhoto] = useState('');
+
+  useEffect(() => {
+    checkNetworkStatus();
+  }, []);
 
   return (
     <>
