@@ -17,6 +17,7 @@ const CreateProfileScreen = () => {
   const [vendorShopName, setVendorShopName] = useState('');
   const [vendorEmail, setVendorEmail] = useState('');
   const [vendorPhone, setVendorPhone] = useState('');
+  const [vendorDescription, setVendorDescription] = useState('');
   const [vendorLogo, setVendorLogo] = useState('');
   const [vendorCoverPhoto, setVendorCoverPhoto] = useState('');
 
@@ -61,10 +62,12 @@ const CreateProfileScreen = () => {
       />
 
       <VendorStep2
+        description={vendorDescription}
+        onDescription={(value) => setVendorDescription(value)}
         coverPhoto={vendorCoverPhoto}
         onCoverPhoto={(value) => setVendorCoverPhoto(value)}
         logo={vendorLogo}
-        onLogo={(value) => setCustomerLogo(value)}
+        onLogo={(value) => setVendorLogo(value)}
         onBack={() => setCustomerStep(vendorStep - 1)}
         onSubmit={() => {}}
         show={vendorStep === 2}

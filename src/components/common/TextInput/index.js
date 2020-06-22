@@ -19,6 +19,7 @@ const TextInput = ({
   placeholder,
   multiline,
   keyboardType,
+  maxLength,
   rows,
   iconRight,
   iconLeft,
@@ -110,6 +111,7 @@ const TextInput = ({
         numberOfLines={rows}
         keyboardType={keyboardType}
         textBreakStrategy="highQuality"
+        maxLength={maxLength}
         style={{
           ...styles.input,
           ...iconLeftStyle,
