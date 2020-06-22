@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
@@ -9,10 +9,18 @@ import {
   skipAuthentication,
   setStorage,
 } from '../../redux/actions/AuthActions';
+import { checkNetworkStatus } from '../../redux/actions/NetworkActions';
 import * as UI from '../../components/common';
+import NetworkErrorIndicator from '../../components/NetworkErrorIndicator';
 import { info, danger } from '../../components/common/variables';
 
-const LoginScreen = ({ setStorage, skipAuthentication, navigation }) => {
+const LoginScreen = ({
+  setStorage,
+  checkNetworkStatus,
+  skipAuthentication,
+  navigation,
+  offline,
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
@@ -25,14 +33,21 @@ const LoginScreen = ({ setStorage, skipAuthentication, navigation }) => {
     errorPolicy: 'ignore',
   });
 
+  useEffect(() => {
+    checkNetworkStatus();
+  }, []);
+
   // A function called when the loin button is clicked
   const handleSignin = () => {
     setErrors({});
+    checkNetworkStatus();
 
     if (!validateEmail(email))
       return setErrors({ email: 'Invalid email address!' });
 
     if (!password) return setErrors({ password: 'Password cannot be empty!' });
+
+    if (offline) return;
 
     return signin({
       variables: {
@@ -59,6 +74,10 @@ const LoginScreen = ({ setStorage, skipAuthentication, navigation }) => {
 
   return (
     <>
+      <NetworkErrorIndicator
+        onRetry={() => checkNetworkStatus()}
+        show={offline}
+      />
       <UI.Loading show={loading} />
       <UI.Layout>
         <View style={styles.header}>
@@ -209,8 +228,14 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
 });
+const mapStateToProps = (state) => {
+  return {
+    offline: !state.network.isConnected,
+  };
+};
 
-export default connect(null, {
+export default connect(mapStateToProps, {
   skipAuthentication,
   setStorage,
+  checkNetworkStatus,
 })(LoginScreen);

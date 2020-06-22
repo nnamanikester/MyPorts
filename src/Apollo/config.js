@@ -8,7 +8,11 @@ async function getToken() {
 
 export const client = new ApolloClient({
   uri: emulatorApiUrl,
-  headers: {
-    Authorization: `Bearer ${getToken()}`,
+  request: (operation) => {
+    operation.setContext({
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
   },
 });
