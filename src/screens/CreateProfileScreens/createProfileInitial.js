@@ -21,29 +21,30 @@ const CreateProfileInitial = ({ show, onCustomer, onVendor }) => {
         </View>
 
         <View>
-          <UI.Text heading>Continue as a Vendor</UI.Text>
+          <UI.Text heading>Continue as a Buyer</UI.Text>
           <UI.Text note color="">
-            Are you a Wholesaler or an Importer looking to sell your products
-            through myports? We got you covered!
+            Are you interested in buying goods in bulk from our amazing Vendors?
+            We got you covered!
           </UI.Text>
           <UI.Spacer />
 
-          <UI.Button onClick={onVendor}>
-            <UI.Text color="#fff">Setup a vendor profile</UI.Text>
+          <UI.Button onClick={onCustomer}>
+            <UI.Text color="#fff">Setup a buyer profile</UI.Text>
           </UI.Button>
         </View>
 
         <UI.Spacer medium />
 
         <View>
-          <UI.Text heading>Continue as a Buyer</UI.Text>
+          <UI.Text heading>Continue as a Vendor</UI.Text>
           <UI.Text note color="">
-            Are you interested in buying goods in bulk from our amazing Vendors?
-            We also got you covered!
+            Are you a Wholesaler or an Importer looking to sell your products
+            through myports? We have buyers waiting for your amazing products
+            already.
           </UI.Text>
           <UI.Spacer />
 
-          <UI.Button onClick={onCustomer}>
+          <UI.Button onClick={onVendor}>
             <UI.Text color="#fff">Setup a vendor profile</UI.Text>
           </UI.Button>
         </View>
