@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { setStorage } from './redux/actions/AuthActions';
-import { checkNetworkStatus } from './redux/actions/NetworkActions';
 import MainFlow from './navigation/MainFlow';
 import AuthFlow from './navigation/AuthFlow';
 import VDFlow from './navigation/VDFlow';
@@ -12,24 +11,28 @@ import { StyleSheet, Platform, StatusBar, View } from 'react-native';
 import { primaryColor } from './components/common/variables';
 import AsyncStorage from '@react-native-community/async-storage';
 import NetworkError from './components/NetworkError';
+import { Network } from './utils';
 import CreateProfileFLow from './navigation/CreateProfileFlow';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 
-const NavigationFlows = ({
-  isSkipped,
-  isStranger,
-  user,
-  setStorage,
-  offline,
-  checkNetworkStatus,
-}) => {
+const NavigationFlows = ({ isSkipped, isStranger, user, setStorage }) => {
+  const [offline, setOffline] = useState(false);
   const [appLoading, setAppLoading] = useState(false);
 
   useEffect(() => {
     checkNetworkStatus();
     checkStorage();
   }, [offline]);
+
+  // Check if network is available
+  const checkNetworkStatus = async () => {
+    const isConnected = await Network.isNetworkAvailable();
+    if (!isConnected) {
+      return setOffline(true);
+    }
+    return setOffline(false);
+  };
 
   // Checks the async storage if token and user exists
   const checkStorage = async () => {
@@ -102,10 +105,7 @@ const mapStateToProps = (state) => {
     isStranger,
     token,
     user,
-    offline: !state.network.isConnected,
   };
 };
 
-export default connect(mapStateToProps, { setStorage, checkNetworkStatus })(
-  NavigationFlows,
-);
+export default connect(mapStateToProps, { setStorage })(NavigationFlows);

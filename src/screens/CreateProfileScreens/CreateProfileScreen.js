@@ -78,10 +78,4 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    offline: state.network.isConnected,
-  };
-};
-
 export default connect(null, { checkNetworkStatus })(CreateProfileScreen);
