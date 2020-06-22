@@ -68,7 +68,7 @@ const CreateProfileScreen = () => {
         onCoverPhoto={(value) => setVendorCoverPhoto(value)}
         logo={vendorLogo}
         onLogo={(value) => setVendorLogo(value)}
-        onBack={() => setCustomerStep(vendorStep - 1)}
+        onBack={() => setVendorStep(vendorStep - 1)}
         onSubmit={() => {}}
         show={vendorStep === 2}
       />

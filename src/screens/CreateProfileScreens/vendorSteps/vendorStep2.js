@@ -62,6 +62,14 @@ const VendorStep2 = ({
   return (
     <>
       <UI.Layout style={{ paddingHorizontal: 10, paddingTop: 10 }}>
+        <View style={styles.pageTitle}>
+          <UI.Text h1>Complete Your Shop Profile</UI.Text>
+
+          <UI.Text color={info}>
+            Fill the form below to complete your shop profile information.
+          </UI.Text>
+        </View>
+
         <UI.Clickable
           onClick={() => handleCoverPhotoUpload()}
           style={styles.coverImage}>
@@ -71,7 +79,10 @@ const VendorStep2 = ({
               source={coverPhoto}
             />
           ) : (
-            <UI.Icon color={lightColor} name="ios-add" size={100} />
+            <>
+              <UI.Icon color={lightColor} name="ios-add" size={100} />
+              <UI.Text color={info}>Cover Photo</UI.Text>
+            </>
           )}
         </UI.Clickable>
 
@@ -82,7 +93,10 @@ const VendorStep2 = ({
             {logo ? (
               <Image style={styles.logo} source={logo} />
             ) : (
-              <UI.Icon color={lightColor} name="ios-add" size={50} />
+              <>
+                <UI.Icon color={lightColor} name="ios-add" size={50} />
+                <UI.Text color={info}>Logo</UI.Text>
+              </>
             )}
           </UI.Clickable>
         </View>
@@ -145,6 +159,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: lightColor,
+  },
+  pageTitle: {
+    marginBottom: 30,
+    paddingHorizontal: 10,
+    marginTop: 20,
   },
   logo: {
     width: '100%',
