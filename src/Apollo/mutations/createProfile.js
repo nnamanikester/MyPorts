@@ -21,8 +21,8 @@ export const CREATE_VENDOR = gql`
     $shopName: String!
     $email: String!
     $phone: String!
-    $logo: String
-    $coverPhoto: String
+    $logo: Upload
+    $coverPhoto: Upload
     $description: String
   ) {
     createVendor(
@@ -43,7 +43,7 @@ export const CREATE_CUSTOMER = gql`
     $firstName: String!
     $lastName: String!
     $phone: String
-    $photo: String
+    $photo: Upload
   ) {
     createVendor(
       firstName: $firstName
