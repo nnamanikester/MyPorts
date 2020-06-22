@@ -24,11 +24,11 @@ const Text = ({
   if (h1) {
     textStyle.fontSize = 28;
     textStyle.fontFamily = 'SFPD-semi-bold';
-    textStyle.lineHeight = 35;
+    textStyle.lineHeight = 33;
   } else if (h2) {
     textStyle.fontFamily = 'SFPD-semi-bold';
     textStyle.fontSize = 22;
-    textStyle.lineHeight = 29;
+    textStyle.lineHeight = 27;
   } else if (h3) {
     textStyle.fontFamily = 'SFPD-semi-bold';
     textStyle.fontSize = 18;
@@ -36,17 +36,17 @@ const Text = ({
   } else if (note) {
     textStyle.color = info;
     textStyle.fontSize = 13;
-    textStyle.lineHeight = 20;
+    textStyle.lineHeight = 17;
   } else if (heading) {
     textStyle.fontFamily = 'SFPD-regular';
     textStyle.fontSize = 17;
-    textStyle.lineHeight = 24;
+    textStyle.lineHeight = 21;
   } else if (size) {
     textStyle.fontSize = size;
     textStyle.lineHeight = size + 10;
   } else {
     textStyle.fontSize = 16;
-    textStyle.lineHeight = 23;
+    textStyle.lineHeight = 20;
   }
 
   if (color) {
