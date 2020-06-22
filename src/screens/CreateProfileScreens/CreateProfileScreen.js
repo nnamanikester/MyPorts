@@ -6,6 +6,7 @@ import VendorStep2 from './vendorSteps/VendorStep2';
 import CreateProfileInitial from './CreateProfileInitial';
 import { connect } from 'react-redux';
 import { checkNetworkStatus } from '../../redux/actions/NetworkActions';
+import NetworkErrorIndicator from '../../components/NetworkErrorIndicator';
 
 const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
   const [customerStep, setCustomerStep] = useState(0);
@@ -25,6 +26,7 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
 
   return (
     <>
+      <NetworkErrorIndicator />
       <CreateProfileInitial
         onCustomer={() => setCustomerStep(1)}
         onVendor={() => setVendorStep(1)}
