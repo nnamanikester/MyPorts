@@ -26,7 +26,10 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
 
   return (
     <>
-      <NetworkErrorIndicator />
+      <NetworkErrorIndicator
+        onRetry={() => checkNetworkStatus()}
+        show={offline}
+      />
       <CreateProfileInitial
         onCustomer={() => setCustomerStep(1)}
         onVendor={() => setVendorStep(1)}
