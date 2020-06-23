@@ -40,8 +40,7 @@ const VendorStep2 = ({
       } else if (response.error) {
         setError(`Error: ${response.error}`);
       } else {
-        const source = { uri: response.uri };
-        return onLogo(source);
+        return onLogo(response);
       }
     });
   };
@@ -53,8 +52,7 @@ const VendorStep2 = ({
       } else if (response.error) {
         setError(`Error: ${response.error}`);
       } else {
-        const source = { uri: response.uri };
-        return onCoverPhoto(source);
+        return onCoverPhoto(response);
       }
     });
   };
@@ -76,7 +74,7 @@ const VendorStep2 = ({
           {coverPhoto ? (
             <Image
               style={{ width: '100%', height: '100%' }}
-              source={coverPhoto}
+              source={{ uri: coverPhoto.uri }}
             />
           ) : (
             <>
@@ -91,7 +89,7 @@ const VendorStep2 = ({
             onClick={() => handleLogoUpload()}
             style={styles.logoContainer}>
             {logo ? (
-              <Image style={styles.logo} source={logo} />
+              <Image style={styles.logo} source={{ uri: logo.uri }} />
             ) : (
               <>
                 <UI.Icon color={lightColor} name="ios-add" size={50} />

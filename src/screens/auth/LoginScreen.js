@@ -26,10 +26,6 @@ const LoginScreen = ({
   const [errors, setErrors] = useState({});
 
   const [signin, { loading, data, error }] = useMutation(SIGNIN, {
-    variables: {
-      email,
-      password,
-    },
     errorPolicy: 'ignore',
   });
 

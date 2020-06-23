@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useMutation } from '@apollo/react-hooks';
+import { CREATE_CUSTOMER } from '../../apollo/mutations/';
+import { setStorage } from '../../redux/actions/AuthActions';
 import CustomerStep1 from './customerSteps/CustomerStep1';
 import CustomerStep2 from './customerSteps/CustomerStep2';
 import VendorStep1 from './vendorSteps/VendorStep1';
@@ -7,22 +10,50 @@ import CreateProfileInitial from './CreateProfileInitial';
 import { connect } from 'react-redux';
 import { checkNetworkStatus } from '../../redux/actions/NetworkActions';
 import NetworkErrorIndicator from '../../components/NetworkErrorIndicator';
+import * as UI from '../../components/common';
 
 const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
+  const [loading, setLoading] = useState(false);
+
   const [customerStep, setCustomerStep] = useState(0);
   const [vendorStep, setVendorStep] = useState(0);
 
   const [customerFirstName, setCustomerFirstName] = useState('');
   const [customerLastName, setCustomerLastName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
-  const [customerPhoto, setCustomerPhoto] = useState('');
+  const [customerPhoto, setCustomerPhoto] = useState(null);
 
   const [vendorShopName, setVendorShopName] = useState('');
   const [vendorEmail, setVendorEmail] = useState('');
   const [vendorPhone, setVendorPhone] = useState('');
   const [vendorDescription, setVendorDescription] = useState('');
-  const [vendorLogo, setVendorLogo] = useState('');
-  const [vendorCoverPhoto, setVendorCoverPhoto] = useState('');
+  const [vendorLogo, setVendorLogo] = useState(null);
+  const [vendorCoverPhoto, setVendorCoverPhoto] = useState(null);
+
+  const [createCustomer] = useMutation(CREATE_CUSTOMER);
+
+  const handleCreateCustomer = () => {
+    checkNetworkStatus();
+    setLoading(true);
+    createCustomer({
+      variables: {
+        firstName: customerFirstName,
+        lastName: customerLastName,
+        phone: customerPhone,
+        photo: null,
+      },
+    })
+      .then(async (res) => {
+        await AsyncStorage.getItem('@myports/token');
+        await AsyncStorage.setItem('@myports/user', JSON.stringify(user));
+        setStorage(user, token);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
     checkNetworkStatus();
@@ -30,6 +61,7 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
 
   return (
     <>
+      <UI.Loading show={loading} />
       <NetworkErrorIndicator
         onRetry={() => checkNetworkStatus()}
         show={offline}
@@ -57,7 +89,7 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
         photo={customerPhoto}
         onPhoto={(value) => setCustomerPhoto(value)}
         onBack={() => setCustomerStep(customerStep - 1)}
-        onSubmit={() => {}}
+        onSubmit={() => handleCreateCustomer()}
       />
 
       <VendorStep1
@@ -93,6 +125,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { checkNetworkStatus })(
+export default connect(mapStateToProps, { checkNetworkStatus, setStorage })(
   CreateProfileScreen,
 );

@@ -3,6 +3,7 @@ import * as UI from '../../../components/common';
 import ImagePicker from 'react-native-image-picker';
 import { info, lightColor } from '../../../components/common/variables';
 import { StyleSheet, View, Image } from 'react-native';
+import { processImage } from '../../../utils/processFile';
 
 const CustomerStep2 = ({ show, onSubmit, onBack, photo, onPhoto }) => {
   if (!show) return null;
@@ -25,8 +26,8 @@ const CustomerStep2 = ({ show, onSubmit, onBack, photo, onPhoto }) => {
       } else if (response.error) {
         setError(`Error: ${response.error}`);
       } else {
-        const source = { uri: response.uri };
-        return onPhoto(source);
+        const file = processImage(response);
+        return onPhoto(file);
       }
     });
   };
@@ -50,7 +51,10 @@ const CustomerStep2 = ({ show, onSubmit, onBack, photo, onPhoto }) => {
           </UI.Clickable>
         ) : (
           <View style={styles.profilePhoto}>
-            <Image style={{ width: 200, height: 200 }} source={photo} />
+            <Image
+              style={{ width: 200, height: 200 }}
+              source={{ uri: photo.uri }}
+            />
             <UI.Spacer />
             <UI.Link onClick={() => handleImageUpload()}>Change Image</UI.Link>
           </View>

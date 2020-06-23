@@ -1,4 +1,5 @@
-import { gql } from 'apollo-boost';
+// import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 export const UPDATE_ACCOUNT_TYPE = gql`
   mutation updateAccountType($type: String!) {
@@ -39,19 +40,23 @@ export const CREATE_VENDOR = gql`
 `;
 
 export const CREATE_CUSTOMER = gql`
-  mutation createVednor(
+  mutation createCustomer(
     $firstName: String!
     $lastName: String!
     $phone: String
     $photo: Upload
   ) {
-    createVendor(
+    createCustomer(
       firstName: $firstName
       lastName: $lastName
       phone: $phone
-      imageUrl: $photo
+      photo: $photo
     ) {
       id
+      username
+      email
+      isVendor
+      isCustomer
     }
   }
 `;
