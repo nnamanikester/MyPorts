@@ -16,9 +16,16 @@ import {
   CUSTOMER_REVIEWS,
   CUSTOMER_SAVES,
 } from '../../apollo/queries';
-import { useLazyQuery, useQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/react-hooks';
+import { checkNetworkStatus } from '../../redux/actions/NetworkActions';
+import NetworkErrorIndicator from '../../components/NetworkErrorIndicator';
 
-const ProfileScreen = ({ navigation, customer }) => {
+const ProfileScreen = ({
+  navigation,
+  offline,
+  customer,
+  checkNetworkStatus,
+}) => {
   // Graphql Queries.
   const [
     customerWallet,
@@ -42,10 +49,12 @@ const ProfileScreen = ({ navigation, customer }) => {
   const [balance, setBalance] = useState(0.0);
 
   useEffect(() => {
-    customerOrders({ variables: { id: customer.id } });
-    customerWallet();
-    customerSaves({ variables: { id: customer.id } });
-
+    checkNetworkStatus();
+    if (!offline) {
+      customerOrders({ variables: { id: customer.id } });
+      customerWallet();
+      customerSaves({ variables: { id: customer.id } });
+    }
     if (walletData) setBalance(walletData.customerWallet.balance);
     if (savesData) setSavesCount(savesData.customerSaves.length);
     if (ordersData) setOrdersCount(ordersData.customerOrders.length);
@@ -57,6 +66,10 @@ const ProfileScreen = ({ navigation, customer }) => {
 
   return (
     <>
+      <NetworkErrorIndicator
+        onRetry={() => checkNetworkStatus()}
+        show={offline}
+      />
       <Header
         isCart
         title="Profile"
@@ -173,7 +186,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     customer: state.customer.profile,
+    offline: !state.network.isConnected,
   };
 };
 
-export default connect(mapStateToProps)(ProfileScreen);
+export default connect(mapStateToProps, { checkNetworkStatus })(ProfileScreen);

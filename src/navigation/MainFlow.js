@@ -4,8 +4,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { setCustomerProfile } from '../redux/actions/CustomerActions';
 import { checkNetworkStatus } from '../redux/actions/NetworkActions';
 import { CUSTOMER_PROFILE } from '../apollo/queries';
-import { useQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/react-hooks';
 import * as UI from '../components/common';
+import NetworkError from '../components/NetworkError';
 
 import TabNavigation from './MainFlows/MainTabNavigation';
 import DraweNavigation from './MainFlows/MainDrawerNavigation';
@@ -64,16 +65,22 @@ import TermsOfUse from '../screens/pages/TermsOfUseScreen';
 
 const Stack = createStackNavigator();
 
-const StackNavigation = ({ setCustomerProfile }) => {
+const StackNavigation = ({ setCustomerProfile, offline }) => {
+  const [customerProfile, { loading, data, error }] = useLazyQuery(
+    CUSTOMER_PROFILE,
+  );
+
   useEffect(() => {
     checkNetworkStatus();
-  }, []);
+    if (!offline) {
+      customerProfile();
+    }
 
-  const { loading, data, error } = useQuery(CUSTOMER_PROFILE);
-
-  if (data) {
-    setCustomerProfile(data.customerProfile);
-  }
+    if (data) setCustomerProfile(data.customerProfile);
+    if (error) {
+      alert('Unable to load profile details');
+    }
+  }, [data]);
 
   return (
     <>
@@ -160,4 +167,12 @@ const StackNavigation = ({ setCustomerProfile }) => {
   );
 };
 
-export default connect(null, { setCustomerProfile })(StackNavigation);
+const mapStateToProps = (state) => {
+  return {
+    offline: !state.network.isConnected,
+  };
+};
+
+export default connect(mapStateToProps, { setCustomerProfile })(
+  StackNavigation,
+);

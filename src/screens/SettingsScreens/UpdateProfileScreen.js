@@ -1,21 +1,14 @@
-import React from 'react';
-import {
-  Layout,
-  Button,
-  Icon,
-  Text,
-  Spacer,
-  Row,
-  TextInput,
-  Select,
-  Column,
-  Link,
-  Clickable,
-} from '../../components/common';
+import React, { useState } from 'react';
+import * as UI from '../../components/common';
 import { View, StyleSheet } from 'react-native';
 import Header from '../../components/Header';
 import Avatar from '../../components/Avatar';
-import { female4 } from '../../assets/images';
+import { profilePhoto } from '../../assets/images';
+import { connect } from 'react-redux';
+import { checkNetworkStatus } from '../../redux/actions/NetworkActions';
+import { setCustomerProfile } from '../../redux/actions/CustomerActions';
+import { useMutation } from '@apollo/react-hooks';
+import { UPDATE_CUSTOMER } from '../../apollo/mutations';
 
 const days = [
   { label: '', value: '' },
@@ -67,94 +60,168 @@ const months = [
   { label: 'December', value: 12 },
 ];
 
-const gender = [
+const genders = [
   { label: '', value: '' },
   { label: 'Male', value: 'male' },
   { label: 'Female', value: 'female' },
 ];
 
-const UpdateProfileScreen = ({ navigation, logUserOut }) => {
+const UpdateProfileScreen = ({
+  navigation,
+  customer,
+  offline,
+  checkNetworkStatus,
+  setCustomerProfile,
+}) => {
+  const [firstName, setFirstName] = useState(customer.firstName);
+  const [lastName, setLastName] = useState(customer.lastName);
+  const [phone, setPhone] = useState(customer.phone);
+  const [birthMonth, setBirthMonth] = useState(customer.birthMonth);
+  const [birthDay, setBirthDay] = useState(customer.birthDay);
+  const [gender, setGender] = useState(customer.gender);
+  const [photo, setPhoto] = useState(customer.photo);
+
+  const [updateCustomer, { loading, data }] = useMutation(UPDATE_CUSTOMER);
+
+  if (data) {
+    setCustomerProfile(data.updateCustomer);
+  }
+
+  const handleCustomerUpdate = () => {
+    checkNetworkStatus();
+    if (!offline) {
+      updateCustomer({
+        variables: {
+          id: customer.id,
+          firstName,
+          lastName,
+          phone,
+          birthMonth,
+          birthDay,
+          gender,
+        },
+      }).catch((err) => {
+        alert('Unable to update profile!');
+      });
+    }
+  };
+
   return (
     <>
+      <UI.Loading show={loading} />
       <Header
         title="Update Pofile"
         headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.goBack()}>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+          </UI.Clickable>
         }
       />
-      <Layout>
+      <UI.Layout>
         <View style={styles.container}>
           <View style={styles.profilePhoto}>
-            <Avatar size={100} rounded src={female4} />
-            <Link>Upload Photo</Link>
+            <Avatar
+              size={100}
+              rounded
+              src={photo ? { uri: photo } : profilePhoto}
+            />
+            <UI.Link>Upload Photo</UI.Link>
           </View>
 
-          <Spacer large />
+          <UI.Spacer large />
 
           <View style={styles.inputContainer}>
-            <Text heading>First Name</Text>
-            <Spacer />
-            <TextInput placeholder="Enter first name" />
+            <UI.Text heading>First Name</UI.Text>
+            <UI.Spacer />
+            <UI.TextInput
+              onChangeText={(value) => setFirstName(value)}
+              value={firstName}
+              placeholder="Enter first name"
+            />
           </View>
 
-          <Spacer medium />
+          <UI.Spacer medium />
 
           <View style={styles.inputContainer}>
-            <Text heading>Last Name</Text>
-            <Spacer />
-            <TextInput placeholder="Enter last name" />
+            <UI.Text heading>Last Name</UI.Text>
+            <UI.Spacer />
+            <UI.TextInput
+              onChangeText={(value) => setLastName(value)}
+              value={lastName}
+              placeholder="Enter last name"
+            />
           </View>
 
-          <Spacer medium />
+          <UI.Spacer medium />
 
           <View style={styles.inputContainer}>
-            <Text heading>Phone Number</Text>
-            <Spacer />
-            <TextInput placeholder="Enter phone number" />
+            <UI.Text heading>Phone Number</UI.Text>
+            <UI.Spacer />
+            <UI.TextInput
+              onChangeText={(value) => setPhone(value)}
+              value={phone}
+              placeholder="Enter phone number"
+            />
           </View>
 
-          <Spacer medium />
+          <UI.Spacer medium />
 
           <View style={styles.inputContainer}>
-            <Text heading>Birthday</Text>
-            <Spacer />
-            <Row style={{ justifyContent: 'space-between' }}>
-              <Column size="6">
-                <Text heading>Month</Text>
-                <Spacer />
-                <Select
+            <UI.Text heading>Birthday</UI.Text>
+
+            <UI.Spacer />
+
+            <UI.Row style={{ justifyContent: 'space-between' }}>
+              <UI.Column size="6">
+                <UI.Text heading>Month</UI.Text>
+
+                <UI.Spacer />
+
+                <UI.Select
                   style={{ width: '95%' }}
                   type="dropdown"
                   data={months}
+                  onChange={(value) => setBirthMonth(value)}
+                  selected={birthMonth}
                 />
-              </Column>
-              <Column size="6">
-                <Text heading>Day</Text>
-                <Spacer />
-                <Select type="dropdown" data={days} />
-              </Column>
-            </Row>
+              </UI.Column>
+
+              <UI.Column size="6">
+                <UI.Text heading>Day</UI.Text>
+
+                <UI.Spacer />
+                <UI.Select
+                  onChange={(value) => setBirthDay(value)}
+                  selected={birthDay}
+                  type="dropdown"
+                  data={days}
+                />
+              </UI.Column>
+            </UI.Row>
           </View>
 
-          <Spacer medium />
+          <UI.Spacer medium />
 
           <View style={styles.inputContainer}>
-            <Text heading>Gender</Text>
-            <Spacer />
-            <Select type="dropdown" data={gender} />
+            <UI.Text heading>Gender</UI.Text>
+            <UI.Spacer />
+            <UI.Select
+              onChange={(value) => setGender(value)}
+              selected={gender}
+              type="dropdown"
+              data={genders}
+            />
           </View>
 
-          <Spacer large />
+          <UI.Spacer large />
 
-          <Button>
-            <Text color="#fff">Save Changes</Text>
-          </Button>
+          <UI.Button onClick={() => handleCustomerUpdate()}>
+            <UI.Text color="#fff">Save Changes</UI.Text>
+          </UI.Button>
 
-          <Spacer large />
+          <UI.Spacer large />
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
@@ -170,4 +237,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UpdateProfileScreen;
+const mapStateToProps = (state) => {
+  return {
+    customer: state.customer.profile,
+    offline: !state.network.isConnected,
+  };
+};
+
+export default connect(mapStateToProps, {
+  checkNetworkStatus,
+  setCustomerProfile,
+})(UpdateProfileScreen);
