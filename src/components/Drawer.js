@@ -1,6 +1,6 @@
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import React from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { View, Image, StyleSheet } from 'react-native';
 import { Text, Icon, ListItem, Link, Badge, Divider, Spacer } from './common';
 import { profilePhoto } from '../assets/images';
@@ -9,13 +9,11 @@ import { logUserOut } from '../redux/actions/AuthActions';
 import { danger } from './common/variables';
 import Permissions from './Permissions';
 
-const Drawer = ({ navigation, user, logUserOut }) => {
-  const { customer, vendor } = user;
-
+const Drawer = ({ navigation, user, customer, logUserOut }) => {
   return (
     <DrawerContentScrollView style={styles.drawer}>
       {/* Drawer Header */}
-      <Permissions.CustomerAndVendor>
+      <Permissions.Customer>
         <View style={styles.header}>
           <ListItem
             onClick={() => navigation.navigate('Profile')}
@@ -47,7 +45,7 @@ const Drawer = ({ navigation, user, logUserOut }) => {
             }
           />
         </View>
-      </Permissions.CustomerAndVendor>
+      </Permissions.Customer>
 
       {/* Drawer Body */}
       <DrawerItem
@@ -202,6 +200,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    customer: state.customer.profile,
   };
 };
 

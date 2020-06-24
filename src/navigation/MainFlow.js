@@ -1,5 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
+import { setCustomerProfile } from '../redux/actions/CustomerActions';
+import { checkNetworkStatus } from '../redux/actions/NetworkActions';
+import { CUSTOMER_PROFILE } from '../apollo/queries';
+import { useQuery } from '@apollo/react-hooks';
+import * as UI from '../components/common';
+
 import TabNavigation from './MainFlows/MainTabNavigation';
 import DraweNavigation from './MainFlows/MainDrawerNavigation';
 import Search from '../screens/SearchScreen';
@@ -57,81 +64,100 @@ import TermsOfUse from '../screens/pages/TermsOfUseScreen';
 
 const Stack = createStackNavigator();
 
-const StackNavigation = () => {
+const StackNavigation = ({ setCustomerProfile }) => {
+  useEffect(() => {
+    checkNetworkStatus();
+  }, []);
+
+  const { loading, data, error } = useQuery(CUSTOMER_PROFILE);
+
+  if (data) {
+    setCustomerProfile(data.customerProfile);
+  }
+
   return (
-    <Stack.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        header: () => null,
-      }}>
-      <Stack.Screen name="Home" component={DraweNavigation} />
-      <Stack.Screen name="Tab" component={TabNavigation} />
-      <Stack.Screen name="Search" component={Search} />
-      <Stack.Screen name="ContactSupport" component={ContactSupport} />
-      <Stack.Screen name="Coupons" component={Coupons} />
+    <>
+      <UI.Loading show={loading} />
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          header: () => null,
+        }}>
+        <Stack.Screen name="Home" component={DraweNavigation} />
+        <Stack.Screen name="Tab" component={TabNavigation} />
+        <Stack.Screen name="Search" component={Search} />
+        <Stack.Screen name="ContactSupport" component={ContactSupport} />
+        <Stack.Screen name="Coupons" component={Coupons} />
 
-      {/* Product Screens */}
-      <Stack.Screen name="ProductsByCategory" component={ProductsByCategory} />
-      <Stack.Screen name="SingleProduct" component={SingleProduct} />
-      <Stack.Screen name="ProductComments" component={ProductComments} />
+        {/* Product Screens */}
+        <Stack.Screen
+          name="ProductsByCategory"
+          component={ProductsByCategory}
+        />
+        <Stack.Screen name="SingleProduct" component={SingleProduct} />
+        <Stack.Screen name="ProductComments" component={ProductComments} />
 
-      {/* User Screens */}
-      <Stack.Screen name="Orders" component={Orders} />
-      <Stack.Screen name="OrderDetails" component={OrderDetails} />
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="ReferAndEarn" component={ReferAndEarn} />
-      <Stack.Screen name="SavedItems" component={SavedItems} />
+        {/* User Screens */}
+        <Stack.Screen name="Orders" component={Orders} />
+        <Stack.Screen name="OrderDetails" component={OrderDetails} />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="ReferAndEarn" component={ReferAndEarn} />
+        <Stack.Screen name="SavedItems" component={SavedItems} />
 
-      {/* Vendor Screens */}
-      <Stack.Screen name="VendorShopSearch" component={VendorShopSearch} />
-      <Stack.Screen name="VendorShopReview" component={VendorShopReview} />
-      <Stack.Screen name="VendorShop" component={VendorShop} />
+        {/* Vendor Screens */}
+        <Stack.Screen name="VendorShopSearch" component={VendorShopSearch} />
+        <Stack.Screen name="VendorShopReview" component={VendorShopReview} />
+        <Stack.Screen name="VendorShop" component={VendorShop} />
 
-      {/* Checkout Screens */}
-      <Stack.Screen name="Cart" component={Cart} />
-      <Stack.Screen name="ShippingDetails" component={ShippingDetails} />
-      <Stack.Screen name="Payment" component={Payment} />
-      <Stack.Screen name="AddAddress" component={AddAddress} />
-      <Stack.Screen name="EditAddress" component={EditAddress} />
+        {/* Checkout Screens */}
+        <Stack.Screen name="Cart" component={Cart} />
+        <Stack.Screen name="ShippingDetails" component={ShippingDetails} />
+        <Stack.Screen name="Payment" component={Payment} />
+        <Stack.Screen name="AddAddress" component={AddAddress} />
+        <Stack.Screen name="EditAddress" component={EditAddress} />
 
-      {/* Settings Screens */}
-      <Stack.Screen name="AccountSettings" component={AccountSettings} />
-      <Stack.Screen name="EmailSettings" component={EmailSettings} />
-      <Stack.Screen name="LegalAndTerms" component={LegalAndTerms} />
-      <Stack.Screen name="ManageAddresses" component={ManageAddresses} />
-      <Stack.Screen name="ManageWallets" component={ManageWallets} />
-      <Stack.Screen name="ChangeEmailAddress" component={ChangeEmailAddress} />
-      <Stack.Screen name="ChangePassword" component={ChangePassword} />
-      <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
-      <Stack.Screen
-        name="NotificationSettings"
-        component={NotificationSettings}
-      />
+        {/* Settings Screens */}
+        <Stack.Screen name="AccountSettings" component={AccountSettings} />
+        <Stack.Screen name="EmailSettings" component={EmailSettings} />
+        <Stack.Screen name="LegalAndTerms" component={LegalAndTerms} />
+        <Stack.Screen name="ManageAddresses" component={ManageAddresses} />
+        <Stack.Screen name="ManageWallets" component={ManageWallets} />
+        <Stack.Screen
+          name="ChangeEmailAddress"
+          component={ChangeEmailAddress}
+        />
+        <Stack.Screen name="ChangePassword" component={ChangePassword} />
+        <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
+        <Stack.Screen
+          name="NotificationSettings"
+          component={NotificationSettings}
+        />
 
-      {/* Pages screens */}
-      <Stack.Screen name="PickupPolicy" component={PickupPolicy} />
-      <Stack.Screen name="About" component={About} />
-      <Stack.Screen
-        name="AccessibilityStatement"
-        component={AccessibiliityStatement}
-      />
-      <Stack.Screen
-        name="CommunityGuidelines"
-        component={CommunityGuidelines}
-      />
-      <Stack.Screen name="CookiePolicy" component={CookiePolicy} />
-      <Stack.Screen name="CustomerTaxPolicy" component={CustomerTaxPolicy} />
-      <Stack.Screen name="FAQ" component={FAQ} />
-      <Stack.Screen name="Help" component={Help} />
-      <Stack.Screen
-        name="LawEnforcementPolicy"
-        component={LawEnforcementPolicy}
-      />
-      <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
-      <Stack.Screen name="ReturnPolicy" component={ReturnPolicy} />
-      <Stack.Screen name="TermsOfUse" component={TermsOfUse} />
-    </Stack.Navigator>
+        {/* Pages screens */}
+        <Stack.Screen name="PickupPolicy" component={PickupPolicy} />
+        <Stack.Screen name="About" component={About} />
+        <Stack.Screen
+          name="AccessibilityStatement"
+          component={AccessibiliityStatement}
+        />
+        <Stack.Screen
+          name="CommunityGuidelines"
+          component={CommunityGuidelines}
+        />
+        <Stack.Screen name="CookiePolicy" component={CookiePolicy} />
+        <Stack.Screen name="CustomerTaxPolicy" component={CustomerTaxPolicy} />
+        <Stack.Screen name="FAQ" component={FAQ} />
+        <Stack.Screen name="Help" component={Help} />
+        <Stack.Screen
+          name="LawEnforcementPolicy"
+          component={LawEnforcementPolicy}
+        />
+        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+        <Stack.Screen name="ReturnPolicy" component={ReturnPolicy} />
+        <Stack.Screen name="TermsOfUse" component={TermsOfUse} />
+      </Stack.Navigator>
+    </>
   );
 };
 
-export default StackNavigation;
+export default connect(null, { setCustomerProfile })(StackNavigation);
