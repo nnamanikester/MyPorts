@@ -1,17 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import * as UI from '../../components/common';
 import { primaryColor } from '../../components/common/variables';
 import Header from '../../components/Header';
 import Avatar from '../../components/Avatar';
-import { female4 } from '../../assets/images';
 import UserComments from './ProfileTabs/UserComments';
 import UserReviews from './ProfileTabs/UserReviews';
 import { profilePhoto } from '../../assets/images';
+import { formatMoney } from '../../utils/numberFormat';
 import { connect } from 'react-redux';
+import {
+  CUSTOMER_WALLET,
+  CUSTOMER_COMMENTS,
+  CUSTOMER_ORDERS,
+  CUSTOMER_REVIEWS,
+  CUSTOMER_SAVES,
+} from '../../apollo/queries';
+import { useLazyQuery, useQuery } from '@apollo/react-hooks';
 
 const ProfileScreen = ({ navigation, customer }) => {
-  const [loading, setLoading] = useState(false);
+  // Graphql Queries.
+  const [
+    customerWallet,
+    { loading: walletLoading, data: walletData, error: walletError },
+  ] = useLazyQuery(CUSTOMER_WALLET);
+
+  const [
+    customerSaves,
+    { loading: savesLoading, data: savesData, error: savesError },
+  ] = useLazyQuery(CUSTOMER_SAVES);
+
+  const [
+    customerOrders,
+    { loading: ordersLoading, data: ordersData, error: ordersError },
+  ] = useLazyQuery(CUSTOMER_ORDERS);
+  // const { loading: commentsLoading, data: commentsData } = useLazyQuery(CUSTOMER_COMMENTS);
+  // const { loading, data } = useLazyQuery(CUSTOMER_REVIEWS);
+
+  const [savesCount, setSavesCount] = useState(0);
+  const [ordersCount, setOrdersCount] = useState(0);
+  const [balance, setBalance] = useState(0.0);
+
+  useEffect(() => {
+    customerOrders({ variables: { id: customer.id } });
+    customerWallet();
+    customerSaves({ variables: { id: customer.id } });
+
+    if (walletData) setBalance(walletData.customerWallet.balance);
+    if (savesData) setSavesCount(savesData.customerSaves.length);
+    if (ordersData) setOrdersCount(ordersData.customerOrders.length);
+  }, [walletData, savesData, ordersData]);
 
   return (
     <>
@@ -52,7 +90,9 @@ const ProfileScreen = ({ navigation, customer }) => {
               src={customer.photo ? { uri: customer.photo } : profilePhoto}
             />
 
-            <UI.Text heading>John Kester</UI.Text>
+            <UI.Text heading>
+              {customer ? customer.firstName + ' ' + customer.lastName : null}
+            </UI.Text>
 
             <UI.Link onClick={() => navigation.navigate('UpdateProfile')}>
               Edit Profile
@@ -71,14 +111,14 @@ const ProfileScreen = ({ navigation, customer }) => {
                 onClick={() => navigation.navigate('SavedItems')}
                 style={{ alignItems: 'center' }}>
                 <UI.Icon color={primaryColor} size={30} name="ios-bookmark" />
-                <UI.Text>300</UI.Text>
+                <UI.Text>{savesCount}</UI.Text>
               </UI.Clickable>
             </UI.Column>
 
             <UI.Column style={styles.column} size="4">
               <View style={{ alignItems: 'center' }}>
                 <UI.Icon color={primaryColor} size={30} name="ios-card" />
-                <UI.Text>NGN 1,200</UI.Text>
+                <UI.Text>NGN {formatMoney(balance)}</UI.Text>
               </View>
             </UI.Column>
 
@@ -87,7 +127,7 @@ const ProfileScreen = ({ navigation, customer }) => {
                 onClick={() => navigation.navigate('Orders')}
                 style={{ alignItems: 'center' }}>
                 <UI.Icon color={primaryColor} size={30} name="ios-time" />
-                <UI.Text>12</UI.Text>
+                <UI.Text>{ordersCount}</UI.Text>
               </UI.Clickable>
             </UI.Column>
           </UI.Row>
@@ -106,7 +146,7 @@ const ProfileScreen = ({ navigation, customer }) => {
         <UI.Spacer large />
         <UI.Spacer large />
       </UI.Layout>
-      <UI.Loading show={loading} />
+      <UI.Loading show={walletLoading || savesLoading || ordersLoading} />
     </>
   );
 };
