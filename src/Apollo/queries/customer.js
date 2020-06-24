@@ -7,6 +7,10 @@ export const CUSTOMER_PROFILE = gql`
       firstName
       lastName
       photo
+      phone
+      gender
+      birthDay
+      birthMonth
     }
   }
 `;

@@ -49,6 +49,10 @@ const ProfileScreen = ({ navigation, customer }) => {
     if (walletData) setBalance(walletData.customerWallet.balance);
     if (savesData) setSavesCount(savesData.customerSaves.length);
     if (ordersData) setOrdersCount(ordersData.customerOrders.length);
+
+    if (walletError) alert('Unable to get balance.');
+    if (savesError) alert('Unable to get saved items.');
+    if (ordersError) alert('Unable to get order history.');
   }, [walletData, savesData, ordersData]);
 
   return (

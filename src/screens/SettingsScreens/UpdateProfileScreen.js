@@ -15,7 +15,6 @@ import {
 import { View, StyleSheet } from 'react-native';
 import Header from '../../components/Header';
 import Avatar from '../../components/Avatar';
-import { info } from '../../components/common/variables';
 import { female4 } from '../../assets/images';
 
 const days = [
