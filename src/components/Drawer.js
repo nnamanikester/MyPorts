@@ -22,9 +22,7 @@ const Drawer = ({ navigation, user, customer, logUserOut }) => {
                 <Image
                   style={styles.profileImage}
                   source={
-                    customer && customer.photo
-                      ? { uri: customer.photo }
-                      : profilePhoto
+                    customer.photo ? { uri: customer.photo } : profilePhoto
                   }
                 />
               </View>
