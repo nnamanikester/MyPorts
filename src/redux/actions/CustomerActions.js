@@ -1,6 +1,6 @@
 export const setCustomerProfile = (customer) => {
   return {
-    type: 'CUSTOMER_PROFILE',
+    type: 'SET_CUSTOMER_PROFILE',
     payload: customer,
   };
 };
