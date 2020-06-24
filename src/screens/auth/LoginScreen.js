@@ -13,6 +13,7 @@ import { checkNetworkStatus } from '../../redux/actions/NetworkActions';
 import * as UI from '../../components/common';
 import NetworkErrorIndicator from '../../components/NetworkErrorIndicator';
 import { info, danger } from '../../components/common/variables';
+import { TOKEN_STORAGE, USER_STORAGE } from '../../constants';
 
 const LoginScreen = ({
   setStorage,
@@ -57,8 +58,8 @@ const LoginScreen = ({
 
   // Setting user and token to async storage
   const setData = async (token, user) => {
-    await AsyncStorage.setItem('@myports/token', token);
-    await AsyncStorage.setItem('@myports/user', JSON.stringify(user));
+    await AsyncStorage.setItem(TOKEN_STORAGE, token);
+    await AsyncStorage.setItem(USER_STORAGE, JSON.stringify(user));
     setStorage(user, token);
   };
 

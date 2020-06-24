@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import { CREATE_CUSTOMER } from '../../apollo/mutations/';
+import { CREATE_CUSTOMER, CREATE_VENDOR } from '../../apollo/mutations/';
 import { setStorage } from '../../redux/actions/AuthActions';
 import CustomerStep1 from './customerSteps/CustomerStep1';
 import CustomerStep2 from './customerSteps/CustomerStep2';
 import VendorStep1 from './vendorSteps/VendorStep1';
 import VendorStep2 from './vendorSteps/VendorStep2';
 import CreateProfileInitial from './CreateProfileInitial';
+import { TOKEN_STORAGE, USER_STORAGE } from '../../constants';
 import { connect } from 'react-redux';
 import { checkNetworkStatus } from '../../redux/actions/NetworkActions';
 import NetworkErrorIndicator from '../../components/NetworkErrorIndicator';
 import * as UI from '../../components/common';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
-  const [loading, setLoading] = useState(false);
-
   const [customerStep, setCustomerStep] = useState(0);
   const [vendorStep, setVendorStep] = useState(0);
 
@@ -30,30 +30,42 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
   const [vendorLogo, setVendorLogo] = useState(null);
   const [vendorCoverPhoto, setVendorCoverPhoto] = useState(null);
 
-  const [createCustomer] = useMutation(CREATE_CUSTOMER);
+  const [
+    createCustomer,
+    { data: customerData, loading: customerLoading },
+  ] = useMutation(CREATE_CUSTOMER);
+
+  const [
+    createVendor,
+    { data: vendorData, loading: vendorLoading },
+  ] = useMutation(CREATE_VENDOR);
 
   const handleCreateCustomer = () => {
     checkNetworkStatus();
-    setLoading(true);
     createCustomer({
       variables: {
         firstName: customerFirstName,
         lastName: customerLastName,
         phone: customerPhone,
-        photo: null,
       },
-    })
-      .then(async (res) => {
-        await AsyncStorage.getItem('@myports/token');
-        await AsyncStorage.setItem('@myports/user', JSON.stringify(user));
-        setStorage(user, token);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+    }).catch((err) => {
+      console.log(err);
+    });
   };
+
+  // Setting user and token to async storage
+  const setData = async (user) => {
+    const token = await AsyncStorage.getItem(TOKEN_STORAGE);
+    await AsyncStorage.setItem(USER_STORAGE, JSON.stringify(user));
+    console.log(user, token);
+    setStorage(user, token);
+  };
+
+  // Checking if data is returned
+  if (customerData) {
+    const user = customerData.createCustomer;
+    setData(user);
+  }
 
   useEffect(() => {
     checkNetworkStatus();
@@ -61,7 +73,7 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
 
   return (
     <>
-      <UI.Loading show={loading} />
+      <UI.Loading show={customerLoading || vendorLoading} />
       <NetworkErrorIndicator
         onRetry={() => checkNetworkStatus()}
         show={offline}

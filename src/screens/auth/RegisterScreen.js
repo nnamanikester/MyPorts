@@ -10,6 +10,8 @@ import * as UI from '../../components/common';
 import { info, primaryColor, danger } from '../../components/common/variables';
 import { SIGNUP } from '../../apollo/mutations';
 import { validateEmail } from '../../utils';
+import { TOKEN_STORAGE, USER_STORAGE } from '../../constants';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const RegisterScreen = ({ skipAuthentication, navigation, setStorage }) => {
   const [username, setUsername] = useState('');
@@ -47,10 +49,14 @@ const RegisterScreen = ({ skipAuthentication, navigation, setStorage }) => {
         password,
       },
     })
-      .then((res) => {
+      .then(async (res) => {
         const { token, user } = res.data.signup;
-        setLoading(false);
+
+        await AsyncStorage.setItem(TOKEN_STORAGE, token);
+        await AsyncStorage.setItem(USER_STORAGE, JSON.stringify(user));
+
         setStorage(user, token);
+        setLoading(false);
       })
       .catch((err) => {
         setLoading(false);

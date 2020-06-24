@@ -1,6 +1,6 @@
 // import ApolloClient, { ApolloLink } from 'apollo-boost';
 import AsyncStorage from '@react-native-community/async-storage';
-import { emulatorApiUrl } from '../config';
+import { EMULATOR_API_URL, TOKEN_STORAGE } from '../constants';
 import { createUploadLink } from 'apollo-upload-client';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -9,10 +9,10 @@ import { onError } from 'apollo-link-error';
 import { ApolloLink, Observable } from 'apollo-link';
 
 const request = async (operation) => {
-  const token = await AsyncStorage.getItem('@myports/token');
+  const token = await AsyncStorage.getItem(TOKEN_STORAGE);
   operation.setContext({
     headers: {
-      authorization: token,
+      Authorization: token,
     },
   });
 };
@@ -49,7 +49,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const uploadLink = createUploadLink({
-  uri: emulatorApiUrl,
+  uri: EMULATOR_API_URL,
 });
 
 const httpLink = ApolloLink.from([errorLink, requestLink, uploadLink]);

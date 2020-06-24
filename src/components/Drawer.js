@@ -24,8 +24,8 @@ const Drawer = ({ navigation, user, logUserOut }) => {
                 <Image
                   style={styles.profileImage}
                   source={
-                    customer && customer.imageUrl
-                      ? { uri: customer.imageUrl }
+                    customer && customer.photo
+                      ? { uri: customer.photo }
                       : profilePhoto
                   }
                 />
@@ -34,8 +34,8 @@ const Drawer = ({ navigation, user, logUserOut }) => {
             body={
               <View style={styles.headerAlignment}>
                 <Text size={18}>
-                  {customer && customer.firstName}{' '}
-                  {customer && customer.lastName}
+                  {customer ? customer.firstName : null}{' '}
+                  {customer ? customer.lastName : null}
                 </Text>
                 <Link to={`mailto:${user.email}`}>{user.email}</Link>
               </View>

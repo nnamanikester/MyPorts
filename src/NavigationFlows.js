@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import NetworkError from './components/NetworkError';
 import { Network } from './utils';
 import CreateProfileFLow from './navigation/CreateProfileFlow';
+import { TOKEN_STORAGE, USER_STORAGE } from './constants';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 
@@ -37,8 +38,8 @@ const NavigationFlows = ({ isSkipped, isStranger, user, setStorage }) => {
   // Checks the async storage if token and user exists
   const checkStorage = async () => {
     setAppLoading(true);
-    const storedToken = await AsyncStorage.getItem('@myports/token');
-    const storedUser = await AsyncStorage.getItem('@myports/user');
+    const storedToken = await AsyncStorage.getItem(TOKEN_STORAGE);
+    const storedUser = await AsyncStorage.getItem(USER_STORAGE);
 
     if (storedToken && storedUser) {
       storeDataOnRedux(storedToken, storedUser);
