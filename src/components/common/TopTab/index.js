@@ -14,7 +14,8 @@ const TopTab = (props) => {
       tabBarOptions={{
         labelStyle: styles.label,
       }}
-      {...props}>
+      {...props}
+      lazy>
       {props.screens.map((screen) => {
         return (
           <Tab.Screen

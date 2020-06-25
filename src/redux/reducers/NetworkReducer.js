@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  isConnected: false,
+  isConnected: true,
 };
 
 export default (state = INITIAL_STATE, action) => {
