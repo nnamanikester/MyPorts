@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as UI from '../../components/common';
 import { View, StyleSheet } from 'react-native';
 import Header from '../../components/Header';
@@ -81,11 +81,9 @@ const UpdateProfileScreen = ({
   const [gender, setGender] = useState(customer.gender);
   const [photo, setPhoto] = useState(customer.photo);
 
-  const [updateCustomer, { loading, data }] = useMutation(UPDATE_CUSTOMER);
+  const [success, setSuccess] = useState(false);
 
-  if (data) {
-    setCustomerProfile(data.updateCustomer);
-  }
+  const [updateCustomer, { loading }] = useMutation(UPDATE_CUSTOMER);
 
   const handleCustomerUpdate = () => {
     checkNetworkStatus();
@@ -100,9 +98,14 @@ const UpdateProfileScreen = ({
           birthDay,
           gender,
         },
-      }).catch((err) => {
-        alert('Unable to update profile!');
-      });
+      })
+        .then((res) => {
+          setSuccess(true);
+          setCustomerProfile(res.data.updateCustomer);
+        })
+        .catch((err) => {
+          alert('Unable to update profile!');
+        });
     }
   };
 
@@ -222,6 +225,13 @@ const UpdateProfileScreen = ({
           <UI.Spacer large />
         </View>
       </UI.Layout>
+      {success && (
+        <UI.Toast
+          message="Profile updated successsfully!"
+          timeout={5000}
+          onTimeout={() => setSuccess(false)}
+        />
+      )}
     </>
   );
 };
