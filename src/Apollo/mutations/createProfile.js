@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 
 export const CREATE_VENDOR = gql`
   mutation createVednor(
-    $shopName: String!
+    $name: String!
     $email: String!
     $phone: String!
     $logo: Upload
@@ -11,7 +11,7 @@ export const CREATE_VENDOR = gql`
     $description: String
   ) {
     createVendor(
-      name: $shopName
+      name: $name
       email: $email
       phone: $phone
       logo: $logo
@@ -21,8 +21,7 @@ export const CREATE_VENDOR = gql`
       id
       username
       email
-      isCustomer
-      vendor
+      isVendor
     }
   }
 `;
@@ -38,13 +37,6 @@ export const CREATE_CUSTOMER = gql`
       username
       email
       isCustomer
-      customer {
-        id
-        firstName
-        lastName
-        phone
-        photo
-      }
     }
   }
 `;

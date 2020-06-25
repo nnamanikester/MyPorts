@@ -35,29 +35,53 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
     { data: customerData, loading: customerLoading },
   ] = useMutation(CREATE_CUSTOMER);
 
-  const [
-    createVendor,
-    { data: vendorData, loading: vendorLoading },
-  ] = useMutation(CREATE_VENDOR);
+  const [createVendor, { loading: vendorLoading }] = useMutation(CREATE_VENDOR);
 
   const handleCreateCustomer = () => {
     checkNetworkStatus();
-    createCustomer({
-      variables: {
-        firstName: customerFirstName,
-        lastName: customerLastName,
-        phone: customerPhone,
-      },
-    }).catch((err) => {
-      console.log(err);
-    });
+    if (!offline) {
+      createCustomer({
+        variables: {
+          firstName: customerFirstName,
+          lastName: customerLastName,
+          phone: customerPhone,
+        },
+      }).catch((err) => {
+        alert('An error occured while trying to create your profile!');
+      });
+    }
+  };
+
+  const handleCreateVendor = () => {
+    checkNetworkStatus();
+
+    if (!offline) {
+      createVendor({
+        variables: {
+          name: vendorShopName,
+          email: vendorEmail,
+          phone: vendorPhone,
+          logo: vendorLogo,
+          description: vendorDescription,
+          coverPhoto: vendorCoverPhoto,
+        },
+      })
+        .then(async (res) => {
+          const user = res.data.createVendor;
+          const token = await AsyncStorage.getItem(TOKEN_STORAGE);
+          await AsyncStorage.setItem(USER_STORAGE, JSON.stringify(user));
+          setStorage(user, token);
+        })
+        .catch((err) => {
+          alert('An error occured while tryin to create your profile!');
+        });
+    }
   };
 
   // Setting user and token to async storage
   const setData = async (user) => {
     const token = await AsyncStorage.getItem(TOKEN_STORAGE);
     await AsyncStorage.setItem(USER_STORAGE, JSON.stringify(user));
-    console.log(user, token);
     setStorage(user, token);
   };
 
@@ -124,7 +148,7 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
         logo={vendorLogo}
         onLogo={(value) => setVendorLogo(value)}
         onBack={() => setVendorStep(vendorStep - 1)}
-        onSubmit={() => {}}
+        onSubmit={() => handleCreateVendor()}
         show={vendorStep === 2}
       />
     </>

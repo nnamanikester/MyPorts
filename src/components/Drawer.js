@@ -72,10 +72,7 @@ const Drawer = ({ navigation, user, customer, logUserOut }) => {
       <Permissions.CustomerAndGuest>
         <DrawerItem
           icon={({ size, color }) => (
-            <>
-              <Icon size={size} style={{ color }} name="ios-bookmark" />
-              <Badge style={{ elevation: 1 }} color={danger} />
-            </>
+            <Icon size={size} style={{ color }} name="ios-bookmark" />
           )}
           label={({ color, focused }) => <Text color={color}>Saved Items</Text>}
           onPress={() => navigation.navigate('SavedItems')}
