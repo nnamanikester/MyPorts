@@ -23,6 +23,7 @@ const VDAnalyticsScreen = ({ navigation }) => {
         <Spacer />
         <View style={styles.container}>
           <ListItem
+            onClick={() => navigation.navigate('ManageWallets')}
             left={
               <View style={styles.list}>
                 <Icon size={35} color="#fff" name="ios-card" />
