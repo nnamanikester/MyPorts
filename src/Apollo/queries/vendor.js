@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const VENDOR_PROFILE = gql`
+export const VENDOR_PROFILE = gql`
   {
     vendorProfile {
       coverPhoto

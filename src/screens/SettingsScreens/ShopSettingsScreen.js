@@ -1,17 +1,43 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as UI from '../../components/common';
 import { View, StyleSheet, Image } from 'react-native';
 import Header from '../../components/Header';
 import { lightColor, info } from '../../components/common/variables';
 import { connect } from 'react-redux';
+import { useLazyQuery } from '@apollo/react-hooks';
+import { VENDOR_PROFILE } from '../../apollo/queries';
+import { setVendorProfile } from '../../redux/actions/VendorActions';
 
-const ShopSettingsScreen = ({ navigation, vendorProfile }) => {
-  console.log(vendorProfile);
+const ShopSettingsScreen = ({
+  navigation,
+  profile,
+  setVendorProfile,
+  offline,
+}) => {
+  const [name, setName] = useState(profile.name);
+  const [email, setEmail] = useState(profile.email);
+  const [phone, setPhone] = useState(profile.phone);
+  const [description, setDescription] = useState(profile.description);
 
-  useEffect(() => {}, []);
+  const [vendorProfile, { loading, data, error }] = useLazyQuery(
+    VENDOR_PROFILE,
+  );
+
+  useEffect(() => {
+    if (!offline) {
+      if (!data || !error) vendorProfile();
+      if (data) {
+        setVendorProfile(data.vendorProfile);
+      }
+      if (error) {
+        alert('An error occured trying to load shop details!');
+      }
+    }
+  }, [data, error]);
 
   return (
     <>
+      <UI.Loading show={loading} />
       <Header
         title="Shop Settings"
         headerLeft={
@@ -35,10 +61,10 @@ const ShopSettingsScreen = ({ navigation, vendorProfile }) => {
         <View style={{ flex: 1 }}>
           <UI.Spacer size={2} />
           <UI.Clickable onClick={() => {}} style={styles.coverImage}>
-            {vendorProfile.coverPhoto ? (
+            {profile.coverPhoto ? (
               <Image
                 style={{ width: '100%', height: '100%' }}
-                source={{ uri: vendorProfile.coverPhoto }}
+                source={{ uri: profile.coverPhoto }}
               />
             ) : (
               <>
@@ -50,11 +76,8 @@ const ShopSettingsScreen = ({ navigation, vendorProfile }) => {
 
           <View>
             <UI.Clickable onClick={() => {}} style={styles.logoContainer}>
-              {vendorProfile.logo ? (
-                <Image
-                  style={styles.logo}
-                  source={{ uri: vendorProfile.logo }}
-                />
+              {profile.logo ? (
+                <Image style={styles.logo} source={{ uri: profile.logo }} />
               ) : (
                 <>
                   <UI.Icon color={lightColor} name="ios-add" size={50} />
@@ -71,7 +94,11 @@ const ShopSettingsScreen = ({ navigation, vendorProfile }) => {
 
             <UI.Spacer />
 
-            <UI.TextInput placeholder="Enter shop's name" />
+            <UI.TextInput
+              onChangeText={(value) => setName(value)}
+              value={name}
+              placeholder="Enter shop's name"
+            />
           </View>
 
           <View style={styles.inputContainer}>
@@ -80,6 +107,8 @@ const ShopSettingsScreen = ({ navigation, vendorProfile }) => {
             <UI.Spacer />
 
             <UI.TextInput
+              onChangeText={(value) => setEmail(value)}
+              value={email}
               keyboardType="email-address"
               placeholder="Enter shop's contact email address"
             />
@@ -91,6 +120,8 @@ const ShopSettingsScreen = ({ navigation, vendorProfile }) => {
             <UI.Spacer />
 
             <UI.TextInput
+              onChangeText={(value) => setPhone(value)}
+              value={phone}
               keyboardType="phone-pad"
               placeholder="Enter shop's contact phone number"
             />
@@ -101,7 +132,11 @@ const ShopSettingsScreen = ({ navigation, vendorProfile }) => {
 
             <UI.Spacer />
 
-            <UI.TextInput placeholder="Enter shop's description" />
+            <UI.TextInput
+              onChangeText={(value) => setSetDescription(value)}
+              value={description}
+              placeholder="Enter shop's description"
+            />
           </View>
 
           <View style={styles.inputContainer}>
@@ -158,8 +193,11 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    vendorProfile: state.vendor.profile,
+    profile: state.vendor.profile,
+    offline: !state.network.isConnected,
   };
 };
 
-export default connect(mapStateToProps)(ShopSettingsScreen);
+export default connect(mapStateToProps, { setVendorProfile })(
+  ShopSettingsScreen,
+);
