@@ -45,7 +45,7 @@ const VDHome = ({ navigation }) => {
         }}
         screens={[
           {
-            name: 'Analytics',
+            name: 'VDAnalyticsTab',
             component: VDAnalyticsScreen,
             options: {
               tabBarIcon: ({ focused, color, size }) => (
@@ -59,7 +59,7 @@ const VDHome = ({ navigation }) => {
             },
           },
           {
-            name: 'Products',
+            name: 'VDProductsTab',
             component: VDProductsScreen,
             options: {
               tabBarIcon: ({ focused, color, size }) => (
@@ -73,7 +73,7 @@ const VDHome = ({ navigation }) => {
             },
           },
           {
-            name: 'Messaging',
+            name: 'VDMessagingTab',
             component: VDMessagingScreen,
             options: {
               tabBarIcon: ({ focused, color, size }) => (
@@ -90,7 +90,7 @@ const VDHome = ({ navigation }) => {
             },
           },
           {
-            name: 'Orders',
+            name: 'VDOrdersTab',
             component: VDOrdersScreen,
             options: {
               tabBarIcon: ({ focused, color, size }) => (
@@ -107,7 +107,7 @@ const VDHome = ({ navigation }) => {
             },
           },
           {
-            name: 'ShopSettings',
+            name: 'VDShopSettingsTab',
             component: VDSettingsScreen,
             options: {
               tabBarIcon: ({ focused, color, size }) => (

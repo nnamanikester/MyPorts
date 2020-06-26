@@ -1,10 +1,27 @@
 import React from 'react';
 import * as UI from '../../components/common';
 import { View, StyleSheet, Image } from 'react-native';
+import Header from '../../components/Header';
+import { lightColor, info } from '../../components/common/variables';
+import { connect } from 'react-redux';
 
-const ShopSettingsScreen = ({ navigation }) => {
+const ShopSettingsScreen = ({ navigation, vendorProfile }) => {
   return (
     <>
+      <Header
+        title="Shop Settings"
+        headerLeft={
+          <UI.Clickable onClick={() => navigation.goBack()}>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+          </UI.Clickable>
+        }
+        headerRight={
+          <UI.Option
+            icon={<UI.Icon color="#fff" name="md-more" />}
+            options={[{ label: 'Preview Changes', action: () => {} }]}
+          />
+        }
+      />
       <UI.Layout>
         <View style={{ flex: 1 }}>
           <UI.Spacer size={2} />
@@ -38,6 +55,54 @@ const ShopSettingsScreen = ({ navigation }) => {
             </UI.Clickable>
           </View>
         </View>
+
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <UI.Text heading> Name</UI.Text>
+
+            <UI.Spacer />
+
+            <UI.TextInput placeholder="Enter shop's name" />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <UI.Text heading>Contact Email Address</UI.Text>
+
+            <UI.Spacer />
+
+            <UI.TextInput
+              keyboardType="email-address"
+              placeholder="Enter shop's contact email address"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <UI.Text heading>Contact Phone</UI.Text>
+
+            <UI.Spacer />
+
+            <UI.TextInput
+              keyboardType="phone-pad"
+              placeholder="Enter shop's contact phone number"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <UI.Text heading>Description</UI.Text>
+
+            <UI.Spacer />
+
+            <UI.TextInput placeholder="Enter shop's description" />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <UI.Spacer medium />
+            <UI.Button>Save Changes</UI.Button>
+          </View>
+        </View>
+
+        <UI.Spacer large />
+        <UI.Spacer large />
       </UI.Layout>
     </>
   );
@@ -45,7 +110,7 @@ const ShopSettingsScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 10,
+    paddingTop: 50,
   },
   inputContainer: {
     marginBottom: 10,
@@ -81,4 +146,11 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
 });
-export default ShopSettingsScreen;
+
+const mapStateToProps = (state) => {
+  return {
+    vendorProfile: state.vendor.profile,
+  };
+};
+
+export default connect(mapStateToProps)(ShopSettingsScreen);

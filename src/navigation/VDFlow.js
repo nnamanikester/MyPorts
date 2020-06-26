@@ -17,11 +17,11 @@ import VDSingleProduct from '../screens/VDScreens/VDProductsScreens/VDSingleProd
 
 // Settings Screen
 import AccountSettings from '../screens/SettingsScreens/AccountSettingsScreen';
+import ShopSettingsScreen from '../screens/SettingsScreens/ShopSettingsScreen';
 import LegalAndTerms from '../screens/SettingsScreens/LegalAndTermsScreen';
 import ManageWallets from '../screens/SettingsScreens/ManageWalletsScreen';
 import ChangeEmailAddress from '../screens/SettingsScreens/ChangeEmailAddressScreen';
 import ChangePassword from '../screens/SettingsScreens/ChangePasswordScreen';
-import ShopSettings from '../screens/SettingsScreens/ShopSettingsScreen';
 
 // Pages Screen
 import PickupPolicy from '../screens/pages/PickupPolicyScreen';
@@ -65,7 +65,7 @@ const VDFlow = () => {
 
       {/* Settings Screens */}
       <Stack.Screen name="AccountSettings" component={AccountSettings} />
-      <Stack.Screen name="ShopSettings" component={ShopSettings} />
+      <Stack.Screen name="ShopSettings" component={ShopSettingsScreen} />
       <Stack.Screen name="LegalAndTerms" component={LegalAndTerms} />
       <Stack.Screen name="ManageWallets" component={ManageWallets} />
       <Stack.Screen name="ChangeEmailAddress" component={ChangeEmailAddress} />
