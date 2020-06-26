@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as UI from '../../components/common';
 import { View, StyleSheet, Image } from 'react-native';
 import Header from '../../components/Header';
@@ -6,6 +6,10 @@ import { lightColor, info } from '../../components/common/variables';
 import { connect } from 'react-redux';
 
 const ShopSettingsScreen = ({ navigation, vendorProfile }) => {
+  console.log(vendorProfile);
+
+  useEffect(() => {}, []);
+
   return (
     <>
       <Header
