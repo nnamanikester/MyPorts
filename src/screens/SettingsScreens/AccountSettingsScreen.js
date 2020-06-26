@@ -12,6 +12,7 @@ import {
   Row,
   Clickable,
 } from '../../components/common';
+import Permissions from '../../components/Permissions';
 import { View, StyleSheet } from 'react-native';
 import Header from '../../components/Header';
 import { info } from '../../components/common/variables';
@@ -31,13 +32,15 @@ const AccountScreen = ({ navigation, logUserOut }) => {
       />
       <Layout>
         <View style={styles.container}>
-          <ListItem
-            onClick={() => navigation.navigate('UpdateProfile')}
-            body={<Text size={17}>Update Profile</Text>}
-            right={<Icon size={20} color={info} name="ios-arrow-forward" />}
-          />
+          <Permissions.Customer>
+            <ListItem
+              onClick={() => navigation.navigate('UpdateProfile')}
+              body={<Text size={17}>Update Profile</Text>}
+              right={<Icon size={20} color={info} name="ios-arrow-forward" />}
+            />
 
-          <Spacer />
+            <Spacer />
+          </Permissions.Customer>
 
           <ListItem
             onClick={() => navigation.navigate('ChangeEmailAddress')}

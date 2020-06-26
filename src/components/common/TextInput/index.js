@@ -10,6 +10,9 @@ import {
 } from '../variables';
 
 const TextInput = ({
+  onFocus,
+  onBlur,
+  onEndEditing,
   value,
   onChangeText,
   autoCapitalize,
@@ -100,6 +103,9 @@ const TextInput = ({
       {iconLeft ? <View style={{ ...styles.iconLeft }}>{iconLeft}</View> : null}
       <TI
         value={value}
+        onEndEditing={onEndEditing}
+        onFocus={onFocus}
+        onBlur={onBlur}
         autoFocus={autoFocus}
         autoCapitalize={autoCapitalize}
         autoCorrect={autoCorrect}

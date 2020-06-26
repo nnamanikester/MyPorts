@@ -21,11 +21,6 @@ const ManageAddressesScreen = ({ navigation }) => {
             <Icon name="ios-arrow-back" color="#fff" />
           </Clickable>
         }
-        headerRight={
-          <Clickable onClick={() => navigation.navigate('AddAddress')}>
-            <Icon name="md-add" color="#fff" />
-          </Clickable>
-        }
       />
       <Layout>
         <View style={styles.container}>

@@ -15,6 +15,13 @@ import VDAddProduct from '../screens/VDScreens/VDProductsScreens/VDAddProductScr
 import VDEditProduct from '../screens/VDScreens/VDProductsScreens/VDEditProductScreen';
 import VDSingleProduct from '../screens/VDScreens/VDProductsScreens/VDSingleProductScreen';
 
+// Settings Screen
+import AccountSettings from '../screens/SettingsScreens/AccountSettingsScreen';
+import LegalAndTerms from '../screens/SettingsScreens/LegalAndTermsScreen';
+import ManageWallets from '../screens/SettingsScreens/ManageWalletsScreen';
+import ChangeEmailAddress from '../screens/SettingsScreens/ChangeEmailAddressScreen';
+import ChangePassword from '../screens/SettingsScreens/ChangePasswordScreen';
+
 // Pages Screen
 import PickupPolicy from '../screens/pages/PickupPolicyScreen';
 import About from '../screens/pages/AboutScreen';
@@ -54,6 +61,13 @@ const VDFlow = () => {
       <Stack.Screen name="VDAddProduct" component={VDAddProduct} />
       <Stack.Screen name="VDEditProduct" component={VDEditProduct} />
       <Stack.Screen name="VDSingleProduct" component={VDSingleProduct} />
+
+      {/* Settings Screens */}
+      <Stack.Screen name="AccountSettings" component={AccountSettings} />
+      <Stack.Screen name="LegalAndTerms" component={LegalAndTerms} />
+      <Stack.Screen name="ManageWallets" component={ManageWallets} />
+      <Stack.Screen name="ChangeEmailAddress" component={ChangeEmailAddress} />
+      <Stack.Screen name="ChangePassword" component={ChangePassword} />
 
       {/* Pages screens */}
       <Stack.Screen name="PickupPolicy" component={PickupPolicy} />

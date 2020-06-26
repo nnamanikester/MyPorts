@@ -7,7 +7,6 @@ import {
   grayColor,
 } from '../../../components/common/variables';
 import { StyleSheet, View, Image } from 'react-native';
-import { female1 } from '../../../assets/images';
 
 const VendorStep2 = ({
   show,
