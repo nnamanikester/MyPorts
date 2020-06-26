@@ -13,7 +13,7 @@ const VDShopSettingsScreen = ({ vendorProfile, navigation }) => {
   return (
     <>
       <UI.Layout>
-        <View style={{ flex: 1 }}>
+        {/* <View style={{ flex: 1 }}>
           <UI.Spacer size={2} />
           <UI.Clickable onClick={() => {}} style={styles.coverImage}>
             {vendorProfile.coverPhoto ? (
@@ -44,11 +44,27 @@ const VDShopSettingsScreen = ({ vendorProfile, navigation }) => {
               )}
             </UI.Clickable>
           </View>
-        </View>
+        </View> */}
         <View style={styles.container}>
           <UI.ListItem
             onClick={() => navigation.navigate('AccountSettings')}
             body={<UI.Text size={17}>Account Settings</UI.Text>}
+            right={<UI.Icon size={20} color={info} name="ios-arrow-forward" />}
+          />
+
+          <UI.Spacer />
+
+          <UI.ListItem
+            onClick={() => navigation.navigate('AccountSettings')}
+            body={<UI.Text size={17}>Shop Settings</UI.Text>}
+            right={<UI.Icon size={20} color={info} name="ios-arrow-forward" />}
+          />
+
+          <UI.Spacer />
+
+          <UI.ListItem
+            onClick={() => navigation.navigate('AccountSettings')}
+            body={<UI.Text size={17}>Get Verified</UI.Text>}
             right={<UI.Icon size={20} color={info} name="ios-arrow-forward" />}
           />
 
@@ -199,7 +215,7 @@ const VDShopSettingsScreen = ({ vendorProfile, navigation }) => {
 
           <View>
             <UI.Text size={20}>Version</UI.Text>
-            <UI.Text note>1.0.0</UI.Text>
+            <UI.Text note>1.0.0 Beta.</UI.Text>
           </View>
 
           <UI.Spacer large />
@@ -237,7 +253,7 @@ const VDShopSettingsScreen = ({ vendorProfile, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 50,
+    paddingTop: 10,
   },
   inputContainer: {
     marginBottom: 10,
