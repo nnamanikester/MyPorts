@@ -13,7 +13,6 @@ import {
   Button,
   Modal,
   TextInput,
-  Column,
 } from '../../components/common';
 import Header from '../../components/Header';
 import Product from '../../components/Product';

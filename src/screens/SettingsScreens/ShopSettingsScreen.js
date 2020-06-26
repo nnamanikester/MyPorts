@@ -18,7 +18,12 @@ const ShopSettingsScreen = ({ navigation, vendorProfile }) => {
         headerRight={
           <UI.Option
             icon={<UI.Icon color="#fff" name="md-more" />}
-            options={[{ label: 'Preview Changes', action: () => {} }]}
+            options={[
+              {
+                label: 'Preview Changes',
+                action: () => navigation.navigate('VDShopPreview'),
+              },
+            ]}
           />
         }
       />
