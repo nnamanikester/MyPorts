@@ -22,7 +22,7 @@ const VDShopSettingsScreen = ({ vendorProfile, navigation }) => {
           <UI.Spacer />
 
           <UI.ListItem
-            onClick={() => navigation.navigate('AccountSettings')}
+            onClick={() => navigation.navigate('ShopSettings')}
             body={<UI.Text size={17}>Shop Settings</UI.Text>}
             right={<UI.Icon size={20} color={info} name="ios-arrow-forward" />}
           />
