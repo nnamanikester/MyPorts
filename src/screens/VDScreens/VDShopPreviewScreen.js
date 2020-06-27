@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import * as UI from '../../components/common';
 import { female4, male1 } from '../../assets/images';
@@ -14,8 +14,6 @@ import { VENDOR } from '../../apollo/queries';
 import { setVendor } from '../../redux/actions/VendorActions';
 
 const VDShopPreviewScreen = ({ navigation, offline, setVendor, vendor }) => {
-  const [verified, setVerified] = useState(true);
-
   const [getVendor, { loading, data, error }] = useLazyQuery(VENDOR);
 
   useEffect(() => {

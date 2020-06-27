@@ -133,7 +133,7 @@ const ShopSettingsScreen = ({
             <UI.Spacer />
 
             <UI.TextInput
-              onChangeText={(value) => setSetDescription(value)}
+              onChangeText={(value) => setDescription(value)}
               value={description}
               placeholder="Enter shop's description"
             />
