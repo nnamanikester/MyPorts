@@ -2,12 +2,14 @@ import gql from 'graphql-tag';
 
 export const UPDATE_VENDOR_PROFILE = gql`
   mutation updateVendorProfile(
+    $id: String!
     $name: String!
     $email: String!
     $phone: String!
     $description: String
   ) {
-    updateVendor(
+    updateVendorProfile(
+      id: $id
       name: $name
       email: $email
       phone: $phone

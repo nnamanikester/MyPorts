@@ -16,6 +16,7 @@ const ShopSettingsScreen = ({
   setVendorProfile,
   offline,
 }) => {
+  const [success, setSuccess] = useState(false);
   const [name, setName] = useState(profile.name);
   const [email, setEmail] = useState(profile.email);
   const [phone, setPhone] = useState(profile.phone);
@@ -29,6 +30,7 @@ const ShopSettingsScreen = ({
   );
 
   const handleUpdateProfile = () => {
+    setSuccess(false);
     if (!name) return setError({ name: 'Shop name cannot be blank!' });
     if (!validateEmail(email))
       return setErrors({ email: 'Invalid email address!' });
@@ -38,6 +40,7 @@ const ShopSettingsScreen = ({
     if (!offline) {
       updateVendorProfle({
         variables: {
+          id: profile.id,
           name,
           email,
           phone,
@@ -45,7 +48,8 @@ const ShopSettingsScreen = ({
         },
       })
         .then((res) => {
-          setVendorProfile(res.data.vendorProfile);
+          setVendorProfile(res.data.updateVendorProfile);
+          setSuccess(true);
         })
         .catch((err) => {
           alert('An error occured while trying to update shop details!');
@@ -184,6 +188,15 @@ const ShopSettingsScreen = ({
         <UI.Spacer large />
         <UI.Spacer large />
       </UI.Layout>
+      {success && (
+        <UI.Toast
+          timeout={3000}
+          onTimeout={() => {
+            setSuccess(false);
+          }}
+          message="Profile updated successfully!"
+        />
+      )}
     </>
   );
 };

@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 export const VENDOR_PROFILE = gql`
   {
     vendorProfile {
+      id
       coverPhoto
       logo
       name

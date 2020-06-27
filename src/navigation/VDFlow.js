@@ -4,6 +4,7 @@ import { setVendor, setVendorProfile } from '../redux/actions/VendorActions';
 import { connect } from 'react-redux';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { VENDOR, VENDOR_PROFILE } from '../apollo/queries/vendor';
+import * as UI from '../components/common';
 
 import VDDrawerNavigation from './VDFlows/VendorDrawerNavigation';
 import VDConversation from '../screens/VDScreens/VDConversationScreen';
@@ -41,7 +42,6 @@ import LawEnforcementPolicy from '../screens/pages/LawEnforcementPolicyScreen';
 import PrivacyPolicy from '../screens/pages/PrivacyPolicyScreen';
 import ReturnPolicy from '../screens/pages/ReturnPolicyScreen';
 import TermsOfUse from '../screens/pages/TermsOfUseScreen';
-import * as UI from '../components/common';
 
 const Stack = createStackNavigator();
 
