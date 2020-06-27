@@ -4,9 +4,11 @@ import { View, StyleSheet, Image } from 'react-native';
 import Header from '../../components/Header';
 import { lightColor, info } from '../../components/common/variables';
 import { connect } from 'react-redux';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 import { VENDOR_PROFILE } from '../../apollo/queries';
+import { UPDATE_VENDOR_PROFILE } from '../../apollo/mutations';
 import { setVendorProfile } from '../../redux/actions/VendorActions';
+import { validateEmail } from '../../utils';
 
 const ShopSettingsScreen = ({
   navigation,
@@ -22,6 +24,36 @@ const ShopSettingsScreen = ({
   const [vendorProfile, { loading, data, error }] = useLazyQuery(
     VENDOR_PROFILE,
   );
+  const [updateVendorProfle, { loading: updateLoading }] = useMutation(
+    UPDATE_VENDOR_PROFILE,
+  );
+
+  const handleUpdateProfile = () => {
+    if (!name) return setError({ name: 'Shop name cannot be blank!' });
+    if (!validateEmail(email))
+      return setErrors({ email: 'Invalid email address!' });
+    if (!phone)
+      return setErrors({ phone: 'Please provide a contact phone number!' });
+
+    if (!offline) {
+      updateVendorProfle({
+        variables: {
+          name,
+          email,
+          phone,
+          description,
+        },
+      })
+        .then((res) => {
+          setVendorProfile(res.data.vendorProfile);
+        })
+        .catch((err) => {
+          alert('An error occured while trying to update shop details!');
+        });
+    } else {
+      alert("Cannot update profile, please check if you're connected");
+    }
+  };
 
   useEffect(() => {
     if (!offline) {
@@ -32,12 +64,14 @@ const ShopSettingsScreen = ({
       if (error) {
         alert('An error occured trying to load shop details!');
       }
+    } else {
+      alert("Please check if you're connected to the internet!");
     }
   }, [data, error]);
 
   return (
     <>
-      <UI.Loading show={loading} />
+      <UI.Loading show={loading || updateLoading} />
       <Header
         title="Shop Settings"
         headerLeft={
@@ -141,7 +175,9 @@ const ShopSettingsScreen = ({
 
           <View style={styles.inputContainer}>
             <UI.Spacer medium />
-            <UI.Button>Save Changes</UI.Button>
+            <UI.Button onClick={() => handleUpdateProfile()}>
+              Save Changes
+            </UI.Button>
           </View>
         </View>
 

@@ -6,16 +6,12 @@ export const UPDATE_VENDOR_PROFILE = gql`
     $email: String!
     $phone: String!
     $description: String
-    $coverPhoto: Upload
-    $logo: Upload
   ) {
     updateVendor(
       name: $name
       email: $email
       phone: $phone
       description: $description
-      coverPhoto: $coverPhoto
-      logo: $logo
     ) {
       id
       coverPhoto
