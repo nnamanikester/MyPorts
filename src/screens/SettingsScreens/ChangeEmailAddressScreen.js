@@ -3,61 +3,41 @@ import * as UI from '../../components/common';
 import { View, StyleSheet } from 'react-native';
 import Header from '../../components/Header';
 import { connect } from 'react-redux';
-import { useLazyQuery, useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { validateEmail } from '../../utils';
 import { danger } from '../../components/common/variables';
-import { VALIDATE_EMAIL, VALIDATE_PASSWORD } from '../../apollo/queries';
+import { UPDATE_USER_EMAIL } from '../../apollo/mutations';
 
 const ChangeEmailAddressScreen = ({ navigation, offline, user }) => {
   const [errors, setErrors] = useState({});
+  const [success, setSuccess] = useState(false);
   const [email, setEmail] = useState('');
   const [confirmEmail, setConfirmEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [callValidateEmail, { data: emailData }] = useLazyQuery(VALIDATE_EMAIL);
-  const [validatePassword, { data: passwordData }] = useLazyQuery(
-    VALIDATE_PASSWORD,
-  );
+  const [updateUserEmail, { loading }] = useMutation(UPDATE_USER_EMAIL);
 
   const handleUpdateEmail = () => {
-    setErrors({});
-    if (!confirmEmail) {
-      return setErrors({
-        ...errors,
-        confirmEmail: 'Please confirm email address',
-      });
-    }
-    if (!checkPassword()) return;
-    console.log('Success!');
-  };
-
-  const checkPassword = () => {
-    setErrors({});
-
-    validatePassword({ variables: { password } });
-
-    if (passwordData && passwordData.validatePassword) {
-      return true;
-    }
-
-    setErrors({ password: 'Incorrect password!' });
-
-    return false;
-  };
-
-  // Called when the email textinput is burred
-  const checkEmail = () => {
     setErrors({});
 
     if (!validateEmail(email)) {
       return setErrors({ ...errors, email: 'Invalid email address!' });
     }
 
-    callValidateEmail({ variables: { email } });
-
-    if (emailData && emailData.validateEmail) {
-      return setErrors({ email: 'Email already in use by another user!' });
+    if (!confirmEmail) {
+      return setErrors({
+        ...errors,
+        confirmEmail: 'Please confirm email address',
+      });
     }
+
+    updateUserEmail({ variables: { email, password } })
+      .then((res) => {
+        setSuccess(true);
+      })
+      .catch((err) => {
+        alert('Unable to update email address');
+      });
   };
 
   // Called onChangeText of confirmEmail textinput.
