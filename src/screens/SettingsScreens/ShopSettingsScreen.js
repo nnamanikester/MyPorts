@@ -16,6 +16,7 @@ const ShopSettingsScreen = ({
   setVendorProfile,
   offline,
 }) => {
+  const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
   const [name, setName] = useState(profile.name);
   const [email, setEmail] = useState(profile.email);
@@ -31,7 +32,7 @@ const ShopSettingsScreen = ({
 
   const handleUpdateProfile = () => {
     setSuccess(false);
-    if (!name) return setError({ name: 'Shop name cannot be blank!' });
+    if (!name) return setErrors({ name: 'Shop name cannot be blank!' });
     if (!validateEmail(email))
       return setErrors({ email: 'Invalid email address!' });
     if (!phone)
@@ -132,6 +133,20 @@ const ShopSettingsScreen = ({
 
             <UI.Spacer />
 
+            {errors.name ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <UI.Spacer />
+                <UI.Icon
+                  size={20}
+                  name="ios-close-circle-outline"
+                  color={danger}
+                />
+                <UI.Spacer size={3} />
+                <UI.Text color={danger}>{errors.name}</UI.Text>
+                <UI.Spacer />
+              </View>
+            ) : null}
+
             <UI.TextInput
               onChangeText={(value) => setName(value)}
               value={name}
@@ -143,6 +158,20 @@ const ShopSettingsScreen = ({
             <UI.Text heading>Contact Email Address</UI.Text>
 
             <UI.Spacer />
+
+            {errors.email ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <UI.Spacer />
+                <UI.Icon
+                  size={20}
+                  name="ios-close-circle-outline"
+                  color={danger}
+                />
+                <UI.Spacer size={3} />
+                <UI.Text color={danger}>{errors.email}</UI.Text>
+                <UI.Spacer />
+              </View>
+            ) : null}
 
             <UI.TextInput
               onChangeText={(value) => setEmail(value)}
@@ -156,6 +185,20 @@ const ShopSettingsScreen = ({
             <UI.Text heading>Contact Phone</UI.Text>
 
             <UI.Spacer />
+
+            {errors.phone ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <UI.Spacer />
+                <UI.Icon
+                  size={20}
+                  name="ios-close-circle-outline"
+                  color={danger}
+                />
+                <UI.Spacer size={3} />
+                <UI.Text color={danger}>{errors.phone}</UI.Text>
+                <UI.Spacer />
+              </View>
+            ) : null}
 
             <UI.TextInput
               onChangeText={(value) => setPhone(value)}
