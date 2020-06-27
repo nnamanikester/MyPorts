@@ -12,3 +12,27 @@ export const VENDOR_PROFILE = gql`
     }
   }
 `;
+
+export const VENDOR = gql`
+  {
+    getVendor {
+      id
+      products {
+        id
+      }
+      reviews {
+        id
+        rating
+        comment
+      }
+      isVerified
+      chats {
+        id
+      }
+      coupons {
+        id
+      }
+      status
+    }
+  }
+`;

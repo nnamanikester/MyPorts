@@ -8,12 +8,31 @@ import {
   primaryColor,
 } from '../../components/common/variables';
 import Skeleton from 'react-native-skeleton-placeholder';
+import { connect } from 'react-redux';
+import { useLazyQuery } from '@apollo/react-hooks';
+import { VENDOR } from '../../apollo/queries';
+import { setVendor } from '../../redux/actions/VendorActions';
 
-const VDShopPreviewScreen = ({ navigation }) => {
+const VDShopPreviewScreen = ({ navigation, offline, setVendor, vendor }) => {
   const [verified, setVerified] = useState(true);
+
+  const [getVendor, { loading, data, error }] = useLazyQuery(VENDOR);
+
+  useEffect(() => {
+    if (!offline) {
+      if (!data && !error) getVendor();
+      if (data) {
+        setVendor(data.getVendor);
+      }
+      if (error) {
+        alert('An errror occured while trying to load data!');
+      }
+    }
+  }, [data, error]);
 
   return (
     <>
+      <UI.Loading show={loading} />
       <UI.Layout style={styles.layout}>
         <View style={styles.header}>
           <View>
@@ -30,7 +49,7 @@ const VDShopPreviewScreen = ({ navigation }) => {
               <UI.Spacer />
               <UI.Text style={styles.shopTitle}>
                 Tiana Rosser {'  '}
-                {verified ? (
+                {vendor.isVerified ? (
                   <UI.Icon
                     size={18}
                     type="Octicons"
@@ -48,7 +67,7 @@ const VDShopPreviewScreen = ({ navigation }) => {
               </UI.Text>
               <UI.Spacer />
               <UI.Text style={styles.shopDescription}>
-                I was part of something special. Eventually, you do.
+                {vendor.profile.description}
               </UI.Text>
             </View>
           </UI.Row>
@@ -263,4 +282,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VDShopPreviewScreen;
+const mapStateToProps = (state) => {
+  return {
+    offline: !state.network.isConnected,
+    vendor: state.vendor,
+  };
+};
+
+export default connect(mapStateToProps, { setVendor })(VDShopPreviewScreen);

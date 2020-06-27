@@ -25,7 +25,7 @@ const ShopSettingsScreen = ({
 
   useEffect(() => {
     if (!offline) {
-      if (!data || !error) vendorProfile();
+      if (!data && !error) vendorProfile();
       if (data) {
         setVendorProfile(data.vendorProfile);
       }

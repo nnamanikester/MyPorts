@@ -4,3 +4,10 @@ export const setVendorProfile = (profile) => {
     payload: profile,
   };
 };
+
+export const setVendor = (vendor) => {
+  return {
+    type: 'SET_VENDOR',
+    payload: vendor,
+  };
+};
