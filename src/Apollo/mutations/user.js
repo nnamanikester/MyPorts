@@ -11,3 +11,15 @@ export const UPDATE_USER_EMAIL = gql`
     }
   }
 `;
+
+export const UPDATE_USER_PASSWORD = gql`
+  mutation updateUserPassword($newPassword: String!, $oldPassword: String!) {
+    updateUserPassword(newPassword: $newPassword, oldPassword: $oldPassword) {
+      id
+      username
+      email
+      isVendor
+      isCustomer
+    }
+  }
+`;
