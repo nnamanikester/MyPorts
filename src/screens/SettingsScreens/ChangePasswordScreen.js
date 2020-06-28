@@ -1,66 +1,186 @@
 import React from 'react';
-import {
-  Layout,
-  Button,
-  Icon,
-  Text,
-  Spacer,
-  TextInput,
-  Clickable,
-} from '../../components/common';
+import * as UI from '../../components/common';
 import { View, StyleSheet } from 'react-native';
 import Header from '../../components/Header';
-import { info } from '../../components/common/variables';
+import { useMutation } from '@apollo/react-hooks';
+import { UPDATE_USER_PASSWORD } from '../../apollo/mutations';
+import { connect } from 'react-redux';
+import { danger } from '../../components/common/variables';
 
-const ChangePasswordScreen = ({ navigation, logUserOut }) => {
+const ChangePasswordScreen = ({ navigation, offline }) => {
+  const [oldPassword, setOldPassword] = React.useState('');
+  const [newPassword, setNewPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [errors, setErrors] = React.useState({});
+  const [success, setSuccess] = React.useState(false);
+
+  const [updatePassword, { loading, error }] = useMutation(
+    UPDATE_USER_PASSWORD,
+  );
+
+  React.useEffect(() => {
+    if (error) {
+      alert(error.graphQLErrors[0].message);
+    }
+  }, [error]);
+
+  const handleChangePassword = () => {
+    if (!oldPassword) {
+      return setErrors({ oPassword: 'Please enter your old password!' });
+    }
+    if (!newPassword) {
+      return setErrors({ nPassword: 'Please enter your new password!' });
+    }
+    if (!confirmPassword) {
+      return setErrors({ cPassword: 'Please confirm your new password!' });
+    }
+    if (!checkPasswordMatch) {
+      return setErrors({ cPassword: 'Passwords do not match!' });
+    }
+    if (!offline) {
+      updatePassword({ variables: { oldPassword, newPassword } }).then(
+        (res) => {
+          setSuccess(true);
+          console.log(res.data);
+        },
+      );
+    } else {
+      alert("Please check if you're connected to the internet!");
+    }
+  };
+
+  // Check if passwords match
+  const checkPasswordMatch = (value) => {
+    setConfirmPassword(value);
+    setErrors({});
+    if (value !== newPassword) {
+      setErrors({ cPassword: 'Passwords do not match!' });
+      return false;
+    }
+    return true;
+  };
+
   return (
     <>
+      <UI.Loading show={loading} />
       <Header
         title="Change Password"
         headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.goBack()}>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+          </UI.Clickable>
         }
       />
-      <Layout>
+      <UI.Layout>
         <View style={styles.container}>
-          <Text heading>Use this form to change your password.</Text>
-          <Text note>Enter your old password for authorization.</Text>
+          <UI.Text heading>Use this form to change your password.</UI.Text>
+          <UI.Text note>Enter your old password for authorization.</UI.Text>
 
-          <Spacer large />
-
-          <View style={styles.inputContainer}>
-            <Text heading>Old Password</Text>
-            <Spacer />
-            <TextInput password autoFocus placeholder="Enter old password" />
-          </View>
-
-          <Spacer medium />
+          <UI.Spacer large />
 
           <View style={styles.inputContainer}>
-            <Text heading>New Password</Text>
-            <Spacer />
-            <TextInput password placeholder="Enter new password" />
+            <UI.Text heading>Old Password</UI.Text>
+
+            <UI.Spacer />
+
+            {errors.oPassword ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <UI.Spacer />
+                <UI.Icon
+                  size={20}
+                  name="ios-close-circle-outline"
+                  color={danger}
+                />
+                <UI.Spacer size={3} />
+                <UI.Text color={danger}>{errors.oPassword}</UI.Text>
+                <UI.Spacer />
+              </View>
+            ) : null}
+
+            <UI.TextInput
+              onChangeText={(value) => setOldPassword(value)}
+              value={oldPassword}
+              password
+              autoFocus
+              placeholder="Enter old password"
+            />
           </View>
 
-          <Spacer medium />
+          <UI.Spacer medium />
 
           <View style={styles.inputContainer}>
-            <Text heading>Confirm New Password</Text>
-            <Spacer />
-            <TextInput password placeholder="Confirm your new password" />
+            <UI.Text heading>New Password</UI.Text>
+
+            <UI.Spacer />
+
+            {errors.nPassword ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <UI.Spacer />
+                <UI.Icon
+                  size={20}
+                  name="ios-close-circle-outline"
+                  color={danger}
+                />
+                <UI.Spacer size={3} />
+                <UI.Text color={danger}>{errors.nPassword}</UI.Text>
+                <UI.Spacer />
+              </View>
+            ) : null}
+
+            <UI.TextInput
+              onChangeText={(value) => setNewPassword(value)}
+              value={newPassword}
+              password
+              placeholder="Enter new password"
+            />
           </View>
 
-          <Spacer large />
+          <UI.Spacer medium />
 
-          <Button>
-            <Text color="#fff">Save Changes</Text>
-          </Button>
+          <View style={styles.inputContainer}>
+            <UI.Text heading>Confirm New Password</UI.Text>
 
-          <Spacer large />
+            <UI.Spacer />
+
+            {errors.cPassword ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <UI.Spacer />
+                <UI.Icon
+                  size={20}
+                  name="ios-close-circle-outline"
+                  color={danger}
+                />
+                <UI.Spacer size={3} />
+                <UI.Text color={danger}>{errors.cPassword}</UI.Text>
+                <UI.Spacer />
+              </View>
+            ) : null}
+
+            <UI.TextInput
+              onChangeText={(value) => checkPasswordMatch(value)}
+              value={confirmPassword}
+              password
+              placeholder="Confirm your new password"
+            />
+          </View>
+
+          <UI.Spacer large />
+
+          <UI.Button onClick={() => handleChangePassword()}>
+            <UI.Text color="#fff">Save Changes</UI.Text>
+          </UI.Button>
+
+          <UI.Spacer large />
         </View>
-      </Layout>
+      </UI.Layout>
+
+      {success && (
+        <UI.Toast
+          message="Password updated successfully!"
+          timeout={3000}
+          onTimeout={() => setSuccess(false)}
+        />
+      )}
     </>
   );
 };
@@ -77,4 +197,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChangePasswordScreen;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    offline: !state.network.isConnected,
+  };
+};
+
+export default connect(mapStateToProps)(ChangePasswordScreen);
