@@ -1,10 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import WalletCard from '../../components/WalletCard';
+import { GET_WALLET } from '../../apollo/queries/wallet';
+import { connect } from 'react-redux';
+import { useLazyQuery } from '@apollo/react-hooks';
+import Skeleton from 'react-native-skeleton-placeholder';
+import { formatMoney, formatCardNo } from '../../utils/index';
 
-const ManageAddressesScreen = ({ navigation }) => {
+const ManageAddressesScreen = ({ navigation, offline }) => {
+  const [getWallet, { loading, data, error }] = useLazyQuery(GET_WALLET);
+  const [cardNo, setCardNo] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [balance, setBalance] = React.useState('');
+
+  React.useEffect(() => {
+    if (!offline) {
+      getWallet();
+    }
+    if (data) {
+      setName(data.getWallet.name);
+      setCardNo(data.getWallet.cardNo);
+      setBalance(data.getWallet.balance);
+    }
+    if (error) {
+      return;
+    }
+  }, [data, error]);
+
   return (
     <>
       <Header
@@ -18,14 +42,27 @@ const ManageAddressesScreen = ({ navigation }) => {
       <UI.Layout>
         <View style={styles.container}>
           <WalletCard
-            cardNo={'5683   8747   8475'}
-            name="Tiana Rosser"
-            balance="32,500"
+            cardNo={formatCardNo(cardNo)}
+            name={name}
+            balance={formatMoney(balance)}
           />
+          {loading && (
+            <Skeleton>
+              <Skeleton.Item height={200} borderRadius={5} />
+            </Skeleton>
+          )}
+
           <UI.Spacer />
+
           <UI.Button>
             <UI.Text color="#fff">Fund Wallet</UI.Text>
           </UI.Button>
+
+          {loading && (
+            <Skeleton>
+              <Skeleton.Item height={50} borderRadius={5} />
+            </Skeleton>
+          )}
         </View>
       </UI.Layout>
     </>
@@ -39,4 +76,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ManageAddressesScreen;
+const mapStateToProps = (state) => {
+  return {
+    offline: !state.network.isConnected,
+  };
+};
+
+export default connect(mapStateToProps)(ManageAddressesScreen);

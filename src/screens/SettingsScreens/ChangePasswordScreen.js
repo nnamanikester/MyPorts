@@ -41,7 +41,6 @@ const ChangePasswordScreen = ({ navigation, offline }) => {
       updatePassword({ variables: { oldPassword, newPassword } }).then(
         (res) => {
           setSuccess(true);
-          console.log(res.data);
         },
       );
     } else {
