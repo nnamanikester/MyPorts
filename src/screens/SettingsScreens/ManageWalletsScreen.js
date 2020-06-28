@@ -41,27 +41,28 @@ const ManageAddressesScreen = ({ navigation, offline }) => {
       />
       <UI.Layout>
         <View style={styles.container}>
-          <WalletCard
-            cardNo={formatCardNo(cardNo)}
-            name={name}
-            balance={formatMoney(balance)}
-          />
-          {loading && (
+          {loading ? (
             <Skeleton>
               <Skeleton.Item height={200} borderRadius={5} />
             </Skeleton>
+          ) : (
+            <WalletCard
+              cardNo={formatCardNo(cardNo)}
+              name={name}
+              balance={formatMoney(balance)}
+            />
           )}
 
           <UI.Spacer />
 
-          <UI.Button>
-            <UI.Text color="#fff">Fund Wallet</UI.Text>
-          </UI.Button>
-
-          {loading && (
+          {loading ? (
             <Skeleton>
               <Skeleton.Item height={50} borderRadius={5} />
             </Skeleton>
+          ) : (
+            <UI.Button>
+              <UI.Text color="#fff">Fund Wallet</UI.Text>
+            </UI.Button>
           )}
         </View>
       </UI.Layout>
