@@ -24,3 +24,8 @@ export const setStorage = (user, token) => ({
   type: 'SET_STORAGE',
   payload: { user, token },
 });
+
+export const setEmailAddress = (email) => ({
+  type: 'SET_EMAIL_ADDRESS',
+  payload: email,
+});

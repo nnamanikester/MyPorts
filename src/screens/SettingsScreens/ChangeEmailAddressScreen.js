@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as UI from '../../components/common';
 import { View, StyleSheet } from 'react-native';
 import Header from '../../components/Header';
@@ -7,23 +7,43 @@ import { useMutation } from '@apollo/react-hooks';
 import { validateEmail } from '../../utils';
 import { danger } from '../../components/common/variables';
 import { UPDATE_USER_EMAIL } from '../../apollo/mutations';
+import { setStorage } from '../../redux/actions/AuthActions';
+import AsyncStorage from '@react-native-community/async-storage';
+import { TOKEN_STORAGE, USER_STORAGE } from '../../constants';
 
-const ChangeEmailAddressScreen = ({ navigation, offline, user }) => {
-  const [errors, setErrors] = useState({});
+const ChangeEmailAddressScreen = ({
+  navigation,
+  offline,
+  user,
+  setStorage,
+}) => {
   const [success, setSuccess] = useState(false);
+  const [errors, setErrors] = useState({});
+
   const [email, setEmail] = useState('');
   const [confirmEmail, setConfirmEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [updateUserEmail, { loading }] = useMutation(UPDATE_USER_EMAIL);
+  const [updateUserEmail, { loading, error: updateError }] = useMutation(
+    UPDATE_USER_EMAIL,
+  );
 
+  useEffect(() => {
+    if (updateError && updateError.graphQLErrors) {
+      alert(updateError.graphQLErrors[0].message);
+    }
+  }, [updateError]);
+
+  // Handle the update email validations and processes.
   const handleUpdateEmail = () => {
     setErrors({});
 
+    // Validate email format
     if (!validateEmail(email)) {
       return setErrors({ ...errors, email: 'Invalid email address!' });
     }
 
+    // Check if confirm email is not null
     if (!confirmEmail) {
       return setErrors({
         ...errors,
@@ -31,25 +51,45 @@ const ChangeEmailAddressScreen = ({ navigation, offline, user }) => {
       });
     }
 
-    updateUserEmail({ variables: { email, password } })
-      .then((res) => {
-        setSuccess(true);
-      })
-      .catch((err) => {
-        alert('Unable to update email address');
-      });
+    // Check if confirm email matches email.
+    if (!checkEmailMatch(confirmEmail)) {
+      return setErrors({ ...errors, emailMatch: 'Emails do not match!' });
+    }
+
+    // Update email.
+    if (!offline) {
+      updateUserEmail({ variables: { email, password } })
+        .then(async (res) => {
+          const token = await AsyncStorage.getItem(TOKEN_STORAGE);
+          const user = await AsyncStorage.setItem(
+            USER_STORAGE,
+            JSON.stringify(res.data.updateUserEmail),
+          );
+          setStorage(user, token);
+          setSuccess(true);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      alert(
+        'Cannot update email!. \nPlease check if you are connected to the internet.',
+      );
+    }
   };
 
   // Called onChangeText of confirmEmail textinput.
   const checkEmailMatch = (value) => {
     setErrors({});
     setConfirmEmail(value);
-    if (email !== value)
-      return setErrors({ ...errors, emailMatch: 'Emails do not match!' });
+    if (email !== confirmEmail) {
+      setErrors({ ...errors, emailMatch: 'Emails do not match!' });
+      return false;
+    }
+    return true;
   };
 
   return (
     <>
+      <UI.Loading show={loading} />
       <Header
         title="Change Email Address"
         headerLeft={
@@ -98,7 +138,6 @@ const ChangeEmailAddressScreen = ({ navigation, offline, user }) => {
             <UI.TextInput
               value={email}
               onChangeText={(value) => setEmail(value)}
-              onBlur={() => checkEmail()}
               autoFocus
               placeholder="Enter email address"
             />
@@ -166,6 +205,7 @@ const ChangeEmailAddressScreen = ({ navigation, offline, user }) => {
                 <UI.Spacer />
               </View>
             ) : null}
+
             <UI.TextInput
               value={password}
               onChangeText={(value) => setPassword(value)}
@@ -183,6 +223,15 @@ const ChangeEmailAddressScreen = ({ navigation, offline, user }) => {
           <UI.Spacer large />
         </View>
       </UI.Layout>
+      {success && (
+        <UI.Toast
+          message={
+            'Email updated successfully! \nPlease check your email inbox for confirmation!'
+          }
+          timeout={5000}
+          onTimeout={() => setSuccess(false)}
+        />
+      )}
     </>
   );
 };
@@ -205,4 +254,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ChangeEmailAddressScreen);
+export default connect(mapStateToProps, { setStorage })(
+  ChangeEmailAddressScreen,
+);

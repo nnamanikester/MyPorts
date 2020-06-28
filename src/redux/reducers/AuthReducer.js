@@ -19,6 +19,8 @@ export default (state = INITIAL_STATE, action) => {
         token: action.payload.token,
         user: action.payload.user,
       };
+    case 'SET_EMAIL_ADDRESS':
+      return { ...state, user: { ...state.user, email: action.payload } };
     default:
       return state;
   }

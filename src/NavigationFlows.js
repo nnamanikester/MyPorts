@@ -80,7 +80,7 @@ const NavigationFlows = ({
           <VDFlow />
         ) : isSkipped ? (
           <MainFlow />
-        ) : user.id && !user.isVendor && !user.isCustomer ? (
+        ) : user && !user.isVendor && !user.isCustomer ? (
           <CreateProfileFLow />
         ) : (
           <AuthFlow />
