@@ -11,14 +11,14 @@ const StepOne = ({ onContinue, show }) => {
     <>
       <UI.Text h3>Add Product Images</UI.Text>
       <UI.Text note>
-        Update at least 2 images that shows clearly your product.
+        Upload at least 2 images that shows clearly your product.
       </UI.Text>
       <UI.Spacer />
 
       <UI.Row>
-        <View style={styles.imagePlaceholder}></View>
+        <UI.Clickable style={styles.imagePlaceholder}></UI.Clickable>
 
-        <View style={styles.imagePlaceholder}></View>
+        <UI.Clickable style={styles.imagePlaceholder}></UI.Clickable>
 
         <UI.Clickable style={styles.addButton}>
           <UI.Icon color={lightColor} size={100} name="ios-add" />

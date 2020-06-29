@@ -15,6 +15,16 @@ const VDAddProductScreen = () => {
       />
       <UI.Layout>
         <View style={styles.container}>
+          <UI.Spacer medium />
+
+          <UI.Pagination
+            clickableButtons
+            currentPage={step}
+            pages={[1, 2, 3, 4, 5]}
+          />
+
+          <UI.Spacer medium />
+
           <StepOne onContinue={() => setStep(step + 1)} show={step === 1} />
         </View>
       </UI.Layout>

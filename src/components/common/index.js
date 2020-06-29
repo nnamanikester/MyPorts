@@ -34,3 +34,4 @@ export * from './PieChart';
 export * from './ContributionChart';
 export * from './ReportBoard';
 export * from './Option';
+export * from './Pagination';
