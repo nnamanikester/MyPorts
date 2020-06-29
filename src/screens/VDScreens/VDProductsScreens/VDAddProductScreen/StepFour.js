@@ -18,10 +18,16 @@ const StepFour = ({
 }) => {
   if (!show) return null;
 
+  const [errors, setErrors] = React.useState({});
+
   const [addDiscount, setAddDiscount] = React.useState(false);
   const [discountType, setDiscountType] = React.useState(1);
 
   const handleFormData = () => {
+    if (!quantity) return setErrors({ quantity: 'Quantity is required!' });
+    if (!price) return setErrors({ price: 'Price is required!' });
+    if (!shipping) return setErrors({ shipping: 'Shipping is required!' });
+
     return onContinue();
   };
 
@@ -39,7 +45,19 @@ const StepFour = ({
         <UI.Text note color="">
           How many of this product do you have for sale?
         </UI.Text>
+
         <UI.Spacer />
+
+        {errors.quantity ? (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <UI.Spacer />
+            <UI.Icon size={20} name="ios-close-circle-outline" color={danger} />
+            <UI.Spacer size={3} />
+            <UI.Text color={danger}>{errors.quantity}</UI.Text>
+            <UI.Spacer />
+          </View>
+        ) : null}
+
         <UI.TextInput
           value={quantity}
           onChangeText={onQuantity}
@@ -55,7 +73,19 @@ const StepFour = ({
         <UI.Text note color="">
           How much do you sell one of this product?
         </UI.Text>
+
         <UI.Spacer />
+
+        {errors.price ? (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <UI.Spacer />
+            <UI.Icon size={20} name="ios-close-circle-outline" color={danger} />
+            <UI.Spacer size={3} />
+            <UI.Text color={danger}>{errors.price}</UI.Text>
+            <UI.Spacer />
+          </View>
+        ) : null}
+
         <UI.TextInput
           value={price}
           onChangeText={onPrice}
@@ -71,7 +101,19 @@ const StepFour = ({
         <UI.Text note color="">
           How much would you charge to ship the products to anywhere Nigeria?
         </UI.Text>
+
         <UI.Spacer />
+
+        {errors.shipping ? (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <UI.Spacer />
+            <UI.Icon size={20} name="ios-close-circle-outline" color={danger} />
+            <UI.Spacer size={3} />
+            <UI.Text color={danger}>{errors.shipping}</UI.Text>
+            <UI.Spacer />
+          </View>
+        ) : null}
+
         <UI.TextInput
           value={shipping}
           onChangeText={onShipping}

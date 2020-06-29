@@ -1,10 +1,28 @@
 import React from 'react';
+import ImagePicker from 'react-native-image-picker';
 import * as UI from '../../../../components/common';
 import { StyleSheet } from 'react-native';
 import { grayColor, lightColor } from '../../../../components/common/variables';
+import { imagePickerOptions } from '../../../../constants';
+import { processImage } from '../../../../utils';
 
-const StepOne = ({ onContinue, show }) => {
+const StepOne = ({ onContinue, show, images, onImages }) => {
   if (!show) return null;
+
+  const handleSelectImage = () => {
+    ImagePicker.showImagePicker(imagePickerOptions, (response) => {
+      if (response.didCancel) {
+        return;
+      } else if (response.error) {
+        alert(`Error: ${response.error}`);
+      } else {
+        const file = processImage(response);
+        // Upload Photo
+        // setImages([...images, {imageUrl: 'imageUrl from uploadrd photo'}])
+        return onImages(imageUrl);
+      }
+    });
+  };
 
   return (
     <>
