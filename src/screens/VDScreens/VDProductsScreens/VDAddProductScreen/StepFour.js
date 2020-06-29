@@ -108,7 +108,9 @@ const StepFour = ({ show, onContinue }) => {
 
       <UI.Spacer large />
 
-      <UI.Button onClick={() => handleFormData()}>Continue</UI.Button>
+      <UI.Button onClick={() => handleFormData()}>
+        <UI.Text color="#fff">Continue</UI.Text>
+      </UI.Button>
 
       <UI.Spacer large />
     </>

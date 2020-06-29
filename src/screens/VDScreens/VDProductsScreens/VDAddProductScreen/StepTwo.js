@@ -121,7 +121,9 @@ const StepTwo = ({ show, onContinue, offline }) => {
 
       <UI.Spacer large />
 
-      <UI.Button onClick={() => validateInputs()}>Continue</UI.Button>
+      <UI.Button onClick={() => validateInputs()}>
+        <UI.Text color="#fff">Continue</UI.Text>
+      </UI.Button>
 
       <UI.Spacer large />
     </>

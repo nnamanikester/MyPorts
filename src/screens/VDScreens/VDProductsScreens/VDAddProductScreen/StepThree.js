@@ -78,7 +78,11 @@ const StepThree = ({ show, onContinue }) => {
 
       <UI.Spacer large />
 
-      <UI.Button onClick={onContinue}>Continue</UI.Button>
+      <UI.Button onClick={onContinue}>
+        <UI.Text color="#fff">Continue</UI.Text>
+      </UI.Button>
+
+      <UI.Spacer large />
     </>
   );
 };
