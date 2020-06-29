@@ -16,7 +16,13 @@ const Select = ({ data, selected, onChange, disabled, type, style }) => {
         onValueChange={onChange}>
         {data &&
           data.map(({ label, value }) => {
-            return <Picker.Item key={`${value}`} label={label} value={value} />;
+            return (
+              <Picker.Item
+                key={`${value + label}`}
+                label={label}
+                value={value}
+              />
+            );
           })}
       </Picker>
     </View>
@@ -45,7 +51,7 @@ const styles = StyleSheet.create({
 });
 
 Select.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object),
   selected: PropTypes.any,
   onChange: PropTypes.func,
   style: PropTypes.object,

@@ -1,17 +1,32 @@
 import React from 'react';
 import * as UI from '../../../../components/common';
-import { StyleSheet, View } from 'react-native';
-import {
-  grayColor,
-  lightColor,
-  danger,
-} from '../../../../components/common/variables';
+import { View } from 'react-native';
+import { danger } from '../../../../components/common/variables';
+import { useLazyQuery } from '@apollo/react-hooks';
+import { connect } from 'react-redux';
+import { GET_CATEGORIES } from '../../../../apollo/queries/category';
 
-const StepTwo = ({ show, onContinue }) => {
+const StepTwo = ({ show, onContinue, offline }) => {
   if (!show) return null;
+
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
+  const [category, setCategory] = React.useState(null);
+  const [categories, setCategories] = React.useState([]);
   const [errors, setErrors] = React.useState({});
+
+  const [getCategories, { data, error, loading }] = useLazyQuery(
+    GET_CATEGORIES,
+  );
+
+  React.useEffect(() => {
+    if (!offline) {
+      getCategories();
+    }
+    if (data) {
+      setCategories(data.categories);
+    }
+  }, [data, error]);
 
   const validateInputs = () => {
     setErrors({});
@@ -30,14 +45,16 @@ const StepTwo = ({ show, onContinue }) => {
   return (
     <>
       <UI.Text h3>Add Product Info</UI.Text>
-      <UI.Text note>
+      <UI.Text color="" note>
         Fill the form below to tell your customers about your product.
       </UI.Text>
 
       <UI.Spacer medium />
 
       <UI.Text heading>Product name</UI.Text>
-      <UI.Text note>Tell your customers the name of your product.</UI.Text>
+      <UI.Text color="" note>
+        Tell your customers the name of your product.
+      </UI.Text>
       <UI.Spacer />
 
       {errors.name ? (
@@ -58,8 +75,30 @@ const StepTwo = ({ show, onContinue }) => {
 
       <UI.Spacer />
 
+      <UI.Text heading>Category</UI.Text>
+      <UI.Text note color="">
+        Which category does your product belong?
+      </UI.Text>
+      <UI.Spacer />
+      <UI.Select
+        type="dropdown"
+        selected={category}
+        onChange={(value) => setCategory(value)}
+        data={
+          categories &&
+          categories.map((cat) => {
+            return { label: cat.name, value: cat.id };
+          })
+        }
+      />
+
+      <UI.Spacer />
+
       <UI.Text heading>Product Description</UI.Text>
-      <UI.Text note>Describe your product here.</UI.Text>
+      <UI.Text color="" note>
+        Describe your product here.
+      </UI.Text>
+
       <UI.Spacer />
 
       {errors.desc ? (
@@ -76,15 +115,23 @@ const StepTwo = ({ show, onContinue }) => {
         value={description}
         onChangeText={(value) => setDescription(value)}
         placeholder="Enter product description"
-        style={{ height: 150 }}
+        style={{ height: 100 }}
         multiline
       />
 
       <UI.Spacer large />
 
       <UI.Button onClick={() => validateInputs()}>Continue</UI.Button>
+
+      <UI.Spacer large />
     </>
   );
 };
 
-export default StepTwo;
+const mapStateToProps = (state) => {
+  return {
+    offline: !state.network.isConnected,
+  };
+};
+
+export default connect(mapStateToProps)(StepTwo);

@@ -4,15 +4,22 @@ import Header from '../../../../components/Header';
 import { View, StyleSheet } from 'react-native';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
+import StepThree from './StepThree';
 
-const VDAddProductScreen = () => {
+const VDAddProductScreen = ({ navigation }) => {
   const [step, setStep] = React.useState(1);
 
   return (
     <>
       <Header
         title="Create Product"
-        headerLeft={<UI.Icon color="#fff" name="ios-arrow-back" />}
+        headerLeft={
+          <>
+            <UI.Clickable onClick={() => navigation.goBack()}>
+              <UI.Icon color="#fff" name="ios-arrow-back" />
+            </UI.Clickable>
+          </>
+        }
       />
       <UI.Layout>
         <View style={styles.container}>
@@ -24,6 +31,7 @@ const VDAddProductScreen = () => {
 
           <StepOne onContinue={() => setStep(step + 1)} show={step === 1} />
           <StepTwo onContinue={() => setStep(step + 1)} show={step === 2} />
+          <StepThree onContinue={() => setStep(step + 1)} show={step === 3} />
         </View>
       </UI.Layout>
     </>

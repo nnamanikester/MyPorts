@@ -10,7 +10,7 @@ const StepOne = ({ onContinue, show }) => {
     <>
       <UI.Text h3>Add Product Images</UI.Text>
 
-      <UI.Text note>
+      <UI.Text color="" note>
         Upload at least 2 images that shows clearly your product.
       </UI.Text>
 
