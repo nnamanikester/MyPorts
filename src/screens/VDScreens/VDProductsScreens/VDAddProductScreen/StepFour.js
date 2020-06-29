@@ -5,7 +5,14 @@ import { View } from 'react-native';
 const StepFour = ({ show, onContinue }) => {
   if (!show) return null;
 
+  const [quantity, setQuantity] = React.useState('');
+  const [price, setPrice] = React.useState('');
+  const [shipping, setShipping] = React.useState('');
+  const [fixedDiscount, setFixedDiscount] = React.useState('');
+  const [percentageDiscount, setPercentageDiscount] = React.useState('');
+
   const [addDiscount, setAddDiscount] = React.useState(false);
+  const [discountType, setDiscountType] = React.useState(1);
 
   const handleFormData = () => {
     return onContinue();
@@ -26,7 +33,12 @@ const StepFour = ({ show, onContinue }) => {
           How many of this product do you have for sale?
         </UI.Text>
         <UI.Spacer />
-        <UI.TextInput placeholder="Enter quantity" keyboardType="number-pad" />
+        <UI.TextInput
+          value={quantity}
+          onChangeText={(value) => setQuantity(value)}
+          placeholder="Enter quantity"
+          keyboardType="number-pad"
+        />
       </View>
 
       <UI.Spacer />
@@ -37,7 +49,12 @@ const StepFour = ({ show, onContinue }) => {
           How much do you sell one of this product?
         </UI.Text>
         <UI.Spacer />
-        <UI.TextInput placeholder="Enter price" keyboardType="number-pad" />
+        <UI.TextInput
+          value={price}
+          onChangeText={(value) => setPrice(value)}
+          placeholder="Enter price"
+          keyboardType="number-pad"
+        />
       </View>
 
       <UI.Spacer />
@@ -49,6 +66,8 @@ const StepFour = ({ show, onContinue }) => {
         </UI.Text>
         <UI.Spacer />
         <UI.TextInput
+          value={shipping}
+          onChangeText={(value) => setShipping(value)}
           placeholder="Enter shipping cost"
           keyboardType="number-pad"
         />
@@ -89,17 +108,31 @@ const StepFour = ({ show, onContinue }) => {
               <UI.Column size="6">
                 <UI.Select
                   type="dropdown"
+                  selected={discountType}
+                  onChange={(value) => setDiscountType(value)}
                   data={[
-                    { label: 'Percentage (%)', value: 2 },
-                    { label: 'Fixed amount (NGN)', value: 1 },
+                    { label: 'Percentage (%)', value: 1 },
+                    { label: 'Fixed amount (NGN)', value: 2 },
                   ]}
                 />
               </UI.Column>
               <UI.Column size="6">
-                <UI.TextInput
-                  placeholder="Enter discount"
-                  keyboardType="number-pad"
-                />
+                {discountType === 1 && (
+                  <UI.TextInput
+                    value={percentageDiscount}
+                    onChangeText={(value) => setPercentageDiscount(value)}
+                    placeholder="Enter percentage discount"
+                    keyboardType="number-pad"
+                  />
+                )}
+                {discountType === 2 && (
+                  <UI.TextInput
+                    value={fixedDiscount}
+                    onChangeText={(value) => setFixedDiscount(value)}
+                    placeholder="Enter fixed amount"
+                    keyboardType="number-pad"
+                  />
+                )}
               </UI.Column>
             </UI.Row>
           </View>
