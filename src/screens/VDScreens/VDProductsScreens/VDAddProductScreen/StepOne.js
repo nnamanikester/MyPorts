@@ -1,12 +1,16 @@
 import React from 'react';
 import ImagePicker from 'react-native-image-picker';
 import * as UI from '../../../../components/common';
-import { StyleSheet } from 'react-native';
-import { grayColor, lightColor } from '../../../../components/common/variables';
+import { StyleSheet, Image } from 'react-native';
+import {
+  grayColor,
+  lightColor,
+  primaryColor,
+} from '../../../../components/common/variables';
 import { imagePickerOptions } from '../../../../constants';
 import { processImage } from '../../../../utils';
 
-const StepOne = ({ onContinue, show, images, onImages }) => {
+const StepOne = ({ onContinue, show, images, onImages, onImageClick }) => {
   if (!show) return null;
 
   const handleSelectImage = () => {
@@ -18,12 +22,12 @@ const StepOne = ({ onContinue, show, images, onImages }) => {
       } else {
         const file = processImage(response);
         // Upload Photo
-        // setImages([...images, {imageUrl: 'imageUrl from uploadrd photo'}])
-        return onImages(imageUrl);
+        // return onImages(imageUrl = 'imageUrl from uploadrd photo');
+        return onImages(response.uri);
       }
     });
   };
-
+  console.log(images);
   return (
     <>
       <UI.Text h3>Add Product Images</UI.Text>
@@ -32,21 +36,46 @@ const StepOne = ({ onContinue, show, images, onImages }) => {
         Upload at least 2 images that shows clearly your product.
       </UI.Text>
 
-      <UI.Spacer />
+      <UI.Spacer medium />
 
       <UI.Row>
-        <UI.Clickable style={styles.imagePlaceholder}></UI.Clickable>
+        {images.map((image, index) => (
+          <UI.Clickable
+            onClick={() => onImageClick(image)}
+            key={`${image.imageUrl + index}`}
+            style={styles.imagePlaceholder}>
+            <UI.Icon
+              style={styles.close}
+              size={35}
+              name="md-close"
+              color={primaryColor}
+            />
+            <Image
+              style={{
+                width: '100%',
+                height: '100%',
+              }}
+              source={{ uri: image.imageUrl }}
+            />
+          </UI.Clickable>
+        ))}
 
-        <UI.Clickable style={styles.imagePlaceholder}></UI.Clickable>
-
-        <UI.Clickable style={styles.addButton}>
+        <UI.Clickable
+          onClick={() => handleSelectImage()}
+          style={styles.addButton}>
           <UI.Icon color={lightColor} size={100} name="ios-add" />
         </UI.Clickable>
       </UI.Row>
 
       <UI.Spacer large />
 
-      <UI.Button onClick={onContinue}>
+      <UI.Button
+        onClick={() => {
+          if (images.length < 2) {
+            return alert('Please upload at least two images');
+          }
+          onContinue();
+        }}>
         <UI.Text color="#fff">Continue</UI.Text>
       </UI.Button>
 
@@ -72,6 +101,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  close: {
+    position: 'absolute',
+    zIndex: 9,
+    right: 0,
+    paddingRight: 7,
   },
 });
 

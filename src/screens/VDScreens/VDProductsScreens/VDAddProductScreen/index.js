@@ -55,6 +55,9 @@ const VDAddProductScreen = ({ navigation }) => {
 
           <StepOne
             images={images}
+            onImageClick={(image) =>
+              setImages(images.filter((img) => img !== image))
+            }
             onImages={(imageUrl) => setImages([...images, { imageUrl }])}
             onContinue={() => setStep(step + 1)}
             show={step === 1}
