@@ -2,14 +2,21 @@ import React from 'react';
 import * as UI from '../../../../components/common';
 import { View } from 'react-native';
 
-const StepFour = ({ show, onContinue }) => {
+const StepFour = ({
+  show,
+  onContinue,
+  fixedDiscount,
+  percentageDiscount,
+  shipping,
+  price,
+  quantity,
+  onQuantity,
+  onPrice,
+  onShipping,
+  onFixedDiscount,
+  onPercentageDiscount,
+}) => {
   if (!show) return null;
-
-  const [quantity, setQuantity] = React.useState('');
-  const [price, setPrice] = React.useState('');
-  const [shipping, setShipping] = React.useState('');
-  const [fixedDiscount, setFixedDiscount] = React.useState('');
-  const [percentageDiscount, setPercentageDiscount] = React.useState('');
 
   const [addDiscount, setAddDiscount] = React.useState(false);
   const [discountType, setDiscountType] = React.useState(1);
@@ -35,7 +42,7 @@ const StepFour = ({ show, onContinue }) => {
         <UI.Spacer />
         <UI.TextInput
           value={quantity}
-          onChangeText={(value) => setQuantity(value)}
+          onChangeText={onQuantity}
           placeholder="Enter quantity"
           keyboardType="number-pad"
         />
@@ -51,7 +58,7 @@ const StepFour = ({ show, onContinue }) => {
         <UI.Spacer />
         <UI.TextInput
           value={price}
-          onChangeText={(value) => setPrice(value)}
+          onChangeText={onPrice}
           placeholder="Enter price"
           keyboardType="number-pad"
         />
@@ -67,7 +74,7 @@ const StepFour = ({ show, onContinue }) => {
         <UI.Spacer />
         <UI.TextInput
           value={shipping}
-          onChangeText={(value) => setShipping(value)}
+          onChangeText={onShipping}
           placeholder="Enter shipping cost"
           keyboardType="number-pad"
         />
@@ -120,7 +127,7 @@ const StepFour = ({ show, onContinue }) => {
                 {discountType === 1 && (
                   <UI.TextInput
                     value={percentageDiscount}
-                    onChangeText={(value) => setPercentageDiscount(value)}
+                    onChangeText={onPercentageDiscount}
                     placeholder="Enter percentage discount"
                     keyboardType="number-pad"
                   />
@@ -128,7 +135,7 @@ const StepFour = ({ show, onContinue }) => {
                 {discountType === 2 && (
                   <UI.TextInput
                     value={fixedDiscount}
-                    onChangeText={(value) => setFixedDiscount(value)}
+                    onChangeText={onFixedDiscount}
                     placeholder="Enter fixed amount"
                     keyboardType="number-pad"
                   />

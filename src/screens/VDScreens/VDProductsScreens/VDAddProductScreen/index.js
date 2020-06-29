@@ -19,6 +19,13 @@ const VDAddProductScreen = ({ navigation }) => {
   // STEP 3
   const [specifications, setSpecifications] = React.useState([]);
 
+  // STEP 4
+  const [quantity, setQuantity] = React.useState('');
+  const [price, setPrice] = React.useState('');
+  const [shipping, setShipping] = React.useState('');
+  const [fixedDiscount, setFixedDiscount] = React.useState('');
+  const [percentageDiscount, setPercentageDiscount] = React.useState('');
+
   const handleCreateProduct = () => {
     return;
   };
@@ -68,7 +75,21 @@ const VDAddProductScreen = ({ navigation }) => {
             show={step === 3}
           />
 
-          <StepFour onContinue={() => setStep(step + 1)} show={step === 4} />
+          <StepFour
+            quantity={quantity}
+            price={price}
+            shipping={shipping}
+            fixedDiscount={fixedDiscount}
+            percentageDiscount={percentageDiscount}
+            onQuantity={(value) => setQuantity(value)}
+            onFixedDiscount={(value) => setFixedDiscount(value)}
+            onPercentageDiscount={(value) => setPercentageDiscount(value)}
+            onPrice={(value) => setPrice(value)}
+            onShipping={(value) => setShipping(value)}
+            onContinue={() => setStep(step + 1)}
+            show={step === 4}
+          />
+
           <StepFive onFinish={() => handleCreateProduct()} show={step === 5} />
         </View>
       </UI.Layout>
