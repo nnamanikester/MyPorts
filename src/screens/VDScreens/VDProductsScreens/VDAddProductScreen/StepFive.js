@@ -85,7 +85,7 @@ const StepFive = ({ show, onFinish }) => {
 
       <UI.Spacer />
 
-      <UI.Button type="ghost">Publish later</UI.Button>
+      <UI.Button type="ghost">Save for later</UI.Button>
 
       <UI.Spacer large />
     </>

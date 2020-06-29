@@ -44,8 +44,8 @@ const Button = ({
       break;
     case 'ghost':
       typeStyle = {
-        backgroundColor: '#fff',
-        elevation: 0.1,
+        backgroundColor: inactiveColor,
+        elevation: 0,
       };
       color = textColor;
       break;
