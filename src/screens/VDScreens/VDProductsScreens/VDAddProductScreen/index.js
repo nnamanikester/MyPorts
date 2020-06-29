@@ -16,6 +16,9 @@ const VDAddProductScreen = ({ navigation }) => {
   const [description, setDescription] = React.useState('');
   const [category, setCategory] = React.useState(null);
 
+  // STEP 3
+  const [specifications, setSpecifications] = React.useState([]);
+
   const handleCreateProduct = () => {
     return;
   };
@@ -53,7 +56,18 @@ const VDAddProductScreen = ({ navigation }) => {
             show={step === 2}
           />
 
-          <StepThree onContinue={() => setStep(step + 1)} show={step === 3} />
+          <StepThree
+            specifications={specifications}
+            onAddSpec={(spec, value) =>
+              setSpecifications([
+                ...specifications,
+                { specification: spec, value },
+              ])
+            }
+            onContinue={() => setStep(step + 1)}
+            show={step === 3}
+          />
+
           <StepFour onContinue={() => setStep(step + 1)} show={step === 4} />
           <StepFive onFinish={() => handleCreateProduct()} show={step === 5} />
         </View>

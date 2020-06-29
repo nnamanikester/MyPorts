@@ -1,10 +1,8 @@
 import React from 'react';
 import * as UI from '../../../../components/common';
 
-const StepThree = ({ show, onContinue }) => {
+const StepThree = ({ show, onContinue, specifications, onAddSpec }) => {
   if (!show) return null;
-
-  const [specifications, setSpecifications] = React.useState([]);
 
   const [spec, setSpec] = React.useState('');
   const [value, setValue] = React.useState('');
@@ -12,7 +10,7 @@ const StepThree = ({ show, onContinue }) => {
   const handleAddSpec = () => {
     if (!spec || !value) return;
 
-    setSpecifications([...specifications, { specification: spec, value }]);
+    onAddSpec(spec, value);
     setSpec('');
     setValue('');
   };
