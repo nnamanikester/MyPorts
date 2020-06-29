@@ -1,7 +1,6 @@
 import React from 'react';
 import * as UI from '../../../../components/common';
-import { View, StyleSheet } from 'react-native';
-import Skeleton from 'react-native-skeleton-placeholder';
+import { StyleSheet } from 'react-native';
 import { grayColor, lightColor } from '../../../../components/common/variables';
 
 const StepOne = ({ onContinue, show }) => {
@@ -10,9 +9,11 @@ const StepOne = ({ onContinue, show }) => {
   return (
     <>
       <UI.Text h3>Add Product Images</UI.Text>
+
       <UI.Text note>
         Upload at least 2 images that shows clearly your product.
       </UI.Text>
+
       <UI.Spacer />
 
       <UI.Row>

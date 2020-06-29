@@ -3,6 +3,7 @@ import * as UI from '../../../../components/common';
 import Header from '../../../../components/Header';
 import { View, StyleSheet } from 'react-native';
 import StepOne from './StepOne';
+import StepTwo from './StepTwo';
 
 const VDAddProductScreen = () => {
   const [step, setStep] = React.useState(1);
@@ -17,15 +18,12 @@ const VDAddProductScreen = () => {
         <View style={styles.container}>
           <UI.Spacer medium />
 
-          <UI.Pagination
-            clickableButtons
-            currentPage={step}
-            pages={[1, 2, 3, 4, 5]}
-          />
+          <UI.Pagination currentPage={step} pages={[1, 2, 3, 4, 5]} />
 
           <UI.Spacer medium />
 
           <StepOne onContinue={() => setStep(step + 1)} show={step === 1} />
+          <StepTwo onContinue={() => setStep(step + 1)} show={step === 2} />
         </View>
       </UI.Layout>
     </>
