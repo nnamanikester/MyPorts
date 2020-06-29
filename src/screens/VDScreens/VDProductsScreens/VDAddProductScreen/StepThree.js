@@ -1,7 +1,5 @@
 import React from 'react';
 import * as UI from '../../../../components/common';
-import { View } from 'react-native';
-import { danger } from '../../../../components/common/variables';
 
 const StepThree = ({ show, onContinue }) => {
   if (!show) return null;
