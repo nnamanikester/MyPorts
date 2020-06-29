@@ -9,7 +9,7 @@ import { logUserOut } from '../redux/actions/AuthActions';
 import { danger } from './common/variables';
 import Permissions from './Permissions';
 
-const Drawer = ({ navigation, user, customer, logUserOut }) => {
+const Drawer = ({ navigation, user, customer, vendorProfile, logUserOut }) => {
   return (
     <DrawerContentScrollView style={styles.drawer}>
       {/* Drawer Header */}
@@ -44,6 +44,38 @@ const Drawer = ({ navigation, user, customer, logUserOut }) => {
           />
         </View>
       </Permissions.Customer>
+      <Permissions.Vendor>
+        <View style={styles.header}>
+          <ListItem
+            onClick={() => navigation.navigate('ShopSettings')}
+            left={
+              <View style={styles.headerAlignment}>
+                <Image
+                  style={styles.profileImage}
+                  source={
+                    vendorProfile.logo
+                      ? { uri: vendorProfile.logo }
+                      : profilePhoto
+                  }
+                />
+              </View>
+            }
+            body={
+              <View style={styles.headerAlignment}>
+                <Text size={18}>
+                  {vendorProfile ? vendorProfile.name : null}
+                </Text>
+                <Link to={`mailto:${user.email}`}>{user.email}</Link>
+              </View>
+            }
+            right={
+              <View style={styles.headerAlignment}>
+                <Icon color={info} name="ios-arrow-forward" />
+              </View>
+            }
+          />
+        </View>
+      </Permissions.Vendor>
 
       {/* Drawer Body */}
       <DrawerItem
@@ -150,13 +182,15 @@ const Drawer = ({ navigation, user, customer, logUserOut }) => {
         onPress={() => navigation.navigate('FAQ')}
       />
 
-      <DrawerItem
-        icon={({ size, color }) => (
-          <Icon size={size} color={color} name="ios-settings" />
-        )}
-        label={({ color, focused }) => <Text color={color}>Settings</Text>}
-        onPress={() => navigation.navigate('Settings')}
-      />
+      <Permissions.Customer>
+        <DrawerItem
+          icon={({ size, color }) => (
+            <Icon size={size} color={color} name="ios-settings" />
+          )}
+          label={({ color, focused }) => <Text color={color}>Settings</Text>}
+          onPress={() => navigation.navigate('Settings')}
+        />
+      </Permissions.Customer>
 
       <DrawerItem
         icon={({ size, color }) => (
@@ -196,6 +230,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
     customer: state.customer.profile,
+    vendorProfile: state.vendor.profile,
   };
 };
 
