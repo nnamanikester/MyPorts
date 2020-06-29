@@ -6,9 +6,14 @@ import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepThree from './StepThree';
 import StepFour from './StepFour';
+import StepFive from './StepFive';
 
 const VDAddProductScreen = ({ navigation }) => {
   const [step, setStep] = React.useState(1);
+
+  const handleCreateProduct = () => {
+    return;
+  };
 
   return (
     <>
@@ -34,6 +39,7 @@ const VDAddProductScreen = ({ navigation }) => {
           <StepTwo onContinue={() => setStep(step + 1)} show={step === 2} />
           <StepThree onContinue={() => setStep(step + 1)} show={step === 3} />
           <StepFour onContinue={() => setStep(step + 1)} show={step === 4} />
+          <StepFive onFinish={() => handleCreateProduct()} show={step === 5} />
         </View>
       </UI.Layout>
     </>

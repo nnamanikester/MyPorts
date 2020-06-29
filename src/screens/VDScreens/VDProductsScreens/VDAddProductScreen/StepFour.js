@@ -43,6 +43,20 @@ const StepFour = ({ show, onContinue }) => {
       <UI.Spacer />
 
       <View>
+        <UI.Text heading>Shipping cost (NGN)</UI.Text>
+        <UI.Text note color="">
+          How much would you charge to ship the products to anywhere Nigeria?
+        </UI.Text>
+        <UI.Spacer />
+        <UI.TextInput
+          placeholder="Enter shipping cost"
+          keyboardType="number-pad"
+        />
+      </View>
+
+      <UI.Spacer />
+
+      <View>
         <UI.ListItem
           body={
             <>
