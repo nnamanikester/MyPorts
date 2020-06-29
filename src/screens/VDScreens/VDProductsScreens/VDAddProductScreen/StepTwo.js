@@ -6,12 +6,19 @@ import { useLazyQuery } from '@apollo/react-hooks';
 import { connect } from 'react-redux';
 import { GET_CATEGORIES } from '../../../../apollo/queries/category';
 
-const StepTwo = ({ show, onContinue, offline }) => {
+const StepTwo = ({
+  show,
+  onContinue,
+  offline,
+  name,
+  category,
+  description,
+  onName,
+  onCategory,
+  onDescription,
+}) => {
   if (!show) return null;
 
-  const [name, setName] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [category, setCategory] = React.useState(null);
   const [categories, setCategories] = React.useState([]);
   const [errors, setErrors] = React.useState({});
 
@@ -68,7 +75,7 @@ const StepTwo = ({ show, onContinue, offline }) => {
       ) : null}
 
       <UI.TextInput
-        onChangeText={(value) => setName(value)}
+        onChangeText={onName}
         value={name}
         placeholder="Enter product name"
       />
@@ -83,7 +90,7 @@ const StepTwo = ({ show, onContinue, offline }) => {
       <UI.Select
         type="dropdown"
         selected={category}
-        onChange={(value) => setCategory(value)}
+        onChange={onCategory}
         data={
           categories &&
           categories.map((cat) => {
@@ -113,7 +120,7 @@ const StepTwo = ({ show, onContinue, offline }) => {
 
       <UI.TextInput
         value={description}
-        onChangeText={(value) => setDescription(value)}
+        onChangeText={onDescription}
         placeholder="Enter product description"
         style={{ height: 100 }}
         multiline

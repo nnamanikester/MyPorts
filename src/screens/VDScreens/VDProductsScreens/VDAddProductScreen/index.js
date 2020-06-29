@@ -11,6 +11,11 @@ import StepFive from './StepFive';
 const VDAddProductScreen = ({ navigation }) => {
   const [step, setStep] = React.useState(1);
 
+  // STEP 2
+  const [name, setName] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  const [category, setCategory] = React.useState(null);
+
   const handleCreateProduct = () => {
     return;
   };
@@ -36,7 +41,18 @@ const VDAddProductScreen = ({ navigation }) => {
           <UI.Spacer medium />
 
           <StepOne onContinue={() => setStep(step + 1)} show={step === 1} />
-          <StepTwo onContinue={() => setStep(step + 1)} show={step === 2} />
+
+          <StepTwo
+            category={category}
+            description={description}
+            name={name}
+            onDescription={(value) => setDescription(value)}
+            onCategory={(value) => setCategory(value)}
+            onName={(value) => setName(value)}
+            onContinue={() => setStep(step + 1)}
+            show={step === 2}
+          />
+
           <StepThree onContinue={() => setStep(step + 1)} show={step === 3} />
           <StepFour onContinue={() => setStep(step + 1)} show={step === 4} />
           <StepFive onFinish={() => handleCreateProduct()} show={step === 5} />
