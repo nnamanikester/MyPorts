@@ -85,7 +85,7 @@ const StepFive = ({
             {percentageDiscount ? (
               <UI.ListItem
                 left={<UI.Text heading>Discount</UI.Text>}
-                right={<UI.Text>{`${percentageDiscount}%`}</UI.Text>}
+                right={<UI.Text>{`NGN ${percentageDiscount}%`}</UI.Text>}
               />
             ) : null}
           </UI.AccordionItem>

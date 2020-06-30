@@ -2,13 +2,18 @@ import React from 'react';
 import * as UI from '../../../../components/common';
 import Header from '../../../../components/Header';
 import { View, StyleSheet } from 'react-native';
+import { CREATE_PRODUCT } from '../../../../apollo/mutations/product';
+import { useMutation } from '@apollo/react-hooks';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepThree from './StepThree';
 import StepFour from './StepFour';
 import StepFive from './StepFive';
+import { connect } from 'react-redux';
 
-const VDAddProductScreen = ({ navigation }) => {
+const VDAddProductScreen = ({ navigation, offline }) => {
+  const [createProduct, { loading, error }] = useMutation(CREATE_PRODUCT);
+
   const [step, setStep] = React.useState(1);
 
   // STEP 1
@@ -23,18 +28,70 @@ const VDAddProductScreen = ({ navigation }) => {
   const [specifications, setSpecifications] = React.useState([]);
 
   // STEP 4
-  const [quantity, setQuantity] = React.useState('');
-  const [price, setPrice] = React.useState('');
-  const [shipping, setShipping] = React.useState('');
-  const [fixedDiscount, setFixedDiscount] = React.useState('');
-  const [percentageDiscount, setPercentageDiscount] = React.useState('');
+  const [quantity, setQuantity] = React.useState(null);
+  const [price, setPrice] = React.useState(null);
+  const [shipping, setShipping] = React.useState(null);
+  const [fixedDiscount, setFixedDiscount] = React.useState(null);
+  const [percentageDiscount, setPercentageDiscount] = React.useState(null);
+
+  React.useEffect(() => {
+    if (error) {
+      alert('Unable to create product. Please try again!');
+    }
+  }, [error]);
 
   const handleCreateProduct = () => {
-    return;
+    if (!offline) {
+      createProduct({
+        variables: {
+          name,
+          description,
+          category,
+          images,
+          specifications,
+          quantity: parseInt(quantity),
+          price: parseFloat(price),
+          shipping: parseFloat(shipping),
+          fixedDiscount: parseFloat(fixedDiscount),
+          percentageDiscount: parseInt(percentageDiscount),
+          status: 1,
+        },
+      }).then((res) => {
+        navigation.goBack();
+      });
+    } else {
+      alert("Please check if you're connected to the internet");
+    }
+  };
+
+  const handleSaveForLater = () => {
+    if (!offline) {
+      createProduct({
+        variables: {
+          name,
+          description,
+          category,
+          images,
+          specifications,
+          quantity: parseInt(quantity),
+          price: parseFloat(price),
+          shipping: parseFloat(shipping),
+          fixedDiscount: parseFloat(fixedDiscount),
+          percentageDiscount: parseInt(percentageDiscount),
+          status: 0,
+        },
+      }).then((res) => {
+        console.log(res.data.createProduct);
+        navigation.goBack();
+      });
+    } else {
+      alert("Please check if you're connected to the internet");
+    }
   };
 
   return (
     <>
+      <UI.Loading show={loading} />
       <Header
         title="Create Product"
         headerLeft={
@@ -114,6 +171,7 @@ const VDAddProductScreen = ({ navigation }) => {
             percentageDiscount={percentageDiscount}
             onFinish={() => handleCreateProduct()}
             show={step === 5}
+            onSaveDraft={() => handleSaveForLater()}
           />
         </View>
       </UI.Layout>
@@ -127,4 +185,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VDAddProductScreen;
+const mapStateToProps = (state) => {
+  return {
+    offline: !state.network.isConnected,
+  };
+};
+
+export default connect(mapStateToProps)(VDAddProductScreen);
