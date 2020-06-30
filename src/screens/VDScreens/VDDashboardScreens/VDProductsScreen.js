@@ -3,13 +3,13 @@ import * as UI from '../../../components/common';
 import { View } from 'react-native';
 import SearchBar from '../../../components/SearchBar';
 import { useLazyQuery } from '@apollo/react-hooks';
-import { GET_VENDOR_PRODUCTS } from '../../../apollo/queries';
+import { GET_PRODUCTS } from '../../../apollo/queries';
 import { connect } from 'react-redux';
 import Skeleton from 'react-native-skeleton-placeholder';
 import EmptyItem from '../../../components/EmptyItem';
 import { formatMoney } from '../../../utils';
 
-const VDProductsScreen = ({ navigation, offline }) => {
+const VDProductsScreen = ({ navigation, offline, vendor }) => {
   const [products, setProducts] = React.useState([]);
 
   const [searchText, setSearchText] = React.useState('');
@@ -19,14 +19,15 @@ const VDProductsScreen = ({ navigation, offline }) => {
     value: 'createdAt_ASC',
   });
 
-  const [getProducts, { loading, data, error }] = useLazyQuery(
-    GET_VENDOR_PRODUCTS,
-  );
+  const [getProducts, { loading, data, error }] = useLazyQuery(GET_PRODUCTS);
 
   React.useEffect(() => {
     if (!offline) {
       getProducts({
         variables: {
+          where: {
+            id: vendor.id,
+          },
           first: 20,
         },
       });
@@ -35,7 +36,7 @@ const VDProductsScreen = ({ navigation, offline }) => {
     }
 
     if (data) {
-      setProducts(data.vendorProducts.edges.map((p) => p.node));
+      setProducts(data.products.edges.map((p) => p.node));
     }
 
     if (error) {
@@ -138,10 +139,12 @@ const VDProductsScreen = ({ navigation, offline }) => {
                   </>
                 }
                 right={
-                  <>
+                  <View style={{ alignItems: 'flex-end' }}>
                     <UI.Text>NGN {formatMoney(prod.price)}</UI.Text>
-                    <UI.Text>Sales: {prod.sales ? prod.sales : 0}</UI.Text>
-                  </>
+                    <UI.Text>
+                      {prod.status === 1 ? 'Published' : 'Draft'}
+                    </UI.Text>
+                  </View>
                 }
               />
             ))}
@@ -205,6 +208,7 @@ const VDProductsScreen = ({ navigation, offline }) => {
 const mapStateToProps = (state) => {
   return {
     offline: !state.network.isConnected,
+    vendor: state.vendor,
   };
 };
 
