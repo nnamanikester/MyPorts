@@ -3,6 +3,6 @@ export * from './createProfile';
 export * from './customer';
 export * from './vendor';
 export * from './user';
+export * from './product';
 
 export * from './imageUpload';
-export * from './product';
