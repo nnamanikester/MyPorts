@@ -29,7 +29,7 @@ const StepFive = ({
 
       <UI.Spacer medium />
 
-      <Swiper animated autoplayTimeout={5} height={300} loop autoplay>
+      <Swiper animated autoplayTimeout={5} height={250} loop autoplay>
         {images.map((image, index) => (
           <View key={`${image.imageUrl + index}`}>
             <Image style={styles.featured} source={{ uri: image.imageUrl }} />
@@ -112,7 +112,7 @@ const StepFive = ({
 const styles = StyleSheet.create({
   featured: {
     width: '100%',
-    height: 300,
+    height: 250,
   },
 });
 
