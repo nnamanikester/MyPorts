@@ -53,7 +53,7 @@ const StepFive = ({
                 <UI.ListItem
                   key={`${spec.specification + index}`}
                   left={<UI.Text heading>{spec.specification}</UI.Text>}
-                  right={<UI.Text>{spec.value}</UI.Text>}
+                  body={<UI.Text>{spec.value}</UI.Text>}
                 />
               ))}
             </UI.AccordionItem>

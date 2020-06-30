@@ -24,11 +24,11 @@ const StepThree = ({ show, onContinue, specifications, onAddSpec }) => {
 
       <UI.Spacer medium />
 
-      <UI.Row style={{ justifyContent: 'space-between' }}>
-        <UI.Column size="7">
+      <UI.Row>
+        <UI.Column size="4">
           <UI.Text heading>Specification</UI.Text>
         </UI.Column>
-        <UI.Column size="5" style={{ alignItems: 'flex-end' }}>
+        <UI.Column size="5">
           <UI.Text heading>Value</UI.Text>
         </UI.Column>
       </UI.Row>
@@ -41,8 +41,8 @@ const StepThree = ({ show, onContinue, specifications, onAddSpec }) => {
         return (
           <UI.ListItem
             key={`${spec.specification + spec.value}`}
-            body={<UI.Text>{spec.specification}</UI.Text>}
-            right={<UI.Text>{spec.value}</UI.Text>}
+            left={<UI.Text heading>{spec.specification}</UI.Text>}
+            body={<UI.Text>{spec.value}</UI.Text>}
           />
         );
       })}
