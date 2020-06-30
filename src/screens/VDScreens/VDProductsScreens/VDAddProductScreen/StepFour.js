@@ -100,6 +100,7 @@ const StepFour = ({
         <UI.Text heading>Shipping cost (NGN)</UI.Text>
         <UI.Text note color="">
           How much would you charge to ship the products to anywhere Nigeria?
+          Enter `0` for free shipping
         </UI.Text>
 
         <UI.Spacer />

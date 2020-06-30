@@ -2,9 +2,22 @@ import React from 'react';
 import Swiper from 'react-native-swiper';
 import { StyleSheet, View, Image } from 'react-native';
 import * as UI from '../../../../components/common';
-import { shoe1, shoe3, shoe2 } from '../../../../assets/images';
+import { formatMoney } from '../../../../utils';
 
-const StepFive = ({ show, onFinish }) => {
+const StepFive = ({
+  images,
+  description,
+  name,
+  specifications,
+  quantity,
+  price,
+  shipping,
+  fixedDiscount,
+  percentageDiscount,
+  show,
+  onFinish,
+  onSaveDraft,
+}) => {
   if (!show) return null;
 
   return (
@@ -17,75 +30,79 @@ const StepFive = ({ show, onFinish }) => {
       <UI.Spacer medium />
 
       <Swiper animated autoplayTimeout={5} height={300} loop autoplay>
-        <View>
-          <Image style={styles.featured} source={shoe1} />
-        </View>
-        <View>
-          <Image style={styles.featured} source={shoe2} />
-        </View>
-        <View>
-          <Image style={styles.featured} source={shoe3} />
-        </View>
+        {images.map((image, index) => (
+          <View key={`${image.imageUrl + index}`}>
+            <Image style={styles.featured} source={{ uri: image.imageUrl }} />
+          </View>
+        ))}
       </Swiper>
 
       <UI.Spacer />
 
-      <UI.Text size={18}>Product Name</UI.Text>
+      <UI.Text size={18}>{name}</UI.Text>
 
       <View>
         <UI.Accordion initialIndex={0}>
           <UI.AccordionItem headerText="Description">
-            <UI.Text>
-              Enjoy the beauty of italian cotton all over your body. This item
-              will fit your body and warm you up all over and during spring.
-              This item will fit your body and warm you up all over and during
-              spring.
-              {'\n\n'}
-              And over and over again, this is the UI.text.
-            </UI.Text>
+            <UI.Text>{description}</UI.Text>
           </UI.AccordionItem>
-          <UI.AccordionItem headerText="Item Specifications">
+
+          {specifications && (
+            <UI.AccordionItem headerText="Item Specifications">
+              {specifications.map((spec, index) => (
+                <UI.ListItem
+                  key={`${spec.specification + index}`}
+                  left={<UI.Text heading>{spec.specification}</UI.Text>}
+                  right={<UI.Text>{spec.value}</UI.Text>}
+                />
+              ))}
+            </UI.AccordionItem>
+          )}
+
+          <UI.AccordionItem headerText="Item Details">
             <UI.ListItem
               left={<UI.Text heading>Quantity</UI.Text>}
-              right={<UI.Text>29</UI.Text>}
-            />
-            <UI.ListItem
-              left={<UI.Text heading>Sizes</UI.Text>}
-              right={<UI.Text>S/M/L/XL/XXL</UI.Text>}
+              right={<UI.Text>{quantity}</UI.Text>}
             />
             <UI.ListItem
               left={<UI.Text heading>Price for 1</UI.Text>}
-              right={<UI.Text>N 2,500</UI.Text>}
+              right={<UI.Text>NGN {`${formatMoney(price)}.00`}</UI.Text>}
             />
             <UI.ListItem
               left={<UI.Text heading>Shipping Cost</UI.Text>}
-              right={<UI.Text>Free</UI.Text>}
+              right={
+                <UI.Text>
+                  {shipping == 0 ? 'Free' : `NGN ${formatMoney(shipping)}.00`}
+                </UI.Text>
+              }
             />
-            <UI.ListItem
-              left={<UI.Text heading>Discount</UI.Text>}
-              right={<UI.Text>10% / 20 Pieces</UI.Text>}
-            />
-            <UI.ListItem
-              left={<UI.Text heading>Location</UI.Text>}
-              right={<UI.Text>Victoria Island, Lagos.</UI.Text>}
-            />
-            <UI.ListItem
-              left={<UI.Text heading>Delivery Period</UI.Text>}
-              right={<UI.Text>3 Days Max.</UI.Text>}
-            />
+            {fixedDiscount ? (
+              <UI.ListItem
+                left={<UI.Text heading>Discount</UI.Text>}
+                right={<UI.Text>{`${formatMoney(fixedDiscount)}.00`}</UI.Text>}
+              />
+            ) : null}
+            {percentageDiscount ? (
+              <UI.ListItem
+                left={<UI.Text heading>Discount</UI.Text>}
+                right={<UI.Text>{`${percentageDiscount}%`}</UI.Text>}
+              />
+            ) : null}
           </UI.AccordionItem>
         </UI.Accordion>
       </View>
 
       <UI.Spacer medium />
 
-      <UI.Button>
+      <UI.Button onClick={onFinish}>
         <UI.Text color="#fff">Publish</UI.Text>
       </UI.Button>
 
       <UI.Spacer />
 
-      <UI.Button type="ghost">Save for later</UI.Button>
+      <UI.Button onClick={onSaveDraft} type="ghost">
+        Save for later
+      </UI.Button>
 
       <UI.Spacer large />
     </>

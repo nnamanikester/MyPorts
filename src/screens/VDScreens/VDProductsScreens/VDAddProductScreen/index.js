@@ -101,7 +101,20 @@ const VDAddProductScreen = ({ navigation }) => {
             show={step === 4}
           />
 
-          <StepFive onFinish={() => handleCreateProduct()} show={step === 5} />
+          <StepFive
+            images={images}
+            description={description}
+            category={category}
+            name={name}
+            specifications={specifications}
+            quantity={quantity}
+            price={price}
+            shipping={shipping}
+            fixedDiscount={fixedDiscount}
+            percentageDiscount={percentageDiscount}
+            onFinish={() => handleCreateProduct()}
+            show={step === 5}
+          />
         </View>
       </UI.Layout>
     </>
