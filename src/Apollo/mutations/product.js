@@ -2,9 +2,9 @@ import gql from 'graphql-tag';
 
 export const CREATE_PRODUCT = gql`
   mutation createProduct(
-    $id: String!
     $name: String!
     $description: String!
+    $category: String!
     $images: [ProductImageInput!]!
     $specifications: [ProductSpecificationInput!]!
     $quantity: Int!
@@ -15,9 +15,9 @@ export const CREATE_PRODUCT = gql`
     $status: Int!
   ) {
     createProduct(
-      id: $id
       name: $name
       description: $description
+      category: $category
       images: $images
       specifications: $specifications
       quantity: $quantity
