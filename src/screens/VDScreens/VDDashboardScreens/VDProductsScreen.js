@@ -1,79 +1,211 @@
 import React from 'react';
-import {
-  Text,
-  Layout,
-  ListItem,
-  Icon,
-  Spacer,
-  Avatar,
-  FAB,
-} from '../../../components/common';
-import { food3, image9, shoe3 } from '../../../assets/images';
+import * as UI from '../../../components/common';
+import { View } from 'react-native';
+import SearchBar from '../../../components/SearchBar';
+import { useLazyQuery } from '@apollo/react-hooks';
+import { GET_VENDOR_PRODUCTS } from '../../../apollo/queries';
+import { connect } from 'react-redux';
+import Skeleton from 'react-native-skeleton-placeholder';
+import EmptyItem from '../../../components/EmptyItem';
+import { formatMoney } from '../../../utils';
 
-const VDProductsScreen = ({ navigation }) => {
+const VDProductsScreen = ({ navigation, offline }) => {
+  const [products, setProducts] = React.useState([]);
+
+  const [searchText, setSearchText] = React.useState('');
+  const [showFilter, setShowFilter] = React.useState(false);
+  const [filter, setFilter] = React.useState({
+    label: 'createdAt',
+    value: 'createdAt_ASC',
+  });
+
+  const [getProducts, { loading, data, error }] = useLazyQuery(
+    GET_VENDOR_PRODUCTS,
+  );
+
+  React.useEffect(() => {
+    if (!offline) {
+      getProducts({
+        variables: {
+          first: 20,
+        },
+      });
+    } else {
+      alert("Please check if you're connected to the internet!");
+    }
+
+    if (data) {
+      setProducts(data.vendorProducts.edges.map((p) => p.node));
+    }
+
+    if (error) {
+      alert('Unable to fetch your products!');
+    }
+  }, [data]);
+
+  const handleSearch = (value) => {
+    setSearchText(value);
+  };
+
   return (
     <>
-      <Layout>
-        <ListItem
-          onClick={() => navigation.navigate('VDEditProduct')}
-          left={<Avatar medium src={food3} />}
-          body={
-            <>
-              <Text heading>Leather Bag</Text>
-              <Text note color="">
-                20/03/2020
-              </Text>
-            </>
-          }
-          right={
-            <>
-              <Text>NGN 2,000</Text>
-              <Text>Sales: 16</Text>
-            </>
-          }
+      <UI.Layout>
+        <UI.Spacer />
+
+        <SearchBar
+          placeholder="Search product"
+          onChangeText={(value) => handleSearch(value)}
+          value={searchText}
+          onFilterClick={() => setShowFilter(true)}
         />
-        <ListItem
-          onClick={() => navigation.navigate('VDEditProduct')}
-          left={<Avatar medium src={shoe3} />}
-          body={
-            <>
-              <Text heading>Leather Bag</Text>
-              <Text note color="">
-                20/03/2020
-              </Text>
-            </>
-          }
-          right={
-            <>
-              <Text>NGN 2,000</Text>
-              <Text>Sales: 16</Text>
-            </>
-          }
-        />
-        <ListItem
-          onClick={() => navigation.navigate('VDEditProduct')}
-          left={<Avatar medium src={image9} />}
-          body={
-            <>
-              <Text heading>Leather Bag</Text>
-              <Text note color="">
-                20/03/2020
-              </Text>
-            </>
-          }
-          right={
-            <>
-              <Text>NGN 2,000</Text>
-              <Text>Sales: 16</Text>
-            </>
-          }
-        />
-      </Layout>
-      <FAB onClick={() => navigation.navigate('VDAddProduct')} size={60}>
-        <Icon color="#fff" name="md-add" />
-      </FAB>
+
+        <UI.Spacer />
+
+        {!loading && !error && !products.length > 0 && (
+          <>
+            <UI.Spacer large />
+            <EmptyItem
+              show
+              title="No product found!"
+              message="Click the + button to add a new product."
+            />
+          </>
+        )}
+
+        {(loading || error) && (
+          <>
+            <UI.ListItem
+              left={
+                <Skeleton>
+                  <Skeleton.Item width={50} height={50} borderRadius={5} />
+                </Skeleton>
+              }
+              body={
+                <Skeleton>
+                  <View
+                    style={{ width: '70%', height: 10, marginBottom: 10 }}
+                  />
+                  <View style={{ width: '40%', height: 10 }} />
+                </Skeleton>
+              }
+            />
+            <UI.ListItem
+              left={
+                <Skeleton>
+                  <Skeleton.Item width={50} height={50} borderRadius={5} />
+                </Skeleton>
+              }
+              body={
+                <Skeleton>
+                  <View
+                    style={{ width: '70%', height: 10, marginBottom: 10 }}
+                  />
+                  <View style={{ width: '40%', height: 10 }} />
+                </Skeleton>
+              }
+            />
+            <UI.ListItem
+              left={
+                <Skeleton>
+                  <Skeleton.Item width={50} height={50} borderRadius={5} />
+                </Skeleton>
+              }
+              body={
+                <Skeleton>
+                  <View
+                    style={{ width: '70%', height: 10, marginBottom: 10 }}
+                  />
+                  <View style={{ width: '40%', height: 10 }} />
+                </Skeleton>
+              }
+            />
+          </>
+        )}
+
+        {!loading && products.length > 0 && (
+          <>
+            {products.map((prod) => (
+              <UI.ListItem
+                key={prod.id}
+                onClick={() => navigation.navigate('VDEditProduct')}
+                left={<UI.Avatar medium src={{ uri: prod.images[0].url }} />}
+                body={
+                  <>
+                    <UI.Text heading>{prod.name}</UI.Text>
+                    <UI.Text note color="">
+                      20/03/2020
+                    </UI.Text>
+                  </>
+                }
+                right={
+                  <>
+                    <UI.Text>NGN {formatMoney(prod.price)}</UI.Text>
+                    <UI.Text>Sales: {prod.sales ? prod.sales : 0}</UI.Text>
+                  </>
+                }
+              />
+            ))}
+          </>
+        )}
+      </UI.Layout>
+
+      <UI.FAB onClick={() => navigation.navigate('VDAddProduct')} size={60}>
+        <UI.Icon color="#fff" name="md-add" />
+      </UI.FAB>
+
+      <UI.ActionBar
+        headerText="Sort Products"
+        show={showFilter}
+        onCloseButtonClick={() => setShowFilter(false)}>
+        <UI.Text heading>Sort by</UI.Text>
+
+        <UI.Spacer />
+
+        <UI.Row>
+          <UI.Column size="6">
+            <UI.Select
+              type="dropdown"
+              selected={filter.label}
+              onChange={(value) => setFilter({ ...filter, label: value })}
+              data={[
+                { label: 'Name', value: 'name' },
+                { label: 'Date', value: 'createdAt' },
+                { label: 'Price', value: 'price' },
+                { label: 'Sales', value: 'sales' },
+              ]}
+            />
+          </UI.Column>
+          <UI.Column size="6">
+            <UI.Select
+              type="dropdown"
+              selected={filter.value}
+              onChange={(value) => setFilter({ ...filter, value })}
+              data={[
+                { label: 'ASC', value: `${filter.label}_ASC` },
+                { label: 'DESC', value: `${filter.label}_DESC` },
+              ]}
+            />
+          </UI.Column>
+        </UI.Row>
+
+        <UI.Spacer large />
+
+        <UI.Button>
+          <UI.Text color="#fff">Apply Filter</UI.Text>
+        </UI.Button>
+
+        <UI.Spacer />
+
+        <UI.Button type="ghost">Clear</UI.Button>
+      </UI.ActionBar>
     </>
   );
 };
 
-export default VDProductsScreen;
+const mapStateToProps = (state) => {
+  return {
+    offline: !state.network.isConnected,
+  };
+};
+
+export default connect(mapStateToProps)(VDProductsScreen);
