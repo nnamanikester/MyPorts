@@ -31,8 +31,8 @@ const StepFive = ({
 
       <Swiper animated autoplayTimeout={5} height={250} loop autoplay>
         {images.map((image, index) => (
-          <View key={`${image.imageUrl + index}`}>
-            <Image style={styles.featured} source={{ uri: image.imageUrl }} />
+          <View key={`${image.url + index}`}>
+            <Image style={styles.featured} source={{ uri: image.url }} />
           </View>
         ))}
       </Swiper>

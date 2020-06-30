@@ -22,7 +22,7 @@ const StepOne = ({ onContinue, show, images, onImages, onImageClick }) => {
       } else {
         const file = processImage(response);
         // Upload Photo
-        // return onImages(imageUrl = 'imageUrl from uploadrd photo');
+        // return onImages(url = 'url from uploadrd photo');
         return onImages(response.uri);
       }
     });
@@ -42,7 +42,7 @@ const StepOne = ({ onContinue, show, images, onImages, onImageClick }) => {
         {images.map((image, index) => (
           <UI.Clickable
             onClick={() => onImageClick(image)}
-            key={`${image.imageUrl + index}`}
+            key={`${image.url + index}`}
             style={styles.imagePlaceholder}>
             <UI.Icon
               style={styles.close}
@@ -55,7 +55,7 @@ const StepOne = ({ onContinue, show, images, onImages, onImageClick }) => {
                 width: '100%',
                 height: '100%',
               }}
-              source={{ uri: image.imageUrl }}
+              source={{ uri: image.url }}
             />
           </UI.Clickable>
         ))}
