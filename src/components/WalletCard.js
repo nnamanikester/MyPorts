@@ -32,7 +32,7 @@ const WalletCard = ({ cardNo, name, balance }) => {
             Balance
           </Text>
           <Text bold color="#fff">
-            NGN {balance}
+            {balance}
           </Text>
         </View>
         <View>

@@ -1,5 +1,8 @@
 export const formatMoney = (amount) => {
-  const formatType = new Intl.NumberFormat('en-US');
+  const formatType = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'NGN',
+  });
   return formatType.format(amount);
 };
 

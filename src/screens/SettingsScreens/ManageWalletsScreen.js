@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
@@ -9,7 +9,7 @@ import { useLazyQuery } from '@apollo/react-hooks';
 import Skeleton from 'react-native-skeleton-placeholder';
 import { formatMoney, formatCardNo } from '../../utils/index';
 
-const ManageAddressesScreen = ({ navigation, offline }) => {
+const ManageWalletsScreen = ({ navigation, offline }) => {
   const [getWallet, { loading, data, error }] = useLazyQuery(GET_WALLET);
   const [cardNo, setCardNo] = React.useState('');
   const [name, setName] = React.useState('');
@@ -83,4 +83,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ManageAddressesScreen);
+export default connect(mapStateToProps)(ManageWalletsScreen);

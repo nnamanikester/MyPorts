@@ -1,116 +1,128 @@
 import React from 'react';
-import {
-  Text,
-  Layout,
-  PieChart,
-  Spacer,
-  ReportBoard,
-  ListItem,
-  Icon,
-} from '../../../components/common';
+import * as UI from '../../../components/common';
 import {
   inactiveColor,
   textColor,
   primaryColor,
-  success,
 } from '../../../components/common/variables';
 import { View, StyleSheet } from 'react-native';
 
 const VDAnalyticsScreen = ({ navigation }) => {
   return (
     <>
-      <Layout>
-        <Spacer />
+      <UI.Layout>
+        <UI.Spacer />
         <View style={styles.container}>
-          <ListItem
+          <UI.ListItem
             onClick={() => navigation.navigate('ManageWallets')}
             left={
               <View style={styles.list}>
-                <Icon size={35} color="#fff" name="ios-card" />
+                <UI.Icon size={35} color="#fff" name="ios-card" />
               </View>
             }
             body={
               <View style={{ justifyContent: 'center', flex: 1 }}>
-                <Text>Account Balance</Text>
+                <UI.Text>Account Balance</UI.Text>
               </View>
             }
             right={
               <View style={{ flex: 1, justifyContent: 'center' }}>
-                <Text bold note>
+                <UI.Text bold note>
                   NGN 454,000
-                </Text>
+                </UI.Text>
               </View>
             }
           />
 
-          <ListItem
+          <UI.ListItem
+            onClick={() => navigation.navigate('VDProductsTab')}
+            left={
+              <View style={styles.list}>
+                <UI.Icon size={35} color="#fff" name="md-basket" />
+              </View>
+            }
+            body={
+              <View style={{ justifyContent: 'center', flex: 1 }}>
+                <UI.Text>Products</UI.Text>
+              </View>
+            }
+            right={
+              <View style={{ flex: 1, justifyContent: 'center' }}>
+                <UI.Text bold note>
+                  43
+                </UI.Text>
+              </View>
+            }
+          />
+
+          <UI.ListItem
             onClick={() => navigation.navigate('VDNewOrders')}
             left={
-              <View style={{ ...styles.list, backgroundColor: success }}>
-                <Icon size={35} color={'#fff'} name="ios-time" />
+              <View style={{ ...styles.list, backgroundColor: primaryColor }}>
+                <UI.Icon size={35} color={'#fff'} name="ios-time" />
               </View>
             }
             body={
               <View style={{ justifyContent: 'center', flex: 1 }}>
-                <Text>New Orders</Text>
+                <UI.Text>New Orders</UI.Text>
               </View>
             }
             right={
               <View style={{ flex: 1, justifyContent: 'center' }}>
-                <Text bold>3</Text>
+                <UI.Text bold>3</UI.Text>
               </View>
             }
           />
 
-          <ListItem
+          <UI.ListItem
             onClick={() => navigation.navigate('VDDeliveredOrders')}
             left={
               <View style={styles.list}>
-                <Icon size={35} color="#fff" name="ios-time" />
+                <UI.Icon size={35} color="#fff" name="ios-time" />
               </View>
             }
             body={
               <View style={{ justifyContent: 'center', flex: 1 }}>
-                <Text>Delivered Orders</Text>
+                <UI.Text>Delivered Orders</UI.Text>
               </View>
             }
             right={
               <View style={{ flex: 1, justifyContent: 'center' }}>
-                <Text bold note>
+                <UI.Text bold note>
                   546
-                </Text>
+                </UI.Text>
               </View>
             }
           />
 
-          <ListItem
+          <UI.ListItem
             onClick={() => navigation.navigate('VDTransactions')}
             left={
               <View style={styles.list}>
-                <Icon type="FontAwesome" color="#fff" name="exchange" />
+                <UI.Icon type="FontAwesome" color="#fff" name="exchange" />
               </View>
             }
             body={
               <View style={{ justifyContent: 'center', flex: 1 }}>
-                <Text>Total Transactions</Text>
+                <UI.Text>Total Transactions</UI.Text>
               </View>
             }
             right={
               <View style={{ flex: 1, justifyContent: 'center' }}>
-                <Text bold note>
+                <UI.Text bold note>
                   135
-                </Text>
+                </UI.Text>
               </View>
             }
           />
 
-          <Spacer />
-          <Text heading>Activity Report</Text>
-          <Spacer />
-          <ReportBoard
+          <UI.Spacer />
+          <UI.Text heading>Activity Report</UI.Text>
+          <UI.Spacer />
+          <UI.ReportBoard
             data={[
               {
-                title: 'Sales',
+                title: 'Orders',
                 today: '10',
                 week: '24',
                 month: '93',
@@ -147,10 +159,10 @@ const VDAnalyticsScreen = ({ navigation }) => {
             ]}
           />
 
-          <Spacer />
-          <Text heading>Weekly Sales Chart</Text>
-          <Spacer />
-          <PieChart
+          <UI.Spacer />
+          <UI.Text heading>Weekly Sales Chart</UI.Text>
+          <UI.Spacer />
+          <UI.PieChart
             data={[
               {
                 name: 'Kester',
@@ -183,9 +195,9 @@ const VDAnalyticsScreen = ({ navigation }) => {
             ]}
             bgColor={inactiveColor}
           />
-          <Spacer large />
+          <UI.Spacer large />
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };

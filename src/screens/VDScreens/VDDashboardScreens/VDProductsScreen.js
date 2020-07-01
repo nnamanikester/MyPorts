@@ -209,7 +209,7 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
                   }
                   right={
                     <View style={{ alignItems: 'flex-end' }}>
-                      <UI.Text>NGN {formatMoney(item.price)}</UI.Text>
+                      <UI.Text>{formatMoney(item.price)}</UI.Text>
                       <UI.Text>
                         {item.status === 1 ? 'Published' : 'Draft'}
                       </UI.Text>

@@ -66,13 +66,13 @@ const StepFive = ({
             />
             <UI.ListItem
               left={<UI.Text heading>Price for 1</UI.Text>}
-              right={<UI.Text>NGN {`${formatMoney(price)}.00`}</UI.Text>}
+              right={<UI.Text>{`${formatMoney(price)}.00`}</UI.Text>}
             />
             <UI.ListItem
               left={<UI.Text heading>Shipping Cost</UI.Text>}
               right={
                 <UI.Text>
-                  {shipping == 0 ? 'Free' : `NGN ${formatMoney(shipping)}.00`}
+                  {shipping == 0 ? 'Free' : `${formatMoney(shipping)}.00`}
                 </UI.Text>
               }
             />
@@ -85,7 +85,7 @@ const StepFive = ({
             {percentageDiscount ? (
               <UI.ListItem
                 left={<UI.Text heading>Discount</UI.Text>}
-                right={<UI.Text>{`NGN ${percentageDiscount}%`}</UI.Text>}
+                right={<UI.Text>{`${percentageDiscount}%`}</UI.Text>}
               />
             ) : null}
           </UI.AccordionItem>
