@@ -33,7 +33,7 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
         },
         name_contains: searchText,
       },
-      first: 10,
+      first: 20,
       orderBy: filter.value,
     },
   });
@@ -53,21 +53,28 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
     }
   }, [data]);
 
+  // Refetch data while typing search keyword.
   const handleSearch = (value) => {
     setSearchText(value);
     refetch();
   };
 
+  // Fetch more products onEndReach for pagination.
   const fetchMoreProducts = () => {
     setFetching(true);
+    // Check if  there's a next page.
     if (data.products.pageInfo.hasNextPage) {
+      // Fetch more products
       fetchMore({
         variables: {
           after: data.products.pageInfo.endCursor,
         },
+        // Update the cached data with the fetched product
         updateQuery: (prev, { fetchMoreResult }) => {
           if (prev.products.pageInfo.hasNextPage) {
+            // if the previous page info has next page
             setFetching(false);
+            // return the products with the new data added to cache
             return {
               products: {
                 edges: [
@@ -79,6 +86,7 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
               },
             };
           } else {
+            // If not, return the precious cached data
             setFetching(false);
             return prev;
           }
