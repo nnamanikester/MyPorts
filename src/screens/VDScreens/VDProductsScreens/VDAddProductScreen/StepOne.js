@@ -27,7 +27,7 @@ const StepOne = ({ onContinue, show, images, onImages, onImageClick }) => {
       }
     });
   };
-  console.log(images);
+
   return (
     <>
       <UI.Text h3>Add Product Images</UI.Text>

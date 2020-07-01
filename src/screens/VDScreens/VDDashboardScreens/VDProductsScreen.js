@@ -1,6 +1,6 @@
 import React from 'react';
 import * as UI from '../../../components/common';
-import { View } from 'react-native';
+import { View, FlatList, ScrollView } from 'react-native';
 import SearchBar from '../../../components/SearchBar';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { GET_PRODUCTS } from '../../../apollo/queries';
@@ -8,33 +8,42 @@ import { connect } from 'react-redux';
 import Skeleton from 'react-native-skeleton-placeholder';
 import EmptyItem from '../../../components/EmptyItem';
 import { formatMoney } from '../../../utils';
+import moment from 'moment';
 
 const VDProductsScreen = ({ navigation, offline, vendor }) => {
   const [products, setProducts] = React.useState([]);
 
   const [searchText, setSearchText] = React.useState('');
   const [showFilter, setShowFilter] = React.useState(false);
+  const [fetching, setFetching] = React.useState(false);
+
   const [filter, setFilter] = React.useState({
     label: 'createdAt',
-    value: 'createdAt_ASC',
+    value: 'createdAt_DESC',
   });
 
-  const [getProducts, { loading, data, error }] = useLazyQuery(GET_PRODUCTS);
+  const [
+    getProducts,
+    { loading, data, error, refetch, fetchMore },
+  ] = useLazyQuery(GET_PRODUCTS, {
+    variables: {
+      where: {
+        vendor: {
+          id: vendor.id,
+        },
+        name_contains: searchText,
+      },
+      first: 10,
+      orderBy: filter.value,
+    },
+  });
 
   React.useEffect(() => {
     if (!offline) {
-      getProducts({
-        variables: {
-          where: {
-            id: vendor.id,
-          },
-          first: 20,
-        },
-      });
+      getProducts();
     } else {
       alert("Please check if you're connected to the internet!");
     }
-
     if (data) {
       setProducts(data.products.edges.map((p) => p.node));
     }
@@ -46,11 +55,43 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
 
   const handleSearch = (value) => {
     setSearchText(value);
+    refetch();
+  };
+
+  const fetchMoreProducts = () => {
+    setFetching(true);
+    if (data.products.pageInfo.hasNextPage) {
+      fetchMore({
+        variables: {
+          after: data.products.pageInfo.endCursor,
+        },
+        updateQuery: (prev, { fetchMoreResult }) => {
+          if (prev.products.pageInfo.hasNextPage) {
+            setFetching(false);
+            return {
+              products: {
+                edges: [
+                  ...prev.products.edges,
+                  ...fetchMoreResult.products.edges,
+                ],
+                pageInfo: { ...fetchMoreResult.products.pageInfo },
+                __typename: fetchMoreResult.products.__typename,
+              },
+            };
+          } else {
+            setFetching(false);
+            return prev;
+          }
+        },
+      });
+    } else {
+      setFetching(false);
+    }
   };
 
   return (
     <>
-      <UI.Layout>
+      <UI.Layout noScroll>
         <UI.Spacer />
 
         <SearchBar
@@ -74,7 +115,7 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
         )}
 
         {(loading || error) && (
-          <>
+          <ScrollView>
             <UI.ListItem
               left={
                 <Skeleton>
@@ -120,34 +161,55 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
                 </Skeleton>
               }
             />
-          </>
+          </ScrollView>
         )}
 
-        {!loading && products.length > 0 && (
+        {!loading && !error && products.length > 0 && (
           <>
-            {products.map((prod) => (
-              <UI.ListItem
-                key={prod.id}
-                onClick={() => navigation.navigate('VDEditProduct')}
-                left={<UI.Avatar medium src={{ uri: prod.images[0].url }} />}
-                body={
-                  <>
-                    <UI.Text heading>{prod.name}</UI.Text>
-                    <UI.Text note color="">
-                      20/03/2020
-                    </UI.Text>
-                  </>
-                }
-                right={
-                  <View style={{ alignItems: 'flex-end' }}>
-                    <UI.Text>NGN {formatMoney(prod.price)}</UI.Text>
-                    <UI.Text>
-                      {prod.status === 1 ? 'Published' : 'Draft'}
-                    </UI.Text>
-                  </View>
-                }
-              />
-            ))}
+            <FlatList
+              ListFooterComponentStyle={{
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              ListFooterComponent={
+                <>
+                  <UI.Spacer />
+                  <UI.Spinner show={fetching} area={40} />
+                  {!fetching && <UI.Text>No more products</UI.Text>}
+                  <UI.Spacer large />
+                </>
+              }
+              onEndReached={() => fetchMoreProducts()}
+              onEndReachedThreshold={0.3}
+              refreshing={loading}
+              onRefresh={() => refetch()}
+              showsVerticalScrollIndicator={false}
+              data={products}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <UI.ListItem
+                  key={item.id}
+                  onClick={() => navigation.navigate('VDEditProduct')}
+                  left={<UI.Avatar medium src={{ uri: item.images[0].url }} />}
+                  body={
+                    <>
+                      <UI.Text heading>{item.name}</UI.Text>
+                      <UI.Text note color="">
+                        {moment(item.createdAt).format('DD/MM/YYYY')}
+                      </UI.Text>
+                    </>
+                  }
+                  right={
+                    <View style={{ alignItems: 'flex-end' }}>
+                      <UI.Text>NGN {formatMoney(item.price)}</UI.Text>
+                      <UI.Text>
+                        {item.status === 1 ? 'Published' : 'Draft'}
+                      </UI.Text>
+                    </View>
+                  }
+                />
+              )}
+            />
           </>
         )}
       </UI.Layout>
@@ -193,13 +255,22 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
 
         <UI.Spacer large />
 
-        <UI.Button>
-          <UI.Text color="#fff">Apply Filter</UI.Text>
+        <UI.Button onClick={() => setShowFilter(false)}>
+          <UI.Text color="#fff">Done</UI.Text>
         </UI.Button>
 
         <UI.Spacer />
 
-        <UI.Button type="ghost">Clear</UI.Button>
+        <UI.Button
+          onClick={() =>
+            setFilter({
+              label: 'createdAt',
+              value: 'createdAt_DESC',
+            })
+          }
+          type="ghost">
+          Reset
+        </UI.Button>
       </UI.ActionBar>
     </>
   );

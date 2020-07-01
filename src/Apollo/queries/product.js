@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 export const GET_PRODUCTS = gql`
   query products(
+    $where: ProductWhereInput
     $orderBy: ProductOrderByInput
     $skip: Int
     $after: String
@@ -10,6 +11,7 @@ export const GET_PRODUCTS = gql`
     $last: Int
   ) {
     products(
+      where: $where
       orderBy: $orderBy
       skip: $skip
       after: $after
