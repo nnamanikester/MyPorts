@@ -21,6 +21,10 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
     label: 'createdAt',
     value: 'createdAt_DESC',
   });
+  const [status, setStatus] = React.useState({
+    label: 'All',
+    value: [1, 0],
+  });
 
   const [
     getProducts,
@@ -32,6 +36,7 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
           id: vendor.id,
         },
         name_contains: searchText,
+        status_in: status.value,
       },
       first: 20,
       orderBy: filter.value,
@@ -230,6 +235,22 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
         headerText="Sort Products"
         show={showFilter}
         onCloseButtonClick={() => setShowFilter(false)}>
+        <UI.Spacer />
+
+        <UI.Text heading>Status</UI.Text>
+
+        <UI.Radio
+          // selected={status.value}
+          onSelect={({ value, label }) => setStatus({ value, label })}
+          data={[
+            { label: 'All', value: [1, 0] },
+            { label: 'Draft', value: [0] },
+            { label: 'Published', value: [1] },
+          ]}
+        />
+
+        <UI.Spacer />
+
         <UI.Text heading>Sort by</UI.Text>
 
         <UI.Spacer />

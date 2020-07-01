@@ -5,6 +5,11 @@ import { Icon } from '../Icon';
 import { primaryColor } from '../variables';
 import PropTypes from 'prop-types';
 
+/**
+ * A component that accepts required `data` prop of array of objects of `label`
+ * and renders a radio component with the provided `label` as the radio's label.
+ * Aside label, other keys can also be provided.
+ */
 const Radio = ({ data, onSelect, selected }) => {
   return (
     <RadioButtonRN
@@ -30,9 +35,20 @@ const styles = StyleSheet.create({
 });
 
 Radio.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
+  /**
+   * Accepts an array of object of required `label` key to render the radio
+   * buttons.
+   */
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  /**
+   * A callback called when a button has been selected.
+   */
   onSelect: PropTypes.func,
-  selected: PropTypes.number,
+  /**
+   * Accepts the `data` (one of the objects provided in `data` prop) to
+   * determin the selected button.
+   */
+  selected: PropTypes.any,
 };
 
 Radio.defaultProps = {

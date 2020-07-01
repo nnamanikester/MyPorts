@@ -1,3 +1,6 @@
+import 'intl';
+import 'intl/locale-data/jsonp/en';
+
 export const formatMoney = (amount) => {
   const formatType = new Intl.NumberFormat('en-US', {
     style: 'currency',
