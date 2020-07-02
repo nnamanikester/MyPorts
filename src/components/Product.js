@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
-import { Text, Row, Spacer, Clickable } from './common';
+import { Text, Clickable } from './common';
 
 const Product = ({ name, vendor, quantity, image, onClick }) => {
   return (
@@ -10,19 +10,17 @@ const Product = ({ name, vendor, quantity, image, onClick }) => {
           <Image style={styles.image} source={image} />
         </View>
         <View style={styles.content}>
-          <Text numberOfLines={1} style={styles.title}>
+          <Text numberOfLines={1} heading>
             {name}
+          </Text>
+          <Text numberOfLines={1} style={styles.vendor}>
+            Stock: {' ' + quantity}
           </Text>
           {vendor && (
             <Text numberOfLines={1} note>
               {vendor}
             </Text>
           )}
-          <Row>
-            <Text style={styles.vendor}>Quantity:</Text>
-            <Spacer />
-            <Text style={styles.vendor}>{quantity}</Text>
-          </Row>
         </View>
       </Clickable>
     </View>
@@ -45,13 +43,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 10,
   },
-  title: {
-    fontSize: 17,
-    fontFamily: 'SFPD-semi-bold',
-  },
   vendor: {
     fontSize: 15,
-    fontFamily: 'SFPD-regular',
   },
 });
 

@@ -2,8 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 export const logUserOut = () => {
   return async (dispatch) => {
-    await AsyncStorage.removeItem('@myports/user');
-    await AsyncStorage.removeItem('@myports/token');
+    await AsyncStorage.clear();
     return dispatch({ type: 'LOG_USER_OUT' });
   };
 };

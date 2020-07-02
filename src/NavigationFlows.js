@@ -8,14 +8,10 @@ import AuthFlow from './navigation/AuthFlow';
 import VDFlow from './navigation/VDFlow';
 import WelcomeScreen from './screens/WelcomeScreen';
 import SplashScreen from './screens/SplashScreen';
-import { StyleSheet, Platform, StatusBar, View } from 'react-native';
-import { primaryColor } from './components/common/variables';
 import AsyncStorage from '@react-native-community/async-storage';
 import NetworkError from './components/NetworkError';
 import CreateProfileFLow from './navigation/CreateProfileFlow';
 import { TOKEN_STORAGE, USER_STORAGE } from './constants';
-
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 
 const NavigationFlows = ({
   isSkipped,
@@ -44,7 +40,7 @@ const NavigationFlows = ({
     setAppLoading(false);
   };
 
-  // Sends a query to the server ans assign the data to redux token
+  // Sends a query to the server and assign the data to redux token
   const storeDataOnRedux = (t, u) => {
     u = JSON.parse(u);
     setStorage(u, t);
@@ -65,36 +61,21 @@ const NavigationFlows = ({
   }
 
   return (
-    <>
-      <View style={styles.statusBar}>
-        <StatusBar
-          translucent
-          backgroundColor={primaryColor}
-          barStyle="light-content"
-        />
-      </View>
-      <NavigationContainer>
-        {user && user.isCustomer ? (
-          <MainFlow />
-        ) : user && user.isVendor ? (
-          <VDFlow />
-        ) : isSkipped ? (
-          <MainFlow />
-        ) : user && !user.isVendor && !user.isCustomer ? (
-          <CreateProfileFLow />
-        ) : (
-          <AuthFlow />
-        )}
-      </NavigationContainer>
-    </>
+    <NavigationContainer>
+      {user && user.isCustomer ? (
+        <MainFlow />
+      ) : user && user.isVendor ? (
+        <VDFlow />
+      ) : isSkipped ? (
+        <MainFlow />
+      ) : user.id && !user.isVendor && !user.isCustomer ? (
+        <CreateProfileFLow />
+      ) : (
+        <AuthFlow />
+      )}
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  statusBar: {
-    height: STATUSBAR_HEIGHT,
-  },
-});
 
 const mapStateToProps = (state) => {
   const { isSkipped, isStranger, token, user } = state.auth;

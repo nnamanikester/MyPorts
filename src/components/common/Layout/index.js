@@ -1,30 +1,27 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View, RefreshControl } from 'react-native';
+import { primaryColor } from '../variables';
 
 const Layout = ({
   children,
   itemToFloat,
   style,
-  onScrollUp,
-  onScrollDown,
   noScroll,
+  onEndReached,
+  onRefresh,
+  refreshing,
 }) => {
-  let scrollOffset = 0;
-
-  const onScroll = (event) => {
-    const currentScrollOffset = event.nativeEvent.contentOffset.y;
-    const differnce = Math.abs(currentScrollOffset - scrollOffset);
-
-    if (scrollOffset > currentScrollOffset && differnce > 3) {
-      // scrollOffset = currentScrollOffset;
-      if (onScrollDown) return onScrollDown();
-    }
-
-    if (differnce > 3) {
-      scrollOffset = currentScrollOffset;
-      if (onScrollUp) return onScrollUp();
-    }
+  const isCloseToBottom = ({
+    layoutMeasurement,
+    contentOffset,
+    contentSize,
+  }) => {
+    const paddingToBottom = 0;
+    return (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    );
   };
 
   return (
@@ -33,10 +30,23 @@ const Layout = ({
         <View style={{ ...styles.container, ...style }}>{children}</View>
       ) : (
         <ScrollView
+          refreshControl={
+            <RefreshControl
+              colors={[primaryColor]}
+              onRefresh={onRefresh}
+              refreshing={refreshing}
+              progressBackgroundColor="#fff"
+            />
+          }
+          scrollEventThrottle={400}
           stickyHeaderIndices={[itemToFloat]}
           showsVerticalScrollIndicator={false}
-          onScroll={onScroll}
-          bounces={false}
+          onScroll={({ nativeEvent }) => {
+            if (isCloseToBottom(nativeEvent)) {
+              onEndReached();
+            }
+          }}
+          bounces
           style={{ ...styles.container, ...style }}>
           {children}
         </ScrollView>
@@ -67,18 +77,23 @@ Layout.propTypes = {
    */
   noScroll: PropTypes.bool,
   /**
-   * Invoked when a scroll event is detected moving upwards
+   * Invoked when a the user scrolls to the bottom of the scrollview
    */
-  onScrollUp: PropTypes.func,
+  onEndReached: PropTypes.func,
   /**
-   * Invoked when a scroll event is detected moving downwards
+   * Invoked when the view start refreshing
    */
-  onScrollDown: PropTypes.func,
+  onRefresh: PropTypes.func,
+  /**
+   * Whether the view should be indicating an active refresh
+   */
+  refreshing: PropTypes.bool,
 };
 
 Layout.defaultProps = {
   style: {},
   noScroll: false,
+  onEndReached: () => {},
 };
 
 export { Layout };

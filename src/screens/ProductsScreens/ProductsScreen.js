@@ -1,52 +1,116 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import {
-  Layout,
-  Spacer,
-  Text,
-  Icon,
-  Row,
-  Clickable,
-} from '../../components/common';
+import * as UI from '../../components/common';
 import Swiper from 'react-native-swiper';
 import Header from '../../components/Header';
 import Product from '../../components/Product';
 import FeaturedProduct from '../../components/FeaturedProduct';
 import { ScrollView, StyleSheet, View, Image } from 'react-native';
-import {
-  female1,
-  female2,
-  female3,
-  male1,
-  bag1,
-  shoe1,
-  shoe2,
-} from '../../assets/images';
+import { useLazyQuery } from '@apollo/react-hooks';
+import { GET_PRODUCTS } from '../../apollo/queries';
+import Skeleton from 'react-native-skeleton-placeholder';
+import EmptyItem from '../../components/EmptyItem';
+import { female2, female3, bag1, shoe1, shoe2 } from '../../assets/images';
+import { info } from '../../components/common/variables';
 
-const ProductsScreen = ({ navigation }) => {
+const ProductsScreen = ({ navigation, offline }) => {
+  const [products, setProducts] = React.useState([]);
+  const [fetching, setFetching] = React.useState(false);
+
+  const [
+    getProducts,
+    { loading, data, error, refetch, fetchMore },
+  ] = useLazyQuery(GET_PRODUCTS, {
+    variables: {
+      first: 42,
+    },
+    pollInterval: 10000,
+  });
+
+  React.useEffect(() => {
+    if (!offline) {
+      getProducts();
+    } else {
+      alert("Please check if you're connected to the internet!");
+    }
+    if (data) {
+      setProducts(data.products.edges.map((p) => p.node));
+    }
+
+    if (error) {
+      alert('Unable to fetch your products!');
+    }
+  }, [data]);
+
+  // Fetch more products onEndReach for pagination.
+  const fetchMoreProducts = () => {
+    setFetching(true);
+    // Check if  there's a next page.
+    if (data.products.pageInfo.hasNextPage) {
+      // Fetch more products
+      fetchMore({
+        variables: {
+          after: data.products.pageInfo.endCursor,
+        },
+        // Update the cached data with the fetched product
+        updateQuery: (prev, { fetchMoreResult }) => {
+          if (prev.products.pageInfo.hasNextPage) {
+            // if the previous page info has next page
+            setFetching(false);
+            // return the products with the new data added to cache
+            return {
+              products: {
+                edges: [
+                  ...prev.products.edges,
+                  ...fetchMoreResult.products.edges,
+                ],
+                pageInfo: { ...fetchMoreResult.products.pageInfo },
+                __typename: fetchMoreResult.products.__typename,
+              },
+            };
+          } else {
+            // If not, return the precious cached data
+            setFetching(false);
+            return prev;
+          }
+        },
+      });
+    } else {
+      setFetching(false);
+    }
+  };
+
   return (
     <>
       <Header
         isCart
         title="Shop"
         headerLeft={
-          <Clickable onClick={() => navigation.openDrawer()}>
-            <Icon name="ios-menu" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.openDrawer()}>
+            <UI.Icon name="ios-menu" color="#fff" />
+          </UI.Clickable>
         }
         headerRight={
           <>
-            <Clickable onClick={() => navigation.navigate('Cart')}>
-              <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </Clickable>
-            <Spacer medium />
-            <Clickable onClick={() => navigation.navigate('Search')}>
-              <Icon name="ios-search" color="#fff" />
-            </Clickable>
+            <UI.Clickable onClick={() => navigation.navigate('Cart')}>
+              <UI.Icon
+                name="shopping-bag"
+                size={22}
+                type="Feather"
+                color="#fff"
+              />
+            </UI.Clickable>
+            <UI.Spacer medium />
+            <UI.Clickable onClick={() => navigation.navigate('Search')}>
+              <UI.Icon name="ios-search" color="#fff" />
+            </UI.Clickable>
           </>
         }
       />
-      <Layout>
+      <UI.Layout
+        refreshing={loading}
+        onRefresh={() => refetch()}
+        onEndReached={() => fetchMoreProducts()}>
         <View style={styles.container}>
           <Swiper
             paginationStyle={{ bottom: 5 }}
@@ -55,23 +119,23 @@ const ProductsScreen = ({ navigation }) => {
             height={100}
             loop
             autoplay>
-            <Clickable>
+            <UI.Clickable>
               <Image style={styles.advert} source={shoe1} />
-            </Clickable>
-            <Clickable>
+            </UI.Clickable>
+            <UI.Clickable>
               <Image style={styles.advert} source={shoe2} />
-            </Clickable>
-            <Clickable>
+            </UI.Clickable>
+            <UI.Clickable>
               <Image style={styles.advert} source={bag1} />
-            </Clickable>
-            <Clickable>
+            </UI.Clickable>
+            <UI.Clickable>
               <Image style={styles.advert} source={female3} />
-            </Clickable>
+            </UI.Clickable>
           </Swiper>
         </View>
         <View style={styles.container}>
-          <Text style={styles.title}>Top Selling Products</Text>
-          <Spacer />
+          <UI.Text style={styles.title}>Top Selling Products</UI.Text>
+          <UI.Spacer />
         </View>
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -113,8 +177,8 @@ const ProductsScreen = ({ navigation }) => {
         </ScrollView>
 
         <View style={styles.container}>
-          <Text style={styles.title}>Shop Our Collections</Text>
-          <Spacer />
+          <UI.Text style={styles.title}>Shop Our Collections</UI.Text>
+          <UI.Spacer />
         </View>
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -137,61 +201,73 @@ const ProductsScreen = ({ navigation }) => {
         </ScrollView>
 
         <View style={styles.container}>
-          <Text style={styles.title}>Latest Products</Text>
-          <Spacer />
-          <Row style={{ justifyContent: 'space-between' }}>
-            <Product
-              quantity="89"
-              image={female1}
-              name="Water Proof Bag"
-              vendor="Chiomy Styles"
-              onClick={() => navigation.navigate('SingleProduct')}
-            />
-            <Product
-              quantity="14"
-              image={male1}
-              name="Table Spoon"
-              vendor="Benson Utilities"
-              onClick={() => navigation.navigate('SingleProduct')}
-            />
-            <Product
-              image={female2}
-              name="Female belt holder"
-              vendor="Genny Collections"
-              quantity="31"
-              onClick={() => navigation.navigate('SingleProduct')}
-            />
-            <Product
-              quantity="45"
-              image={female3}
-              name="Balenciaga Shoe"
-              vendor="Chucks Ventiany"
-              onClick={() => navigation.navigate('SingleProduct')}
-            />
-            <Product
-              quantity="15"
-              image={shoe1}
-              name="Adidas Shoe"
-              vendor="Adidas"
-              onClick={() => navigation.navigate('SingleProduct')}
-            />
-            <Product
-              quantity="20"
-              image={female3}
-              name="Nike Shoe"
-              vendor="Nike"
-              onClick={() => navigation.navigate('SingleProduct')}
-            />
-            <Product
-              quantity="8"
-              image={female3}
-              name="Gucci Bag"
-              vendor="Cossy Viantae"
-              onClick={() => navigation.navigate('SingleProduct')}
-            />
-          </Row>
+          <UI.Text style={styles.title}>Latest Products</UI.Text>
+          <UI.Spacer />
+          <UI.Row style={{ justifyContent: 'space-between' }}>
+            {(loading || error) && (
+              <Skeleton>
+                <View>
+                  <View style={{ width: 120, height: 120, borderRadius: 5 }} />
+                  <View style={{ width: 120, height: 10, marginVertical: 5 }} />
+                  <View style={{ width: 120, height: 10 }} />
+                </View>
+                <View>
+                  <View style={{ width: 120, height: 120, borderRadius: 5 }} />
+                  <View style={{ width: 120, height: 10, marginVertical: 5 }} />
+                  <View style={{ width: 120, height: 10 }} />
+                </View>
+                <View>
+                  <View style={{ width: 120, height: 120, borderRadius: 5 }} />
+                  <View style={{ width: 120, height: 10, marginVertical: 5 }} />
+                  <View style={{ width: 120, height: 10 }} />
+                </View>
+              </Skeleton>
+            )}
+
+            {!loading && !error && !products.length > 0 && (
+              <>
+                <UI.Spacer large />
+                <EmptyItem
+                  icon={<UI.Icon color={info} size={100} name="ios-basket" />}
+                  show
+                  title="No product found!"
+                  message="There are no products yet! Please check back later."
+                />
+              </>
+            )}
+
+            {!loading &&
+              !error &&
+              products.length > 0 &&
+              products.map((p) => {
+                console.log(p.vendor);
+                return (
+                  <Product
+                    key={p.id}
+                    quantity={p.quantity}
+                    image={{ uri: p.images[0].url }}
+                    name={p.name}
+                    vendor={p.category.name}
+                    onClick={() =>
+                      navigation.navigate('SingleProduct', { product: p })
+                    }
+                  />
+                );
+              })}
+          </UI.Row>
+
+          <UI.Spacer medium />
+
+          <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <UI.Spinner show={fetching} area={40} />
+            {!fetching && !loading && !error && (
+              <UI.Text>No more products!</UI.Text>
+            )}
+          </View>
+
+          <UI.Spacer large />
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
@@ -211,4 +287,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductsScreen;
+const mapStateToProps = (state) => {
+  return {
+    offline: !state.network.isConnected,
+  };
+};
+
+export default connect(mapStateToProps)(ProductsScreen);
