@@ -56,3 +56,12 @@ export const CUSTOMER_ORDERS = gql`
     }
   }
 `;
+
+export const SEARCH_TERMS = gql`
+  {
+    searchTerms {
+      id
+      term
+    }
+  }
+`;

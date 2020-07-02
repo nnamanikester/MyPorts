@@ -94,6 +94,7 @@ Layout.defaultProps = {
   style: {},
   noScroll: false,
   onEndReached: () => {},
+  refreshing: false,
 };
 
 export { Layout };

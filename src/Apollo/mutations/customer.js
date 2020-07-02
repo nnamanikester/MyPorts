@@ -30,3 +30,12 @@ export const UPDATE_CUSTOMER = gql`
     }
   }
 `;
+
+export const CREATE_SEARCH_TERM = gql`
+  mutation createSearchTerm($term: String!) {
+    createSearchTerm(term: $term) {
+      id
+      name
+    }
+  }
+`;

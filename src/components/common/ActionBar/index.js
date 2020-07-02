@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   headerText: {
     flex: 1,
     fontFamily: 'SFPD-regular',
-    fontSize: 24,
+    fontSize: 20,
   },
   body: {
     paddingTop: 10,
