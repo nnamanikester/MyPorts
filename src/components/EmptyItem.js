@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { info } from './common/variables';
 import * as UI from './common';
 
-const EmptyItem = ({ show, title, message }) => {
+const EmptyItem = ({ show, title, message, icon }) => {
   if (!show) return null;
 
   return (
@@ -22,9 +22,7 @@ const EmptyItem = ({ show, title, message }) => {
 
       <UI.Spacer large />
 
-      <View>
-        <UI.Icon color={info} size={100} name="ios-basket" />
-      </View>
+      <View>{icon}</View>
     </View>
   );
 };

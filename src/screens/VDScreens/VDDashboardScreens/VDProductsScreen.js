@@ -9,6 +9,7 @@ import Skeleton from 'react-native-skeleton-placeholder';
 import EmptyItem from '../../../components/EmptyItem';
 import { formatMoney } from '../../../utils';
 import moment from 'moment';
+import { info } from '../../../components/common/variables';
 
 const VDProductsScreen = ({ navigation, offline, vendor }) => {
   const [products, setProducts] = React.useState([]);
@@ -120,6 +121,7 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
           <>
             <UI.Spacer large />
             <EmptyItem
+              icon={<UI.Icon color={info} size={100} name="ios-basket" />}
               show
               title="No product found!"
               message="Click the + button to add a new product."
@@ -202,7 +204,11 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
               renderItem={({ item }) => (
                 <UI.ListItem
                   key={item.id}
-                  onClick={() => navigation.navigate('VDEditProduct')}
+                  onClick={() =>
+                    navigation.navigate('VDSingleProduct', {
+                      product: item,
+                    })
+                  }
                   left={<UI.Avatar medium src={{ uri: item.images[0].url }} />}
                   body={
                     <>

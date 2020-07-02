@@ -37,3 +37,15 @@ export const VENDOR = gql`
     }
   }
 `;
+
+export const GET_VENDOR_ANALYTICS = gql`
+  {
+    vendorAnalytics {
+      balance
+      products
+      newOrders
+      deliveredOrders
+      transactions
+    }
+  }
+`;

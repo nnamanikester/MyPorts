@@ -32,6 +32,18 @@ export const GET_PRODUCTS = gql`
           name
           createdAt
           price
+          category {
+            name
+          }
+          description
+          quantity
+          shipping
+          specifications {
+            value
+            specification
+          }
+          fixedDiscount
+          percentageDiscount
           status
         }
       }

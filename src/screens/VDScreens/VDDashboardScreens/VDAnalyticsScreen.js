@@ -6,8 +6,30 @@ import {
   primaryColor,
 } from '../../../components/common/variables';
 import { View, StyleSheet } from 'react-native';
+import { useLazyQuery } from '@apollo/react-hooks';
+import { GET_VENDOR_ANALYTICS } from '../../../apollo/queries/vendor';
+import { connect } from 'react-redux';
+import Skeleton from 'react-native-skeleton-placeholder';
+import { formatMoney } from '../../../utils';
 
-const VDAnalyticsScreen = ({ navigation }) => {
+const VDAnalyticsScreen = ({ navigation, offline }) => {
+  const [analytics, setAnalytics] = React.useState({});
+
+  const [getAnalytics, { loading, data, error }] = useLazyQuery(
+    GET_VENDOR_ANALYTICS,
+    {
+      pollInterval: 1000,
+    },
+  );
+
+  React.useEffect(() => {
+    if (!offline) getAnalytics();
+
+    if (data) {
+      setAnalytics(data.vendorAnalytics);
+    }
+  }, [data]);
+
   return (
     <>
       <UI.Layout>
@@ -16,20 +38,34 @@ const VDAnalyticsScreen = ({ navigation }) => {
           <UI.ListItem
             onClick={() => navigation.navigate('ManageWallets')}
             left={
-              <View style={styles.list}>
-                <UI.Icon size={35} color="#fff" name="ios-card" />
-              </View>
+              loading ? (
+                <Skeleton>
+                  <Skeleton.Item width={50} height={50} borderRadius={5} />
+                </Skeleton>
+              ) : (
+                <View style={styles.list}>
+                  <UI.Icon size={35} color="#fff" name="ios-card" />
+                </View>
+              )
             }
             body={
               <View style={{ justifyContent: 'center', flex: 1 }}>
-                <UI.Text>Account Balance</UI.Text>
+                {loading ? (
+                  <Skeleton>
+                    <Skeleton.Item width="80%" height={10} borderRadius={5} />
+                  </Skeleton>
+                ) : (
+                  <UI.Text>Account Balance</UI.Text>
+                )}
               </View>
             }
             right={
               <View style={{ flex: 1, justifyContent: 'center' }}>
-                <UI.Text bold note>
-                  NGN 454,000
-                </UI.Text>
+                {!loading ? (
+                  <UI.Text bold note>
+                    {formatMoney(analytics.balance)}
+                  </UI.Text>
+                ) : null}
               </View>
             }
           />
@@ -37,20 +73,34 @@ const VDAnalyticsScreen = ({ navigation }) => {
           <UI.ListItem
             onClick={() => navigation.navigate('VDProductsTab')}
             left={
-              <View style={styles.list}>
-                <UI.Icon size={35} color="#fff" name="md-basket" />
-              </View>
+              loading ? (
+                <Skeleton>
+                  <Skeleton.Item width={50} height={50} borderRadius={5} />
+                </Skeleton>
+              ) : (
+                <View style={styles.list}>
+                  <UI.Icon size={35} color="#fff" name="md-basket" />
+                </View>
+              )
             }
             body={
               <View style={{ justifyContent: 'center', flex: 1 }}>
-                <UI.Text>Products</UI.Text>
+                {loading ? (
+                  <Skeleton>
+                    <Skeleton.Item width="80%" height={10} borderRadius={5} />
+                  </Skeleton>
+                ) : (
+                  <UI.Text>Products</UI.Text>
+                )}
               </View>
             }
             right={
               <View style={{ flex: 1, justifyContent: 'center' }}>
-                <UI.Text bold note>
-                  43
-                </UI.Text>
+                {!loading ? (
+                  <UI.Text bold note>
+                    {analytics.products}
+                  </UI.Text>
+                ) : null}
               </View>
             }
           />
@@ -58,18 +108,34 @@ const VDAnalyticsScreen = ({ navigation }) => {
           <UI.ListItem
             onClick={() => navigation.navigate('VDNewOrders')}
             left={
-              <View style={{ ...styles.list, backgroundColor: primaryColor }}>
-                <UI.Icon size={35} color={'#fff'} name="ios-time" />
-              </View>
+              loading ? (
+                <Skeleton>
+                  <Skeleton.Item width={50} height={50} borderRadius={5} />
+                </Skeleton>
+              ) : (
+                <View style={styles.list}>
+                  <UI.Icon size={35} color="#fff" name="ios-time" />
+                </View>
+              )
             }
             body={
               <View style={{ justifyContent: 'center', flex: 1 }}>
-                <UI.Text>New Orders</UI.Text>
+                {loading ? (
+                  <Skeleton>
+                    <Skeleton.Item width="80%" height={10} borderRadius={5} />
+                  </Skeleton>
+                ) : (
+                  <UI.Text>New Orders</UI.Text>
+                )}
               </View>
             }
             right={
               <View style={{ flex: 1, justifyContent: 'center' }}>
-                <UI.Text bold>3</UI.Text>
+                {!loading ? (
+                  <UI.Text bold note>
+                    {analytics.newOrders}
+                  </UI.Text>
+                ) : null}
               </View>
             }
           />
@@ -77,20 +143,34 @@ const VDAnalyticsScreen = ({ navigation }) => {
           <UI.ListItem
             onClick={() => navigation.navigate('VDDeliveredOrders')}
             left={
-              <View style={styles.list}>
-                <UI.Icon size={35} color="#fff" name="ios-time" />
-              </View>
+              loading ? (
+                <Skeleton>
+                  <Skeleton.Item width={50} height={50} borderRadius={5} />
+                </Skeleton>
+              ) : (
+                <View style={styles.list}>
+                  <UI.Icon size={35} color="#fff" name="ios-time" />
+                </View>
+              )
             }
             body={
               <View style={{ justifyContent: 'center', flex: 1 }}>
-                <UI.Text>Delivered Orders</UI.Text>
+                {loading ? (
+                  <Skeleton>
+                    <Skeleton.Item width="80%" height={10} borderRadius={5} />
+                  </Skeleton>
+                ) : (
+                  <UI.Text>Dellivered Orders</UI.Text>
+                )}
               </View>
             }
             right={
               <View style={{ flex: 1, justifyContent: 'center' }}>
-                <UI.Text bold note>
-                  546
-                </UI.Text>
+                {!loading ? (
+                  <UI.Text bold note>
+                    {analytics.deliveredOrders}
+                  </UI.Text>
+                ) : null}
               </View>
             }
           />
@@ -98,27 +178,44 @@ const VDAnalyticsScreen = ({ navigation }) => {
           <UI.ListItem
             onClick={() => navigation.navigate('VDTransactions')}
             left={
-              <View style={styles.list}>
-                <UI.Icon type="FontAwesome" color="#fff" name="exchange" />
-              </View>
+              loading ? (
+                <Skeleton>
+                  <Skeleton.Item width={50} height={50} borderRadius={5} />
+                </Skeleton>
+              ) : (
+                <View style={styles.list}>
+                  <UI.Icon type="FontAwesome" color="#fff" name="exchange" />
+                </View>
+              )
             }
             body={
               <View style={{ justifyContent: 'center', flex: 1 }}>
-                <UI.Text>Total Transactions</UI.Text>
+                {loading ? (
+                  <Skeleton>
+                    <Skeleton.Item width="80%" height={10} borderRadius={5} />
+                  </Skeleton>
+                ) : (
+                  <UI.Text>Total Transactions</UI.Text>
+                )}
               </View>
             }
             right={
               <View style={{ flex: 1, justifyContent: 'center' }}>
-                <UI.Text bold note>
-                  135
-                </UI.Text>
+                {!loading ? (
+                  <UI.Text bold note>
+                    {analytics.transactions}
+                  </UI.Text>
+                ) : null}
               </View>
             }
           />
 
           <UI.Spacer />
+
           <UI.Text heading>Activity Report</UI.Text>
+
           <UI.Spacer />
+
           <UI.ReportBoard
             data={[
               {
@@ -216,4 +313,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VDAnalyticsScreen;
+const mapStateToProps = (state) => {
+  return {
+    offline: !state.network.isConnected,
+  };
+};
+
+export default connect(mapStateToProps)(VDAnalyticsScreen);

@@ -21,7 +21,7 @@ const Header = ({
         <View style={styles.leftContainerStyle}>{headerLeft}</View>
       )}
       <View style={styles.titleContainerStyle}>
-        <Text style={styles.titleStyle} size={17}>
+        <Text numberOfLines={1} style={styles.titleStyle} size={17}>
           {title}
         </Text>
       </View>
