@@ -2,24 +2,16 @@ import React, { useState } from 'react';
 import * as UI from '../components/common';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
+import EmptyItem from '../components/EmptyItem';
 import Product from '../components/Product';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { useLazyQuery, useQuery, useMutation } from '@apollo/react-hooks';
+import { StyleSheet, View } from 'react-native';
+import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 import { GET_PRODUCTS, SEARCH_TERMS } from '../apollo/queries';
 import { CREATE_SEARCH_TERM } from '../apollo/mutations';
-import {
-  female1,
-  female2,
-  bag1,
-  female3,
-  male1,
-  shoe2,
-  shoe1,
-} from '../assets/images';
-import FeaturedProduct from '../components/FeaturedProduct';
 import { connect } from 'react-redux';
+import { info } from '../components/common/variables';
 
-const SearchScreen = ({ navigation }) => {
+const SearchScreen = ({ navigation, offline }) => {
   const [products, setProducts] = React.useState([]);
   const [fetching, setFetching] = React.useState(false);
   const [term, setTerm] = React.useState('');
@@ -32,9 +24,8 @@ const SearchScreen = ({ navigation }) => {
     label: 'createdAt',
     value: 'createdAt_DESC',
   });
-
-  const [searching, setSearching] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
+  const [showAllTerms, setShowAllTerms] = useState(false);
 
   const [
     getProducts,
@@ -52,25 +43,46 @@ const SearchScreen = ({ navigation }) => {
   });
   const [createSearchTerm, { data: termData }] = useMutation(
     CREATE_SEARCH_TERM,
+    {
+      variables: {
+        term,
+      },
+    },
   );
-  const { data: searchTermsData } = useQuery(SEARCH_TERMS);
+  const [
+    fetchSearchTerms,
+    { data: searchTermsData, refetch: refetchSearchTerms },
+  ] = useLazyQuery(SEARCH_TERMS);
 
-  const handleSearch = (term) => {
-    if (!searching) setSearching(true);
+  console.log(searchTermsData);
+
+  const handleSearch = () => {
+    if (!term) {
+      refetchSearchTerms();
+      return setProducts([]);
+    }
     if (!offline) {
       getProducts();
-      createSearchTerm({ variables: { term } });
+      createSearchTerm();
     } else {
       alert("Please check if you're connected to the internet!");
     }
   };
 
   React.useEffect(() => {
+    if (!offline) {
+      fetchSearchTerms();
+    }
     if (data) {
       setProducts(data.products.edges.map((p) => p.node));
     }
     if (searchTermsData) {
       setRecentSearches(searchTermsData.searchTerms);
+      if (searchTermsData.searchTerms.length > 5) {
+        setShowAllTerms(false);
+      } else {
+        setShowAllTerms(true);
+      }
     }
 
     if (error) {
@@ -80,6 +92,7 @@ const SearchScreen = ({ navigation }) => {
 
   // Fetch more products onEndReach for pagination.
   const fetchMoreProducts = () => {
+    if (!products.length > 0 && term) return;
     setFetching(true);
     // Check if  there's a next page.
     if (data.products.pageInfo.hasNextPage) {
@@ -126,11 +139,12 @@ const SearchScreen = ({ navigation }) => {
           </UI.Clickable>
         }
       />
-      <UI.Layout>
+      <UI.Layout onEndReached={() => fetchMoreProducts()}>
         <UI.Spacer />
 
         <SearchBar
-          onChangeText={handleSearch}
+          onEndEditing={() => handleSearch()}
+          onChangeText={(value) => setTerm(value)}
           value={term}
           placeholder="What are you looking for?"
           onFilterClick={() => setIsFilter(true)}
@@ -139,125 +153,82 @@ const SearchScreen = ({ navigation }) => {
         <View style={styles.container}>
           <UI.Spacer medium />
 
-          {!searching && (
+          {!products.length > 0 && !term && (
             <View>
-              <UI.Row>
-                <UI.Column size="10">
-                  <UI.Text heading>Recent Searches</UI.Text>
-                </UI.Column>
-                <UI.Column size="2" style={{ alignItems: 'flex-end' }}>
-                  <UI.Link>View All</UI.Link>
-                </UI.Column>
-              </UI.Row>
+              {recentSearches.length > 0 && (
+                <>
+                  <UI.Row>
+                    <UI.Column size="10">
+                      <UI.Text heading>Recent Searches</UI.Text>
+                    </UI.Column>
+                    {recentSearches.length > 5 && (
+                      <UI.Column size="2" style={{ alignItems: 'flex-end' }}>
+                        <UI.Link onClick={() => setShowAllTerms(true)}>
+                          View All
+                        </UI.Link>
+                      </UI.Column>
+                    )}
+                  </UI.Row>
 
-              <UI.ListItem
-                onClick={() => setTerm('Men Cloths')}
-                body={<UI.Text>Men Cloths</UI.Text>}
-              />
-              <UI.ListItem
-                onClick={() => setTerm('Piano')}
-                body={<UI.Text>Piano</UI.Text>}
-              />
-              <UI.ListItem
-                onClick={() => setTerm('Black Board')}
-                body={<UI.Text>Black Board</UI.Text>}
-              />
-              <UI.ListItem
-                onClick={() => setTerm('Baby Toys')}
-                body={<UI.Text>Baby Toys</UI.Text>}
-              />
-
-              <UI.Spacer medium />
-
-              <UI.Row>
-                <UI.Column size="10">
-                  <UI.Text heading>Recommended for you</UI.Text>
-                </UI.Column>
-                <UI.Column size="2" style={{ alignItems: 'flex-end' }}>
-                  <UI.Link>View All</UI.Link>
-                </UI.Column>
-              </UI.Row>
-
-              <UI.Spacer medium />
-
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <FeaturedProduct
-                  image={bag1}
-                  onClick={() => navigation.navigate('SingleProduct')}
-                />
-                <FeaturedProduct
-                  image={shoe1}
-                  onClick={() => navigation.navigate('SingleProduct')}
-                />
-                <FeaturedProduct
-                  image={shoe2}
-                  onClick={() => navigation.navigate('SingleProduct')}
-                />
-                <FeaturedProduct
-                  image={female2}
-                  onClick={() => navigation.navigate('SingleProduct')}
-                />
-                <FeaturedProduct
-                  image={female3}
-                  onClick={() => navigation.navigate('SingleProduct')}
-                />
-              </ScrollView>
+                  {recentSearches.map((t, i) => {
+                    if (!showAllTerms && i > 4) return;
+                    return (
+                      <UI.ListItem
+                        key={t.id}
+                        onClick={() => {
+                          setTerm(t.term);
+                          handleSearch();
+                        }}
+                        body={<UI.Text>{t.term}</UI.Text>}
+                      />
+                    );
+                  })}
+                </>
+              )}
             </View>
           )}
 
-          {searching && (
+          {!products.length > 0 && !recentSearches.length > 0 && (
+            <>
+              <UI.Spacer large />
+              <EmptyItem
+                icon={<UI.Icon color={info} size={100} name="ios-basket" />}
+                show
+                title="No product found!"
+                message="Products you searched for will appear here."
+              />
+            </>
+          )}
+
+          {products.length > 0 && (
             <View>
               <UI.Row style={{ justifyContent: 'space-between' }}>
-                <Product
-                  quantity="89"
-                  image={female1}
-                  name="Water Proof Bag"
-                  vendor="Chiomy Styles"
-                  onClick={() => navigation.navigate('SingleProduct')}
-                />
-                <Product
-                  quantity="14"
-                  image={male1}
-                  name="Table Spoon"
-                  vendor="Benson Utilities"
-                  onClick={() => navigation.navigate('SingleProduct')}
-                />
-                <Product
-                  image={female2}
-                  name="Female belt holder"
-                  vendor="Genny Collections"
-                  quantity="31"
-                  onClick={() => navigation.navigate('SingleProduct')}
-                />
-                <Product
-                  quantity="45"
-                  image={female3}
-                  name="Balenciaga Shoe"
-                  vendor="Chucks Ventiany"
-                  onClick={() => navigation.navigate('SingleProduct')}
-                />
-                <Product
-                  quantity="15"
-                  image={shoe1}
-                  name="Adidas Shoe"
-                  vendor="Adidas"
-                  onClick={() => navigation.navigate('SingleProduct')}
-                />
-                <Product
-                  quantity="20"
-                  image={female3}
-                  name="Nike Shoe"
-                  vendor="Nike"
-                  onClick={() => navigation.navigate('SingleProduct')}
-                />
-                <Product
-                  quantity="8"
-                  image={female3}
-                  name="Gucci Bag"
-                  vendor="Cossy Viantae"
-                  onClick={() => navigation.navigate('SingleProduct')}
-                />
+                {products.map((p) => {
+                  return (
+                    <Product
+                      key={p.id}
+                      quantity={p.quantity}
+                      image={{ uri: p.images[0].url }}
+                      name={p.name}
+                      vendor={p.category.name}
+                      onClick={() =>
+                        navigation.navigate('SingleProduct', { product: p })
+                      }
+                    />
+                  );
+                })}
               </UI.Row>
+
+              <UI.Spacer medium />
+
+              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                <UI.Spinner show={fetching} area={40} />
+                {!fetching && !loading && !error && (
+                  <UI.Text>No more products!</UI.Text>
+                )}
+              </View>
+
+              <UI.Spacer large />
             </View>
           )}
         </View>
