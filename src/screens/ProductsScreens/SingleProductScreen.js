@@ -1,42 +1,24 @@
 import React, { useState } from 'react';
 import Swiper from 'react-native-swiper';
 import { StyleSheet, View, Image } from 'react-native';
-import {
-  Layout,
-  Text,
-  Spacer,
-  Icon,
-  ActivityButton,
-  Button,
-  Column,
-  Link,
-  ListItem,
-  Select,
-  Accordion,
-  AccordionItem,
-  TextInput,
-  Row,
-  Divider,
-  Clickable,
-} from '../../components/common';
+import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import Comment from '../../components/Comment';
-import {
-  shoe1,
-  female4,
-  shoe7,
-  shoe6,
-  shoe5,
-  shoe3,
-  shoe2,
-  shoe4,
-} from '../../assets/images';
+import { useLazyQuery, useMutation } from '@apollo/react-hooks';
+import { PRODUCT_COMMENTS, GET_SINGLE_PRODUCT } from '../../apollo/queries';
+import { CREATE_COMMENT } from '../../apollo/mutations';
+import { formatMoney } from '../../utils';
+import { female4 } from '../../assets/images';
+import EmptyItem from '../../components/EmptyItem';
+import Skeleton from 'react-native-skeleton-placeholder';
 import {
   grayColor,
   info,
   danger,
   primaryColor,
 } from '../../components/common/variables';
+import { connect } from 'react-redux';
+import moment from 'moment';
 
 const colors = [
   { label: '', value: '' },
@@ -53,68 +35,116 @@ const sizes = [
   { label: 'XL', value: 'xl' },
   { label: 'XXL', value: 'xxl' },
 ];
-const SingleProductScreen = ({ navigation }) => {
+const SingleProductScreen = ({
+  navigation,
+  route: { params },
+  offline,
+  customer,
+}) => {
+  const p = params.product;
+  const [comments, setComments] = React.useState([]);
+  const [product, setProduct] = React.useState({});
+
+  const [
+    getProduct,
+    { data: productData, loading: productLoading, error: productError },
+  ] = useLazyQuery(GET_SINGLE_PRODUCT, { variables: { id: p.id } });
+  const [
+    getComments,
+    { data: commentData, loading: commentsLoading, error, refetch },
+  ] = useLazyQuery(PRODUCT_COMMENTS, { variables: { id: p.id } });
+  const [
+    createComment,
+    {
+      data: createCommentData,
+      loading: createCommentLoading,
+      error: createCommentError,
+    },
+  ] = useMutation(CREATE_COMMENT);
+
   const [likeCount, setLikeCount] = useState(123);
-  const [selectedColor, setSelectedColor] = useState('');
-  const [selectedSize, setSelectedSize] = useState('');
   const [showCommentBox, setShowCommentBox] = useState(false);
+
+  React.useEffect(() => {
+    if (!offline) {
+      getProduct();
+      getComments();
+    }
+    if (productData) {
+      setProduct(productData.product);
+    }
+    if (productError) {
+      alert(
+        "Error Loading Product!. \nPlease check if you're connected to the internet",
+      );
+    }
+    if (commentData) {
+      setComments(commentData.productComments);
+    }
+    if (createCommentData) {
+      refetch();
+    }
+    if (createCommentError) {
+      alert('Unable to comment at the time. Please try again!');
+    }
+  }, [
+    commentData,
+    createCommentData,
+    productData,
+    productError,
+    createCommentError,
+    error,
+  ]);
 
   return (
     <>
+      <UI.Loading show={productLoading || createCommentLoading} />
       <Header
         isCart
-        title="Water Proof Watch"
+        title={p.name}
         headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.goBack()}>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+          </UI.Clickable>
         }
         headerRight={
           <>
-            <Clickable onClick={() => navigation.navigate('Cart')}>
-              <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </Clickable>
-            <Spacer medium />
-            <Clickable onClick={() => navigation.navigate('Search')}>
-              <Icon name="ios-search" color="#fff" />
-            </Clickable>
+            <UI.Clickable onClick={() => navigation.navigate('Cart')}>
+              <UI.Icon
+                name="shopping-bag"
+                size={22}
+                type="Feather"
+                color="#fff"
+              />
+            </UI.Clickable>
+            <UI.Spacer medium />
+            <UI.Clickable onClick={() => navigation.navigate('Search')}>
+              <UI.Icon name="ios-search" color="#fff" />
+            </UI.Clickable>
           </>
         }
       />
-      <Layout style={styles.layout}>
+      <UI.Layout style={styles.layout}>
         <Swiper animated autoplayTimeout={5} height={300} loop autoplay>
-          <View>
-            <Image style={styles.featured} source={shoe1} />
-          </View>
-          <View>
-            <Image style={styles.featured} source={shoe2} />
-          </View>
-          <View>
-            <Image style={styles.featured} source={shoe3} />
-          </View>
-          <View>
-            <Image style={styles.featured} source={shoe4} />
-          </View>
-          <View>
-            <Image style={styles.featured} source={shoe5} />
-          </View>
-          <View>
-            <Image style={styles.featured} source={shoe6} />
-          </View>
-          <View>
-            <Image style={styles.featured} source={shoe7} />
-          </View>
+          {p &&
+            p.images.map((img) => {
+              return (
+                <View key={img}>
+                  <Image style={styles.featured} source={{ uri: img.url }} />
+                </View>
+              );
+            })}
         </Swiper>
         <View style={styles.titleContainer}>
-          <Text style={styles.category} heading>
-            Men
-          </Text>
+          <UI.Text style={styles.category} heading>
+            {p.category.name}
+          </UI.Text>
         </View>
         <View style={styles.container}>
           <View style={styles.activities}>
-            <ActivityButton
+            <UI.ActivityButton
               // inActiveIcon={
-              //   <Icon
+              //   <UI.Icon
               //     type="FontAwesome"
               //     size={20}
               //     name="heart-o"
@@ -122,7 +152,7 @@ const SingleProductScreen = ({ navigation }) => {
               //   />
               // }
               activeIcon={
-                <Icon
+                <UI.Icon
                   type="FontAwesome"
                   size={20}
                   name="heart"
@@ -132,10 +162,10 @@ const SingleProductScreen = ({ navigation }) => {
               count={likeCount}
               onClick={() => setLikeCount(likeCount + 1)}
             />
-            <Spacer medium />
-            <ActivityButton
+            <UI.Spacer medium />
+            <UI.ActivityButton
               inActiveIcon={
-                <Icon
+                <UI.Icon
                   type="Feather"
                   size={22}
                   name="message-circle"
@@ -145,10 +175,10 @@ const SingleProductScreen = ({ navigation }) => {
               count={likeCount}
               onClick={() => setLikeCount(likeCount + 1)}
             />
-            <Spacer medium />
-            <ActivityButton
+            <UI.Spacer medium />
+            <UI.ActivityButton
               // inActiveIcon={
-              //   <Icon
+              //   <UI.Icon
               //     type="FontAwesome"
               //     size={20}
               //     name="bookmark-o"
@@ -156,7 +186,7 @@ const SingleProductScreen = ({ navigation }) => {
               //   />
               // }
               activeIcon={
-                <Icon
+                <UI.Icon
                   type="FontAwesome"
                   size={20}
                   name="bookmark"
@@ -166,187 +196,215 @@ const SingleProductScreen = ({ navigation }) => {
               count={likeCount}
               onClick={() => setLikeCount(likeCount + 1)}
             />
-            <Spacer />
+            <UI.Spacer />
             <View style={styles.share}>
-              <ActivityButton
-                inActiveIcon={<Icon size={22} name="md-share" color={info} />}
+              <UI.ActivityButton
+                inActiveIcon={
+                  <UI.Icon size={22} name="md-share" color={info} />
+                }
                 onClick={() => setLikeCount(likeCount - 1)}
               />
             </View>
           </View>
 
-          <Spacer />
+          <UI.Spacer />
 
           <View style={styles.container}>
-            <Text style={styles.title} size={22}>
-              China Sneakers
-            </Text>
+            <UI.Text style={styles.title} size={22}>
+              {p.name}
+            </UI.Text>
           </View>
 
           <View>
-            <Accordion initialIndex={0}>
-              <AccordionItem headerText="Description">
-                <Text>
-                  Enjoy the beauty of italian cotton all over your body. This
-                  item will fit your body and warm you up all over and during
-                  spring. This item will fit your body and warm you up all over
-                  and during spring.
-                  {'\n\n'}
-                  And over and over again, this is the text.
-                </Text>
-              </AccordionItem>
-              <AccordionItem headerText="Item Specifications">
-                <ListItem
-                  left={<Text heading>Quantity</Text>}
-                  right={<Text>29</Text>}
+            <UI.Accordion initialIndex={0}>
+              <UI.AccordionItem headerText="Description">
+                <UI.Text>{p.description}</UI.Text>
+              </UI.AccordionItem>
+              <UI.AccordionItem headerText="Item Specifications">
+                <UI.ListItem
+                  left={<UI.Text heading>Quantity</UI.Text>}
+                  right={<UI.Text>{p.quantity}</UI.Text>}
                 />
-                <ListItem
-                  left={<Text heading>Sizes</Text>}
-                  right={<Text>S/M/L/XL/XXL</Text>}
+                <UI.ListItem
+                  left={<UI.Text heading>Price for 1</UI.Text>}
+                  right={<UI.Text>{formatMoney(p.price)}</UI.Text>}
                 />
-                <ListItem
-                  left={<Text heading>Price for 1</Text>}
-                  right={<Text>N 2,500</Text>}
+                <UI.ListItem
+                  left={<UI.Text heading>Shipping Cost</UI.Text>}
+                  right={
+                    <UI.Text>
+                      {p.shipping ? formatMoney(p.shipping) : 'Free'}
+                    </UI.Text>
+                  }
                 />
-                <ListItem
-                  left={<Text heading>Shipping Cost</Text>}
-                  right={<Text>Free</Text>}
-                />
-                <ListItem
-                  left={<Text heading>Discount</Text>}
-                  right={<Text>10% / 20 Pieces</Text>}
-                />
-                <ListItem
-                  left={<Text heading>Location</Text>}
-                  right={<Text>Victoria Island, Lagos.</Text>}
-                />
-                <ListItem
-                  left={<Text heading>Delivery Period</Text>}
-                  right={<Text>3 Days Max.</Text>}
-                />
-                <Spacer />
-                <Link onClick={() => navigation.navigate('VendorShop')}>
-                  Vendor Details
-                </Link>
-              </AccordionItem>
-              <AccordionItem headerText="Shipping Information"></AccordionItem>
-              <AccordionItem headerText="Buyer Guarantee"></AccordionItem>
-            </Accordion>
+                {(p.percentageDiscount || p.fixedDiscount) && (
+                  <UI.ListItem
+                    left={<UI.Text heading>Discount</UI.Text>}
+                    right={
+                      <UI.Text>
+                        {p.fixedDiscount
+                          ? formatMoney(p.fixedDiscount)
+                          : p.percentageDiscount + ' %'}
+                      </UI.Text>
+                    }
+                  />
+                )}
+                {p.specifications
+                  ? p.specifications.map((spec) => {
+                      return (
+                        <UI.ListItem
+                          key={spec.id}
+                          left={<UI.Text heading>{spec.specification}</UI.Text>}
+                          body={
+                            <View
+                              style={{
+                                justifyContent: 'center',
+                              }}>
+                              <UI.Text>{spec.value}</UI.Text>
+                            </View>
+                          }
+                        />
+                      );
+                    })
+                  : null}
+                <UI.Spacer />
+                {product && (
+                  <UI.Link
+                    onClick={() =>
+                      navigation.navigate('VendorShop', {
+                        id: product.vendor.id,
+                      })
+                    }>
+                    Vendor Details
+                  </UI.Link>
+                )}
+              </UI.AccordionItem>
+              <UI.AccordionItem headerText="Shipping Information">
+                <UI.Row style={{ justifyContent: 'space-between' }}>
+                  <UI.Text heading>Shipping Cost: </UI.Text>
+                  <UI.Text>{formatMoney(p.shipping)}</UI.Text>
+                </UI.Row>
+                <UI.Text>
+                  The product is to be shipped within 3 - 5 business days from
+                  the day of purchase. {'\n'}If not received after 5 days from
+                  the day of purchase, feel free to contact the support team.
+                </UI.Text>
+                <UI.Spacer />
+                <UI.Text note color="">
+                  Items are sold and shipped by{' '}
+                  <UI.Text note>
+                    {product && product.vendor
+                      ? product.vendor.profile.name
+                      : null}
+                  </UI.Text>
+                </UI.Text>
+              </UI.AccordionItem>
+              <UI.AccordionItem headerText="Buyer Guarantee">
+                <UI.Text bold>Shop with confidence!</UI.Text>
+                <UI.Text>
+                  We want you to be comletely satisfied with your purchase on
+                  MyPorts! {'\n'}Feel free to retur all products within 30 days
+                  of purchase if they are not up to your satisfaction.
+                </UI.Text>
+              </UI.AccordionItem>
+            </UI.Accordion>
           </View>
 
-          <Spacer />
+          <UI.Spacer />
 
           <View style={styles.container}>
-            <Spacer medium />
+            <UI.Spacer medium />
 
             <View>
-              <Text heading>Color</Text>
-              <Select
-                type="dropdown"
-                selected={selectedColor}
-                onChange={(item) => {
-                  setSelectedColor(item);
-                }}
-                data={colors}
+              <UI.Text heading>Quantity</UI.Text>
+              <UI.TextInput
+                keyboardType="number-pad"
+                placeholder="Enter quantity"
               />
-              <Spacer />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  width: '100%',
-                  paddingRight: 10,
-                }}>
-                <Column size="6">
-                  <Text heading>Size</Text>
-                  <Select
-                    type="dropdown"
-                    selected={selectedSize}
-                    onChange={(item) => {
-                      setSelectedSize(item);
-                    }}
-                    data={sizes}
-                  />
-                </Column>
-                <Spacer />
-                <Column size="6">
-                  <Text heading>Quantity</Text>
-                  <TextInput
-                    keyboardType="number-pad"
-                    placeholder="Enter quantity"
-                  />
-                </Column>
-              </View>
             </View>
 
-            <Spacer />
+            <UI.Spacer />
 
-            <Button>
-              <Text color="#fff">Add to cart</Text>
-            </Button>
-            <Spacer />
-            <Button type="ghost">
-              <Text>Save for later</Text>
-            </Button>
+            <UI.Button>
+              <UI.Text color="#fff">Add to cart</UI.Text>
+            </UI.Button>
+            <UI.Spacer />
+            <UI.Button type="ghost">
+              <UI.Text>Save for later</UI.Text>
+            </UI.Button>
           </View>
 
-          <Divider />
+          <UI.Divider />
 
-          <Spacer medium />
+          <UI.Spacer medium />
 
           <View style={styles.container}>
-            <Row
+            <UI.Row
               style={{
                 justifyContent: 'space-between',
               }}>
-              <Text style={styles.title} size={20}>
+              <UI.Text style={styles.title} size={20}>
                 Comments
-              </Text>
-              <Link onClick={() => navigation.navigate('ProductComments')}>
-                {/* <Icon name={'md-arrow-forward'} /> */}
-                See All Comments
-              </Link>
-            </Row>
+              </UI.Text>
+              {comments.length > 3 && (
+                <UI.Link
+                  onClick={() =>
+                    navigation.navigate('ProductComments', { id: p.id })
+                  }>
+                  See All Comments
+                </UI.Link>
+              )}
+            </UI.Row>
             <View>
-              <Spacer medium />
+              <UI.Spacer medium />
               {showCommentBox && (
-                <TextInput rows={8} placeholder="Write your comment..." />
+                <UI.TextInput rows={8} placeholder="Write your comment..." />
               )}
 
-              <Spacer />
+              <UI.Spacer />
               {!showCommentBox && (
-                <Button onClick={() => setShowCommentBox(true)}>
-                  <Text color="#fff">Write a comment</Text>
-                </Button>
+                <UI.Button onClick={() => setShowCommentBox(true)}>
+                  <UI.Text color="#fff">Write a comment</UI.Text>
+                </UI.Button>
               )}
               {showCommentBox && (
-                <Button onClick={() => setShowCommentBox(false)}>
-                  <Text color="#fff">Submit</Text>
-                </Button>
+                <UI.Button onClick={() => setShowCommentBox(false)}>
+                  <UI.Text color="#fff">Submit</UI.Text>
+                </UI.Button>
               )}
-              <Spacer medium />
+              <UI.Spacer medium />
             </View>
-            <Comment
-              date="20/02/2020"
-              image={female4}
-              name="Mark Zukerberg"
-              comment="This poduct is extremely good. i love it. And it shipped within 3 ays like promised."
-            />
-            <Comment
-              date="20/02/2020"
-              image={female4}
-              name="Mark Zukerberg"
-              comment="This poduct is extremely good. i love it. And it shipped within 3 ays like promised."
-            />
-            <Comment
-              date="20/02/2020"
-              image={female4}
-              name="Mark Zukerberg"
-              comment="This poduct is extremely good. i love it. And it shipped within 3 ays like promised."
-            />
+            {comments.length > 0 &&
+              comments.map((comment, i) => {
+                if (i > 2) return;
+                return (
+                  <Comment
+                    key={comment.id}
+                    date={moment(comment.createdAt).format('DD/MM/YYYY')}
+                    image={{ uri: comment.customer.photo }}
+                    name={`${comment.customer.firstName} ${comment.customer.lastName}`}
+                    comment={comment.comment}
+                  />
+                );
+              })}
+            {!comments.length > 0 && !commentsLoading && (
+              <>
+                <UI.Spacer large />
+                <EmptyItem
+                  icon={
+                    <UI.Icon color={info} size={100} name="ios-chatboxes" />
+                  }
+                  show
+                  title="No Comments!"
+                  message="There are no comments yet! Be the first to write a comment."
+                />
+              </>
+            )}
+            {commentsLoading && <Skeleton></Skeleton>}
           </View>
         </View>
-        <Spacer large />
-      </Layout>
+        <UI.Spacer large />
+      </UI.Layout>
     </>
   );
 };
@@ -409,4 +467,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SingleProductScreen;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    offline: !state.network.isConnected,
+    customer: state.auth.customer,
+  };
+};
+
+export default connect(mapStateToProps)(SingleProductScreen);

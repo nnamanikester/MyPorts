@@ -31,3 +31,27 @@ export const CREATE_PRODUCT = gql`
     }
   }
 `;
+
+export const CREATE_COMMENT = gql`
+  mutation createProductComment(
+    $customerId: String!
+    $comment: String!
+    $productId: String!
+  ) {
+    createProductComment(
+      customerId: $custommerId
+      comment: $comment
+      productId: $productId
+    ) {
+      id
+      comment
+      customer {
+        id
+        firstName
+        lastName
+        photo
+        createdAt
+      }
+    }
+  }
+`;
