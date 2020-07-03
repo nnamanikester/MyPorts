@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { setVendor, setVendorProfile } from '../redux/actions/VendorActions';
 import { connect } from 'react-redux';
 import { useLazyQuery } from '@apollo/react-hooks';
-import { VENDOR, VENDOR_PROFILE } from '../apollo/queries/vendor';
+import { VENDOR } from '../apollo/queries/vendor';
 import * as UI from '../components/common';
 
 import VDDrawerNavigation from './VDFlows/VendorDrawerNavigation';
@@ -50,26 +50,19 @@ const VDFlow = ({ offline, setVendorProfile, setVendor }) => {
     getVendor,
     { loading: getVendorLoading, data: getVendorData, error: getVendorError },
   ] = useLazyQuery(VENDOR);
-  const [
-    vendorProfile,
-    {
-      loading: vendorProfileLoading,
-      data: vendorProfileData,
-      error: vendorProfileError,
-    },
-  ] = useLazyQuery(VENDOR_PROFILE);
 
   useEffect(() => {
-    vendorProfile();
-    getVendor();
+    if (!offline) getVendor();
 
-    if (getVendorData) setVendor(getVendorData.getVendor);
-    if (vendorProfileData) setVendorProfile(vendorProfileData.vendorProfile);
-  }, [getVendorData, getVendorError, vendorProfileData, vendorProfileError]);
+    if (getVendorData) {
+      setVendor(getVendorData.getVendor);
+      setVendorProfile(getVendorData.getVendor.profile);
+    }
+  }, [getVendorData, getVendorError]);
 
   return (
     <>
-      <UI.Loading show={vendorProfileLoading || getVendorLoading} />
+      <UI.Loading show={getVendorLoading} />
       <Stack.Navigator
         screenOptions={{
           header: () => null,

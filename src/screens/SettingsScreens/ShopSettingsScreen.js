@@ -4,8 +4,7 @@ import { View, StyleSheet, Image } from 'react-native';
 import Header from '../../components/Header';
 import { lightColor, info } from '../../components/common/variables';
 import { connect } from 'react-redux';
-import { useLazyQuery, useMutation } from '@apollo/react-hooks';
-import { VENDOR_PROFILE } from '../../apollo/queries';
+import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_VENDOR_PROFILE } from '../../apollo/mutations';
 import { setVendorProfile } from '../../redux/actions/VendorActions';
 import { validateEmail } from '../../utils';
@@ -23,12 +22,7 @@ const ShopSettingsScreen = ({
   const [phone, setPhone] = useState(profile.phone);
   const [description, setDescription] = useState(profile.description);
 
-  const [vendorProfile, { loading, data, error }] = useLazyQuery(
-    VENDOR_PROFILE,
-  );
-  const [updateVendorProfle, { loading: updateLoading }] = useMutation(
-    UPDATE_VENDOR_PROFILE,
-  );
+  const [updateVendorProfle, { loading }] = useMutation(UPDATE_VENDOR_PROFILE);
 
   const handleUpdateProfile = () => {
     setSuccess(false);
@@ -60,23 +54,9 @@ const ShopSettingsScreen = ({
     }
   };
 
-  useEffect(() => {
-    if (!offline) {
-      if (!data && !error) vendorProfile();
-      if (data) {
-        setVendorProfile(data.vendorProfile);
-      }
-      if (error) {
-        alert('An error occured trying to load shop details!');
-      }
-    } else {
-      alert("Please check if you're connected to the internet!");
-    }
-  }, [data, error]);
-
   return (
     <>
-      <UI.Loading show={loading || updateLoading} />
+      <UI.Loading show={loading} />
       <Header
         title="Shop Settings"
         headerLeft={

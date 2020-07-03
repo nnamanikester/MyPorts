@@ -16,7 +16,7 @@ import { StyleSheet, View } from 'react-native';
 import { primaryColor, info } from '../../components/common/variables';
 import { logUserOut } from '../../redux/actions/AuthActions';
 
-const SettingsScreen = ({ navigation, logUserOut }) => {
+const SettingsScreen = ({ navigation }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (

@@ -47,7 +47,10 @@ const VDSingleProductScreen = ({ navigation, route: { params } }) => {
             {product &&
               product.images.map((image, index) => (
                 <View key={`${image.url + index}`}>
-                  <Image style={styles.featured} source={{ uri: image.url }} />
+                  <Image
+                    style={{ width: '100%', height: '100%', borderRadius: 5 }}
+                    source={{ uri: image.url }}
+                  />
                 </View>
               ))}
           </Swiper>
