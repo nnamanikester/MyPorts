@@ -8,7 +8,6 @@ import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 import { PRODUCT_COMMENTS, GET_SINGLE_PRODUCT } from '../../apollo/queries';
 import { CREATE_COMMENT } from '../../apollo/mutations';
 import { formatMoney } from '../../utils';
-import { female4 } from '../../assets/images';
 import EmptyItem from '../../components/EmptyItem';
 import Skeleton from 'react-native-skeleton-placeholder';
 import {
@@ -20,21 +19,6 @@ import {
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-const colors = [
-  { label: '', value: '' },
-  { label: 'Red', value: 'red' },
-  { label: 'Blue', value: 'blue' },
-  { label: 'Orange', value: 'orange' },
-  { label: 'Green', value: 'green' },
-];
-const sizes = [
-  { label: '', value: '' },
-  { label: 'S', value: 's' },
-  { label: 'M', value: 'm' },
-  { label: 'L', value: 'l' },
-  { label: 'XL', value: 'xl' },
-  { label: 'XXL', value: 'xxl' },
-];
 const SingleProductScreen = ({
   navigation,
   route: { params },
@@ -44,6 +28,7 @@ const SingleProductScreen = ({
   const p = params.product;
   const [comments, setComments] = React.useState([]);
   const [product, setProduct] = React.useState({});
+  const [commentText, setCommentText] = React.useState('');
 
   const [
     getProduct,
@@ -51,8 +36,11 @@ const SingleProductScreen = ({
   ] = useLazyQuery(GET_SINGLE_PRODUCT, { variables: { id: p.id } });
   const [
     getComments,
-    { data: commentData, loading: commentsLoading, error, refetch },
-  ] = useLazyQuery(PRODUCT_COMMENTS, { variables: { id: p.id } });
+    { data: commentData, loading: commentsLoading, error },
+  ] = useLazyQuery(PRODUCT_COMMENTS, {
+    variables: { id: p.id },
+    pollInterval: 500,
+  });
   const [
     createComment,
     {
@@ -82,7 +70,8 @@ const SingleProductScreen = ({
       setComments(commentData.productComments);
     }
     if (createCommentData) {
-      refetch();
+      setShowCommentBox(false);
+      setCommentText('');
     }
     if (createCommentError) {
       alert('Unable to comment at the time. Please try again!');
@@ -96,9 +85,20 @@ const SingleProductScreen = ({
     error,
   ]);
 
+  const handleCreateComment = () => {
+    if (!commentText) return;
+    createComment({
+      variables: {
+        comment: commentText,
+        productId: p.id,
+        customerId: customer.id,
+      },
+    });
+  };
+
   return (
     <>
-      <UI.Loading show={productLoading || createCommentLoading} />
+      <UI.Loading show={productLoading} />
       <Header
         isCart
         title={p.name}
@@ -127,9 +127,9 @@ const SingleProductScreen = ({
       <UI.Layout style={styles.layout}>
         <Swiper animated autoplayTimeout={5} height={300} loop autoplay>
           {p &&
-            p.images.map((img) => {
+            p.images.map((img, i) => {
               return (
-                <View key={img}>
+                <View key={img + i}>
                   <Image style={styles.featured} source={{ uri: img.url }} />
                 </View>
               );
@@ -159,7 +159,7 @@ const SingleProductScreen = ({
                   color={danger}
                 />
               }
-              count={likeCount}
+              // count={product ? product.likes.length : 0}
               onClick={() => setLikeCount(likeCount + 1)}
             />
             <UI.Spacer medium />
@@ -172,7 +172,7 @@ const SingleProductScreen = ({
                   color={info}
                 />
               }
-              count={likeCount}
+              // count={comments ? comments.length : 0}
               onClick={() => setLikeCount(likeCount + 1)}
             />
             <UI.Spacer medium />
@@ -193,7 +193,7 @@ const SingleProductScreen = ({
                   color={primaryColor}
                 />
               }
-              count={likeCount}
+              // count={product ? product.saves.length : 0}
               onClick={() => setLikeCount(likeCount + 1)}
             />
             <UI.Spacer />
@@ -349,7 +349,10 @@ const SingleProductScreen = ({
               {comments.length > 3 && (
                 <UI.Link
                   onClick={() =>
-                    navigation.navigate('ProductComments', { id: p.id })
+                    navigation.navigate('ProductComments', {
+                      id: p.id,
+                      name: p.name,
+                    })
                   }>
                   See All Comments
                 </UI.Link>
@@ -358,7 +361,12 @@ const SingleProductScreen = ({
             <View>
               <UI.Spacer medium />
               {showCommentBox && (
-                <UI.TextInput rows={8} placeholder="Write your comment..." />
+                <UI.TextInput
+                  onChangeText={(value) => setCommentText(value)}
+                  value={commentText}
+                  multiline
+                  placeholder="Write your comment..."
+                />
               )}
 
               <UI.Spacer />
@@ -368,8 +376,14 @@ const SingleProductScreen = ({
                 </UI.Button>
               )}
               {showCommentBox && (
-                <UI.Button onClick={() => setShowCommentBox(false)}>
-                  <UI.Text color="#fff">Submit</UI.Text>
+                <UI.Button
+                  type={createCommentLoading ? 'disabled' : ''}
+                  onClick={() => handleCreateComment()}>
+                  {createCommentLoading ? (
+                    <UI.Spinner show area={30} />
+                  ) : (
+                    <UI.Text color="#fff">Submit</UI.Text>
+                  )}
                 </UI.Button>
               )}
               <UI.Spacer medium />
@@ -400,7 +414,26 @@ const SingleProductScreen = ({
                 />
               </>
             )}
-            {commentsLoading && <Skeleton></Skeleton>}
+            {commentsLoading && (
+              <UI.Row>
+                <Skeleton>
+                  <Skeleton.Item
+                    marginRight={20}
+                    width={40}
+                    height={40}
+                    borderRadius={100}
+                  />
+                  <View style={{ justifyContent: 'center' }}>
+                    <View style={{ width: 150, height: 10 }} />
+                  </View>
+                  <View>
+                    <View style={{ width: 320, height: 10, marginTop: 10 }} />
+                    <View style={{ width: 290, height: 10, marginTop: 5 }} />
+                    <View style={{ width: 300, height: 10, marginTop: 5 }} />
+                  </View>
+                </Skeleton>
+              </UI.Row>
+            )}
           </View>
         </View>
         <UI.Spacer large />
@@ -467,10 +500,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     offline: !state.network.isConnected,
-    customer: state.auth.customer,
+    customer: state.customer.profile,
   };
 };
 

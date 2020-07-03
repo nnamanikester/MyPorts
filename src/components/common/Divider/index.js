@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {grayColor} from '../variables';
+import { View, StyleSheet } from 'react-native';
+import { inactiveColor } from '../variables';
 
-const Divider = ({horizontal, vertical}) => {
-  let value = {height: 1, width: '100%'};
+const Divider = ({ horizontal, vertical }) => {
+  let value = { height: 1, width: '100%' };
 
   if (horizontal) {
-    value = {height: 1, width: '100%'};
+    value = { height: 1, width: '100%' };
   }
   if (vertical) {
-    value = {height: '100%', width: 1, marginHorizontal: 10};
+    value = { height: '100%', width: 1, marginHorizontal: 10 };
   }
 
   return (
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderWidth: 1,
     height: 1,
-    borderColor: grayColor,
+    borderColor: inactiveColor,
     marginVertical: 10,
   },
 });
@@ -42,4 +42,4 @@ Divider.defaultProps = {
   horizontal: false,
 };
 
-export {Divider};
+export { Divider };

@@ -39,7 +39,7 @@ export const CREATE_COMMENT = gql`
     $productId: String!
   ) {
     createProductComment(
-      customerId: $custommerId
+      customerId: $customerId
       comment: $comment
       productId: $productId
     ) {

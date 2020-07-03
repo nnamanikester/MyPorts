@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Text, Spacer, Rating } from './common';
+import { Text, Spacer, Rating, Divider } from './common';
 
 import Avatar from './Avatar';
 
 const Comment = ({ name, s1, s2, s3, s4, s5, date, image, comment }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Avatar rounded src={image} />
           <Spacer medium />
@@ -26,7 +26,8 @@ const Comment = ({ name, s1, s2, s3, s4, s5, date, image, comment }) => {
       <View style={styles.body}>
         <Text>{comment}</Text>
       </View>
-      <Spacer medium />
+      <Spacer />
+      <Divider />
     </View>
   );
 };
@@ -34,7 +35,6 @@ const Comment = ({ name, s1, s2, s3, s4, s5, date, image, comment }) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    paddingVertical: 10,
   },
   body: {
     width: '100%',
