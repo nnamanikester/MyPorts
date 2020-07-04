@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Swiper from 'react-native-swiper';
 import { StyleSheet, View, Image } from 'react-native';
 import * as UI from '../../components/common';
@@ -6,7 +6,12 @@ import Header from '../../components/Header';
 import Comment from '../../components/Comment';
 import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 import { PRODUCT_COMMENTS, GET_SINGLE_PRODUCT } from '../../apollo/queries';
-import { CREATE_COMMENT } from '../../apollo/mutations';
+import {
+  CREATE_COMMENT,
+  CREATE_LIKE,
+  CREATE_SAVE,
+  CREATE_SHARE,
+} from '../../apollo/mutations';
 import { formatMoney } from '../../utils';
 import EmptyItem from '../../components/EmptyItem';
 import Skeleton from 'react-native-skeleton-placeholder';
@@ -29,11 +34,16 @@ const SingleProductScreen = ({
   const [comments, setComments] = React.useState([]);
   const [product, setProduct] = React.useState({});
   const [commentText, setCommentText] = React.useState('');
+  const [showCommentBox, setShowCommentBox] = React.useState(false);
+  const [liked, setLiked] = React.useState(false);
+  const [saved, setSaved] = React.useState(false);
 
+  // Queries and mutations
   const [
     getProduct,
     { data: productData, loading: productLoading, error: productError },
   ] = useLazyQuery(GET_SINGLE_PRODUCT, { variables: { id: p.id } });
+
   const [
     getComments,
     { data: commentData, loading: commentsLoading, error },
@@ -41,6 +51,7 @@ const SingleProductScreen = ({
     variables: { id: p.id },
     pollInterval: 500,
   });
+
   const [
     createComment,
     {
@@ -50,29 +61,60 @@ const SingleProductScreen = ({
     },
   ] = useMutation(CREATE_COMMENT);
 
-  const [likeCount, setLikeCount] = useState(123);
-  const [showCommentBox, setShowCommentBox] = useState(false);
+  const [likeProduct] = useMutation(CREATE_LIKE, {
+    variables: {
+      productId: p.id,
+      customerId: customer.id,
+    },
+    pollInterval: 500,
+  });
 
+  const [saveProduct] = useMutation(CREATE_SAVE, {
+    variables: {
+      productId: p.id,
+      customerId: customer.id,
+    },
+    pollInterval: 500,
+  });
+
+  const [shareProduct] = useMutation(CREATE_SHARE, {
+    variables: {
+      productId: p.id,
+      customerId: customer.id,
+    },
+  });
+
+  // Functions to run on component mount
   React.useEffect(() => {
     if (!offline) {
+      // get data and comments if not offline
       getProduct();
       getComments();
     }
+    // Set Fetched data to product state
     if (productData) {
       setProduct(productData.product);
     }
+
+    // Alert the user if an error occured while fetching producs
     if (productError) {
       alert(
         "Error Loading Product!. \nPlease check if you're connected to the internet",
       );
     }
+
+    // Set fetched comments to the comment state
     if (commentData) {
       setComments(commentData.productComments);
     }
+
+    // clear search text and hide comment box after creating a comment
     if (createCommentData) {
       setShowCommentBox(false);
       setCommentText('');
     }
+
+    // Alert the user if an error occured while creating comment
     if (createCommentError) {
       alert('Unable to comment at the time. Please try again!');
     }
@@ -85,6 +127,7 @@ const SingleProductScreen = ({
     error,
   ]);
 
+  // Function call when the user sumits the comment
   const handleCreateComment = () => {
     if (!commentText) return;
     createComment({
@@ -94,6 +137,28 @@ const SingleProductScreen = ({
         customerId: customer.id,
       },
     });
+  };
+
+  const handleLike = () => {
+    setLiked(!liked);
+    likeProduct().then((res) => {
+      setProduct({
+        ...product,
+        likes: [...product.likes, res.data.createProductLike],
+      });
+    });
+  };
+  const handleSave = () => {
+    setSaved(!saved);
+    saveProduct().then((res) => {
+      setProduct({
+        ...product,
+        saves: [...product.saves, res.data.createProductSave],
+      });
+    });
+  };
+  const handleShare = () => {
+    shareProduct();
   };
 
   return (
@@ -143,24 +208,28 @@ const SingleProductScreen = ({
         <View style={styles.container}>
           <View style={styles.activities}>
             <UI.ActivityButton
-              // inActiveIcon={
-              //   <UI.Icon
-              //     type="FontAwesome"
-              //     size={20}
-              //     name="heart-o"
-              //     color={info}
-              //   />
-              // }
-              activeIcon={
-                <UI.Icon
-                  type="FontAwesome"
-                  size={20}
-                  name="heart"
-                  color={danger}
-                />
+              inActiveIcon={
+                !liked ? (
+                  <UI.Icon
+                    type="FontAwesome"
+                    size={20}
+                    name="heart-o"
+                    color={info}
+                  />
+                ) : null
               }
-              // count={product ? product.likes.length : 0}
-              onClick={() => setLikeCount(likeCount + 1)}
+              activeIcon={
+                liked ? (
+                  <UI.Icon
+                    type="FontAwesome"
+                    size={20}
+                    name="heart"
+                    color={danger}
+                  />
+                ) : null
+              }
+              count={product && product.likes ? product.likes.length : 0}
+              onClick={() => handleLike()}
             />
             <UI.Spacer medium />
             <UI.ActivityButton
@@ -172,29 +241,32 @@ const SingleProductScreen = ({
                   color={info}
                 />
               }
-              // count={comments ? comments.length : 0}
-              onClick={() => setLikeCount(likeCount + 1)}
+              count={comments ? comments.length : 0}
             />
             <UI.Spacer medium />
             <UI.ActivityButton
-              // inActiveIcon={
-              //   <UI.Icon
-              //     type="FontAwesome"
-              //     size={20}
-              //     name="bookmark-o"
-              //     color={info}
-              //   />
-              // }
-              activeIcon={
-                <UI.Icon
-                  type="FontAwesome"
-                  size={20}
-                  name="bookmark"
-                  color={primaryColor}
-                />
+              inActiveIcon={
+                !saved ? (
+                  <UI.Icon
+                    type="FontAwesome"
+                    size={20}
+                    name="bookmark-o"
+                    color={info}
+                  />
+                ) : null
               }
-              // count={product ? product.saves.length : 0}
-              onClick={() => setLikeCount(likeCount + 1)}
+              activeIcon={
+                saved ? (
+                  <UI.Icon
+                    type="FontAwesome"
+                    size={20}
+                    name="bookmark"
+                    color={primaryColor}
+                  />
+                ) : null
+              }
+              count={product && product.saves ? product.saves.length : 0}
+              onClick={() => handleSave()}
             />
             <UI.Spacer />
             <View style={styles.share}>
@@ -202,7 +274,7 @@ const SingleProductScreen = ({
                 inActiveIcon={
                   <UI.Icon size={22} name="md-share" color={info} />
                 }
-                onClick={() => setLikeCount(likeCount - 1)}
+                onClick={() => {}}
               />
             </View>
           </View>

@@ -55,3 +55,45 @@ export const CREATE_COMMENT = gql`
     }
   }
 `;
+
+export const CREATE_LIKE = gql`
+  mutation createProductLike($customerId: String!, $productId: String!) {
+    createProductLike(customerId: $customerId, productId: $productId) {
+      id
+      customer {
+        id
+      }
+      product {
+        id
+      }
+    }
+  }
+`;
+
+export const CREATE_SAVE = gql`
+  mutation createProductSave($customerId: String!, $productId: String!) {
+    createProductSave(customerId: $customerId, productId: $productId) {
+      id
+      customer {
+        id
+      }
+      product {
+        id
+      }
+    }
+  }
+`;
+
+export const CREATE_SHARE = gql`
+  mutation createProductShare($customerId: String!, $produdctId: String!) {
+    createProductShare(customerId: $customerId, productId: $productId) {
+      id
+      customer {
+        id
+      }
+      product {
+        id
+      }
+    }
+  }
+`;
