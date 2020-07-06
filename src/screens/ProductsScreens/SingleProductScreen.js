@@ -12,7 +12,7 @@ import {
   CREATE_SAVE,
   CREATE_SHARE,
 } from '../../apollo/mutations';
-import { formatMoney } from '../../utils';
+import { formatMoney, formatShortNumber } from '../../utils';
 import EmptyItem from '../../components/EmptyItem';
 import Skeleton from 'react-native-skeleton-placeholder';
 import {
@@ -260,7 +260,11 @@ const SingleProductScreen = ({
                   />
                 ) : null
               }
-              count={product && product.likes ? product.likes.length : 0}
+              count={
+                product && product.likes
+                  ? formatShortNumber(product.likes.length)
+                  : 0
+              }
               onClick={() => handleLike()}
             />
             <UI.Spacer medium />
@@ -273,7 +277,7 @@ const SingleProductScreen = ({
                   color={info}
                 />
               }
-              count={comments ? comments.length : 0}
+              count={comments ? formatShortNumber(comments.length) : 0}
             />
             <UI.Spacer medium />
             <UI.ActivityButton
@@ -297,7 +301,11 @@ const SingleProductScreen = ({
                   />
                 ) : null
               }
-              count={product && product.saves ? product.saves.length : 0}
+              count={
+                product && product.saves
+                  ? formatShortNumber(product.saves.length)
+                  : 0
+              }
               onClick={() => handleSave()}
             />
             <UI.Spacer />
