@@ -239,11 +239,10 @@ const ProductsScreen = ({ navigation, offline }) => {
             {!loading &&
               !error &&
               products.length > 0 &&
-              products.map((p) => {
-                console.log(p.vendor);
+              products.map((p, i) => {
                 return (
                   <Product
-                    key={p.id}
+                    key={p.id + i}
                     quantity={p.quantity}
                     image={{ uri: p.images[0].url }}
                     name={p.name}
