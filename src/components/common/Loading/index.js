@@ -21,7 +21,7 @@ const Loading = ({
     <View style={styles.container}>
       <Spinner
         isVisible={show}
-        size={80}
+        size={40}
         color={color}
         type="Circle"
         style={{ ...styles.spinner, ...style }}
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute',
     width: '100%',
-    backgroundColor: '#fffe',
+    backgroundColor: '#fffa',
     zIndex: 99999999999,
     elevation: 15,
   },
