@@ -593,11 +593,13 @@ const styles = StyleSheet.create({
   category: {
     position: 'absolute',
     right: 10,
-    backgroundColor: '#0009',
+    backgroundColor: primaryColor,
     paddingHorizontal: 5,
     top: 10,
     color: '#fff',
+    fontSize: 13,
     textTransform: 'uppercase',
+    borderRadius: 5,
   },
   bottomCart: {
     position: 'absolute',
