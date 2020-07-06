@@ -105,6 +105,11 @@ const SingleProductScreen = ({
           return setLiked(true);
         }
       });
+      productData.product.saves.forEach((s) => {
+        if (s.customer.id === customer.id) {
+          return setSaved(true);
+        }
+      });
     }
 
     // Alert the user if an error occured while fetching producs
@@ -168,12 +173,21 @@ const SingleProductScreen = ({
 
   const handleSave = () => {
     setSaved(!saved);
-    saveProduct().then((res) => {
-      setProduct({
-        ...product,
-        saves: [res.data.createProductSave],
+    saveProduct()
+      .then((res) => {
+        setProduct(res.data.createProductSave);
+        ToastAndroid.show(
+          !saved ? 'Product Saved!' : 'Unsaved!',
+          ToastAndroid.SHORT,
+        );
+      })
+      .catch(() => {
+        setSaved(false);
+        ToastAndroid.show(
+          'An error occured while saving this product!',
+          ToastAndroid.SHORT,
+        );
       });
-    });
   };
   const handleShare = () => {
     shareProduct();
