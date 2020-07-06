@@ -24,7 +24,6 @@ const ProductsScreen = ({ navigation, offline }) => {
     variables: {
       first: 42,
     },
-    pollInterval: 10000,
   });
 
   React.useEffect(() => {

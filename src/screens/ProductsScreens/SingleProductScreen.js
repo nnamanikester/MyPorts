@@ -1,6 +1,6 @@
 import React from 'react';
 import Swiper from 'react-native-swiper';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, ToastAndroid } from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import Comment from '../../components/Comment';
@@ -41,8 +41,16 @@ const SingleProductScreen = ({
   // Queries and mutations
   const [
     getProduct,
-    { data: productData, loading: productLoading, error: productError },
-  ] = useLazyQuery(GET_SINGLE_PRODUCT, { variables: { id: p.id } });
+    {
+      data: productData,
+      loading: productLoading,
+      error: productError,
+      refetch,
+    },
+  ] = useLazyQuery(GET_SINGLE_PRODUCT, {
+    variables: { id: p.id },
+    pollInterval: 500,
+  });
 
   const [
     getComments,
@@ -66,7 +74,6 @@ const SingleProductScreen = ({
       productId: p.id,
       customerId: customer.id,
     },
-    pollInterval: 500,
   });
 
   const [saveProduct] = useMutation(CREATE_SAVE, {
@@ -74,7 +81,6 @@ const SingleProductScreen = ({
       productId: p.id,
       customerId: customer.id,
     },
-    pollInterval: 500,
   });
 
   const [shareProduct] = useMutation(CREATE_SHARE, {
@@ -94,12 +100,18 @@ const SingleProductScreen = ({
     // Set Fetched data to product state
     if (productData) {
       setProduct(productData.product);
+      productData.product.likes.forEach((l) => {
+        if (l.customer.id === customer.id) {
+          return setLiked(true);
+        }
+      });
     }
 
     // Alert the user if an error occured while fetching producs
     if (productError) {
-      alert(
+      ToastAndroid.show(
         "Error Loading Product!. \nPlease check if you're connected to the internet",
+        ToastAndroid.LONG,
       );
     }
 
@@ -141,19 +153,25 @@ const SingleProductScreen = ({
 
   const handleLike = () => {
     setLiked(!liked);
-    likeProduct().then((res) => {
-      setProduct({
-        ...product,
-        likes: [...product.likes, res.data.createProductLike],
+    likeProduct()
+      .then((res) => {
+        setProduct(res.data.createProductLike);
+      })
+      .catch(() => {
+        setLiked(false);
+        ToastAndroid.show(
+          'An error occured, Please try again later!',
+          ToastAndroid.SHORT,
+        );
       });
-    });
   };
+
   const handleSave = () => {
     setSaved(!saved);
     saveProduct().then((res) => {
       setProduct({
         ...product,
-        saves: [...product.saves, res.data.createProductSave],
+        saves: [res.data.createProductSave],
       });
     });
   };
@@ -189,7 +207,7 @@ const SingleProductScreen = ({
           </>
         }
       />
-      <UI.Layout style={styles.layout}>
+      <UI.Layout onRefresh={() => refetch()} style={styles.layout}>
         <Swiper animated autoplayTimeout={5} height={300} loop autoplay>
           {p &&
             p.images.map((img, i) => {
@@ -462,7 +480,7 @@ const SingleProductScreen = ({
             </View>
             {comments.length > 0 &&
               comments.map((comment, i) => {
-                if (i > 2) return;
+                if (i > 2) return null;
                 return (
                   <Comment
                     key={comment.id}
