@@ -23,6 +23,7 @@ import {
 } from '../../components/common/variables';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import Share from 'react-native-share';
 
 const SingleProductScreen = ({
   navigation,
@@ -189,8 +190,21 @@ const SingleProductScreen = ({
         );
       });
   };
+
   const handleShare = () => {
-    shareProduct();
+    const options = {
+      message: product && product.description,
+      title: product && product.name,
+    };
+    console.log('clicked');
+    // shareProduct();
+    Share.open(options)
+      .then(() => {
+        console.log(shared);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
@@ -314,7 +328,7 @@ const SingleProductScreen = ({
                 inActiveIcon={
                   <UI.Icon size={22} name="md-share" color={info} />
                 }
-                onClick={() => {}}
+                onClick={() => handleShare()}
               />
             </View>
           </View>
@@ -362,10 +376,10 @@ const SingleProductScreen = ({
                   />
                 )}
                 {p.specifications
-                  ? p.specifications.map((spec) => {
+                  ? p.specifications.map((spec, i) => {
                       return (
                         <UI.ListItem
-                          key={spec.id}
+                          key={spec.id + i}
                           left={<UI.Text heading>{spec.specification}</UI.Text>}
                           body={
                             <View
