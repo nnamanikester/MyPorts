@@ -193,8 +193,10 @@ const SingleProductScreen = ({
 
   const handleShare = () => {
     const options = {
-      message: product && product.description,
-      title: product && product.name,
+      message: p.description,
+      title: p.name,
+      filename: p.name,
+      url: p.images[0].url,
     };
     console.log('clicked');
     // shareProduct();

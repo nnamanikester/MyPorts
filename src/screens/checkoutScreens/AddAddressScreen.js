@@ -28,23 +28,37 @@ const AddAddressScreen = ({ navigation }) => {
       />
       <Layout>
         <View style={styles.container}>
+          <View>
+            <Text h3>Add A New Shipping Address</Text>
+            <Text note color="">
+              The Fields marked with <Text color="red">*</Text> are required
+            </Text>
+          </View>
           <Spacer medium />
+
           <View style={styles.inputContainer}>
-            <Text heading>Full Name</Text>
+            <Text heading>
+              Full Name <Text color="red">*</Text>
+            </Text>
             <Spacer />
             <TextInput />
           </View>
 
           <Spacer medium />
           <View style={styles.inputContainer}>
-            <Text heading> Street Address</Text>
+            <Text heading>
+              {' '}
+              Street Address <Text color="red">*</Text>
+            </Text>
             <Spacer />
             <TextInput />
           </View>
 
           <Spacer medium />
           <View style={styles.inputContainer}>
-            <Text heading>State</Text>
+            <Text heading>
+              State <Text color="red">*</Text>
+            </Text>
             <Spacer />
             <TextInput />
           </View>
@@ -58,14 +72,25 @@ const AddAddressScreen = ({ navigation }) => {
 
           <Spacer medium />
           <View style={styles.inputContainer}>
-            <Text heading>Postal Code</Text>
+            <Text heading>Lga</Text>
             <Spacer />
             <TextInput />
           </View>
 
           <Spacer medium />
           <View style={styles.inputContainer}>
-            <Text heading>Phone</Text>
+            <Text heading>
+              Postal Code <Text color="red">*</Text>
+            </Text>
+            <Spacer />
+            <TextInput />
+          </View>
+
+          <Spacer medium />
+          <View style={styles.inputContainer}>
+            <Text heading>
+              Phone <Text color="red">*</Text>
+            </Text>
             <Spacer />
             <TextInput />
           </View>
