@@ -14,7 +14,7 @@ import {
 import Header from '../../components/Header';
 
 const AddAddressScreen = ({ navigation }) => {
-  const [defaultAddress, setDefaultAddress] = useState(false);
+  const [isDefault, setIsDefault] = useState(false);
 
   return (
     <>
@@ -99,8 +99,8 @@ const AddAddressScreen = ({ navigation }) => {
           <View style={styles.inputContainer}>
             <Row>
               <Switch
-                onChange={() => setDefaultAddress(!defaultAddress)}
-                value={defaultAddress}
+                onChange={() => setIsDefault(!isDefault)}
+                value={isDefault}
                 style={{ alignSelf: 'flex-start' }}
               />
               <Spacer medium />
