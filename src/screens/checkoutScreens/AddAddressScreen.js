@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ToastAndroid } from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import { useMutation } from '@apollo/react-hooks';
 import { CREATE_ADDRESS } from '../../apollo/mutations';
+import { connect } from 'react-redux';
 
-const AddAddressScreen = ({ navigation }) => {
+const AddAddressScreen = ({ navigation, customer }) => {
   const [isDefault, setIsDefault] = useState(false);
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
@@ -14,6 +15,36 @@ const AddAddressScreen = ({ navigation }) => {
   const [lga, setLga] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [phone, setPhone] = useState('');
+
+  const [createAddress, { loading }] = useMutation(CREATE_ADDRESS, {
+    variables: {
+      customerId: customer.id,
+      name,
+      address,
+      state,
+      city,
+      lga,
+      postalCode,
+      phone,
+      isDefault,
+    },
+  });
+
+  const handleCreateAddress = () => {
+    createAddress()
+      .then((res) => {
+        console.log(res.data.createAddress);
+        ToastAndroid.show('Address created successfully!', ToastAndroid.SHORT);
+        navigation.goBack();
+      })
+      .catch((e) => {
+        console.log(e);
+        ToastAndroid.show(
+          'Error creating new address. Please, try again!',
+          ToastAndroid.SHORT,
+        );
+      });
+  };
 
   return (
     <>
@@ -25,6 +56,7 @@ const AddAddressScreen = ({ navigation }) => {
           </UI.Clickable>
         }
       />
+      <UI.Loading show={loading} />
       <UI.Layout>
         <View style={styles.container}>
           <View>
@@ -108,6 +140,7 @@ const AddAddressScreen = ({ navigation }) => {
             </UI.Text>
             <UI.Spacer />
             <UI.TextInput
+              keyboardType="phone-pad"
               value={phone}
               onChangeText={(value) => setPhone(value)}
             />
@@ -129,7 +162,7 @@ const AddAddressScreen = ({ navigation }) => {
           <UI.Spacer medium />
           <View>
             <UI.Row style={{ justifyContent: 'space-between' }}>
-              <UI.Button>
+              <UI.Button onClick={() => handleCreateAddress()}>
                 <UI.Text color="#fff">Save</UI.Text>
               </UI.Button>
             </UI.Row>
@@ -149,4 +182,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddAddressScreen;
+const mapStateToProps = (state) => {
+  return {
+    offline: !state.network.isConnected,
+    customer: state.customer.profile,
+  };
+};
+
+export default connect(mapStateToProps)(AddAddressScreen);
