@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import {gql} from 'apollo-boost';
 
 export const SIGNIN = gql`
   mutation signin($email: String!, $password: String!) {
@@ -10,6 +10,24 @@ export const SIGNIN = gql`
         email
         isVendor
         isCustomer
+        customer {
+          id
+          emailSetting {
+            id
+            promotions
+            orders
+            rewards
+          }
+          notificationSetting {
+            id
+            orders
+            promotions
+            rewards
+            reminders
+            inStock
+            newProducts
+          }
+        }
       }
     }
   }
@@ -25,6 +43,24 @@ export const SIGNUP = gql`
         email
         isVendor
         isCustomer
+        customer {
+          id
+          emailSetting {
+            id
+            promotions
+            orders
+            rewards
+          }
+          notificationSetting {
+            id
+            orders
+            promotions
+            rewards
+            reminders
+            inStock
+            newProducts
+          }
+        }
       }
     }
   }

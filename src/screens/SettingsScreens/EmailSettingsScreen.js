@@ -10,9 +10,17 @@ import {
   Clickable,
 } from '../../components/common';
 import Header from '../../components/Header';
+import {connect} from 'react-redux';
 
-const EmailSettingsScreen = ({navigation}) => {
+const EmailSettingsScreen = ({navigation, user}) => {
+  const {
+    customer: {emailSetting},
+  } = user;
+  console.log('custoer', emailSetting);
   const [value, setValue] = useState(false);
+  const [orders, setOrders] = React.useState(emailSetting.orders);
+  const [promotions, setPromotions] = React.useState(emailSetting.promotions);
+  const [rewards, setRewards] = React.useState(emailSetting.rewards);
 
   return (
     <>
@@ -33,7 +41,9 @@ const EmailSettingsScreen = ({navigation}) => {
                 <Text note>Notify me of the status of my orders</Text>
               </>
             }
-            right={<Switch value={value} onChange={() => setValue(!value)} />}
+            right={
+              <Switch value={orders} onChange={() => setOrders(!orders)} />
+            }
           />
 
           <Spacer />
@@ -45,7 +55,12 @@ const EmailSettingsScreen = ({navigation}) => {
                 <Text note>Daily deals, promotions and flash sales</Text>
               </>
             }
-            right={<Switch value={value} onChange={() => setValue(!value)} />}
+            right={
+              <Switch
+                value={promotions}
+                onChange={() => setPromotions(!promotions)}
+              />
+            }
           />
 
           <Spacer />
@@ -57,7 +72,9 @@ const EmailSettingsScreen = ({navigation}) => {
                 <Text note>Gifts, rewards, and coupons</Text>
               </>
             }
-            right={<Switch value={value} onChange={() => setValue(!value)} />}
+            right={
+              <Switch value={rewards} onChange={() => setRewards(!rewards)} />
+            }
           />
 
           <Spacer />
@@ -78,4 +95,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EmailSettingsScreen;
+const mapStateToProps = (state) => {
+  return {
+    offline: !state.network.isConnected,
+    customer: state.customer.profile,
+    user: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps)(EmailSettingsScreen);
