@@ -1,108 +1,96 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import {
-  Layout,
-  Icon,
-  ListItem,
-  Text,
-  Link,
-  Spacer,
-  Clickable,
-} from '../../components/common';
+import { View, StyleSheet, ToastAndroid } from 'react-native';
+import * as UI from '../../components/common';
 import Header from '../../components/Header';
-import {
-  primaryColor,
-  grayColor,
-  info,
-} from '../../components/common/variables';
+import { primaryColor, info } from '../../components/common/variables';
+import { useLazyQuery } from '@apollo/react-hooks';
+import { GET_ADDRESSES } from '../../apollo/queries';
+import { connect } from 'react-redux';
 
-const ManageAddressesScreen = ({ navigation }) => {
+const ManageAddressesScreen = ({ navigation, offline, customer }) => {
+  const [addresses, setAddresses] = React.useState([]);
+
+  const [getAddresses, { loading, data, error, refetch }] = useLazyQuery(
+    GET_ADDRESSES,
+    {
+      variables: {
+        customerId: customer.id,
+      },
+      pollInterval: 500,
+    },
+  );
+
+  React.useEffect(() => {
+    getAddresses();
+
+    if (data) {
+      setAddresses(data.addresses);
+    }
+
+    if (error) {
+      ToastAndroid.show('Error getting addresses', ToastAndroid.SHORT);
+    }
+  }, [data, error]);
+
   return (
     <>
+      <UI.Loading show={loading} />
       <Header
         title="Manage Addresses"
         headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.goBack()}>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+          </UI.Clickable>
         }
         headerRight={
-          <Clickable onClick={() => navigation.navigate('AddAddress')}>
-            <Icon name="md-add" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.navigate('AddAddress')}>
+            <UI.Icon name="md-add" color="#fff" />
+          </UI.Clickable>
         }
       />
-      <Layout>
+      <UI.Layout onRefresh={() => refetch()}>
         <View style={styles.container}>
-          <ListItem
-            left={<Icon name="ios-pin" color={info} />}
-            body={
-              <>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text heading>John Kester</Text>
-                  <Link>
-                    <Icon name="ios-flag" color={primaryColor} size={16} />
-                    {'  '}
-                    Default
-                  </Link>
-                </View>
-                <Text>
-                  Suit 13 Romchi plaza, oneday road, Awkunanaw, Enugu, Enugu
-                  State.
-                </Text>
-                <Text>Nigeria</Text>
-                <Text>400252</Text>
-              </>
-            }
-          />
-          <ListItem
-            onClick={() => navigation.navigate('EditAddress')}
-            left={<Icon name="ios-pin" color={info} />}
-            body={
-              <>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text heading>John Kester</Text>
-                </View>
-                <Text>
-                  Suit 13 Romchi plaza, oneday road, Awkunanaw, Enugu, Enugu
-                  State.
-                </Text>
-                <Text>Nigeria</Text>
-                <Text>400252</Text>
-              </>
-            }
-          />
-          <ListItem
-            onClick={() => navigation.navigate('EditAddress')}
-            left={<Icon name="ios-pin" color={info} />}
-            body={
-              <>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text heading>John Kester</Text>
-                </View>
-                <Text>
-                  Suit 13 Romchi plaza, oneday road, Awkunanaw, Enugu, Enugu
-                  State.
-                </Text>
-                <Text>Nigeria</Text>
-                <Text>400252</Text>
-              </>
-            }
-          />
+          {addresses.length > 0 &&
+            addresses.map((a, i) => {
+              return (
+                <UI.ListItem
+                  key={i + a.id}
+                  onClick={() => navigation.navigate('EditAddress', { a })}
+                  left={<UI.Icon name="ios-pin" color={info} />}
+                  body={
+                    <>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                        }}>
+                        <UI.Text heading>{a.name}</UI.Text>
+                        {a.default
+                          ? a.default.address.id === a.id && (
+                              <UI.Link>
+                                <UI.Icon
+                                  name="ios-flag"
+                                  color={primaryColor}
+                                  size={16}
+                                />
+                                {'  '}
+                                Default
+                              </UI.Link>
+                            )
+                          : null}
+                      </View>
+                      <UI.Text>
+                        {a.address}, {a.city}
+                      </UI.Text>
+                      <UI.Text>{a.state}</UI.Text>
+                      <UI.Text>{a.postalCode}</UI.Text>
+                    </>
+                  }
+                />
+              );
+            })}
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
@@ -114,4 +102,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ManageAddressesScreen;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    offline: !state.network.isConnected,
+    customer: state.customer.profile,
+  };
+};
+
+export default connect(mapStateToProps)(ManageAddressesScreen);

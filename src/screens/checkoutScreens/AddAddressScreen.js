@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { CREATE_ADDRESS } from '../../apollo/mutations';
 import { connect } from 'react-redux';
 
-const AddAddressScreen = ({ navigation, customer }) => {
+const AddAddressScreen = ({ navigation, customer, offline }) => {
   const [isDefault, setIsDefault] = useState(false);
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
@@ -31,19 +31,22 @@ const AddAddressScreen = ({ navigation, customer }) => {
   });
 
   const handleCreateAddress = () => {
-    createAddress()
-      .then((res) => {
-        console.log(res.data.createAddress);
-        ToastAndroid.show('Address created successfully!', ToastAndroid.SHORT);
-        navigation.goBack();
-      })
-      .catch((e) => {
-        console.log(e);
-        ToastAndroid.show(
-          'Error creating new address. Please, try again!',
-          ToastAndroid.SHORT,
-        );
-      });
+    if (!offline) {
+      createAddress()
+        .then((res) => {
+          ToastAndroid.show(
+            'Address created successfully!',
+            ToastAndroid.SHORT,
+          );
+          navigation.goBack();
+        })
+        .catch((e) => {
+          ToastAndroid.show(
+            'Error creating new address. Please, try again!',
+            ToastAndroid.SHORT,
+          );
+        });
+    }
   };
 
   return (

@@ -16,6 +16,12 @@ export const GET_ADDRESSES = gql`
       }
       default {
         id
+        address {
+          id
+        }
+        customer {
+          id
+        }
       }
       status
     }
