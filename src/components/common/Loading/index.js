@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Spinner from 'react-native-spinkit';
 import PropTypes from 'prop-types';
-import { primaryColor } from '../variables';
+import {primaryColor} from '../variables';
 
 /**
  * Displays a loading spinner with a white overlay background
@@ -24,7 +24,7 @@ const Loading = ({
         size={40}
         color={color}
         type="Circle"
-        style={{ ...styles.spinner, ...style }}
+        style={{...styles.spinner, ...style}}
       />
     </View>
   );
@@ -87,4 +87,4 @@ Loading.defaultProps = {
   show: false,
 };
 
-export { Loading };
+export {Loading};

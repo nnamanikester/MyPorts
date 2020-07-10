@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import {
   Layout,
   Text,
@@ -9,10 +9,10 @@ import {
   Clickable,
 } from '../../components/common';
 import Header from '../../components/Header';
-import { StyleSheet, View } from 'react-native';
-import { info } from '../../components/common/variables';
+import {StyleSheet, View} from 'react-native';
+import {info} from '../../components/common/variables';
 
-const LegalAndTermsScreen = ({ navigation }) => {
+const LegalAndTermsScreen = ({navigation}) => {
   return (
     <>
       <Header

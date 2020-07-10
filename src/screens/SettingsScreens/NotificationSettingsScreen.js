@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet} from 'react-native';
 import {
   Layout,
   Text,
@@ -9,10 +9,10 @@ import {
   ListItem,
   Clickable,
 } from '../../components/common';
-import { primaryColor } from '../../components/common/variables';
+import {primaryColor} from '../../components/common/variables';
 import Header from '../../components/Header';
 
-const NotificationSettingsScreen = ({ navigation }) => {
+const NotificationSettingsScreen = ({navigation}) => {
   const [value, setValue] = useState(false);
 
   return (

@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Text } from '..';
+import {StyleSheet, View} from 'react-native';
+import {Text} from '..';
 import PropTypes from 'prop-types';
-import { grayColor } from '../variables';
+import {grayColor} from '../variables';
 
 /**
  * A component that shows a dark background with message when for a `timeout(ms)` period of
@@ -10,7 +10,7 @@ import { grayColor } from '../variables';
  * a `onTimeout` prop that will make use of state to display the component. If not the toast
  * will continue to be on the screen.
  */
-const Toast = ({ style, message, position, timeout, onToast, onTimeout }) => {
+const Toast = ({style, message, position, timeout, onToast, onTimeout}) => {
   if (onToast) {
     onToast();
   }
@@ -47,9 +47,9 @@ const Toast = ({ style, message, position, timeout, onToast, onTimeout }) => {
   }
 
   return (
-    <View style={{ ...styles.overlay, ...positionStyle }}>
-      <View style={{ ...styles.container, ...style }}>
-        <Text style={{ lineHeight: 16 }} color={grayColor} note>
+    <View style={{...styles.overlay, ...positionStyle}}>
+      <View style={{...styles.container, ...style}}>
+        <Text style={{lineHeight: 16}} color={grayColor} note>
           {message}
         </Text>
       </View>
@@ -118,4 +118,4 @@ Toast.defaultProps = {
   style: {},
 };
 
-export { Toast };
+export {Toast};

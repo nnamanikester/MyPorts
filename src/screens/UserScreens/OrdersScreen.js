@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Layout, Icon, Spacer, Clickable } from '../../components/common';
+import {View, StyleSheet} from 'react-native';
+import {Layout, Icon, Spacer, Clickable} from '../../components/common';
 import Header from '../../components/Header';
 import Order from '../../components/Order';
 
-const OrdersScreen = ({ navigation }) => {
+const OrdersScreen = ({navigation}) => {
   return (
     <>
       <Header

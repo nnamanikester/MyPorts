@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
-import { Card, Text, Row, Icon, Spacer, Clickable } from './common';
-import { primaryColor, info } from './common/variables';
+import {View, StyleSheet, Image} from 'react-native';
+import {Card, Text, Row, Icon, Spacer, Clickable} from './common';
+import {primaryColor, info} from './common/variables';
 
-const VendorList = ({ name, location, image, onClick, verified }) => {
+const VendorList = ({name, location, image, onClick, verified}) => {
   return (
     <View>
       <Card style={styles.container}>
@@ -11,7 +11,7 @@ const VendorList = ({ name, location, image, onClick, verified }) => {
           <Image style={styles.image} source={image} />
         </View>
         <View style={styles.content}>
-          <Row style={{ justifyContent: 'space-between' }}>
+          <Row style={{justifyContent: 'space-between'}}>
             <View>
               <Text heading>
                 {name} {'  '}
@@ -33,9 +33,9 @@ const VendorList = ({ name, location, image, onClick, verified }) => {
               </Text>
               <Text note>{location}</Text>
             </View>
-            <View style={{ justifyContent: 'center' }}>
+            <View style={{justifyContent: 'center'}}>
               <Clickable onClick={onClick}>
-                <Row style={{ alignItems: 'center' }}>
+                <Row style={{alignItems: 'center'}}>
                   <Text color={primaryColor}>Shop Now</Text>
                   <Spacer size={2} />
                   <Icon

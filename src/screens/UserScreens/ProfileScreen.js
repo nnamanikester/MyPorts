@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, StyleSheet} from 'react-native';
 import * as UI from '../../components/common';
-import { primaryColor } from '../../components/common/variables';
+import {primaryColor} from '../../components/common/variables';
 import Header from '../../components/Header';
 import Avatar from '../../components/Avatar';
 import UserComments from './ProfileTabs/UserComments';
 import UserReviews from './ProfileTabs/UserReviews';
-import { profilePhoto } from '../../assets/images';
-import { formatMoney } from '../../utils/numberFormat';
-import { connect } from 'react-redux';
+import {profilePhoto} from '../../assets/images';
+import {formatMoney} from '../../utils/numberFormat';
+import {connect} from 'react-redux';
 import {
   CUSTOMER_WALLET,
   CUSTOMER_COMMENTS,
@@ -16,30 +16,25 @@ import {
   CUSTOMER_REVIEWS,
   CUSTOMER_SAVES,
 } from '../../apollo/queries';
-import { useLazyQuery } from '@apollo/react-hooks';
-import { checkNetworkStatus } from '../../redux/actions/NetworkActions';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {checkNetworkStatus} from '../../redux/actions/NetworkActions';
 import NetworkErrorIndicator from '../../components/NetworkErrorIndicator';
 
-const ProfileScreen = ({
-  navigation,
-  offline,
-  customer,
-  checkNetworkStatus,
-}) => {
+const ProfileScreen = ({navigation, offline, customer, checkNetworkStatus}) => {
   // Graphql Queries.
   const [
     customerWallet,
-    { loading: walletLoading, data: walletData, error: walletError },
+    {loading: walletLoading, data: walletData, error: walletError},
   ] = useLazyQuery(CUSTOMER_WALLET);
 
   const [
     customerSaves,
-    { loading: savesLoading, data: savesData, error: savesError },
+    {loading: savesLoading, data: savesData, error: savesError},
   ] = useLazyQuery(CUSTOMER_SAVES);
 
   const [
     customerOrders,
-    { loading: ordersLoading, data: ordersData, error: ordersError },
+    {loading: ordersLoading, data: ordersData, error: ordersError},
   ] = useLazyQuery(CUSTOMER_ORDERS);
   // const { loading: commentsLoading, data: commentsData } = useLazyQuery(CUSTOMER_COMMENTS);
   // const { loading, data } = useLazyQuery(CUSTOMER_REVIEWS);
@@ -51,9 +46,9 @@ const ProfileScreen = ({
   useEffect(() => {
     checkNetworkStatus();
     if (!offline) {
-      customerOrders({ variables: { id: customer.id } });
+      customerOrders({variables: {id: customer.id}});
       customerWallet();
-      customerSaves({ variables: { id: customer.id } });
+      customerSaves({variables: {id: customer.id}});
     }
     if (walletData) setBalance(walletData.customerWallet.balance);
     if (savesData) setSavesCount(savesData.customerSaves.length);
@@ -104,7 +99,7 @@ const ProfileScreen = ({
             <Avatar
               size={100}
               rounded
-              src={customer.photo ? { uri: customer.photo } : profilePhoto}
+              src={customer.photo ? {uri: customer.photo} : profilePhoto}
             />
 
             <UI.Text heading>
@@ -126,14 +121,14 @@ const ProfileScreen = ({
             <UI.Column style={styles.column} size="4">
               <UI.Clickable
                 onClick={() => navigation.navigate('SavedItems')}
-                style={{ alignItems: 'center' }}>
+                style={{alignItems: 'center'}}>
                 <UI.Icon color={primaryColor} size={30} name="ios-bookmark" />
                 <UI.Text>{savesCount}</UI.Text>
               </UI.Clickable>
             </UI.Column>
 
             <UI.Column style={styles.column} size="4">
-              <View style={{ alignItems: 'center' }}>
+              <View style={{alignItems: 'center'}}>
                 <UI.Icon color={primaryColor} size={30} name="ios-card" />
                 <UI.Text>NGN {formatMoney(balance)}</UI.Text>
               </View>
@@ -142,7 +137,7 @@ const ProfileScreen = ({
             <UI.Column style={styles.column} size="4">
               <UI.Clickable
                 onClick={() => navigation.navigate('Orders')}
-                style={{ alignItems: 'center' }}>
+                style={{alignItems: 'center'}}>
                 <UI.Icon color={primaryColor} size={30} name="ios-time" />
                 <UI.Text>{ordersCount}</UI.Text>
               </UI.Clickable>
@@ -154,8 +149,8 @@ const ProfileScreen = ({
 
         <UI.TopTab
           screens={[
-            { name: 'Reviews', component: UserReviews },
-            { name: 'Comments', component: UserComments },
+            {name: 'Reviews', component: UserReviews},
+            {name: 'Comments', component: UserComments},
           ]}
         />
 
@@ -190,4 +185,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { checkNetworkStatus })(ProfileScreen);
+export default connect(mapStateToProps, {checkNetworkStatus})(ProfileScreen);

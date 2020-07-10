@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { connect } from 'react-redux';
-import { setStorage } from './redux/actions/AuthActions';
-import { checkNetworkStatus } from './redux/actions/NetworkActions';
+import React, {useEffect, useState} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {connect} from 'react-redux';
+import {setStorage} from './redux/actions/AuthActions';
+import {checkNetworkStatus} from './redux/actions/NetworkActions';
 import MainFlow from './navigation/MainFlow';
 import AuthFlow from './navigation/AuthFlow';
 import VDFlow from './navigation/VDFlow';
@@ -11,7 +11,7 @@ import SplashScreen from './screens/SplashScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import NetworkError from './components/NetworkError';
 import CreateProfileFLow from './navigation/CreateProfileFlow';
-import { TOKEN_STORAGE, USER_STORAGE } from './constants';
+import {TOKEN_STORAGE, USER_STORAGE} from './constants';
 
 const NavigationFlows = ({
   isSkipped,
@@ -26,7 +26,7 @@ const NavigationFlows = ({
   useEffect(() => {
     checkNetworkStatus();
     checkStorage();
-  }, []);
+  });
 
   // Checks the async storage if token and user exists
   const checkStorage = async () => {
@@ -78,7 +78,7 @@ const NavigationFlows = ({
 };
 
 const mapStateToProps = (state) => {
-  const { isSkipped, isStranger, token, user } = state.auth;
+  const {isSkipped, isStranger, token, user} = state.auth;
   return {
     isSkipped,
     isStranger,
@@ -88,6 +88,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setStorage, checkNetworkStatus })(
+export default connect(mapStateToProps, {setStorage, checkNetworkStatus})(
   NavigationFlows,
 );

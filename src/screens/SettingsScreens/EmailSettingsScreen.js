@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet} from 'react-native';
 import {
   Layout,
   Text,
@@ -11,7 +11,7 @@ import {
 } from '../../components/common';
 import Header from '../../components/Header';
 
-const EmailSettingsScreen = ({ navigation }) => {
+const EmailSettingsScreen = ({navigation}) => {
   const [value, setValue] = useState(false);
 
   return (

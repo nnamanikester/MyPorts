@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet} from 'react-native';
 import {
   Text,
   Layout,
@@ -16,9 +16,9 @@ import {
 } from '../../components/common';
 import Header from '../../components/Header';
 import Comment from '../../components/Comment';
-import { female4 } from '../../assets/images';
+import {female4} from '../../assets/images';
 
-const VendorShopReviewScreen = ({ navigation }) => {
+const VendorShopReviewScreen = ({navigation}) => {
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -104,11 +104,11 @@ const VendorShopReviewScreen = ({ navigation }) => {
         <Spacer medium />
         <Rating />
         <Spacer medium />
-        <View style={{ width: '100%' }}>
+        <View style={{width: '100%'}}>
           <TextInput placeholder="Comment..." autoFocus multiline />
         </View>
         <Divider />
-        <Row style={{ justifyContent: 'space-between' }}>
+        <Row style={{justifyContent: 'space-between'}}>
           <Button onClick={() => setOpenModal(false)} size="small" type="ghost">
             Cancel
           </Button>

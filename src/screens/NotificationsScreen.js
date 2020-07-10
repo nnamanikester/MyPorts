@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { View, StyleSheet, FlatList } from 'react-native';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
+import {View, StyleSheet, FlatList} from 'react-native';
 import {
   Layout,
   Icon,
@@ -13,9 +13,9 @@ import {
 } from '../components/common';
 import Header from '../components/Header';
 import Avatar from '../components/Avatar';
-import { female1, female2, female3, male1 } from '../assets/images';
+import {female1, female2, female3, male1} from '../assets/images';
 
-const NotificationsScreen = ({ navigation }) => {
+const NotificationsScreen = ({navigation}) => {
   const [hideHeader, setHideHeader] = useState(false);
   const offers = [
     {
@@ -114,7 +114,7 @@ const NotificationsScreen = ({ navigation }) => {
           <View>
             <FlatList
               data={offers}
-              renderItem={({ item }) => (
+              renderItem={({item}) => (
                 <ListItem
                   marked={!item.isRead}
                   right={<Text note>{item.time}</Text>}
@@ -137,7 +137,7 @@ const NotificationsScreen = ({ navigation }) => {
           <View>
             <FlatList
               data={activities}
-              renderItem={({ item }) => (
+              renderItem={({item}) => (
                 <ListItem
                   body={
                     <>

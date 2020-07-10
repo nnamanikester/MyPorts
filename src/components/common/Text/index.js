@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Text as TXT, StyleSheet } from 'react-native';
-import { textColor, info } from '../variables';
+import {Text as TXT, StyleSheet} from 'react-native';
+import {textColor, info} from '../variables';
 
 /**
  * A component for displaying texts which supports
@@ -60,7 +60,7 @@ const Text = ({
   return (
     <TXT
       numberOfLines={numberOfLines}
-      style={{ ...styles.text, ...textStyle, ...style }}>
+      style={{...styles.text, ...textStyle, ...style}}>
       {children}
     </TXT>
   );
@@ -106,4 +106,4 @@ Text.defaultProps = {
   numberOfLines: 9999999999,
 };
 
-export { Text };
+export {Text};

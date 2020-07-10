@@ -1,18 +1,18 @@
 import React from 'react';
 import Swiper from 'react-native-swiper';
-import { StyleSheet, View, Image, ToastAndroid } from 'react-native';
+import {StyleSheet, View, Image, ToastAndroid} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import Comment from '../../components/Comment';
-import { useLazyQuery, useMutation } from '@apollo/react-hooks';
-import { PRODUCT_COMMENTS, GET_SINGLE_PRODUCT } from '../../apollo/queries';
+import {useLazyQuery, useMutation} from '@apollo/react-hooks';
+import {PRODUCT_COMMENTS, GET_SINGLE_PRODUCT} from '../../apollo/queries';
 import {
   CREATE_COMMENT,
   CREATE_LIKE,
   CREATE_SAVE,
   CREATE_SHARE,
 } from '../../apollo/mutations';
-import { formatMoney, formatShortNumber } from '../../utils';
+import {formatMoney, formatShortNumber} from '../../utils';
 import EmptyItem from '../../components/EmptyItem';
 import Skeleton from 'react-native-skeleton-placeholder';
 import {
@@ -21,13 +21,13 @@ import {
   danger,
   primaryColor,
 } from '../../components/common/variables';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import moment from 'moment';
 import Share from 'react-native-share';
 
 const SingleProductScreen = ({
   navigation,
-  route: { params },
+  route: {params},
   offline,
   customer,
 }) => {
@@ -42,22 +42,17 @@ const SingleProductScreen = ({
   // Queries and mutations
   const [
     getProduct,
-    {
-      data: productData,
-      loading: productLoading,
-      error: productError,
-      refetch,
-    },
+    {data: productData, loading: productLoading, error: productError, refetch},
   ] = useLazyQuery(GET_SINGLE_PRODUCT, {
-    variables: { id: p.id },
+    variables: {id: p.id},
     pollInterval: 500,
   });
 
   const [
     getComments,
-    { data: commentData, loading: commentsLoading, error },
+    {data: commentData, loading: commentsLoading, error},
   ] = useLazyQuery(PRODUCT_COMMENTS, {
-    variables: { id: p.id },
+    variables: {id: p.id},
     pollInterval: 500,
   });
 
@@ -98,6 +93,7 @@ const SingleProductScreen = ({
       getProduct();
       getComments();
     }
+
     // Set Fetched data to product state
     if (productData) {
       setProduct(productData.product);
@@ -120,7 +116,16 @@ const SingleProductScreen = ({
         ToastAndroid.LONG,
       );
     }
+  }, [
+    productError,
+    productData,
+    getProduct,
+    customer.id,
+    getComments,
+    offline,
+  ]);
 
+  React.useEffect(() => {
     // Set fetched comments to the comment state
     if (commentData) {
       setComments(commentData.productComments);
@@ -136,14 +141,7 @@ const SingleProductScreen = ({
     if (createCommentError) {
       alert('Unable to comment at the time. Please try again!');
     }
-  }, [
-    commentData,
-    createCommentData,
-    productData,
-    productError,
-    createCommentError,
-    error,
-  ]);
+  }, [commentData, createCommentData, createCommentError]);
 
   // Function call when the user sumits the comment
   const handleCreateComment = () => {
@@ -243,7 +241,7 @@ const SingleProductScreen = ({
             p.images.map((img, i) => {
               return (
                 <View key={img + i}>
-                  <Image style={styles.featured} source={{ uri: img.url }} />
+                  <Image style={styles.featured} source={{uri: img.url}} />
                 </View>
               );
             })}
@@ -408,7 +406,7 @@ const SingleProductScreen = ({
                 )}
               </UI.AccordionItem>
               <UI.AccordionItem headerText="Shipping Information">
-                <UI.Row style={{ justifyContent: 'space-between' }}>
+                <UI.Row style={{justifyContent: 'space-between'}}>
                   <UI.Text heading>Shipping Cost: </UI.Text>
                   <UI.Text>{formatMoney(p.shipping)}</UI.Text>
                 </UI.Row>
@@ -523,7 +521,7 @@ const SingleProductScreen = ({
                   <Comment
                     key={comment.id}
                     date={moment(comment.createdAt).format('DD/MM/YYYY')}
-                    image={{ uri: comment.customer.photo }}
+                    image={{uri: comment.customer.photo}}
                     name={`${comment.customer.firstName} ${comment.customer.lastName}`}
                     comment={comment.comment}
                   />
@@ -551,13 +549,13 @@ const SingleProductScreen = ({
                     height={40}
                     borderRadius={100}
                   />
-                  <View style={{ justifyContent: 'center' }}>
-                    <View style={{ width: 150, height: 10 }} />
+                  <View style={{justifyContent: 'center'}}>
+                    <View style={{width: 150, height: 10}} />
                   </View>
                   <View>
-                    <View style={{ width: 320, height: 10, marginTop: 10 }} />
-                    <View style={{ width: 290, height: 10, marginTop: 5 }} />
-                    <View style={{ width: 300, height: 10, marginTop: 5 }} />
+                    <View style={{width: 320, height: 10, marginTop: 10}} />
+                    <View style={{width: 290, height: 10, marginTop: 5}} />
+                    <View style={{width: 300, height: 10, marginTop: 5}} />
                   </View>
                 </Skeleton>
               </UI.Row>

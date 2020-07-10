@@ -1,16 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, ToastAndroid } from 'react-native';
+import {View, StyleSheet, ToastAndroid} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
-import { primaryColor, info } from '../../components/common/variables';
-import { useLazyQuery } from '@apollo/react-hooks';
-import { GET_ADDRESSES } from '../../apollo/queries';
-import { connect } from 'react-redux';
+import {primaryColor, info} from '../../components/common/variables';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {GET_ADDRESSES} from '../../apollo/queries';
+import {connect} from 'react-redux';
 
-const ManageAddressesScreen = ({ navigation, offline, customer }) => {
+const ManageAddressesScreen = ({navigation, offline, customer}) => {
   const [addresses, setAddresses] = React.useState([]);
 
-  const [getAddresses, { loading, data, error, refetch }] = useLazyQuery(
+  const [getAddresses, {loading, data, error, refetch}] = useLazyQuery(
     GET_ADDRESSES,
     {
       variables: {
@@ -22,7 +22,9 @@ const ManageAddressesScreen = ({ navigation, offline, customer }) => {
 
   React.useEffect(() => {
     getAddresses();
+  }, [getAddresses]);
 
+  React.useEffect(() => {
     if (data) {
       setAddresses(data.addresses);
     }
@@ -55,7 +57,7 @@ const ManageAddressesScreen = ({ navigation, offline, customer }) => {
               return (
                 <UI.ListItem
                   key={i + a.id}
-                  onClick={() => navigation.navigate('EditAddress', { a })}
+                  onClick={() => navigation.navigate('EditAddress', {a})}
                   left={<UI.Icon name="ios-pin" color={info} />}
                   body={
                     <>

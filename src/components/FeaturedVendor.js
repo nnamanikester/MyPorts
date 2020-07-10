@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
-import { Card, Text, Clickable, Icon } from './common';
-import { primaryColor, info } from './common/variables';
+import {View, StyleSheet, Image} from 'react-native';
+import {Card, Text, Clickable, Icon} from './common';
+import {primaryColor, info} from './common/variables';
 
-const FeaturedVendor = ({ name, location, image, onClick, verified }) => {
+const FeaturedVendor = ({name, location, image, onClick, verified}) => {
   return (
     <View>
       <Card style={styles.container}>

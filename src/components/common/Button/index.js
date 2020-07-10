@@ -1,14 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Text } from '../Text';
-import {
-  primaryColor,
-  inactiveColor,
-  grayColor,
-  textColor,
-} from '../variables';
-import { Clickable } from '../Clickable';
+import {StyleSheet, View} from 'react-native';
+import {Text} from '../Text';
+import {primaryColor, inactiveColor, grayColor, textColor} from '../variables';
+import {Clickable} from '../Clickable';
 
 let smallStyle = {};
 let color = '#fff';
@@ -91,7 +86,7 @@ const Button = ({
           {iconLeft}
         </View>
       ) : null}
-      <Text color={color} style={{ ...styles.title }}>
+      <Text color={color} style={{...styles.title}}>
         {children}
       </Text>
       {iconRight ? (
@@ -155,4 +150,4 @@ Button.defaultProps = {
   style: {},
 };
 
-export { Button };
+export {Button};

@@ -1,18 +1,18 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
-import { useMutation } from '@apollo/react-hooks';
-import { UPDATE_ADDRESS } from '../../apollo/mutations';
-import { connect } from 'react-redux';
+import {useMutation} from '@apollo/react-hooks';
+import {UPDATE_ADDRESS} from '../../apollo/mutations';
+import {connect} from 'react-redux';
 
 const EditAddressScreen = ({
   navigation,
   offline,
   customer,
-  route: { params },
+  route: {params},
 }) => {
-  const { a } = params;
+  const {a} = params;
   const [isDefault, setIsDefault] = React.useState(false);
   const [name, setName] = React.useState('');
   const [address, setAddress] = React.useState('');
@@ -22,7 +22,7 @@ const EditAddressScreen = ({
   const [postalCode, setPostalCode] = React.useState('');
   const [phone, setPhone] = React.useState('');
 
-  const [updateAddress, { loading }] = useMutation(UPDATE_ADDRESS, {
+  const [updateAddress, {loading}] = useMutation(UPDATE_ADDRESS, {
     variables: {
       id: a.id,
       customerId: customer.id,
@@ -143,7 +143,7 @@ const EditAddressScreen = ({
               <UI.Switch
                 onChange={() => setIsDefault(!isDefault)}
                 value={isDefault}
-                style={{ alignSelf: 'flex-start' }}
+                style={{alignSelf: 'flex-start'}}
               />
               <UI.Spacer medium />
               <UI.Text heading>Set As Default</UI.Text>
@@ -152,7 +152,7 @@ const EditAddressScreen = ({
 
           <UI.Spacer medium />
           <View>
-            <UI.Row style={{ justifyContent: 'space-between' }}>
+            <UI.Row style={{justifyContent: 'space-between'}}>
               <UI.Button onClick={() => handleCreateAddress()}>
                 <UI.Text color="#fff">Save</UI.Text>
               </UI.Button>

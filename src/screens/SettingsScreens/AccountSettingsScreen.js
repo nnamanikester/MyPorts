@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { logUserOut } from '../../redux/actions/AuthActions';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
+import {logUserOut} from '../../redux/actions/AuthActions';
 import {
   Layout,
   Button,
@@ -13,11 +13,11 @@ import {
   Clickable,
 } from '../../components/common';
 import Permissions from '../../components/Permissions';
-import { View, StyleSheet } from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Header from '../../components/Header';
-import { info } from '../../components/common/variables';
+import {info} from '../../components/common/variables';
 
-const AccountScreen = ({ navigation, logUserOut }) => {
+const AccountScreen = ({navigation, logUserOut}) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -70,7 +70,7 @@ const AccountScreen = ({ navigation, logUserOut }) => {
         <Spacer />
         <Text>Do you really want to deactivate your account?</Text>
         <Spacer size={20} />
-        <Row style={{ paddingHorizontal: 20 }}>
+        <Row style={{paddingHorizontal: 20}}>
           <Button onClick={() => setShowModal(false)}>
             <Text color="#fff">Yes</Text>
           </Button>
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, { logUserOut })(AccountScreen);
+export default connect(null, {logUserOut})(AccountScreen);

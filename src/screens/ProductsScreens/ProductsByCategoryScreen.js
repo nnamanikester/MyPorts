@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import {
   Layout,
   Spacer,
@@ -12,7 +12,7 @@ import {
 import Avatar from '../../components/Avatar';
 import Header from '../../components/Header';
 import Product from '../../components/Product';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {
   female1,
   female2,
@@ -22,9 +22,9 @@ import {
   shoe1,
   shoe2,
 } from '../../assets/images';
-import { primaryColor } from '../../components/common/variables';
+import {primaryColor} from '../../components/common/variables';
 
-const ProductsByCategoryScreen = ({ navigation }) => {
+const ProductsByCategoryScreen = ({navigation}) => {
   const [hideHeader, setHideHeader] = useState(false);
 
   return (
@@ -51,11 +51,11 @@ const ProductsByCategoryScreen = ({ navigation }) => {
       />
       <Layout>
         <View style={styles.container}>
-          <View style={{ paddingLeft: 15 }}>
+          <View style={{paddingLeft: 15}}>
             <Text style={styles.title}>Men</Text>
           </View>
           <Spacer />
-          <Row style={{ justifyContent: 'space-between' }}>
+          <Row style={{justifyContent: 'space-between'}}>
             <Product
               quantity="89"
               image={female1}

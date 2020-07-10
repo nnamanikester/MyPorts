@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import RadioButtonRN from 'radio-buttons-react-native';
-import { Icon } from '../Icon';
-import { primaryColor } from '../variables';
+import {Icon} from '../Icon';
+import {primaryColor} from '../variables';
 import PropTypes from 'prop-types';
 
 /**
@@ -10,10 +10,10 @@ import PropTypes from 'prop-types';
  * and renders a radio component with the provided `label` as the radio's label.
  * Aside label, other keys can also be provided.
  */
-const Radio = ({ data, onSelect, selected }) => {
+const Radio = ({data, onSelect, selected}) => {
   return (
     <RadioButtonRN
-      style={{ justifyContent: 'space-between' }}
+      style={{justifyContent: 'space-between'}}
       box={false}
       duration={200}
       initial={selected}
@@ -55,4 +55,4 @@ Radio.defaultProps = {
   onSelect: () => {},
 };
 
-export { Radio };
+export {Radio};

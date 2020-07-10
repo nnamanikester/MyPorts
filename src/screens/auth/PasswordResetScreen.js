@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {
   Layout,
   Text,
@@ -9,9 +9,9 @@ import {
   Spacer,
   Clickable,
 } from '../../components/common';
-import { info } from '../../components/common/variables';
+import {info} from '../../components/common/variables';
 
-const PasswordResetScreen = ({ navigation }) => {
+const PasswordResetScreen = ({navigation}) => {
   return (
     <>
       <Layout>

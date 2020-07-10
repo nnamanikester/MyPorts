@@ -1,15 +1,15 @@
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import React from 'react';
-import { connect } from 'react-redux';
-import { View, Image, StyleSheet } from 'react-native';
-import { Text, Icon, ListItem, Link, Badge, Divider, Spacer } from './common';
-import { profilePhoto } from '../assets/images';
-import { info } from './common/variables';
-import { logUserOut } from '../redux/actions/AuthActions';
-import { danger } from './common/variables';
+import {connect} from 'react-redux';
+import {View, Image, StyleSheet} from 'react-native';
+import {Text, Icon, ListItem, Link, Badge, Divider, Spacer} from './common';
+import {profilePhoto} from '../assets/images';
+import {info} from './common/variables';
+import {logUserOut} from '../redux/actions/AuthActions';
+import {danger} from './common/variables';
 import Permissions from './Permissions';
 
-const Drawer = ({ navigation, user, customer, vendorProfile, logUserOut }) => {
+const Drawer = ({navigation, user, customer, vendorProfile, logUserOut}) => {
   return (
     <DrawerContentScrollView style={styles.drawer}>
       {/* Drawer Header */}
@@ -21,9 +21,7 @@ const Drawer = ({ navigation, user, customer, vendorProfile, logUserOut }) => {
               <View style={styles.headerAlignment}>
                 <Image
                   style={styles.profileImage}
-                  source={
-                    customer.photo ? { uri: customer.photo } : profilePhoto
-                  }
+                  source={customer.photo ? {uri: customer.photo} : profilePhoto}
                 />
               </View>
             }
@@ -54,7 +52,7 @@ const Drawer = ({ navigation, user, customer, vendorProfile, logUserOut }) => {
                   style={styles.profileImage}
                   source={
                     vendorProfile.logo
-                      ? { uri: vendorProfile.logo }
+                      ? {uri: vendorProfile.logo}
                       : profilePhoto
                   }
                 />
@@ -79,69 +77,63 @@ const Drawer = ({ navigation, user, customer, vendorProfile, logUserOut }) => {
 
       {/* Drawer Body */}
       <DrawerItem
-        icon={({ size, color }) => (
-          <Icon size={size} style={{ color }} name="ios-home" />
+        icon={({size, color}) => (
+          <Icon size={size} style={{color}} name="ios-home" />
         )}
-        label={({ color, focused }) => <Text color={color}>Home</Text>}
+        label={({color, focused}) => <Text color={color}>Home</Text>}
         onPress={() => navigation.navigate('Vendors')}
       />
 
       <Permissions.CustomerAndGuest>
         <DrawerItem
-          icon={({ size, color }) => (
+          icon={({size, color}) => (
             <>
               <Icon size={size} color={color} name="md-cart" />
-              <Badge style={{ elevation: 1 }} color={danger} />
+              <Badge style={{elevation: 1}} color={danger} />
             </>
           )}
-          label={({ color, focused }) => (
-            <Text color={color}>Shopping Cart</Text>
-          )}
+          label={({color, focused}) => <Text color={color}>Shopping Cart</Text>}
           onPress={() => navigation.navigate('Cart')}
         />
       </Permissions.CustomerAndGuest>
 
       <Permissions.CustomerAndGuest>
         <DrawerItem
-          icon={({ size, color }) => (
-            <Icon size={size} style={{ color }} name="ios-bookmark" />
+          icon={({size, color}) => (
+            <Icon size={size} style={{color}} name="ios-bookmark" />
           )}
-          label={({ color, focused }) => <Text color={color}>Saved Items</Text>}
+          label={({color, focused}) => <Text color={color}>Saved Items</Text>}
           onPress={() => navigation.navigate('SavedItems')}
         />
       </Permissions.CustomerAndGuest>
 
       <Permissions.CustomerAndGuest>
         <DrawerItem
-          icon={({ size, color }) => (
+          icon={({size, color}) => (
             <Icon size={size} color={color} name="md-time" />
           )}
-          label={({ color, focused }) => (
-            <Text color={color}>Order History</Text>
-          )}
+          label={({color, focused}) => <Text color={color}>Order History</Text>}
           onPress={() => navigation.navigate('Orders')}
         />
       </Permissions.CustomerAndGuest>
 
       <DrawerItem
-        icon={({ size, color }) => (
+        icon={({size, color}) => (
           <Icon size={size} color={color} name="ios-gift" />
         )}
-        label={({ color, focused }) => (
-          <Text color={color}>Refer and Earn</Text>
-        )}
+        label={({color, focused}) => <Text color={color}>Refer and Earn</Text>}
         onPress={() => navigation.navigate('ReferAndEarn')}
       />
 
       <Permissions.CustomerAndGuest>
         <DrawerItem
-          icon={({ size, color }) => (
+          icon={({size, color}) => (
             <>
               <Icon size={size} color={color} name="ios-megaphone" />
-              <Badge style={{ elevation: 1 }} color={danger} />
+              <Badge style={{elevation: 1}} color={danger} />
             </>
           )}
-          label={({ color, focused }) => (
+          label={({color, focused}) => (
             <Text color={color}>Available Coupons</Text>
           )}
           onPress={() => navigation.navigate('Coupons')}
@@ -151,32 +143,30 @@ const Drawer = ({ navigation, user, customer, vendorProfile, logUserOut }) => {
       <Divider />
 
       <DrawerItem
-        icon={({ size, color }) => (
+        icon={({size, color}) => (
           <Icon
             size={size}
             color={color}
             name="ios-information-circle-outline"
           />
         )}
-        label={({ color, focused }) => <Text color={color}>About</Text>}
+        label={({color, focused}) => <Text color={color}>About</Text>}
         onPress={() => navigation.navigate('About')}
       />
 
       <DrawerItem
-        icon={({ size, color }) => (
+        icon={({size, color}) => (
           <Icon size={size} color={color} name="ios-call" />
         )}
-        label={({ color, focused }) => (
-          <Text color={color}>Contact Support</Text>
-        )}
+        label={({color, focused}) => <Text color={color}>Contact Support</Text>}
         onPress={() => navigation.navigate('ContactSupport')}
       />
 
       <DrawerItem
-        icon={({ size, color }) => (
+        icon={({size, color}) => (
           <Icon size={size} color={color} name="ios-help-circle-outline" />
         )}
-        label={({ color, focused }) => (
+        label={({color, focused}) => (
           <Text color={color}>Fequently Asked Questions</Text>
         )}
         onPress={() => navigation.navigate('FAQ')}
@@ -184,19 +174,19 @@ const Drawer = ({ navigation, user, customer, vendorProfile, logUserOut }) => {
 
       <Permissions.Customer>
         <DrawerItem
-          icon={({ size, color }) => (
+          icon={({size, color}) => (
             <Icon size={size} color={color} name="ios-settings" />
           )}
-          label={({ color, focused }) => <Text color={color}>Settings</Text>}
+          label={({color, focused}) => <Text color={color}>Settings</Text>}
           onPress={() => navigation.navigate('Settings')}
         />
       </Permissions.Customer>
 
       <DrawerItem
-        icon={({ size, color }) => (
+        icon={({size, color}) => (
           <Icon size={size} color={color} name="ios-log-out" />
         )}
-        label={({ color, focused }) => <Text>Log Out</Text>}
+        label={({color, focused}) => <Text>Log Out</Text>}
         onPress={() => logUserOut()}
       />
       <Spacer large />
@@ -234,4 +224,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { logUserOut })(Drawer);
+export default connect(mapStateToProps, {logUserOut})(Drawer);

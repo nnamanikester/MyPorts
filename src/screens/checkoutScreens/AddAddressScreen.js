@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, ToastAndroid } from 'react-native';
+import {View, StyleSheet, ToastAndroid} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
-import { useMutation } from '@apollo/react-hooks';
-import { CREATE_ADDRESS } from '../../apollo/mutations';
-import { connect } from 'react-redux';
+import {useMutation} from '@apollo/react-hooks';
+import {CREATE_ADDRESS} from '../../apollo/mutations';
+import {connect} from 'react-redux';
 
-const AddAddressScreen = ({ navigation, customer, offline }) => {
+const AddAddressScreen = ({navigation, customer, offline}) => {
   const [isDefault, setIsDefault] = React.useState(false);
   const [name, setName] = React.useState('');
   const [address, setAddress] = React.useState('');
@@ -17,7 +17,7 @@ const AddAddressScreen = ({ navigation, customer, offline }) => {
   const [phone, setPhone] = React.useState('');
   const [errors, setErrors] = React.useState('');
 
-  const [createAddress, { loading }] = useMutation(CREATE_ADDRESS, {
+  const [createAddress, {loading}] = useMutation(CREATE_ADDRESS, {
     variables: {
       customerId: customer.id,
       name,
@@ -159,7 +159,7 @@ const AddAddressScreen = ({ navigation, customer, offline }) => {
               <UI.Switch
                 onChange={() => setIsDefault(!isDefault)}
                 value={isDefault}
-                style={{ alignSelf: 'flex-start' }}
+                style={{alignSelf: 'flex-start'}}
               />
               <UI.Spacer medium />
               <UI.Text heading>Set As Default</UI.Text>
@@ -172,7 +172,7 @@ const AddAddressScreen = ({ navigation, customer, offline }) => {
 
           <UI.Spacer />
           <View>
-            <UI.Row style={{ justifyContent: 'space-between' }}>
+            <UI.Row style={{justifyContent: 'space-between'}}>
               <UI.Button onClick={() => handleCreateAddress()}>
                 <UI.Text color="#fff">Save</UI.Text>
               </UI.Button>

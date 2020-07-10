@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Text, Icon, Layout } from '..';
+import {StyleSheet, View} from 'react-native';
+import {Text, Icon, Layout} from '..';
 import PropTypes from 'prop-types';
-import { grayColor, primaryColor } from '../variables';
-import { Clickable } from '../Clickable';
+import {grayColor, primaryColor} from '../variables';
+import {Clickable} from '../Clickable';
 
 /**
  * A component that given `show` boolean prop with value `true`, displays a bar from
@@ -25,11 +25,9 @@ const ActionBar = ({
 
   return (
     <View style={styles.overlay}>
-      <View style={{ ...styles.container, ...containerStyle }}>
+      <View style={{...styles.container, ...containerStyle}}>
         <View style={styles.header}>
-          <Text
-            style={{ ...styles.headerText, ...headerTextStyle }}
-            color="#fff">
+          <Text style={{...styles.headerText, ...headerTextStyle}} color="#fff">
             {headerText}
           </Text>
           <Clickable onClick={onCloseButtonClick} activeOpacity={0.7}>
@@ -127,4 +125,4 @@ ActionBar.defaultProps = {
   containerStyle: {},
 };
 
-export { ActionBar };
+export {ActionBar};

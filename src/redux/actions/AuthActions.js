@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 export const logUserOut = () => {
   return async (dispatch) => {
     await AsyncStorage.clear();
-    return dispatch({ type: 'LOG_USER_OUT' });
+    return dispatch({type: 'LOG_USER_OUT'});
   };
 };
 
@@ -21,7 +21,7 @@ export const removeStrangerStatus = () => {
 
 export const setStorage = (user, token) => ({
   type: 'SET_STORAGE',
-  payload: { user, token },
+  payload: {user, token},
 });
 
 export const setEmailAddress = (email) => ({

@@ -6,4 +6,4 @@ import error from './images/icons/x-circle.png';
 import visa from './images/icons/visa-icon.png';
 import chip from './images/icons/chip.png';
 
-export { masterCard, error, errorBg, check, successBg, visa, chip };
+export {masterCard, error, errorBg, check, successBg, visa, chip};

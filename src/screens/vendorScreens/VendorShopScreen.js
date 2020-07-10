@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet, Image} from 'react-native';
 import {
   Layout,
   Row,
@@ -26,13 +26,9 @@ import {
   female4,
   male1,
 } from '../../assets/images';
-import {
-  grayColor,
-  info,
-  primaryColor,
-} from '../../components/common/variables';
+import {grayColor, info, primaryColor} from '../../components/common/variables';
 
-const VendorShopScreen = ({ navigation }) => {
+const VendorShopScreen = ({navigation}) => {
   const [openChat, setOpenChat] = useState(false);
   const [openReview, setOpenReview] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
@@ -119,8 +115,7 @@ const VendorShopScreen = ({ navigation }) => {
 
           <Spacer />
 
-          <Row
-            style={{ justifyContent: 'space-between', paddingHorizontal: 10 }}>
+          <Row style={{justifyContent: 'space-between', paddingHorizontal: 10}}>
             <Text style={styles.title}>Ratings and Reviews</Text>
             <Link onClick={() => navigation.navigate('VendorShopReview')}>
               See All Reviews
@@ -147,7 +142,7 @@ const VendorShopScreen = ({ navigation }) => {
 
           <Divider />
 
-          <View style={{ paddingHorizontal: 10 }}>
+          <View style={{paddingHorizontal: 10}}>
             <Button onClick={() => setOpenReview(true)}>
               <Icon size={20} name="md-create" color="#fff" />
               {'   '}
@@ -160,8 +155,7 @@ const VendorShopScreen = ({ navigation }) => {
         <Divider />
 
         <View style={styles.container}>
-          <Row
-            style={{ justifyContent: 'space-between', paddingHorizontal: 10 }}>
+          <Row style={{justifyContent: 'space-between', paddingHorizontal: 10}}>
             <Text style={styles.title}>Recent Products</Text>
             <Link onClick={() => setShowSearchBar(!showSearchBar)}>
               <Icon name={showSearchBar ? 'md-close' : 'ios-search'} />
@@ -176,7 +170,7 @@ const VendorShopScreen = ({ navigation }) => {
 
           <Spacer />
 
-          <Row style={{ justifyContent: 'space-between' }}>
+          <Row style={{justifyContent: 'space-between'}}>
             <Product
               quantity="89"
               image={female1}
@@ -240,11 +234,11 @@ const VendorShopScreen = ({ navigation }) => {
         <Spacer medium />
         <Rating />
         <Spacer medium />
-        <View style={{ width: '100%' }}>
+        <View style={{width: '100%'}}>
           <TextInput placeholder="Comment..." autoFocus multiline />
         </View>
         <Divider />
-        <Row style={{ justifyContent: 'space-between' }}>
+        <Row style={{justifyContent: 'space-between'}}>
           <Button
             onClick={() => setOpenReview(false)}
             size="small"

@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Text } from '../Text';
-import { Row } from '../Row';
-import { Spacer } from '../Spacer';
-import { info } from '../variables';
-import { Clickable } from '../Clickable';
+import {View, StyleSheet} from 'react-native';
+import {Text} from '../Text';
+import {Row} from '../Row';
+import {Spacer} from '../Spacer';
+import {info} from '../variables';
+import {Clickable} from '../Clickable';
 
-const ActivityButton = ({ activeIcon, inActiveIcon, onClick, count }) => {
+const ActivityButton = ({activeIcon, inActiveIcon, onClick, count}) => {
   return (
     <View style={styles.container}>
       <Clickable onClick={onClick}>{activeIcon || inActiveIcon}</Clickable>
@@ -37,4 +37,4 @@ ActivityButton.propTypes = {
   count: PropTypes.number,
 };
 
-export { ActivityButton };
+export {ActivityButton};

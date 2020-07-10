@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {
   Text,
   Card,
@@ -11,14 +11,8 @@ import {
   ListItem,
   Avatar,
 } from './common';
-import {
-  primaryColor,
-  info,
-  success,
-  warning,
-  danger,
-} from './common/variables';
-import { image1 } from '../assets/images';
+import {primaryColor, info, success, warning, danger} from './common/variables';
+import {image1} from '../assets/images';
 
 const Order = ({
   orderNo,
@@ -78,7 +72,7 @@ const Order = ({
           </>
         }
         right={
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Icon size={16} name={icon} color={statusColor} />
             <Spacer size={2} />
             <Text color={statusColor}>{statusLabel}</Text>

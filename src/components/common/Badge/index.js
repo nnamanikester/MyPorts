@@ -1,22 +1,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { success } from '../variables';
-import { Text } from '../Text';
+import {StyleSheet, View} from 'react-native';
+import {success} from '../variables';
+import {Text} from '../Text';
 
-const Badge = ({ children, style, medium, large, small, color }) => {
-  let size = { width: 10, height: 10 };
+const Badge = ({children, style, medium, large, small, color}) => {
+  let size = {width: 10, height: 10};
 
   if (small) {
-    size = { width: 10, height: 10 };
+    size = {width: 10, height: 10};
   }
 
   if (medium) {
-    size = { width: 15, height: 15 };
+    size = {width: 15, height: 15};
   }
 
   if (large) {
-    size = { width: 20, height: 20 };
+    size = {width: 20, height: 20};
   }
 
   return (
@@ -52,4 +52,4 @@ Badge.propTypes = {};
 
 Badge.defaultProps = {};
 
-export { Badge };
+export {Badge};

@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { createStackNavigator } from '@react-navigation/stack';
-import { setCustomerProfile } from '../redux/actions/CustomerActions';
-import { checkNetworkStatus } from '../redux/actions/NetworkActions';
-import { CUSTOMER_PROFILE } from '../apollo/queries';
-import { useLazyQuery } from '@apollo/react-hooks';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {createStackNavigator} from '@react-navigation/stack';
+import {setCustomerProfile} from '../redux/actions/CustomerActions';
+import {checkNetworkStatus} from '../redux/actions/NetworkActions';
+import {CUSTOMER_PROFILE} from '../apollo/queries';
+import {useLazyQuery} from '@apollo/react-hooks';
 import * as UI from '../components/common';
-import NetworkError from '../components/NetworkError';
+import {Alert} from 'react-native';
 
 import TabNavigation from './MainFlows/MainTabNavigation';
 import DraweNavigation from './MainFlows/MainDrawerNavigation';
@@ -65,8 +65,8 @@ import TermsOfUse from '../screens/pages/TermsOfUseScreen';
 
 const Stack = createStackNavigator();
 
-const StackNavigation = ({ setCustomerProfile, offline }) => {
-  const [customerProfile, { loading, data, error }] = useLazyQuery(
+const StackNavigation = ({setCustomerProfile, offline}) => {
+  const [customerProfile, {loading, data, error}] = useLazyQuery(
     CUSTOMER_PROFILE,
   );
 
@@ -75,12 +75,16 @@ const StackNavigation = ({ setCustomerProfile, offline }) => {
     if (!offline) {
       customerProfile();
     }
+  }, [offline, customerProfile]);
 
-    if (data) setCustomerProfile(data.customerProfile);
-    if (error) {
-      alert('Unable to load profile details');
+  useEffect(() => {
+    if (data) {
+      setCustomerProfile(data.customerProfile);
     }
-  }, [data]);
+    if (error) {
+      Alert.alert('Unable to load profile details');
+    }
+  }, [data, error, setCustomerProfile]);
 
   return (
     <>
@@ -173,6 +177,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setCustomerProfile })(
-  StackNavigation,
-);
+export default connect(mapStateToProps, {setCustomerProfile})(StackNavigation);

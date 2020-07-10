@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import OptionsMenu from 'react-native-options-menu';
-import { Text, Icon, Clickable } from '..';
-import { View, StyleSheet, UIManager, findNodeHandle } from 'react-native';
+import {Text, Icon, Clickable} from '..';
+import {View, StyleSheet, UIManager, findNodeHandle} from 'react-native';
 import PropTypes from 'prop-types';
 
 /**
  * A component that requires `options` and `Icon` props to returns a dropdown
  * menu with those options as items inside the menu.
  */
-const Option = ({ options, icon }) => {
+const Option = ({options, icon}) => {
   return (
     <View>
       <OptionsMenu
@@ -33,4 +33,4 @@ Option.propTypes = {
   icon: PropTypes.element.isRequired,
 };
 
-export { Option };
+export {Option};

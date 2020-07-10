@@ -1,22 +1,20 @@
 import React from 'react';
 import * as UI from '../../components/common';
-import { View, StyleSheet } from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Header from '../../components/Header';
-import { useMutation } from '@apollo/react-hooks';
-import { UPDATE_USER_PASSWORD } from '../../apollo/mutations';
-import { connect } from 'react-redux';
-import { danger } from '../../components/common/variables';
+import {useMutation} from '@apollo/react-hooks';
+import {UPDATE_USER_PASSWORD} from '../../apollo/mutations';
+import {connect} from 'react-redux';
+import {danger} from '../../components/common/variables';
 
-const ChangePasswordScreen = ({ navigation, offline }) => {
+const ChangePasswordScreen = ({navigation, offline}) => {
   const [oldPassword, setOldPassword] = React.useState('');
   const [newPassword, setNewPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const [errors, setErrors] = React.useState({});
   const [success, setSuccess] = React.useState(false);
 
-  const [updatePassword, { loading, error }] = useMutation(
-    UPDATE_USER_PASSWORD,
-  );
+  const [updatePassword, {loading, error}] = useMutation(UPDATE_USER_PASSWORD);
 
   React.useEffect(() => {
     if (error) {
@@ -26,23 +24,21 @@ const ChangePasswordScreen = ({ navigation, offline }) => {
 
   const handleChangePassword = () => {
     if (!oldPassword) {
-      return setErrors({ oPassword: 'Please enter your old password!' });
+      return setErrors({oPassword: 'Please enter your old password!'});
     }
     if (!newPassword) {
-      return setErrors({ nPassword: 'Please enter your new password!' });
+      return setErrors({nPassword: 'Please enter your new password!'});
     }
     if (!confirmPassword) {
-      return setErrors({ cPassword: 'Please confirm your new password!' });
+      return setErrors({cPassword: 'Please confirm your new password!'});
     }
     if (!checkPasswordMatch) {
-      return setErrors({ cPassword: 'Passwords do not match!' });
+      return setErrors({cPassword: 'Passwords do not match!'});
     }
     if (!offline) {
-      updatePassword({ variables: { oldPassword, newPassword } }).then(
-        (res) => {
-          setSuccess(true);
-        },
-      );
+      updatePassword({variables: {oldPassword, newPassword}}).then((res) => {
+        setSuccess(true);
+      });
     } else {
       alert("Please check if you're connected to the internet!");
     }
@@ -53,7 +49,7 @@ const ChangePasswordScreen = ({ navigation, offline }) => {
     setConfirmPassword(value);
     setErrors({});
     if (value !== newPassword) {
-      setErrors({ cPassword: 'Passwords do not match!' });
+      setErrors({cPassword: 'Passwords do not match!'});
       return false;
     }
     return true;
@@ -83,7 +79,7 @@ const ChangePasswordScreen = ({ navigation, offline }) => {
             <UI.Spacer />
 
             {errors.oPassword ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <UI.Spacer />
                 <UI.Icon
                   size={20}
@@ -113,7 +109,7 @@ const ChangePasswordScreen = ({ navigation, offline }) => {
             <UI.Spacer />
 
             {errors.nPassword ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <UI.Spacer />
                 <UI.Icon
                   size={20}
@@ -142,7 +138,7 @@ const ChangePasswordScreen = ({ navigation, offline }) => {
             <UI.Spacer />
 
             {errors.cPassword ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <UI.Spacer />
                 <UI.Icon
                   size={20}

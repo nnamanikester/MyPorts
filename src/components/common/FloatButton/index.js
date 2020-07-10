@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { primaryColor, inactiveColor, textColor } from '../variables';
-import { Text } from '../Text';
-import { Clickable } from '../Clickable';
+import {StyleSheet} from 'react-native';
+import {primaryColor, inactiveColor, textColor} from '../variables';
+import {Text} from '../Text';
+import {Clickable} from '../Clickable';
 
-const FloatButton = ({ onClick, children, size, shape, type, style }) => {
+const FloatButton = ({onClick, children, size, shape, type, style}) => {
   let smallStyle = {};
   let color = '#fff';
   let typeStyle = {};
@@ -131,4 +131,4 @@ FloatButton.defaultProps = {
   style: {},
 };
 
-export { FloatButton };
+export {FloatButton};

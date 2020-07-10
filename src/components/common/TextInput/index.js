@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { TextInput as TI, View, StyleSheet } from 'react-native';
+import {TextInput as TI, View, StyleSheet} from 'react-native';
 import {
   grayColor,
   textColor,
@@ -99,8 +99,8 @@ const TextInput = ({
   }
 
   return (
-    <View style={{ ...styles.container }}>
-      {iconLeft ? <View style={{ ...styles.iconLeft }}>{iconLeft}</View> : null}
+    <View style={{...styles.container}}>
+      {iconLeft ? <View style={{...styles.iconLeft}}>{iconLeft}</View> : null}
       <TI
         value={value}
         onEndEditing={onEndEditing}
@@ -129,7 +129,7 @@ const TextInput = ({
         }}
       />
       {iconRight ? (
-        <View style={{ ...styles.iconRight }}>{iconRight}</View>
+        <View style={{...styles.iconRight}}>{iconRight}</View>
       ) : null}
     </View>
   );
@@ -198,8 +198,7 @@ TextInput.defaultProps = {
   error: false,
   shape: 'normal',
   multiline: false,
-  autoFocus: false,
   keyboardType: 'default',
 };
 
-export { TextInput };
+export {TextInput};

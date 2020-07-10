@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Text, Badge } from './common';
-import { primaryColor, lightColor } from './common/variables';
-import { danger } from './common/variables';
+import {View, StyleSheet} from 'react-native';
+import {Text, Badge} from './common';
+import {primaryColor, lightColor} from './common/variables';
+import {danger} from './common/variables';
 
 const Header = ({
   isCart,
@@ -16,7 +16,7 @@ const Header = ({
   if (hideHeader) return null;
 
   return (
-    <View style={{ ...styles.container, ...style }}>
+    <View style={{...styles.container, ...style}}>
       {headerLeft && (
         <View style={styles.leftContainerStyle}>{headerLeft}</View>
       )}
@@ -29,7 +29,7 @@ const Header = ({
         <View style={styles.rightContainerStyle}>
           {headerRight}
           {isCart && (
-            <Badge style={{ elevation: 1, top: 8, left: 30 }} color={danger} />
+            <Badge style={{elevation: 1, top: 8, left: 30}} color={danger} />
           )}
         </View>
       )}

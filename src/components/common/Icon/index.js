@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -15,9 +15,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Zocial from 'react-native-vector-icons/Zocial';
-import { info, grayColor, inactiveColor } from '../variables';
+import {info, grayColor, inactiveColor} from '../variables';
 
-const Icon = ({ size, name, color, type, style }) => {
+const Icon = ({size, name, color, type, style}) => {
   const IconType = () => {
     switch (type) {
       case 'AntDesign':
@@ -26,7 +26,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
       case 'Entypo':
@@ -35,7 +35,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
       case 'EvilIcons':
@@ -44,7 +44,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
       case 'Feather':
@@ -53,7 +53,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
       case 'FontAwesome':
@@ -62,7 +62,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
       case 'FontAwesome5':
@@ -71,7 +71,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
       case 'Fontisto':
@@ -80,7 +80,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
       case 'Foundation':
@@ -89,7 +89,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
       case 'Ionicons':
@@ -98,7 +98,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
       case 'MaterialIcons':
@@ -107,7 +107,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
       case 'MaterialCommunityIcons':
@@ -116,7 +116,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
       case 'Octicons':
@@ -125,7 +125,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
       case 'Zocial':
@@ -134,7 +134,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
       case 'SimpleLineIcons':
@@ -143,7 +143,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
       default:
@@ -152,7 +152,7 @@ const Icon = ({ size, name, color, type, style }) => {
             name={name}
             color={color || info}
             size={size}
-            style={{ ...styles.icon, ...style }}
+            style={{...styles.icon, ...style}}
           />
         );
     }
@@ -178,4 +178,4 @@ Icon.defaultProps = {
   style: {},
 };
 
-export { Icon };
+export {Icon};

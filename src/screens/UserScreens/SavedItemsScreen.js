@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {
   Text,
   Icon,
@@ -10,12 +10,12 @@ import {
   Clickable,
 } from '../../components/common';
 import Avater from '../../components/Avatar';
-import { cloth3, shoe3, food6 } from '../../assets/images';
-import { Link } from '../../components/common';
+import {cloth3, shoe3, food6} from '../../assets/images';
+import {Link} from '../../components/common';
 import Header from '../../components/Header';
-import { primaryColor } from '../../components/common/variables';
+import {primaryColor} from '../../components/common/variables';
 
-const SavedItemsScreen = ({ navigation }) => {
+const SavedItemsScreen = ({navigation}) => {
   return (
     <>
       <Header
@@ -53,7 +53,7 @@ const SavedItemsScreen = ({ navigation }) => {
             </>
           }
           right={
-            <View style={{ alignItems: 'flex-end' }}>
+            <View style={{alignItems: 'flex-end'}}>
               <Link>
                 <Icon name="md-close" />
               </Link>
@@ -74,7 +74,7 @@ const SavedItemsScreen = ({ navigation }) => {
             </>
           }
           right={
-            <View style={{ alignItems: 'flex-end' }}>
+            <View style={{alignItems: 'flex-end'}}>
               <Link>
                 <Icon name="md-close" />
               </Link>
@@ -95,7 +95,7 @@ const SavedItemsScreen = ({ navigation }) => {
             </>
           }
           right={
-            <View style={{ alignItems: 'flex-end' }}>
+            <View style={{alignItems: 'flex-end'}}>
               <Link>
                 <Icon name="md-close" />
               </Link>

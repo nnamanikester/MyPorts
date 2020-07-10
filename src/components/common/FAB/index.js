@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { primaryColor, inactiveColor, textColor } from '../variables';
-import { Text } from '../Text';
-import { Clickable } from '../Clickable';
+import {StyleSheet} from 'react-native';
+import {primaryColor, inactiveColor, textColor} from '../variables';
+import {Text} from '../Text';
+import {Clickable} from '../Clickable';
 
 /**
  * A Floating action bar button that floats at thte bottom right of
  * the screen.
  */
-const FAB = ({ onClick, children, size, shape, type, style }) => {
+const FAB = ({onClick, children, size, shape, type, style}) => {
   let sizeStyle = {
     width: size || 40,
     height: size || 40,
@@ -127,4 +127,4 @@ FAB.defaultProps = {
   style: {},
 };
 
-export { FAB };
+export {FAB};

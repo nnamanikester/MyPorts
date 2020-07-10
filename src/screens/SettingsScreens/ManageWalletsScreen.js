@@ -1,16 +1,16 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import WalletCard from '../../components/WalletCard';
-import { GET_WALLET } from '../../apollo/queries/wallet';
-import { connect } from 'react-redux';
-import { useLazyQuery } from '@apollo/react-hooks';
+import {GET_WALLET} from '../../apollo/queries/wallet';
+import {connect} from 'react-redux';
+import {useLazyQuery} from '@apollo/react-hooks';
 import Skeleton from 'react-native-skeleton-placeholder';
-import { formatMoney, formatCardNo } from '../../utils/index';
+import {formatMoney, formatCardNo} from '../../utils/index';
 
-const ManageWalletsScreen = ({ navigation, offline }) => {
-  const [getWallet, { loading, data, error }] = useLazyQuery(GET_WALLET);
+const ManageWalletsScreen = ({navigation, offline}) => {
+  const [getWallet, {loading, data, error}] = useLazyQuery(GET_WALLET);
   const [cardNo, setCardNo] = React.useState('');
   const [name, setName] = React.useState('');
   const [balance, setBalance] = React.useState('');
@@ -27,7 +27,7 @@ const ManageWalletsScreen = ({ navigation, offline }) => {
     if (error) {
       return;
     }
-  }, [data, error]);
+  }, [data, error, offline, getWallet]);
 
   return (
     <>

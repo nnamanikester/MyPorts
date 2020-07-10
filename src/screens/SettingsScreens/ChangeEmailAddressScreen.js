@@ -1,22 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import * as UI from '../../components/common';
-import { View, StyleSheet } from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Header from '../../components/Header';
-import { connect } from 'react-redux';
-import { useMutation } from '@apollo/react-hooks';
-import { validateEmail } from '../../utils';
-import { danger } from '../../components/common/variables';
-import { UPDATE_USER_EMAIL } from '../../apollo/mutations';
-import { setStorage } from '../../redux/actions/AuthActions';
+import {connect} from 'react-redux';
+import {useMutation} from '@apollo/react-hooks';
+import {validateEmail} from '../../utils';
+import {danger} from '../../components/common/variables';
+import {UPDATE_USER_EMAIL} from '../../apollo/mutations';
+import {setStorage} from '../../redux/actions/AuthActions';
 import AsyncStorage from '@react-native-community/async-storage';
-import { TOKEN_STORAGE, USER_STORAGE } from '../../constants';
+import {TOKEN_STORAGE, USER_STORAGE} from '../../constants';
 
-const ChangeEmailAddressScreen = ({
-  navigation,
-  offline,
-  user,
-  setStorage,
-}) => {
+const ChangeEmailAddressScreen = ({navigation, offline, user, setStorage}) => {
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -24,7 +19,7 @@ const ChangeEmailAddressScreen = ({
   const [confirmEmail, setConfirmEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [updateUserEmail, { loading, error: updateError }] = useMutation(
+  const [updateUserEmail, {loading, error: updateError}] = useMutation(
     UPDATE_USER_EMAIL,
   );
 
@@ -40,7 +35,7 @@ const ChangeEmailAddressScreen = ({
 
     // Validate email format
     if (!validateEmail(email)) {
-      return setErrors({ ...errors, email: 'Invalid email address!' });
+      return setErrors({...errors, email: 'Invalid email address!'});
     }
 
     // Check if confirm email is not null
@@ -53,12 +48,12 @@ const ChangeEmailAddressScreen = ({
 
     // Check if confirm email matches email.
     if (!checkEmailMatch(confirmEmail)) {
-      return setErrors({ ...errors, emailMatch: 'Emails do not match!' });
+      return setErrors({...errors, emailMatch: 'Emails do not match!'});
     }
 
     // Update email.
     if (!offline) {
-      updateUserEmail({ variables: { email, password } })
+      updateUserEmail({variables: {email, password}})
         .then(async (res) => {
           const token = await AsyncStorage.getItem(TOKEN_STORAGE);
           const user = await AsyncStorage.setItem(
@@ -81,7 +76,7 @@ const ChangeEmailAddressScreen = ({
     setErrors({});
     setConfirmEmail(value);
     if (email !== confirmEmail) {
-      setErrors({ ...errors, emailMatch: 'Emails do not match!' });
+      setErrors({...errors, emailMatch: 'Emails do not match!'});
       return false;
     }
     return true;
@@ -122,7 +117,7 @@ const ChangeEmailAddressScreen = ({
             <UI.Spacer />
 
             {errors.email ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <UI.Spacer />
                 <UI.Icon
                   size={20}
@@ -151,7 +146,7 @@ const ChangeEmailAddressScreen = ({
             <UI.Spacer />
 
             {errors.confirmEmail ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <UI.Spacer />
                 <UI.Icon
                   size={20}
@@ -165,7 +160,7 @@ const ChangeEmailAddressScreen = ({
             ) : null}
 
             {errors.emailMatch ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <UI.Spacer />
                 <UI.Icon
                   size={20}
@@ -193,7 +188,7 @@ const ChangeEmailAddressScreen = ({
             <UI.Spacer />
 
             {errors.password ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <UI.Spacer />
                 <UI.Icon
                   size={20}
@@ -254,6 +249,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setStorage })(
-  ChangeEmailAddressScreen,
-);
+export default connect(mapStateToProps, {setStorage})(ChangeEmailAddressScreen);

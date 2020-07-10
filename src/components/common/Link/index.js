@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Linking } from 'react-native';
-import { Text } from '../Text';
-import { primaryColor } from '../variables';
-import { Clickable } from '../Clickable';
+import {Linking} from 'react-native';
+import {Text} from '../Text';
+import {primaryColor} from '../variables';
+import {Clickable} from '../Clickable';
 
-const Link = ({ children, to, textStyle, onClick, style, color }) => {
+const Link = ({children, to, textStyle, onClick, style, color}) => {
   return (
     <Clickable style={style} onClick={to ? () => Linking.openURL(to) : onClick}>
       <Text style={textStyle} color={color || primaryColor}>
@@ -42,4 +42,4 @@ Link.defaultProps = {
   onClick: () => {},
 };
 
-export { Link };
+export {Link};

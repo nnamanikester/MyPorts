@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import Comment from '../../components/Comment';
 import EmptyItem from '../../components/EmptyItem';
 import Skeleton from 'react-native-skeleton-placeholder';
-import { useLazyQuery, useMutation } from '@apollo/react-hooks';
-import { CREATE_COMMENT } from '../../apollo/mutations';
-import { PRODUCT_COMMENTS } from '../../apollo/queries';
-import { connect } from 'react-redux';
+import {useLazyQuery, useMutation} from '@apollo/react-hooks';
+import {CREATE_COMMENT} from '../../apollo/mutations';
+import {PRODUCT_COMMENTS} from '../../apollo/queries';
+import {connect} from 'react-redux';
 import moment from 'moment';
-import { info } from '../../components/common/variables';
+import {info} from '../../components/common/variables';
 
 const ProductCommentsScreen = ({
   navigation,
-  route: { params },
+  route: {params},
   offline,
   customer,
 }) => {
@@ -24,9 +24,9 @@ const ProductCommentsScreen = ({
 
   const [
     getComments,
-    { data: commentData, loading: commentsLoading, error, refetch },
+    {data: commentData, loading: commentsLoading, error, refetch},
   ] = useLazyQuery(PRODUCT_COMMENTS, {
-    variables: { id: params.id },
+    variables: {id: params.id},
     pollInterval: 500,
   });
 
@@ -53,7 +53,14 @@ const ProductCommentsScreen = ({
     if (createCommentError) {
       alert('Unable to comment at the time. Please try again!');
     }
-  }, [commentData, createCommentData, createCommentError, error]);
+  }, [
+    commentData,
+    createCommentData,
+    createCommentError,
+    error,
+    offline,
+    getComments,
+  ]);
 
   const handleCreateComment = () => {
     if (!commentText) return;
@@ -89,7 +96,7 @@ const ProductCommentsScreen = ({
                 <Comment
                   key={comment.id}
                   date={moment(comment.createdAt).format('DD/MM/YYYY')}
-                  image={{ uri: comment.customer.photo }}
+                  image={{uri: comment.customer.photo}}
                   name={`${comment.customer.firstName} ${comment.customer.lastName}`}
                   comment={comment.comment}
                 />
@@ -115,13 +122,13 @@ const ProductCommentsScreen = ({
                   height={40}
                   borderRadius={100}
                 />
-                <View style={{ justifyContent: 'center' }}>
-                  <View style={{ width: 150, height: 10 }} />
+                <View style={{justifyContent: 'center'}}>
+                  <View style={{width: 150, height: 10}} />
                 </View>
                 <View>
-                  <View style={{ width: 320, height: 10, marginTop: 10 }} />
-                  <View style={{ width: 290, height: 10, marginTop: 5 }} />
-                  <View style={{ width: 300, height: 10, marginTop: 5 }} />
+                  <View style={{width: 320, height: 10, marginTop: 10}} />
+                  <View style={{width: 290, height: 10, marginTop: 5}} />
+                  <View style={{width: 300, height: 10, marginTop: 5}} />
                 </View>
               </Skeleton>
             </UI.Row>
@@ -135,7 +142,7 @@ const ProductCommentsScreen = ({
       <UI.Modal show={openModal}>
         <UI.Text heading>Write a Comment</UI.Text>
         <UI.Spacer medium />
-        <View style={{ width: '100%' }}>
+        <View style={{width: '100%'}}>
           <UI.TextInput
             onChangeText={(value) => setCommentText(value)}
             value={commentText}
@@ -145,7 +152,7 @@ const ProductCommentsScreen = ({
           />
         </View>
         <UI.Divider />
-        <UI.Row style={{ justifyContent: 'space-between' }}>
+        <UI.Row style={{justifyContent: 'space-between'}}>
           <UI.Button
             onClick={() => setOpenModal(false)}
             size="small"

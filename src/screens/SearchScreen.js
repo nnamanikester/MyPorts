@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import * as UI from '../components/common';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import EmptyItem from '../components/EmptyItem';
 import Product from '../components/Product';
-import { StyleSheet, View } from 'react-native';
-import { useLazyQuery, useMutation } from '@apollo/react-hooks';
-import { GET_PRODUCTS, SEARCH_TERMS } from '../apollo/queries';
-import { CREATE_SEARCH_TERM } from '../apollo/mutations';
-import { connect } from 'react-redux';
-import { info } from '../components/common/variables';
+import {StyleSheet, View} from 'react-native';
+import {useLazyQuery, useMutation} from '@apollo/react-hooks';
+import {GET_PRODUCTS, SEARCH_TERMS} from '../apollo/queries';
+import {CREATE_SEARCH_TERM} from '../apollo/mutations';
+import {connect} from 'react-redux';
+import {info} from '../components/common/variables';
 
-const SearchScreen = ({ navigation, offline }) => {
+const SearchScreen = ({navigation, offline}) => {
   const [products, setProducts] = React.useState([]);
   const [fetching, setFetching] = React.useState(false);
   const [term, setTerm] = React.useState('');
@@ -29,7 +29,7 @@ const SearchScreen = ({ navigation, offline }) => {
 
   const [
     getProducts,
-    { loading, data, error, fetchMore, refetch },
+    {loading, data, error, fetchMore, refetch},
   ] = useLazyQuery(GET_PRODUCTS, {
     variables: {
       where: {
@@ -41,17 +41,14 @@ const SearchScreen = ({ navigation, offline }) => {
       orderBy: filter.value,
     },
   });
-  const [createSearchTerm, { data: termData }] = useMutation(
-    CREATE_SEARCH_TERM,
-    {
-      variables: {
-        term,
-      },
+  const [createSearchTerm, {data: termData}] = useMutation(CREATE_SEARCH_TERM, {
+    variables: {
+      term,
     },
-  );
+  });
   const [
     fetchSearchTerms,
-    { data: searchTermsData, refetch: refetchSearchTerms },
+    {data: searchTermsData, refetch: refetchSearchTerms},
   ] = useLazyQuery(SEARCH_TERMS);
 
   console.log(searchTermsData);
@@ -73,6 +70,8 @@ const SearchScreen = ({ navigation, offline }) => {
     if (!offline) {
       fetchSearchTerms();
     }
+  });
+  React.useEffect(() => {
     if (data) {
       setProducts(data.products.edges.map((p) => p.node));
     }
@@ -84,11 +83,13 @@ const SearchScreen = ({ navigation, offline }) => {
         setShowAllTerms(true);
       }
     }
+  }, [data, searchTermsData]);
 
+  React.useEffect(() => {
     if (error) {
       alert("There's a problem loading getting the data. Please try again.");
     }
-  }, [data, searchTermsData]);
+  }, [error]);
 
   // Fetch more products onEndReach for pagination.
   const fetchMoreProducts = () => {
@@ -102,7 +103,7 @@ const SearchScreen = ({ navigation, offline }) => {
           after: data.products.pageInfo.endCursor,
         },
         // Update the cached data with the fetched product
-        updateQuery: (prev, { fetchMoreResult }) => {
+        updateQuery: (prev, {fetchMoreResult}) => {
           if (prev.products.pageInfo.hasNextPage) {
             // if the previous page info has next page
             setFetching(false);
@@ -113,7 +114,7 @@ const SearchScreen = ({ navigation, offline }) => {
                   ...prev.products.edges,
                   ...fetchMoreResult.products.edges,
                 ],
-                pageInfo: { ...fetchMoreResult.products.pageInfo },
+                pageInfo: {...fetchMoreResult.products.pageInfo},
                 __typename: fetchMoreResult.products.__typename,
               },
             };
@@ -162,7 +163,7 @@ const SearchScreen = ({ navigation, offline }) => {
                       <UI.Text heading>Recent Searches</UI.Text>
                     </UI.Column>
                     {recentSearches.length > 5 && (
-                      <UI.Column size="2" style={{ alignItems: 'flex-end' }}>
+                      <UI.Column size="2" style={{alignItems: 'flex-end'}}>
                         <UI.Link onClick={() => setShowAllTerms(true)}>
                           View All
                         </UI.Link>
@@ -202,17 +203,17 @@ const SearchScreen = ({ navigation, offline }) => {
 
           {products.length > 0 && (
             <View>
-              <UI.Row style={{ justifyContent: 'space-between' }}>
+              <UI.Row style={{justifyContent: 'space-between'}}>
                 {products.map((p) => {
                   return (
                     <Product
                       key={p.id}
                       quantity={p.quantity}
-                      image={{ uri: p.images[0].url }}
+                      image={{uri: p.images[0].url}}
                       name={p.name}
                       vendor={p.category.name}
                       onClick={() =>
-                        navigation.navigate('SingleProduct', { product: p })
+                        navigation.navigate('SingleProduct', {product: p})
                       }
                     />
                   );
@@ -221,7 +222,7 @@ const SearchScreen = ({ navigation, offline }) => {
 
               <UI.Spacer medium />
 
-              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
                 <UI.Spinner show={fetching} area={40} />
                 {!fetching && !loading && !error && (
                   <UI.Text>No more products!</UI.Text>
@@ -245,7 +246,7 @@ const SearchScreen = ({ navigation, offline }) => {
             <UI.Column size="6">
               <UI.TextInput
                 onChangeText={(value) =>
-                  setPriceRange({ ...priceRange, min: value })
+                  setPriceRange({...priceRange, min: value})
                 }
                 value={priceRange.min}
                 keyboardType="number-pad"
@@ -255,7 +256,7 @@ const SearchScreen = ({ navigation, offline }) => {
             <UI.Column size="6">
               <UI.TextInput
                 onChangeText={(value) =>
-                  setPriceRange({ ...priceRange, max: value })
+                  setPriceRange({...priceRange, max: value})
                 }
                 value={priceRange.max}
                 keyboardType="number-pad"
@@ -277,11 +278,11 @@ const SearchScreen = ({ navigation, offline }) => {
             <UI.Select
               type="dropdown"
               selected={filter.label}
-              onChange={(value) => setFilter({ ...filter, label: value })}
+              onChange={(value) => setFilter({...filter, label: value})}
               data={[
-                { label: 'Name', value: 'name' },
-                { label: 'Date', value: 'createdAt' },
-                { label: 'Price', value: 'price' },
+                {label: 'Name', value: 'name'},
+                {label: 'Date', value: 'createdAt'},
+                {label: 'Price', value: 'price'},
               ]}
             />
           </UI.Column>
@@ -289,10 +290,10 @@ const SearchScreen = ({ navigation, offline }) => {
             <UI.Select
               type="dropdown"
               selected={filter.value}
-              onChange={(value) => setFilter({ ...filter, value })}
+              onChange={(value) => setFilter({...filter, value})}
               data={[
-                { label: 'Ascending', value: `${filter.label}_ASC` },
-                { label: 'Descending', value: `${filter.label}_DESC` },
+                {label: 'Ascending', value: `${filter.label}_ASC`},
+                {label: 'Descending', value: `${filter.label}_DESC`},
               ]}
             />
           </UI.Column>

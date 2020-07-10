@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
-import { Text, Clickable } from './common';
+import {View, StyleSheet, Image} from 'react-native';
+import {Text, Clickable} from './common';
 
-const Product = ({ name, vendor, quantity, image, onClick }) => {
+const Product = ({name, vendor, quantity, image, onClick}) => {
   return (
     <View style={styles.container}>
       <Clickable onClick={onClick}>

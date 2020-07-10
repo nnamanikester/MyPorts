@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Layout, Clickable, Icon, Text } from '../../components/common';
+import {View, StyleSheet} from 'react-native';
+import {Layout, Clickable, Icon, Text} from '../../components/common';
 import Header from '../../components/Header';
 
-const CookiePolicyScreen = ({ navigation }) => {
+const CookiePolicyScreen = ({navigation}) => {
   return (
     <>
       <Header

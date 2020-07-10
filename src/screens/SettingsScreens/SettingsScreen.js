@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import {
   Layout,
   Modal,
@@ -12,11 +12,11 @@ import {
   Clickable,
 } from '../../components/common';
 import Header from '../../components/Header';
-import { StyleSheet, View } from 'react-native';
-import { primaryColor, info } from '../../components/common/variables';
-import { logUserOut } from '../../redux/actions/AuthActions';
+import {StyleSheet, View} from 'react-native';
+import {primaryColor, info} from '../../components/common/variables';
+import {logUserOut} from '../../redux/actions/AuthActions';
 
-const SettingsScreen = ({ navigation }) => {
+const SettingsScreen = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -247,4 +247,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, { logUserOut })(SettingsScreen);
+export default connect(null, {logUserOut})(SettingsScreen);

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {
   Text,
   Layout,
@@ -14,9 +14,9 @@ import {
   Clickable,
 } from '../../components/common';
 import Header from '../../components/Header';
-import { info, primaryColor } from '../../components/common/variables';
+import {info, primaryColor} from '../../components/common/variables';
 
-const CheckoutScreen = ({ navigation }) => {
+const CheckoutScreen = ({navigation}) => {
   const [newAddress, setNewAddress] = useState(false);
   const [loading, setLoading] = useState(false);
 

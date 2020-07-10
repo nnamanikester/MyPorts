@@ -1,13 +1,13 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Spin from 'react-native-spinkit';
 import PropTypes from 'prop-types';
-import { primaryColor } from '../variables';
+import {primaryColor} from '../variables';
 
 /**
  * Displays a loading spinner with a white overlay background
  */
-const Spinner = ({ show, area, style, tint }) => {
+const Spinner = ({show, area, style, tint}) => {
   if (!show) {
     return null;
   }
@@ -17,7 +17,7 @@ const Spinner = ({ show, area, style, tint }) => {
       size={area || 20}
       color={tint || primaryColor}
       type="Circle"
-      style={{ ...styles.spinner, ...style }}
+      style={{...styles.spinner, ...style}}
     />
   );
 };
@@ -45,4 +45,4 @@ Spinner.defaultProps = {
   show: false,
 };
 
-export { Spinner };
+export {Spinner};

@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Text } from '../Text';
+import React, {useState} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {Text} from '../Text';
 
-const Modal = ({ children, show }) => {
+const Modal = ({children, show}) => {
   if (!show) {
     return null;
   }
@@ -53,4 +53,4 @@ Modal.defaultProps = {
   show: false,
 };
 
-export { Modal };
+export {Modal};

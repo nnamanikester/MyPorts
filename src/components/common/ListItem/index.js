@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { inactiveColor } from '../variables';
-import { Clickable } from '../Clickable';
+import {View, StyleSheet} from 'react-native';
+import {inactiveColor} from '../variables';
+import {Clickable} from '../Clickable';
 
-const ListItem = ({ children, left, right, body, marked, onClick, style }) => {
+const ListItem = ({children, left, right, body, marked, onClick, style}) => {
   let markedStyle = {};
 
   if (marked) {
@@ -18,7 +18,7 @@ const ListItem = ({ children, left, right, body, marked, onClick, style }) => {
     <Clickable
       style={style}
       onClick={onClick}
-      style={{ ...styles.container, ...markedStyle }}>
+      style={{...styles.container, ...markedStyle}}>
       {left && <View style={styles.left}>{left}</View>}
       <View style={styles.body}>{body || children}</View>
       {right && <View style={styles.right}>{right}</View>}
@@ -58,4 +58,4 @@ ListItem.propTypes = {
 
 ListItem.defaultProps = {};
 
-export { ListItem };
+export {ListItem};

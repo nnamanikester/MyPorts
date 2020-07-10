@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { TextInput, Text, Icon, Link } from './common';
-import { TextInput as TeIp } from 'react-native';
-import { StyleSheet, View } from 'react-native';
+import {TextInput, Text, Icon, Link} from './common';
+import {TextInput as TeIp} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 const SearchBar = (props) => {
-  const { placeholder, onChangeText, value, onFilterClick } = props;
+  const {placeholder, onChangeText, value, onFilterClick} = props;
   return (
     <View style={styles.container}>
       <TextInput

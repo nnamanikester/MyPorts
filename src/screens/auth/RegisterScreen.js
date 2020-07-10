@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { useMutation } from '@apollo/react-hooks';
-import { connect } from 'react-redux';
-import {
-  skipAuthentication,
-  setStorage,
-} from '../../redux/actions/AuthActions';
+import React, {useState} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {useMutation} from '@apollo/react-hooks';
+import {connect} from 'react-redux';
+import {skipAuthentication, setStorage} from '../../redux/actions/AuthActions';
 import * as UI from '../../components/common';
-import { info, primaryColor, danger } from '../../components/common/variables';
-import { SIGNUP } from '../../apollo/mutations';
-import { validateEmail } from '../../utils';
-import { TOKEN_STORAGE, USER_STORAGE } from '../../constants';
+import {info, primaryColor, danger} from '../../components/common/variables';
+import {SIGNUP} from '../../apollo/mutations';
+import {validateEmail} from '../../utils';
+import {TOKEN_STORAGE, USER_STORAGE} from '../../constants';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const RegisterScreen = ({ skipAuthentication, navigation, setStorage }) => {
+const RegisterScreen = ({skipAuthentication, navigation, setStorage}) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,7 +25,7 @@ const RegisterScreen = ({ skipAuthentication, navigation, setStorage }) => {
     setLoading(true);
 
     if (!username) {
-      return setErrors({ username: 'Username is required!' });
+      return setErrors({username: 'Username is required!'});
     }
     if (username.length < 3) {
       return setErrors({
@@ -36,10 +33,10 @@ const RegisterScreen = ({ skipAuthentication, navigation, setStorage }) => {
       });
     }
     if (!validateEmail(email)) {
-      return setErrors({ email: 'Invalid email address!' });
+      return setErrors({email: 'Invalid email address!'});
     }
     if (!password) {
-      return setErrors({ password: 'Password is required' });
+      return setErrors({password: 'Password is required'});
     }
 
     return signup({
@@ -50,7 +47,7 @@ const RegisterScreen = ({ skipAuthentication, navigation, setStorage }) => {
       },
     })
       .then(async (res) => {
-        const { token, user } = res.data.signup;
+        const {token, user} = res.data.signup;
 
         await AsyncStorage.setItem(TOKEN_STORAGE, token);
         await AsyncStorage.setItem(USER_STORAGE, JSON.stringify(user));
@@ -60,7 +57,7 @@ const RegisterScreen = ({ skipAuthentication, navigation, setStorage }) => {
       })
       .catch((err) => {
         setLoading(false);
-        setErrors({ graphQL: err.graphQLErrors, network: err.networkError });
+        setErrors({graphQL: err.graphQLErrors, network: err.networkError});
       });
   };
 
@@ -95,7 +92,7 @@ const RegisterScreen = ({ skipAuthentication, navigation, setStorage }) => {
               <UI.Spacer />
 
               {errors.username ? (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <UI.Spacer />
                   <UI.Icon
                     size={20}
@@ -125,7 +122,7 @@ const RegisterScreen = ({ skipAuthentication, navigation, setStorage }) => {
               <UI.Spacer />
 
               {errors.email ? (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <UI.Spacer />
                   <UI.Icon
                     size={20}
@@ -156,7 +153,7 @@ const RegisterScreen = ({ skipAuthentication, navigation, setStorage }) => {
               <UI.Spacer />
 
               {errors.password ? (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <UI.Spacer />
                   <UI.Icon
                     size={20}
@@ -181,7 +178,7 @@ const RegisterScreen = ({ skipAuthentication, navigation, setStorage }) => {
             <UI.Spacer medium />
 
             {errors.graphQL ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <UI.Spacer />
                 <UI.Icon
                   size={20}
@@ -210,7 +207,7 @@ const RegisterScreen = ({ skipAuthentication, navigation, setStorage }) => {
           message={
             'Network Error: Check your network connection and try again!'
           }
-          onTimeout={() => setErrors({ ...errors, network: null })}
+          onTimeout={() => setErrors({...errors, network: null})}
         />
       )}
     </>

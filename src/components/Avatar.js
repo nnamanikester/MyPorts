@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import {StyleSheet, Image} from 'react-native';
 
-const Avatar = ({ src, medium, small, large, size, rounded, style }) => {
+const Avatar = ({src, medium, small, large, size, rounded, style}) => {
   let typeStyle = {};
 
   if (small) {

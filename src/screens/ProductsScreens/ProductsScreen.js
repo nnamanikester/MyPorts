@@ -1,25 +1,25 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import * as UI from '../../components/common';
 import Swiper from 'react-native-swiper';
 import Header from '../../components/Header';
 import Product from '../../components/Product';
 import FeaturedProduct from '../../components/FeaturedProduct';
-import { ScrollView, StyleSheet, View, Image } from 'react-native';
-import { useLazyQuery } from '@apollo/react-hooks';
-import { GET_PRODUCTS } from '../../apollo/queries';
+import {ScrollView, StyleSheet, View, Image} from 'react-native';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {GET_PRODUCTS} from '../../apollo/queries';
 import Skeleton from 'react-native-skeleton-placeholder';
 import EmptyItem from '../../components/EmptyItem';
-import { female2, female3, bag1, shoe1, shoe2 } from '../../assets/images';
-import { info } from '../../components/common/variables';
+import {female2, female3, bag1, shoe1, shoe2} from '../../assets/images';
+import {info} from '../../components/common/variables';
 
-const ProductsScreen = ({ navigation, offline }) => {
+const ProductsScreen = ({navigation, offline}) => {
   const [products, setProducts] = React.useState([]);
   const [fetching, setFetching] = React.useState(false);
 
   const [
     getProducts,
-    { loading, data, error, refetch, fetchMore },
+    {loading, data, error, refetch, fetchMore},
   ] = useLazyQuery(GET_PRODUCTS, {
     variables: {
       first: 42,
@@ -35,11 +35,13 @@ const ProductsScreen = ({ navigation, offline }) => {
     if (data) {
       setProducts(data.products.edges.map((p) => p.node));
     }
+  }, [data, offline, getProducts]);
 
+  React.useEffect(() => {
     if (error) {
       alert('Unable to fetch your products!');
     }
-  }, [data]);
+  }, [error]);
 
   // Fetch more products onEndReach for pagination.
   const fetchMoreProducts = () => {
@@ -52,7 +54,7 @@ const ProductsScreen = ({ navigation, offline }) => {
           after: data.products.pageInfo.endCursor,
         },
         // Update the cached data with the fetched product
-        updateQuery: (prev, { fetchMoreResult }) => {
+        updateQuery: (prev, {fetchMoreResult}) => {
           if (prev.products.pageInfo.hasNextPage) {
             // if the previous page info has next page
             setFetching(false);
@@ -63,7 +65,7 @@ const ProductsScreen = ({ navigation, offline }) => {
                   ...prev.products.edges,
                   ...fetchMoreResult.products.edges,
                 ],
-                pageInfo: { ...fetchMoreResult.products.pageInfo },
+                pageInfo: {...fetchMoreResult.products.pageInfo},
                 __typename: fetchMoreResult.products.__typename,
               },
             };
@@ -112,7 +114,7 @@ const ProductsScreen = ({ navigation, offline }) => {
         onEndReached={() => fetchMoreProducts()}>
         <View style={styles.container}>
           <Swiper
-            paginationStyle={{ bottom: 5 }}
+            paginationStyle={{bottom: 5}}
             animated
             autoplayTimeout={10}
             height={100}
@@ -202,23 +204,23 @@ const ProductsScreen = ({ navigation, offline }) => {
         <View style={styles.container}>
           <UI.Text style={styles.title}>Latest Products</UI.Text>
           <UI.Spacer />
-          <UI.Row style={{ justifyContent: 'space-between' }}>
+          <UI.Row style={{justifyContent: 'space-between'}}>
             {(loading || error) && (
               <Skeleton>
                 <View>
-                  <View style={{ width: 120, height: 120, borderRadius: 5 }} />
-                  <View style={{ width: 120, height: 10, marginVertical: 5 }} />
-                  <View style={{ width: 120, height: 10 }} />
+                  <View style={{width: 120, height: 120, borderRadius: 5}} />
+                  <View style={{width: 120, height: 10, marginVertical: 5}} />
+                  <View style={{width: 120, height: 10}} />
                 </View>
                 <View>
-                  <View style={{ width: 120, height: 120, borderRadius: 5 }} />
-                  <View style={{ width: 120, height: 10, marginVertical: 5 }} />
-                  <View style={{ width: 120, height: 10 }} />
+                  <View style={{width: 120, height: 120, borderRadius: 5}} />
+                  <View style={{width: 120, height: 10, marginVertical: 5}} />
+                  <View style={{width: 120, height: 10}} />
                 </View>
                 <View>
-                  <View style={{ width: 120, height: 120, borderRadius: 5 }} />
-                  <View style={{ width: 120, height: 10, marginVertical: 5 }} />
-                  <View style={{ width: 120, height: 10 }} />
+                  <View style={{width: 120, height: 120, borderRadius: 5}} />
+                  <View style={{width: 120, height: 10, marginVertical: 5}} />
+                  <View style={{width: 120, height: 10}} />
                 </View>
               </Skeleton>
             )}
@@ -243,11 +245,11 @@ const ProductsScreen = ({ navigation, offline }) => {
                   <Product
                     key={p.id + i}
                     quantity={p.quantity}
-                    image={{ uri: p.images[0].url }}
+                    image={{uri: p.images[0].url}}
                     name={p.name}
                     vendor={p.category.name}
                     onClick={() =>
-                      navigation.navigate('SingleProduct', { product: p })
+                      navigation.navigate('SingleProduct', {product: p})
                     }
                   />
                 );
@@ -256,7 +258,7 @@ const ProductsScreen = ({ navigation, offline }) => {
 
           <UI.Spacer medium />
 
-          <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <UI.Spinner show={fetching} area={40} />
             {!fetching && !loading && !error && (
               <UI.Text>No more products!</UI.Text>

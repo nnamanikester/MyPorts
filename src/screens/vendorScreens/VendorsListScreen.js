@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import {
   Layout,
   Text,
@@ -14,7 +14,7 @@ import {
 } from '../../components/common';
 import Header from '../../components/Header';
 import VendorList from '../../components/VendorList';
-import { StyleSheet, ScrollView, View, Image } from 'react-native';
+import {StyleSheet, ScrollView, View, Image} from 'react-native';
 import {
   female1,
   female2,
@@ -28,7 +28,7 @@ import FeaturedVendor from '../../components/FeaturedVendor';
 import SearchBar from '../../components/SearchBar';
 import Swiper from 'react-native-swiper';
 
-const VendorListScreen = ({ navigation }) => {
+const VendorListScreen = ({navigation}) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
 
   return (
@@ -36,7 +36,7 @@ const VendorListScreen = ({ navigation }) => {
       <ActionBar
         show={showSearchBar}
         onCloseButtonClick={() => setShowSearchBar(false)}>
-        <Radio selected={2} data={[{ label: 'Date' }, { label: 'Month' }]} />
+        <Radio selected={2} data={[{label: 'Date'}, {label: 'Month'}]} />
       </ActionBar>
 
       <Header
@@ -62,7 +62,7 @@ const VendorListScreen = ({ navigation }) => {
       <Layout>
         <View style={styles.container}>
           <Swiper
-            paginationStyle={{ bottom: 5 }}
+            paginationStyle={{bottom: 5}}
             animated
             autoplayTimeout={10}
             height={100}
@@ -87,7 +87,7 @@ const VendorListScreen = ({ navigation }) => {
           <Text style={styles.title}>Featured Vendors</Text>
         </View>
         <ScrollView
-          style={{ paddingLeft: 10 }}
+          style={{paddingLeft: 10}}
           horizontal
           showsHorizontalScrollIndicator={false}>
           <FeaturedVendor
@@ -133,7 +133,7 @@ const VendorListScreen = ({ navigation }) => {
             <Column size="10">
               <Text style={styles.title}>All Vendors</Text>
             </Column>
-            <Column size="2" style={{ alignItems: 'flex-end' }}>
+            <Column size="2" style={{alignItems: 'flex-end'}}>
               <Clickable onClick={() => setShowSearchBar(!showSearchBar)}>
                 <Icon name={showSearchBar ? 'md-close' : 'ios-search'} />
               </Clickable>

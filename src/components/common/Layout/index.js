@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { ScrollView, StyleSheet, View, RefreshControl } from 'react-native';
-import { primaryColor } from '../variables';
+import {ScrollView, StyleSheet, View, RefreshControl} from 'react-native';
+import {primaryColor} from '../variables';
 
 const Layout = ({
   children,
@@ -12,11 +12,7 @@ const Layout = ({
   onRefresh,
   refreshing,
 }) => {
-  const isCloseToBottom = ({
-    layoutMeasurement,
-    contentOffset,
-    contentSize,
-  }) => {
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
     const paddingToBottom = 0;
     return (
       layoutMeasurement.height + contentOffset.y >=
@@ -27,7 +23,7 @@ const Layout = ({
   return (
     <>
       {noScroll ? (
-        <View style={{ ...styles.container, ...style }}>{children}</View>
+        <View style={{...styles.container, ...style}}>{children}</View>
       ) : (
         <ScrollView
           refreshControl={
@@ -41,13 +37,13 @@ const Layout = ({
           scrollEventThrottle={400}
           stickyHeaderIndices={[itemToFloat]}
           showsVerticalScrollIndicator={false}
-          onScroll={({ nativeEvent }) => {
+          onScroll={({nativeEvent}) => {
             if (isCloseToBottom(nativeEvent)) {
               onEndReached();
             }
           }}
           bounces
-          style={{ ...styles.container, ...style }}>
+          style={{...styles.container, ...style}}>
           {children}
         </ScrollView>
       )}
@@ -97,4 +93,4 @@ Layout.defaultProps = {
   refreshing: false,
 };
 
-export { Layout };
+export {Layout};

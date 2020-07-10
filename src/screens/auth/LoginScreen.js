@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { connect } from 'react-redux';
-import { useMutation } from '@apollo/react-hooks';
-import { SIGNIN } from '../../apollo/mutations';
-import { validateEmail } from '../../utils';
-import {
-  skipAuthentication,
-  setStorage,
-} from '../../redux/actions/AuthActions';
-import { checkNetworkStatus } from '../../redux/actions/NetworkActions';
+import {connect} from 'react-redux';
+import {useMutation} from '@apollo/react-hooks';
+import {SIGNIN} from '../../apollo/mutations';
+import {validateEmail} from '../../utils';
+import {skipAuthentication, setStorage} from '../../redux/actions/AuthActions';
+import {checkNetworkStatus} from '../../redux/actions/NetworkActions';
 import * as UI from '../../components/common';
 import NetworkErrorIndicator from '../../components/NetworkErrorIndicator';
-import { info, danger } from '../../components/common/variables';
-import { TOKEN_STORAGE, USER_STORAGE } from '../../constants';
+import {info, danger} from '../../components/common/variables';
+import {TOKEN_STORAGE, USER_STORAGE} from '../../constants';
 
 const LoginScreen = ({
   setStorage,
@@ -26,13 +23,13 @@ const LoginScreen = ({
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  const [signin, { loading, data, error }] = useMutation(SIGNIN, {
+  const [signin, {loading, data, error}] = useMutation(SIGNIN, {
     errorPolicy: 'ignore',
   });
 
   useEffect(() => {
     checkNetworkStatus();
-  }, []);
+  });
 
   // A function called when the loin button is clicked
   const handleSignin = () => {
@@ -40,9 +37,9 @@ const LoginScreen = ({
     checkNetworkStatus();
 
     if (!validateEmail(email))
-      return setErrors({ email: 'Invalid email address!' });
+      return setErrors({email: 'Invalid email address!'});
 
-    if (!password) return setErrors({ password: 'Password cannot be empty!' });
+    if (!password) return setErrors({password: 'Password cannot be empty!'});
 
     if (offline) return;
 
@@ -52,7 +49,7 @@ const LoginScreen = ({
         password,
       },
     }).catch((err) => {
-      setErrors({ graphQL: err.graphQLErrors, network: err.networkError });
+      setErrors({graphQL: err.graphQLErrors, network: err.networkError});
     });
   };
 
@@ -65,7 +62,7 @@ const LoginScreen = ({
 
   // Checking if data is returned after signin and setting the data
   if (data) {
-    const { token, user } = data.signin;
+    const {token, user} = data.signin;
     setData(token, user);
   }
 
@@ -104,7 +101,7 @@ const LoginScreen = ({
               <UI.Spacer />
 
               {errors.email ? (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <UI.Spacer />
                   <UI.Icon
                     size={20}
@@ -136,7 +133,7 @@ const LoginScreen = ({
               <UI.Spacer />
 
               {errors.password ? (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <UI.Spacer />
                   <UI.Icon
                     size={20}
@@ -161,7 +158,7 @@ const LoginScreen = ({
             <UI.Spacer />
 
             {errors.graphQL ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <UI.Spacer />
                 <UI.Icon
                   size={20}
@@ -197,7 +194,7 @@ const LoginScreen = ({
           message={
             'Network Error: Check your network connection and try again!'
           }
-          onTimeout={() => setErrors({ ...errors, network: null })}
+          onTimeout={() => setErrors({...errors, network: null})}
         />
       )}
     </>

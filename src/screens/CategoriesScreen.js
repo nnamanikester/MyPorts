@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import {
   Layout,
   Clickable,
@@ -10,10 +10,10 @@ import {
 } from '../components/common';
 import Header from '../components/Header';
 import Category from '../components/Category';
-import { StyleSheet, Image, View } from 'react-native';
-import { female1, female2, female3, male1 } from '../assets/images';
+import {StyleSheet, Image, View} from 'react-native';
+import {female1, female2, female3, male1} from '../assets/images';
 
-const CategoriesScreen = ({ navigation }) => {
+const CategoriesScreen = ({navigation}) => {
   const [hideHeader, setHideHeader] = useState(false);
 
   return (

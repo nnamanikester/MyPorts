@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Layout, Icon, Text, Clickable } from '../../components/common';
+import {View, StyleSheet} from 'react-native';
+import {Layout, Icon, Text, Clickable} from '../../components/common';
 import Header from '../../components/Header';
 
-const HelpScreen = ({ navigation }) => {
+const HelpScreen = ({navigation}) => {
   return (
     <>
       <Header

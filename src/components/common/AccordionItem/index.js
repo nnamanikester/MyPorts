@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet } from 'react-native';
-import { Text } from '../Text';
-import { Icon } from '../Icon';
-import { primaryColor } from '../variables';
-import { Clickable } from '../Clickable';
+import {View, StyleSheet} from 'react-native';
+import {Text} from '../Text';
+import {Icon} from '../Icon';
+import {primaryColor} from '../variables';
+import {Clickable} from '../Clickable';
 
 /**
  * An `AccordionItem`, to be used only inside an Accordion.
  */
-const AccordionItem = ({ children, expanded, index, onExpand, props }) => {
+const AccordionItem = ({children, expanded, index, onExpand, props}) => {
   const {
     onClick,
     headerText,
@@ -29,10 +29,9 @@ const AccordionItem = ({ children, expanded, index, onExpand, props }) => {
   return (
     <View style={styles.container}>
       <Clickable
-        style={headerContainerStyle}
         onClick={callbacks}
-        style={styles.header}>
-        <Text style={{ ...styles.headerText, ...headerTextStyle }}>
+        style={{...styles.header, ...headerContainerStyle}}>
+        <Text style={{...styles.headerText, ...headerTextStyle}}>
           {headerText}
         </Text>
         <Icon
@@ -113,4 +112,4 @@ AccordionItem.defaultProps = {
   onClick: () => {},
 };
 
-export { AccordionItem };
+export {AccordionItem};

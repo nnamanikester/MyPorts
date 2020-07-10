@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Layout, Spacer } from '../../../components/common';
+import {View, StyleSheet} from 'react-native';
+import {Layout, Spacer} from '../../../components/common';
 import Comment from '../../../components/Comment';
-import { female4 } from '../../../assets/images';
+import {female4} from '../../../assets/images';
 
 const UserReviews = () => {
   return (

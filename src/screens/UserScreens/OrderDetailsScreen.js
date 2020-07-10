@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {
   Text,
   Layout,
@@ -11,9 +11,9 @@ import {
 import Header from '../../components/Header';
 import CartItem from '../../components/CartItem';
 import OrderSummary from '../../components/OrderSummary';
-import { female2 } from '../../assets/images';
+import {female2} from '../../assets/images';
 
-const OrderDetailsScreen = ({ navigation }) => {
+const OrderDetailsScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
 
   const goToCheckout = () => {

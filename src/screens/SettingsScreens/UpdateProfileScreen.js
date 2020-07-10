@@ -1,69 +1,69 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState} from 'react';
 import * as UI from '../../components/common';
-import { View, StyleSheet } from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Header from '../../components/Header';
 import Avatar from '../../components/Avatar';
-import { profilePhoto } from '../../assets/images';
-import { connect } from 'react-redux';
-import { checkNetworkStatus } from '../../redux/actions/NetworkActions';
-import { setCustomerProfile } from '../../redux/actions/CustomerActions';
-import { useMutation } from '@apollo/react-hooks';
-import { UPDATE_CUSTOMER } from '../../apollo/mutations';
+import {profilePhoto} from '../../assets/images';
+import {connect} from 'react-redux';
+import {checkNetworkStatus} from '../../redux/actions/NetworkActions';
+import {setCustomerProfile} from '../../redux/actions/CustomerActions';
+import {useMutation} from '@apollo/react-hooks';
+import {UPDATE_CUSTOMER} from '../../apollo/mutations';
 
 const days = [
-  { label: '', value: '' },
-  { label: '1', value: 1 },
-  { label: '2', value: 2 },
-  { label: '3', value: 3 },
-  { label: '4', value: 4 },
-  { label: '5', value: 5 },
-  { label: '6', value: 6 },
-  { label: '7', value: 7 },
-  { label: '8', value: 8 },
-  { label: '9', value: 9 },
-  { label: '10', value: 10 },
-  { label: '11', value: 11 },
-  { label: '12', value: 12 },
-  { label: '13', value: 13 },
-  { label: '14', value: 14 },
-  { label: '15', value: 15 },
-  { label: '16', value: 16 },
-  { label: '17', value: 17 },
-  { label: '18', value: 18 },
-  { label: '19', value: 19 },
-  { label: '20', value: 20 },
-  { label: '21', value: 21 },
-  { label: '22', value: 22 },
-  { label: '23', value: 23 },
-  { label: '24', value: 24 },
-  { label: '25', value: 25 },
-  { label: '26', value: 26 },
-  { label: '27', value: 27 },
-  { label: '28', value: 28 },
-  { label: '29', value: 29 },
-  { label: '30', value: 30 },
-  { label: '31', value: 31 },
+  {label: '', value: ''},
+  {label: '1', value: 1},
+  {label: '2', value: 2},
+  {label: '3', value: 3},
+  {label: '4', value: 4},
+  {label: '5', value: 5},
+  {label: '6', value: 6},
+  {label: '7', value: 7},
+  {label: '8', value: 8},
+  {label: '9', value: 9},
+  {label: '10', value: 10},
+  {label: '11', value: 11},
+  {label: '12', value: 12},
+  {label: '13', value: 13},
+  {label: '14', value: 14},
+  {label: '15', value: 15},
+  {label: '16', value: 16},
+  {label: '17', value: 17},
+  {label: '18', value: 18},
+  {label: '19', value: 19},
+  {label: '20', value: 20},
+  {label: '21', value: 21},
+  {label: '22', value: 22},
+  {label: '23', value: 23},
+  {label: '24', value: 24},
+  {label: '25', value: 25},
+  {label: '26', value: 26},
+  {label: '27', value: 27},
+  {label: '28', value: 28},
+  {label: '29', value: 29},
+  {label: '30', value: 30},
+  {label: '31', value: 31},
 ];
 const months = [
-  { label: '', value: '' },
-  { label: 'January', value: 1 },
-  { label: 'February', value: 2 },
-  { label: 'March', value: 3 },
-  { label: 'April', value: 4 },
-  { label: 'May', value: 5 },
-  { label: 'June', value: 6 },
-  { label: 'July', value: 7 },
-  { label: 'August', value: 8 },
-  { label: 'September', value: 9 },
-  { label: 'Octobre', value: 10 },
-  { label: 'November', value: 11 },
-  { label: 'December', value: 12 },
+  {label: '', value: ''},
+  {label: 'January', value: 1},
+  {label: 'February', value: 2},
+  {label: 'March', value: 3},
+  {label: 'April', value: 4},
+  {label: 'May', value: 5},
+  {label: 'June', value: 6},
+  {label: 'July', value: 7},
+  {label: 'August', value: 8},
+  {label: 'September', value: 9},
+  {label: 'Octobre', value: 10},
+  {label: 'November', value: 11},
+  {label: 'December', value: 12},
 ];
 
 const genders = [
-  { label: '', value: '' },
-  { label: 'Male', value: 'male' },
-  { label: 'Female', value: 'female' },
+  {label: '', value: ''},
+  {label: 'Male', value: 'male'},
+  {label: 'Female', value: 'female'},
 ];
 
 const UpdateProfileScreen = ({
@@ -83,7 +83,7 @@ const UpdateProfileScreen = ({
 
   const [success, setSuccess] = useState(false);
 
-  const [updateCustomer, { loading }] = useMutation(UPDATE_CUSTOMER);
+  const [updateCustomer, {loading}] = useMutation(UPDATE_CUSTOMER);
 
   const handleCustomerUpdate = () => {
     checkNetworkStatus();
@@ -126,7 +126,7 @@ const UpdateProfileScreen = ({
             <Avatar
               size={100}
               rounded
-              src={photo ? { uri: photo } : profilePhoto}
+              src={photo ? {uri: photo} : profilePhoto}
             />
             <UI.Link>Upload Photo</UI.Link>
           </View>
@@ -174,14 +174,14 @@ const UpdateProfileScreen = ({
 
             <UI.Spacer />
 
-            <UI.Row style={{ justifyContent: 'space-between' }}>
+            <UI.Row style={{justifyContent: 'space-between'}}>
               <UI.Column size="6">
                 <UI.Text heading>Month</UI.Text>
 
                 <UI.Spacer />
 
                 <UI.Select
-                  style={{ width: '95%' }}
+                  style={{width: '95%'}}
                   type="dropdown"
                   data={months}
                   onChange={(value) => setBirthMonth(value)}

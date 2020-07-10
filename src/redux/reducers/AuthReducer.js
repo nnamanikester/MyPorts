@@ -8,11 +8,11 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case 'LOG_USER_OUT':
-      return { ...state, user: {}, token: '', isSkipped: false };
+      return {...state, user: {}, token: '', isSkipped: false};
     case 'SKIP_AUTHENTICATION':
-      return { ...state, isSkipped: true };
+      return {...state, isSkipped: true};
     case 'REMOVE_STRANGER_STATUS':
-      return { ...state, isStranger: false };
+      return {...state, isStranger: false};
     case 'SET_STORAGE':
       return {
         ...state,
@@ -20,7 +20,7 @@ export default (state = INITIAL_STATE, action) => {
         user: action.payload.user,
       };
     case 'SET_EMAIL_ADDRESS':
-      return { ...state, user: { ...state.user, email: action.payload } };
+      return {...state, user: {...state.user, email: action.payload}};
     default:
       return state;
   }
