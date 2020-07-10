@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet, ToastAndroid } from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
@@ -7,14 +7,15 @@ import { CREATE_ADDRESS } from '../../apollo/mutations';
 import { connect } from 'react-redux';
 
 const AddAddressScreen = ({ navigation, customer, offline }) => {
-  const [isDefault, setIsDefault] = useState(false);
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [state, setState] = useState('');
-  const [city, setCity] = useState('');
-  const [lga, setLga] = useState('');
-  const [postalCode, setPostalCode] = useState('');
-  const [phone, setPhone] = useState('');
+  const [isDefault, setIsDefault] = React.useState(false);
+  const [name, setName] = React.useState('');
+  const [address, setAddress] = React.useState('');
+  const [state, setState] = React.useState('');
+  const [city, setCity] = React.useState('');
+  const [lga, setLga] = React.useState('');
+  const [postalCode, setPostalCode] = React.useState('');
+  const [phone, setPhone] = React.useState('');
+  const [errors, setErrors] = React.useState('');
 
   const [createAddress, { loading }] = useMutation(CREATE_ADDRESS, {
     variables: {
@@ -31,6 +32,9 @@ const AddAddressScreen = ({ navigation, customer, offline }) => {
   });
 
   const handleCreateAddress = () => {
+    if (!name || !address || !state || !postalCode || !phone) {
+      return setErrors('All fields marked with * are required!');
+    }
     if (!offline) {
       createAddress()
         .then((res) => {
@@ -162,7 +166,11 @@ const AddAddressScreen = ({ navigation, customer, offline }) => {
             </UI.Row>
           </View>
 
-          <UI.Spacer medium />
+          <UI.Spacer />
+
+          {errors ? <Text color="red">errors</Text> : null}
+
+          <UI.Spacer />
           <View>
             <UI.Row style={{ justifyContent: 'space-between' }}>
               <UI.Button onClick={() => handleCreateAddress()}>
