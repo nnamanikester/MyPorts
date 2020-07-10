@@ -13,14 +13,14 @@ const EditAddressScreen = ({
   route: {params},
 }) => {
   const {a} = params;
-  const [isDefault, setIsDefault] = React.useState(false);
-  const [name, setName] = React.useState('');
-  const [address, setAddress] = React.useState('');
-  const [state, setState] = React.useState('');
-  const [city, setCity] = React.useState('');
-  const [lga, setLga] = React.useState('');
-  const [postalCode, setPostalCode] = React.useState('');
-  const [phone, setPhone] = React.useState('');
+  const [isDefault, setIsDefault] = React.useState(a.default ? true : false);
+  const [name, setName] = React.useState(a.name);
+  const [address, setAddress] = React.useState(a.address);
+  const [state, setState] = React.useState(a.state);
+  const [city, setCity] = React.useState(a.city);
+  const [lga, setLga] = React.useState(a.lga);
+  const [postalCode, setPostalCode] = React.useState(a.postalCode);
+  const [phone, setPhone] = React.useState(a.phone);
   const [errors, setErrors] = React.useState('');
 
   const [updateAddress, {loading}] = useMutation(UPDATE_ADDRESS, {
@@ -54,7 +54,7 @@ const EditAddressScreen = ({
         })
         .catch((e) => {
           ToastAndroid.show(
-            'Error creating new address. Please, try again!',
+            'Error updating your address. Please, try again!',
             ToastAndroid.SHORT,
           );
         });
@@ -75,7 +75,7 @@ const EditAddressScreen = ({
       <UI.Layout>
         <View style={styles.container}>
           <View>
-            <UI.Text h3>Add A New Shipping Address</UI.Text>
+            <UI.Text h3>Update Shipping Address</UI.Text>
             <UI.Text note color="">
               The Fields marked with <UI.Text color="red">*</UI.Text> are
               required
