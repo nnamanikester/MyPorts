@@ -22,4 +22,10 @@
 module.exports = {
   root: true,
   extends: '@react-native-community',
+  rules: {
+    'react-native/no-inline-styles': 'off',
+    'import/prefer-default-export': 'off',
+    'react/forbid-prop-types': 'off',
+    'no-use-before-define': 'off',
+  },
 };

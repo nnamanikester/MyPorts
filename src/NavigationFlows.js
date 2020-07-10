@@ -26,7 +26,7 @@ const NavigationFlows = ({
   useEffect(() => {
     checkNetworkStatus();
     checkStorage();
-  });
+  }, []);
 
   // Checks the async storage if token and user exists
   const checkStorage = async () => {

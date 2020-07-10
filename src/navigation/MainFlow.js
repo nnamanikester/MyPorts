@@ -6,7 +6,6 @@ import {checkNetworkStatus} from '../redux/actions/NetworkActions';
 import {CUSTOMER_PROFILE} from '../apollo/queries';
 import {useLazyQuery} from '@apollo/react-hooks';
 import * as UI from '../components/common';
-import {Alert} from 'react-native';
 
 import TabNavigation from './MainFlows/MainTabNavigation';
 import DraweNavigation from './MainFlows/MainDrawerNavigation';
@@ -75,16 +74,12 @@ const StackNavigation = ({setCustomerProfile, offline}) => {
     if (!offline) {
       customerProfile();
     }
-  }, [offline, customerProfile]);
 
-  useEffect(() => {
-    if (data) {
-      setCustomerProfile(data.customerProfile);
-    }
+    if (data) setCustomerProfile(data.customerProfile);
     if (error) {
-      Alert.alert('Unable to load profile details');
+      alert('Unable to load profile details');
     }
-  }, [data, error, setCustomerProfile]);
+  }, [data]);
 
   return (
     <>

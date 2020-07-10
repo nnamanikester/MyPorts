@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ToastAndroid} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import {useMutation} from '@apollo/react-hooks';
@@ -21,6 +21,7 @@ const EditAddressScreen = ({
   const [lga, setLga] = React.useState('');
   const [postalCode, setPostalCode] = React.useState('');
   const [phone, setPhone] = React.useState('');
+  const [errors, setErrors] = React.useState('');
 
   const [updateAddress, {loading}] = useMutation(UPDATE_ADDRESS, {
     variables: {
@@ -37,6 +38,29 @@ const EditAddressScreen = ({
     },
   });
 
+  const handleUpdateAddress = () => {
+    setErrors('');
+    if (!name || !address || !state || !postalCode || !phone) {
+      return setErrors('All fields marked with * are required!');
+    }
+    if (!offline) {
+      updateAddress()
+        .then((res) => {
+          ToastAndroid.show(
+            'Address updated successfully!',
+            ToastAndroid.SHORT,
+          );
+          navigation.goBack();
+        })
+        .catch((e) => {
+          ToastAndroid.show(
+            'Error creating new address. Please, try again!',
+            ToastAndroid.SHORT,
+          );
+        });
+    }
+  };
+
   return (
     <>
       <UI.Loading show={loading} />
@@ -44,7 +68,7 @@ const EditAddressScreen = ({
         title="Edit Address"
         headerLeft={
           <UI.Clickable onClick={() => navigation.goBack()}>
-            <UI.Icon name="ios-arUI.row-back" color="#fff" />
+            <UI.Icon name="ios-arrow-back" color="#fff" />
           </UI.Clickable>
         }
       />
@@ -150,10 +174,15 @@ const EditAddressScreen = ({
             </UI.Row>
           </View>
 
-          <UI.Spacer medium />
+          <UI.Spacer />
+
+          {errors ? <UI.Text color="red">{errors}</UI.Text> : null}
+
+          <UI.Spacer />
+
           <View>
             <UI.Row style={{justifyContent: 'space-between'}}>
-              <UI.Button onClick={() => handleCreateAddress()}>
+              <UI.Button onClick={() => handleUpdateAddress()}>
                 <UI.Text color="#fff">Save</UI.Text>
               </UI.Button>
             </UI.Row>

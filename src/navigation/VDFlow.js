@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { setVendor, setVendorProfile } from '../redux/actions/VendorActions';
-import { connect } from 'react-redux';
-import { useLazyQuery } from '@apollo/react-hooks';
-import { VENDOR } from '../apollo/queries/vendor';
+import React, {useEffect} from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+import {setVendor, setVendorProfile} from '../redux/actions/VendorActions';
+import {connect} from 'react-redux';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {VENDOR} from '../apollo/queries/vendor';
 import * as UI from '../components/common';
 
 import VDDrawerNavigation from './VDFlows/VendorDrawerNavigation';
@@ -45,10 +45,10 @@ import TermsOfUse from '../screens/pages/TermsOfUseScreen';
 
 const Stack = createStackNavigator();
 
-const VDFlow = ({ offline, setVendorProfile, setVendor }) => {
+const VDFlow = ({offline, setVendorProfile, setVendor}) => {
   const [
     getVendor,
-    { loading: getVendorLoading, data: getVendorData, error: getVendorError },
+    {loading: getVendorLoading, data: getVendorData, error: getVendorError},
   ] = useLazyQuery(VENDOR);
 
   useEffect(() => {
@@ -129,6 +129,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setVendor, setVendorProfile })(
-  VDFlow,
-);
+export default connect(mapStateToProps, {setVendor, setVendorProfile})(VDFlow);

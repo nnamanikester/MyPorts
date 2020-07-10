@@ -168,7 +168,7 @@ const AddAddressScreen = ({navigation, customer, offline}) => {
 
           <UI.Spacer />
 
-          {errors ? <Text color="red">errors</Text> : null}
+          {errors ? <UI.Text color="red">{errors}</UI.Text> : null}
 
           <UI.Spacer />
           <View>
