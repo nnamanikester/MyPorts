@@ -21,6 +21,25 @@ export default (state = INITIAL_STATE, action) => {
       };
     case 'SET_EMAIL_ADDRESS':
       return {...state, user: {...state.user, email: action.payload}};
+    case 'SET_EMAIL_SETTINGS':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          customer: {...state.user.customer, emailSetting: action.payload},
+        },
+      };
+    case 'SET_Notification_SETTINGS':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          customer: {
+            ...state.user.customer,
+            notificationSetting: action.payload,
+          },
+        },
+      };
     default:
       return state;
   }

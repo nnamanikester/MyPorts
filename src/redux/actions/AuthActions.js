@@ -28,3 +28,17 @@ export const setEmailAddress = (email) => ({
   type: 'SET_EMAIL_ADDRESS',
   payload: email,
 });
+
+export const setEmailSettings = (setting) => {
+  return {
+    type: 'SET_EMAIL_SETTINGS',
+    payload: setting,
+  };
+};
+
+export const setNotificationSettings = (setting) => {
+  return {
+    type: 'SET_NOTIFICATION_SETTINGS',
+    payload: setting,
+  };
+};

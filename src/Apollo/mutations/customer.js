@@ -39,3 +39,54 @@ export const CREATE_SEARCH_TERM = gql`
     }
   }
 `;
+
+export const UPDATE_EMAIL_SETTINGS = gql`
+  mutation updateEmailSettings(
+    $id: String!
+    $orders: Boolean
+    $promotions: Boolean
+    $rewards: Boolean
+  ) {
+    updateEmailSettings(
+      id: $id
+      orders: $orders
+      promotions: $promotions
+      rewards: $rewards
+    ) {
+      id
+      orders
+      promotions
+      rewards
+    }
+  }
+`;
+
+export const UPDATE_NOTIFICATION_SETTINGS = gql`
+  mutation updateNotificationSettings(
+    $id: String!
+    $orders: Boolean
+    $promotions: Boolean
+    $rewards: Boolean
+    $remiders: Boolean
+    $inStock: Boolean
+    $newProducts: Boolean
+  ) {
+    updateNotificationSettings(
+      id: $id
+      orders: $orders
+      promotions: $promotions
+      rewards: $rewards
+      reminders: $reminders
+      inStock: $inStock
+      newProducts: $newProducts
+    ) {
+      id
+      orders
+      promotions
+      rewards
+      reminders
+      inStock
+      newProducts
+    }
+  }
+`;

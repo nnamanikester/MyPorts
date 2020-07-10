@@ -1,85 +1,117 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {
-  Layout,
-  Text,
-  Switch,
-  Icon,
-  Spacer,
-  ListItem,
-  Clickable,
-} from '../../components/common';
+import {View, StyleSheet, ToastAndroid} from 'react-native';
+import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import {connect} from 'react-redux';
+import {useMutation} from '@apollo/react-hooks';
+import {UPDATE_EMAIL_SETTINGS} from '../../apollo/mutations';
+import {setEmailSettings} from '../../redux/actions/AuthActions';
 
-const EmailSettingsScreen = ({navigation, user}) => {
+const EmailSettingsScreen = ({navigation, user, setEmailSettings}) => {
   const {
     customer: {emailSetting},
   } = user;
-  console.log('custoer', emailSetting);
-  const [value, setValue] = useState(false);
+
   const [orders, setOrders] = React.useState(emailSetting.orders);
   const [promotions, setPromotions] = React.useState(emailSetting.promotions);
   const [rewards, setRewards] = React.useState(emailSetting.rewards);
+
+  const [updateEmail] = useMutation(UPDATE_EMAIL_SETTINGS);
+
+  const handleUpdateSettings = () => {
+    updateEmail({
+      variables: {
+        id: emailSetting.id,
+        orders,
+        promotions,
+        rewards,
+      },
+    })
+      .then((res) => {
+        setEmailSettings(res.data.updateEmailSettings);
+        ToastAndroid.show('Settings Updapted!', ToastAndroid.SHORT);
+      })
+      .catch((e) => {
+        setOrders(emailSetting.orders);
+        setPromotions(emailSetting.promotions);
+        setRewards(emailSetting.rewards);
+        ToastAndroid.show('Error updating settings!', ToastAndroid.SHORT);
+      });
+  };
 
   return (
     <>
       <Header
         title="Email Settngs"
         headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.goBack()}>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+          </UI.Clickable>
         }
       />
-      <Layout>
+      <UI.Layout>
         <View style={styles.container}>
-          <ListItem
+          <UI.ListItem
             body={
               <>
-                <Text size={17}>Your Orders</Text>
-                <Text note>Notify me of the status of my orders</Text>
+                <UI.Text size={17}>Your Orders</UI.Text>
+                <UI.Text note>Notify me of the status of my orders</UI.Text>
               </>
             }
             right={
-              <Switch value={orders} onChange={() => setOrders(!orders)} />
-            }
-          />
-
-          <Spacer />
-
-          <ListItem
-            body={
-              <>
-                <Text size={17}>Deals and Promotions</Text>
-                <Text note>Daily deals, promotions and flash sales</Text>
-              </>
-            }
-            right={
-              <Switch
-                value={promotions}
-                onChange={() => setPromotions(!promotions)}
+              <UI.Switch
+                value={orders}
+                onChange={() => {
+                  setOrders(!orders);
+                  handleUpdateSettings();
+                }}
               />
             }
           />
 
-          <Spacer />
+          <UI.Spacer />
 
-          <ListItem
+          <UI.ListItem
             body={
               <>
-                <Text size={17}>Rewards</Text>
-                <Text note>Gifts, rewards, and coupons</Text>
+                <UI.Text size={17}>Deals and Promotions</UI.Text>
+                <UI.Text note>Daily deals, promotions and flash sales</UI.Text>
               </>
             }
             right={
-              <Switch value={rewards} onChange={() => setRewards(!rewards)} />
+              <UI.Switch
+                value={promotions}
+                onChange={() => {
+                  setPromotions(!promotions);
+                  handleUpdateSettings();
+                }}
+              />
             }
           />
 
-          <Spacer />
+          <UI.Spacer />
+
+          <UI.ListItem
+            body={
+              <>
+                <UI.Text size={17}>Rewards</UI.Text>
+                <UI.Text note>Gifts, rewards, and coupons</UI.Text>
+              </>
+            }
+            right={
+              <UI.Switch
+                value={rewards}
+                onChange={() => {
+                  setRewards(!rewards);
+                  handleUpdateSettings();
+                }}
+              />
+            }
+          />
+
+          <UI.Spacer />
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
@@ -103,4 +135,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(EmailSettingsScreen);
+export default connect(mapStateToProps, {setEmailSettings})(
+  EmailSettingsScreen,
+);
