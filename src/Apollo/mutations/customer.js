@@ -67,7 +67,7 @@ export const UPDATE_NOTIFICATION_SETTINGS = gql`
     $orders: Boolean
     $promotions: Boolean
     $rewards: Boolean
-    $remiders: Boolean
+    $reminders: Boolean
     $inStock: Boolean
     $newProducts: Boolean
   ) {

@@ -1,109 +1,184 @@
-import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {
-  Layout,
-  Text,
-  Switch,
-  Icon,
-  Spacer,
-  ListItem,
-  Clickable,
-} from '../../components/common';
-import {primaryColor} from '../../components/common/variables';
+import React from 'react';
+import {View, StyleSheet, ToastAndroid} from 'react-native';
+import * as UI from '../../components/common';
 import Header from '../../components/Header';
+import {connect} from 'react-redux';
+import {useMutation} from '@apollo/react-hooks';
+import {UPDATE_NOTIFICATION_SETTINGS} from '../../apollo/mutations';
+import {setNotificationSettings} from '../../redux/actions/AuthActions';
+import {primaryColor} from '../../components/common/variables';
 
-const NotificationSettingsScreen = ({navigation}) => {
-  const [value, setValue] = useState(false);
+const NotificationSettingsScreen = ({
+  navigation,
+  user,
+  offline,
+  setNotificationSettings,
+}) => {
+  const {
+    customer: {notificationSetting},
+  } = user;
+
+  const [orders, setOrders] = React.useState(notificationSetting.orders);
+  const [promotions, setPromotions] = React.useState(
+    notificationSetting.promotions,
+  );
+  const [rewards, setRewards] = React.useState(notificationSetting.rewards);
+  const [reminders, setReminders] = React.useState(
+    notificationSetting.reminders,
+  );
+  const [inStock, setInStock] = React.useState(notificationSetting.inStock);
+  const [newProducts, setNewProducts] = React.useState(
+    notificationSetting.newProducts,
+  );
+
+  const [updateNotification] = useMutation(UPDATE_NOTIFICATION_SETTINGS, {
+    variables: {
+      id: notificationSetting.id,
+      orders,
+      promotions,
+      rewards,
+      reminders,
+      inStock,
+      newProducts,
+    },
+  });
+
+  React.useMemo(() => {
+    if (!offline) {
+      updateNotification()
+        .then((res) => {
+          setNotificationSettings(res.data.updateNotificationSettings);
+          ToastAndroid.show('Settings Updapted!', ToastAndroid.SHORT);
+        })
+        .catch((e) => {
+          setOrders(notificationSetting.orders);
+          setPromotions(notificationSetting.promotions);
+          setRewards(notificationSetting.rewards);
+          ToastAndroid.show('Error updating settings!', ToastAndroid.SHORT);
+        });
+    }
+  }, [orders, promotions, rewards, newProducts, reminders, inStock]);
 
   return (
     <>
       <Header
         title="Notification Settngs"
         headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.goBack()}>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+          </UI.Clickable>
         }
       />
-      <Layout>
+      <UI.Layout>
         <View style={styles.container}>
-          <Text color={primaryColor} style={styles.title}>
+          <UI.Text color={primaryColor} style={styles.title}>
             Push Notifications
-          </Text>
+          </UI.Text>
 
-          <ListItem
+          <UI.ListItem
             body={
               <>
-                <Text size={17}>Your Orders</Text>
-                <Text note>Notify me of the status of my orders</Text>
+                <UI.Text size={17}>Your Orders</UI.Text>
+                <UI.Text note>Notify me of the status of my orders</UI.Text>
               </>
             }
-            right={<Switch value={value} onChange={() => setValue(!value)} />}
+            right={
+              <UI.Switch value={orders} onChange={() => setOrders(!orders)} />
+            }
           />
 
-          <Spacer />
+          <UI.Spacer />
 
-          <ListItem
+          <UI.ListItem
             body={
               <>
-                <Text size={17}>Deals and Promotions</Text>
-                <Text note>Daily deals, promotions and flash sales</Text>
+                <UI.Text size={17}>Deals and Promotions</UI.Text>
+                <UI.Text note>Daily deals, promotions and flash sales</UI.Text>
               </>
             }
-            right={<Switch value={value} onChange={() => setValue(!value)} />}
+            right={
+              <UI.Switch
+                value={promotions}
+                onChange={() => setPromotions(!promotions)}
+              />
+            }
           />
 
-          <Spacer />
+          <UI.Spacer />
 
-          <ListItem
+          <UI.ListItem
             body={
               <>
-                <Text size={17}>Rewards</Text>
-                <Text note>Gifts, rewards, and coupons</Text>
+                <UI.Text size={17}>Rewards</UI.Text>
+                <UI.Text note>Gifts, rewards, and coupons</UI.Text>
               </>
             }
-            right={<Switch value={value} onChange={() => setValue(!value)} />}
+            right={
+              <UI.Switch
+                value={rewards}
+                onChange={() => setRewards(!rewards)}
+              />
+            }
           />
 
-          <Spacer />
+          <UI.Spacer />
 
-          <ListItem
+          <UI.ListItem
             body={
               <>
-                <Text size={17}>System Reminders</Text>
-                <Text note>Generals, admins, and updates</Text>
+                <UI.Text size={17}>System Reminders</UI.Text>
+                <UI.Text note>Generals, admins, and updates</UI.Text>
               </>
             }
-            right={<Switch value={value} onChange={() => setValue(!value)} />}
+            right={
+              <UI.Switch
+                value={reminders}
+                onChange={() => setReminders(!reminders)}
+              />
+            }
           />
 
-          <Spacer />
+          <UI.Spacer />
 
-          <ListItem
+          <UI.ListItem
             body={
               <>
-                <Text size={17}>Back in Stock</Text>
-                <Text note>et notified when a product is back in stock</Text>
+                <UI.Text size={17}>Back in Stock</UI.Text>
+                <UI.Text note>
+                  et notified when a product is back in stock
+                </UI.Text>
               </>
             }
-            right={<Switch value={value} onChange={() => setValue(!value)} />}
+            right={
+              <UI.Switch
+                value={inStock}
+                onChange={() => setInStock(!inStock)}
+              />
+            }
           />
 
-          <Spacer />
+          <UI.Spacer />
 
-          <ListItem
+          <UI.ListItem
             body={
               <>
-                <Text size={17}>Favorite Vendor Products</Text>
-                <Text note>Notify me of my favorite vendors new products</Text>
+                <UI.Text size={17}>Favorite Vendor Products</UI.Text>
+                <UI.Text note>
+                  Notify me of my favorite vendors new products
+                </UI.Text>
               </>
             }
-            right={<Switch value={value} onChange={() => setValue(!value)} />}
+            right={
+              <UI.Switch
+                value={newProducts}
+                onChange={() => setNewProducts(!newProducts)}
+              />
+            }
           />
 
-          <Spacer />
+          <UI.Spacer />
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
@@ -119,4 +194,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NotificationSettingsScreen;
+const mapStateToProps = (state) => {
+  return {
+    offline: !state.network.isConnected,
+    customer: state.customer.profile,
+    user: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps, {setNotificationSettings})(
+  NotificationSettingsScreen,
+);

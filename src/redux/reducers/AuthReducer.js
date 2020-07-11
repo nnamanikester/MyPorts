@@ -29,7 +29,7 @@ export default (state = INITIAL_STATE, action) => {
           customer: {...state.user.customer, emailSetting: action.payload},
         },
       };
-    case 'SET_Notification_SETTINGS':
+    case 'SET_NOTIFICATION_SETTINGS':
       return {
         ...state,
         user: {

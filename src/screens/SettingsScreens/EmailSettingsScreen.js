@@ -7,7 +7,7 @@ import {useMutation} from '@apollo/react-hooks';
 import {UPDATE_EMAIL_SETTINGS} from '../../apollo/mutations';
 import {setEmailSettings} from '../../redux/actions/AuthActions';
 
-const EmailSettingsScreen = ({navigation, user, setEmailSettings}) => {
+const EmailSettingsScreen = ({navigation, user, setEmailSettings, offline}) => {
   const {
     customer: {emailSetting},
   } = user;
@@ -26,17 +26,19 @@ const EmailSettingsScreen = ({navigation, user, setEmailSettings}) => {
   });
 
   React.useMemo(() => {
-    updateEmail()
-      .then((res) => {
-        setEmailSettings(res.data.updateEmailSettings);
-        ToastAndroid.show('Settings Updapted!', ToastAndroid.SHORT);
-      })
-      .catch((e) => {
-        setOrders(emailSetting.orders);
-        setPromotions(emailSetting.promotions);
-        setRewards(emailSetting.rewards);
-        ToastAndroid.show('Error updating settings!', ToastAndroid.SHORT);
-      });
+    if (!offline) {
+      updateEmail()
+        .then((res) => {
+          setEmailSettings(res.data.updateEmailSettings);
+          ToastAndroid.show('Settings Updapted!', ToastAndroid.SHORT);
+        })
+        .catch((e) => {
+          setOrders(emailSetting.orders);
+          setPromotions(emailSetting.promotions);
+          setRewards(emailSetting.rewards);
+          ToastAndroid.show('Error updating settings!', ToastAndroid.SHORT);
+        });
+    }
   }, [orders, promotions, rewards]);
 
   return (
