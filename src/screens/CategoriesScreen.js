@@ -1,75 +1,118 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {
-  Layout,
-  Clickable,
-  Spacer,
-  Icon,
-  Row,
-  Column,
-} from '../components/common';
+import * as UI from '../components/common';
 import Header from '../components/Header';
 import Category from '../components/Category';
-import {StyleSheet, Image, View} from 'react-native';
-import {female1, female2, female3, male1} from '../assets/images';
+import EmptyItem from '../components/EmptyItem';
+import {StyleSheet, View, ToastAndroid, Dimensions} from 'react-native';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {GET_CATEGORIES} from '../apollo/queries';
+import Skeleton from 'react-native-skeleton-placeholder';
 
-const CategoriesScreen = ({navigation}) => {
-  const [hideHeader, setHideHeader] = useState(false);
+const CategoriesScreen = ({navigation, offline}) => {
+  const [categories, setCategories] = React.useState([]);
+
+  const [getCategories, {data, loading, error}] = useLazyQuery(GET_CATEGORIES);
+
+  React.useMemo(() => {
+    if (!offline) {
+      getCategories();
+    }
+
+    if (error) {
+      ToastAndroid.show(
+        'Unable to get categories at this time.',
+        ToastAndroid.SHORT,
+      );
+    }
+  }, [error]);
+
+  React.useMemo(() => {
+    if (data) {
+      setCategories(data.categories);
+    }
+  }, [data]);
 
   return (
     <>
+      <UI.Loading show={loading} />
       <Header
         isCart
         title="Categories"
         headerLeft={
-          <Clickable onClick={() => navigation.openDrawer()}>
-            <Icon name="ios-menu" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.openDrawer()}>
+            <UI.Icon name="ios-menu" color="#fff" />
+          </UI.Clickable>
         }
         headerRight={
           <>
-            <Clickable onClick={() => navigation.navigate('Cart')}>
-              <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </Clickable>
-            <Spacer medium />
-            <Clickable onClick={() => navigation.navigate('Search')}>
-              <Icon name="ios-search" color="#fff" />
-            </Clickable>
+            <UI.Clickable onClick={() => navigation.navigate('Cart')}>
+              <UI.Icon
+                name="shopping-bag"
+                size={22}
+                type="Feather"
+                color="#fff"
+              />
+            </UI.Clickable>
+            <UI.Spacer medium />
+            <UI.Clickable onClick={() => navigation.navigate('Search')}>
+              <UI.Icon name="ios-search" color="#fff" />
+            </UI.Clickable>
           </>
         }
       />
-      <Layout>
+      <UI.Layout>
         <View style={styles.container}>
-          <Category
-            onClick={() => navigation.navigate('ProductsByCategory')}
-            title="Women"
-            image={female1}
-            subtitle="346 Items"
-          />
+          {loading && (
+            <Skeleton>
+              <Skeleton.Item
+                borderRadius={5}
+                width="100%"
+                height={150}
+                marginVertical={10}
+              />
+              <Skeleton.Item
+                borderRadius={5}
+                width="100%"
+                height={150}
+                marginVertical={10}
+              />
+              <Skeleton.Item
+                borderRadius={5}
+                width="100%"
+                height={150}
+                marginVertical={10}
+              />
+            </Skeleton>
+          )}
 
-          <Category
-            onClick={() => navigation.navigate('ProductsByCategory')}
-            title="Men"
-            image={female2}
-            subtitle="465 Items"
-          />
+          {!loading && !categories.length > 0 && (
+            <View style={styles.emptyContainer}>
+              <EmptyItem
+                icon={<UI.Icon name="ios-list" size={100} />}
+                show
+                title="No Category Found!"
+                message="All categories Will appear here."
+              />
+            </View>
+          )}
 
-          <Category
-            onClick={() => navigation.navigate('ProductsByCategory')}
-            title="Kids"
-            image={female3}
-            subtitle="753 Items"
-          />
+          {categories &&
+            categories.map((c, i) => {
+              return (
+                <Category
+                  key={c.id + i}
+                  onClick={() => navigation.navigate('ProductsByCategory', {c})}
+                  title={c.name}
+                  image={{uri: c.imageUrl}}
+                  subtitle={`${c.products.length} Items`}
+                />
+              );
+            })}
 
-          <Category
-            onClick={() => navigation.navigate('ProductsByCategory')}
-            title="Cars"
-            image={male1}
-            subtitle="4387 Items"
-          />
-          <Spacer size={50} />
+          <UI.Spacer size={50} />
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
@@ -78,6 +121,18 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 5,
   },
+  emptyContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: Dimensions.get('screen').height - 200,
+    flex: 1,
+  },
 });
 
-export default CategoriesScreen;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    offline: !state.network.isConnected,
+  };
+};
+
+export default connect(mapStateToProps)(CategoriesScreen);
