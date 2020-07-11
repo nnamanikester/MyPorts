@@ -51,6 +51,10 @@ export const CUSTOMER_COMMENTS = gql`
       product {
         id
         name
+        images {
+          id
+          url
+        }
       }
     }
   }
