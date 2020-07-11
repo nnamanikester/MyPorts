@@ -35,7 +35,6 @@ const CategoriesScreen = ({navigation, offline}) => {
 
   return (
     <>
-      <UI.Loading show={loading} />
       <Header
         isCart
         title="Categories"
