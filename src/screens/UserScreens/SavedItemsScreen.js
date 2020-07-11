@@ -7,7 +7,8 @@ import EmptyItem from '../../components/EmptyItem';
 import {primaryColor} from '../../components/common/variables';
 import {connect} from 'react-redux';
 import {CUSTOMER_SAVES} from '../../apollo/queries';
-import {useLazyQuery} from '@apollo/react-hooks';
+import {CREATE_SAVE} from '../../apollo/mutations';
+import {useLazyQuery, useMutation} from '@apollo/react-hooks';
 
 const SavedItemsScreen = ({navigation, offline, customer}) => {
   const [items, setItems] = React.useState([]);
@@ -15,6 +16,7 @@ const SavedItemsScreen = ({navigation, offline, customer}) => {
   const [getItems, {data, loading, error}] = useLazyQuery(CUSTOMER_SAVES, {
     pollInterval: 500,
   });
+  const [deleteItem] = useMutation(CREATE_SAVE);
 
   React.useMemo(() => {
     if (!offline) {
@@ -34,6 +36,24 @@ const SavedItemsScreen = ({navigation, offline, customer}) => {
       setItems(data.customerSaves);
     }
   }, [data]);
+
+  const handeleteItem = (id) => {
+    deleteItem({
+      variables: {
+        customerId: customer.id,
+        productId: id,
+      },
+    })
+      .then((res) => {
+        ToastAndroid.show('Unsaved!', ToastAndroid.SHORT);
+      })
+      .catch((e) => {
+        ToastAndroid.show(
+          'Unable to delete item! Plealse try again!',
+          ToastAndroid.SHORT,
+        );
+      });
+  };
 
   return (
     <>
@@ -97,7 +117,7 @@ const SavedItemsScreen = ({navigation, offline, customer}) => {
                 }
                 right={
                   <View style={{alignItems: 'flex-end'}}>
-                    <UI.Link>
+                    <UI.Link onClick={() => handeleteItem(p.product.id)}>
                       <UI.Icon name="md-close" />
                     </UI.Link>
                   </View>
