@@ -27,5 +27,6 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'react/forbid-prop-types': 'off',
     'react-hooks/exhaustive-deps': 'off',
+    radix: 'off',
   },
 };

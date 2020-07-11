@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import EmptyItem from '../components/EmptyItem';
 import Product from '../components/Product';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ToastAndroid} from 'react-native';
 import {useLazyQuery, useMutation} from '@apollo/react-hooks';
 import {GET_PRODUCTS, SEARCH_TERMS} from '../apollo/queries';
 import {CREATE_SEARCH_TERM} from '../apollo/mutations';
@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import {info} from '../components/common/variables';
 
 const SearchScreen = ({navigation, offline}) => {
+  // Defining state variables.
   const [products, setProducts] = React.useState([]);
   const [fetching, setFetching] = React.useState(false);
   const [term, setTerm] = React.useState('');
@@ -27,6 +28,7 @@ const SearchScreen = ({navigation, offline}) => {
   const [isFilter, setIsFilter] = useState(false);
   const [showAllTerms, setShowAllTerms] = useState(false);
 
+  // Query for getting products after search
   const [
     getProducts,
     {loading, data, error, fetchMore, refetch},
@@ -41,18 +43,22 @@ const SearchScreen = ({navigation, offline}) => {
       orderBy: filter.value,
     },
   });
-  const [createSearchTerm, {data: termData}] = useMutation(CREATE_SEARCH_TERM, {
+
+  // Mutation for creating a searchTerm after search.
+  const [createSearchTerm] = useMutation(CREATE_SEARCH_TERM, {
     variables: {
       term,
     },
   });
+
+  // Query to fetch search terms
   const [
     fetchSearchTerms,
     {data: searchTermsData, refetch: refetchSearchTerms},
   ] = useLazyQuery(SEARCH_TERMS);
 
-  console.log(searchTermsData);
-
+  // A function that is called when the searchBox is blured,
+  // to search the terms in products
   const handleSearch = () => {
     if (!term) {
       refetchSearchTerms();
@@ -61,20 +67,38 @@ const SearchScreen = ({navigation, offline}) => {
     if (!offline) {
       getProducts();
       createSearchTerm();
-    } else {
-      alert("Please check if you're connected to the internet!");
     }
   };
 
-  React.useEffect(() => {
-    if (!offline) {
-      fetchSearchTerms();
-    }
-  });
-  React.useEffect(() => {
+  // React.useEffect(() => {
+  //   if (!offline) {
+  //     fetchSearchTerms();
+  //   }
+
+  //   if (data) {
+  //     setProducts(data.products.edges.map((p) => p.node));
+  //   }
+  //   if (searchTermsData) {
+  //     setRecentSearches(searchTermsData.searchTerms);
+  //     if (searchTermsData.searchTerms.length > 5) {
+  //       setShowAllTerms(false);
+  //     } else {
+  //       setShowAllTerms(true);
+  //     }
+  //   }
+  // }, [data, searchTermsData]);
+
+  React.useMemo(() => {
     if (data) {
       setProducts(data.products.edges.map((p) => p.node));
     }
+  }, [data]);
+
+  React.useMemo(() => {
+    if (!offline) {
+      fetchSearchTerms();
+    }
+
     if (searchTermsData) {
       setRecentSearches(searchTermsData.searchTerms);
       if (searchTermsData.searchTerms.length > 5) {
@@ -83,17 +107,19 @@ const SearchScreen = ({navigation, offline}) => {
         setShowAllTerms(true);
       }
     }
-  }, [data, searchTermsData]);
+  }, [searchTermsData]);
 
   React.useEffect(() => {
     if (error) {
-      alert("There's a problem loading getting the data. Please try again.");
+      ToastAndroid.show('Unable to get data at the time.', ToastAndroid.SHORT);
     }
   }, [error]);
 
   // Fetch more products onEndReach for pagination.
   const fetchMoreProducts = () => {
-    if (!products.length > 0 && term) return;
+    if (!products.length > 0 && term) {
+      return;
+    }
     setFetching(true);
     // Check if  there's a next page.
     if (data.products.pageInfo.hasNextPage) {
@@ -172,7 +198,9 @@ const SearchScreen = ({navigation, offline}) => {
                   </UI.Row>
 
                   {recentSearches.map((t, i) => {
-                    if (!showAllTerms && i > 4) return;
+                    if (!showAllTerms && i > 4) {
+                      return;
+                    }
                     return (
                       <UI.ListItem
                         key={t.id}

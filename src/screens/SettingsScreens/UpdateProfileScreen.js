@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import * as UI from '../../components/common';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ToastAndroid} from 'react-native';
 import Header from '../../components/Header';
 import Avatar from '../../components/Avatar';
 import {profilePhoto} from '../../assets/images';
@@ -81,8 +81,6 @@ const UpdateProfileScreen = ({
   const [gender, setGender] = useState(customer.gender);
   const [photo, setPhoto] = useState(customer.photo);
 
-  const [success, setSuccess] = useState(false);
-
   const [updateCustomer, {loading}] = useMutation(UPDATE_CUSTOMER);
 
   const handleCustomerUpdate = () => {
@@ -100,11 +98,14 @@ const UpdateProfileScreen = ({
         },
       })
         .then((res) => {
-          setSuccess(true);
           setCustomerProfile(res.data.updateCustomer);
+          ToastAndroid.show(
+            'Profile updated successfully!',
+            ToastAndroid.SHORT,
+          );
         })
         .catch((err) => {
-          alert('Unable to update profile!');
+          ToastAndroid.show('Unable to update profile!', ToastAndroid.SHORT);
         });
     }
   };
@@ -225,13 +226,6 @@ const UpdateProfileScreen = ({
           <UI.Spacer large />
         </View>
       </UI.Layout>
-      {success && (
-        <UI.Toast
-          message="Profile updated successsfully!"
-          timeout={5000}
-          onTimeout={() => setSuccess(false)}
-        />
-      )}
     </>
   );
 };

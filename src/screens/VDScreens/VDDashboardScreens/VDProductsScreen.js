@@ -1,17 +1,17 @@
 import React from 'react';
 import * as UI from '../../../components/common';
-import { View, FlatList, ScrollView } from 'react-native';
+import {View, FlatList, ScrollView} from 'react-native';
 import SearchBar from '../../../components/SearchBar';
-import { useLazyQuery } from '@apollo/react-hooks';
-import { GET_PRODUCTS } from '../../../apollo/queries';
-import { connect } from 'react-redux';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {GET_PRODUCTS} from '../../../apollo/queries';
+import {connect} from 'react-redux';
 import Skeleton from 'react-native-skeleton-placeholder';
 import EmptyItem from '../../../components/EmptyItem';
-import { formatMoney } from '../../../utils';
+import {formatMoney} from '../../../utils';
 import moment from 'moment';
-import { info } from '../../../components/common/variables';
+import {info} from '../../../components/common/variables';
 
-const VDProductsScreen = ({ navigation, offline, vendor }) => {
+const VDProductsScreen = ({navigation, offline, vendor}) => {
   const [products, setProducts] = React.useState([]);
 
   const [searchText, setSearchText] = React.useState('');
@@ -29,7 +29,7 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
 
   const [
     getProducts,
-    { loading, data, error, refetch, fetchMore },
+    {loading, data, error, refetch, fetchMore},
   ] = useLazyQuery(GET_PRODUCTS, {
     variables: {
       where: {
@@ -42,6 +42,7 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
       first: 20,
       orderBy: filter.value,
     },
+    pollInterval: 500,
   });
 
   React.useEffect(() => {
@@ -76,7 +77,7 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
           after: data.products.pageInfo.endCursor,
         },
         // Update the cached data with the fetched product
-        updateQuery: (prev, { fetchMoreResult }) => {
+        updateQuery: (prev, {fetchMoreResult}) => {
           if (prev.products.pageInfo.hasNextPage) {
             // if the previous page info has next page
             setFetching(false);
@@ -87,7 +88,7 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
                   ...prev.products.edges,
                   ...fetchMoreResult.products.edges,
                 ],
-                pageInfo: { ...fetchMoreResult.products.pageInfo },
+                pageInfo: {...fetchMoreResult.products.pageInfo},
                 __typename: fetchMoreResult.products.__typename,
               },
             };
@@ -139,10 +140,8 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
               }
               body={
                 <Skeleton>
-                  <View
-                    style={{ width: '70%', height: 10, marginBottom: 10 }}
-                  />
-                  <View style={{ width: '40%', height: 10 }} />
+                  <View style={{width: '70%', height: 10, marginBottom: 10}} />
+                  <View style={{width: '40%', height: 10}} />
                 </Skeleton>
               }
             />
@@ -154,10 +153,8 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
               }
               body={
                 <Skeleton>
-                  <View
-                    style={{ width: '70%', height: 10, marginBottom: 10 }}
-                  />
-                  <View style={{ width: '40%', height: 10 }} />
+                  <View style={{width: '70%', height: 10, marginBottom: 10}} />
+                  <View style={{width: '40%', height: 10}} />
                 </Skeleton>
               }
             />
@@ -169,10 +166,8 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
               }
               body={
                 <Skeleton>
-                  <View
-                    style={{ width: '70%', height: 10, marginBottom: 10 }}
-                  />
-                  <View style={{ width: '40%', height: 10 }} />
+                  <View style={{width: '70%', height: 10, marginBottom: 10}} />
+                  <View style={{width: '40%', height: 10}} />
                 </Skeleton>
               }
             />
@@ -201,7 +196,7 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
               showsVerticalScrollIndicator={false}
               data={products}
               keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
+              renderItem={({item}) => (
                 <UI.ListItem
                   key={item.id}
                   onClick={() =>
@@ -209,7 +204,7 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
                       product: item,
                     })
                   }
-                  left={<UI.Avatar medium src={{ uri: item.images[0].url }} />}
+                  left={<UI.Avatar medium src={{uri: item.images[0].url}} />}
                   body={
                     <>
                       <UI.Text heading>{item.name}</UI.Text>
@@ -219,7 +214,7 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
                     </>
                   }
                   right={
-                    <View style={{ alignItems: 'flex-end' }}>
+                    <View style={{alignItems: 'flex-end'}}>
                       <UI.Text>{formatMoney(item.price)}</UI.Text>
                       <UI.Text>
                         {item.status === 1 ? 'Published' : 'Draft'}
@@ -247,11 +242,11 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
 
         <UI.Radio
           // selected={status.value}
-          onSelect={({ value, label }) => setStatus({ value, label })}
+          onSelect={({value, label}) => setStatus({value, label})}
           data={[
-            { label: 'All', value: [1, 0] },
-            { label: 'Draft', value: [0] },
-            { label: 'Published', value: [1] },
+            {label: 'All', value: [1, 0]},
+            {label: 'Draft', value: [0]},
+            {label: 'Published', value: [1]},
           ]}
         />
 
@@ -266,12 +261,12 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
             <UI.Select
               type="dropdown"
               selected={filter.label}
-              onChange={(value) => setFilter({ ...filter, label: value })}
+              onChange={(value) => setFilter({...filter, label: value})}
               data={[
-                { label: 'Name', value: 'name' },
-                { label: 'Date', value: 'createdAt' },
-                { label: 'Price', value: 'price' },
-                { label: 'Sales', value: 'sales' },
+                {label: 'Name', value: 'name'},
+                {label: 'Date', value: 'createdAt'},
+                {label: 'Price', value: 'price'},
+                {label: 'Sales', value: 'sales'},
               ]}
             />
           </UI.Column>
@@ -279,10 +274,10 @@ const VDProductsScreen = ({ navigation, offline, vendor }) => {
             <UI.Select
               type="dropdown"
               selected={filter.value}
-              onChange={(value) => setFilter({ ...filter, value })}
+              onChange={(value) => setFilter({...filter, value})}
               data={[
-                { label: 'ASC', value: `${filter.label}_ASC` },
-                { label: 'DESC', value: `${filter.label}_DESC` },
+                {label: 'ASC', value: `${filter.label}_ASC`},
+                {label: 'DESC', value: `${filter.label}_DESC`},
               ]}
             />
           </UI.Column>

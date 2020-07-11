@@ -5,7 +5,7 @@ import Swiper from 'react-native-swiper';
 import Header from '../../components/Header';
 import Product from '../../components/Product';
 import FeaturedProduct from '../../components/FeaturedProduct';
-import {ScrollView, StyleSheet, View, Image} from 'react-native';
+import {ScrollView, StyleSheet, View, Image, ToastAndroid} from 'react-native';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_PRODUCTS} from '../../apollo/queries';
 import Skeleton from 'react-native-skeleton-placeholder';
@@ -23,15 +23,18 @@ const ProductsScreen = ({navigation, offline}) => {
   ] = useLazyQuery(GET_PRODUCTS, {
     variables: {
       first: 42,
+      where: {
+        status: 1,
+      },
+      orderBy: 'createdAt_DESC',
     },
   });
 
   React.useEffect(() => {
     if (!offline) {
       getProducts();
-    } else {
-      alert("Please check if you're connected to the internet!");
     }
+
     if (data) {
       setProducts(data.products.edges.map((p) => p.node));
     }
@@ -39,7 +42,7 @@ const ProductsScreen = ({navigation, offline}) => {
 
   React.useEffect(() => {
     if (error) {
-      alert('Unable to fetch your products!');
+      ToastAndroid.show('Error loading products!', ToastAndroid.SHORT);
     }
   }, [error]);
 

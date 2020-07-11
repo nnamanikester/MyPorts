@@ -1,18 +1,18 @@
 import React from 'react';
 import * as UI from '../../../../components/common';
 import Header from '../../../../components/Header';
-import { View, StyleSheet } from 'react-native';
-import { CREATE_PRODUCT } from '../../../../apollo/mutations/product';
-import { useMutation } from '@apollo/react-hooks';
+import {View, StyleSheet} from 'react-native';
+import {CREATE_PRODUCT} from '../../../../apollo/mutations/product';
+import {useMutation} from '@apollo/react-hooks';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepThree from './StepThree';
 import StepFour from './StepFour';
 import StepFive from './StepFive';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-const VDAddProductScreen = ({ navigation, offline }) => {
-  const [createProduct, { loading, error }] = useMutation(CREATE_PRODUCT);
+const VDAddProductScreen = ({navigation, offline}) => {
+  const [createProduct, {loading, error}] = useMutation(CREATE_PRODUCT);
 
   const [step, setStep] = React.useState(1);
 
@@ -115,7 +115,7 @@ const VDAddProductScreen = ({ navigation, offline }) => {
             onImageClick={(image) =>
               setImages(images.filter((img) => img !== image))
             }
-            onImages={(url) => setImages([...images, { url }])}
+            onImages={(url) => setImages([...images, {url}])}
             onContinue={() => setStep(step + 1)}
             show={step === 1}
           />
@@ -136,7 +136,7 @@ const VDAddProductScreen = ({ navigation, offline }) => {
             onAddSpec={(spec, value) =>
               setSpecifications([
                 ...specifications,
-                { specification: spec, value },
+                {specification: spec, value},
               ])
             }
             onContinue={() => setStep(step + 1)}
