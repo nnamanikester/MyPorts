@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, StyleSheet, ToastAndroid} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
@@ -16,17 +16,17 @@ const EmailSettingsScreen = ({navigation, user, setEmailSettings}) => {
   const [promotions, setPromotions] = React.useState(emailSetting.promotions);
   const [rewards, setRewards] = React.useState(emailSetting.rewards);
 
-  const [updateEmail] = useMutation(UPDATE_EMAIL_SETTINGS);
+  const [updateEmail] = useMutation(UPDATE_EMAIL_SETTINGS, {
+    variables: {
+      id: emailSetting.id,
+      orders,
+      promotions,
+      rewards,
+    },
+  });
 
-  const handleUpdateSettings = () => {
-    updateEmail({
-      variables: {
-        id: emailSetting.id,
-        orders,
-        promotions,
-        rewards,
-      },
-    })
+  React.useMemo(() => {
+    updateEmail()
       .then((res) => {
         setEmailSettings(res.data.updateEmailSettings);
         ToastAndroid.show('Settings Updapted!', ToastAndroid.SHORT);
@@ -37,7 +37,7 @@ const EmailSettingsScreen = ({navigation, user, setEmailSettings}) => {
         setRewards(emailSetting.rewards);
         ToastAndroid.show('Error updating settings!', ToastAndroid.SHORT);
       });
-  };
+  }, [orders, promotions, rewards]);
 
   return (
     <>
@@ -59,13 +59,7 @@ const EmailSettingsScreen = ({navigation, user, setEmailSettings}) => {
               </>
             }
             right={
-              <UI.Switch
-                value={orders}
-                onChange={() => {
-                  setOrders(!orders);
-                  handleUpdateSettings();
-                }}
-              />
+              <UI.Switch value={orders} onChange={() => setOrders(!orders)} />
             }
           />
 
@@ -81,10 +75,7 @@ const EmailSettingsScreen = ({navigation, user, setEmailSettings}) => {
             right={
               <UI.Switch
                 value={promotions}
-                onChange={() => {
-                  setPromotions(!promotions);
-                  handleUpdateSettings();
-                }}
+                onChange={() => setPromotions(!promotions)}
               />
             }
           />
@@ -101,10 +92,7 @@ const EmailSettingsScreen = ({navigation, user, setEmailSettings}) => {
             right={
               <UI.Switch
                 value={rewards}
-                onChange={() => {
-                  setRewards(!rewards);
-                  handleUpdateSettings();
-                }}
+                onChange={() => setRewards(!rewards)}
               />
             }
           />

@@ -26,5 +26,6 @@ module.exports = {
     'react-native/no-inline-styles': 'off',
     'import/prefer-default-export': 'off',
     'react/forbid-prop-types': 'off',
+    'react-hooks/exhaustive-deps': 'off',
   },
 };
