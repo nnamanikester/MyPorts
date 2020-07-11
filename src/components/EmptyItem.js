@@ -1,13 +1,12 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { info } from './common/variables';
+import {View, StyleSheet} from 'react-native';
 import * as UI from './common';
 
-const EmptyItem = ({ show, title, message, icon }) => {
+const EmptyItem = ({show, title, message, icon}) => {
   if (!show) return null;
 
   return (
-    <View style={{ ...styles.container }}>
+    <View style={{...styles.container}}>
       <View style={styles.headerContanier}>
         <UI.Text h3>{title}</UI.Text>
       </View>
@@ -32,8 +31,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    // height: '100%',
-    // width: '100%',
     backgroundColor: '#fff',
   },
   messageContainer: {

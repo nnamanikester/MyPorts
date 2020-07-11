@@ -29,6 +29,28 @@ export const CUSTOMER_SAVES = gql`
   query customerSaves($id: String!) {
     customerSaves(id: $id) {
       id
+      product {
+        id
+        images {
+          url
+        }
+        name
+        createdAt
+        price
+        category {
+          name
+        }
+        description
+        quantity
+        shipping
+        specifications {
+          value
+          specification
+        }
+        fixedDiscount
+        percentageDiscount
+        status
+      }
     }
   }
 `;

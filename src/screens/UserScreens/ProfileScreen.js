@@ -130,7 +130,7 @@ const ProfileScreen = ({navigation, offline, customer, checkNetworkStatus}) => {
             <UI.Column style={styles.column} size="4">
               <View style={{alignItems: 'center'}}>
                 <UI.Icon color={primaryColor} size={30} name="ios-card" />
-                <UI.Text>NGN {formatMoney(balance)}</UI.Text>
+                <UI.Text>{formatMoney(balance)}</UI.Text>
               </View>
             </UI.Column>
 

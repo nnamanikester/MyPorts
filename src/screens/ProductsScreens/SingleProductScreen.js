@@ -197,10 +197,10 @@ const SingleProductScreen = ({
       url: p.images[0].url,
     };
     console.log('clicked');
-    // shareProduct();
     Share.open(options)
       .then(() => {
-        console.log(shared);
+        shareProduct();
+        console.log('shared');
       })
       .catch((e) => {
         console.log(e);

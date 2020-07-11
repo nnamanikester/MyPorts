@@ -1,9 +1,8 @@
 import React from 'react';
-import {View, StyleSheet, ToastAndroid} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import * as UI from '../../../components/common';
 import Comment from '../../../components/Comment';
 import EmptyItem from '../../../components/EmptyItem';
-import {female4} from '../../../assets/images';
 import {connect} from 'react-redux';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {CUSTOMER_COMMENTS} from '../../../apollo/queries';
@@ -14,11 +13,13 @@ const UserComments = ({navigation, offline, customer}) => {
   const [getComments, {data, error, loading}] = useLazyQuery(CUSTOMER_COMMENTS);
 
   React.useMemo(() => {
-    getComments({
-      variables: {
-        id: customer.id,
-      },
-    });
+    if (!offline) {
+      getComments({
+        variables: {
+          id: customer.id,
+        },
+      });
+    }
   }, [error]);
 
   React.useMemo(() => {
