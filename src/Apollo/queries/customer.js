@@ -45,6 +45,13 @@ export const CUSTOMER_COMMENTS = gql`
   query customerComments($id: String!) {
     customerComments(id: $id) {
       id
+      comment
+      createdAt
+      updatedAt
+      product {
+        id
+        name
+      }
     }
   }
 `;
