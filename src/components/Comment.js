@@ -1,12 +1,23 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Text, Spacer, Rating, Divider} from './common';
+import {Text, Spacer, Rating, Divider, Clickable} from './common';
 
 import Avatar from './Avatar';
 
-const Comment = ({name, s1, s2, s3, s4, s5, date, image, comment}) => {
+const Comment = ({
+  name,
+  s1,
+  s2,
+  s3,
+  s4,
+  s5,
+  date,
+  image,
+  comment,
+  onCommentClick,
+}) => {
   return (
-    <View style={styles.container}>
+    <Clickable onClick={onCommentClick} style={styles.container}>
       <View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Avatar rounded src={image} />
@@ -28,7 +39,7 @@ const Comment = ({name, s1, s2, s3, s4, s5, date, image, comment}) => {
       </View>
       <Spacer />
       <Divider />
-    </View>
+    </Clickable>
   );
 };
 
