@@ -145,7 +145,9 @@ const SingleProductScreen = ({
 
   // Function call when the user sumits the comment
   const handleCreateComment = () => {
-    if (!commentText) return;
+    if (!commentText) {
+      return;
+    }
     createComment({
       variables: {
         comment: commentText,

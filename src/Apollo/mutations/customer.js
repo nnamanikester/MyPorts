@@ -90,3 +90,11 @@ export const UPDATE_NOTIFICATION_SETTINGS = gql`
     }
   }
 `;
+
+export const CLEAR_SAVED_ITEMS = gql`
+  mutation deleteSavedItems($customerId: String!) {
+    deleteSavedItems(customerId: $customerId) {
+      id
+    }
+  }
+`;
