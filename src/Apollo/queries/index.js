@@ -6,3 +6,4 @@ export * from './wallet';
 export * from './product';
 export * from './category';
 export * from './address';
+export * from './shop';

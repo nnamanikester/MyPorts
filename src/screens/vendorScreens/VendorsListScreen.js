@@ -1,17 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {
-  Layout,
-  Text,
-  Spacer,
-  Icon,
-  Card,
-  Column,
-  Row,
-  ActionBar,
-  Radio,
-  Clickable,
-} from '../../components/common';
+import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import VendorList from '../../components/VendorList';
 import {StyleSheet, ScrollView, View, Image} from 'react-native';
@@ -33,33 +22,38 @@ const VendorListScreen = ({navigation}) => {
 
   return (
     <>
-      <ActionBar
+      <UI.ActionBar
         show={showSearchBar}
         onCloseButtonClick={() => setShowSearchBar(false)}>
-        <Radio selected={2} data={[{label: 'Date'}, {label: 'Month'}]} />
-      </ActionBar>
+        <UI.Radio selected={2} data={[{label: 'Date'}, {label: 'Month'}]} />
+      </UI.ActionBar>
 
       <Header
         isCart
         title="Vendors"
         headerLeft={
-          <Clickable onClick={() => navigation.openDrawer()}>
-            <Icon name="ios-menu" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.openDrawer()}>
+            <UI.Icon name="ios-menu" color="#fff" />
+          </UI.Clickable>
         }
         headerRight={
           <>
-            <Clickable onClick={() => navigation.navigate('Cart')}>
-              <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </Clickable>
-            <Spacer medium />
-            <Clickable onClick={() => navigation.navigate('Search')}>
-              <Icon name="ios-search" color="#fff" />
-            </Clickable>
+            <UI.Clickable onClick={() => navigation.navigate('Cart')}>
+              <UI.Icon
+                name="shopping-bag"
+                size={22}
+                type="Feather"
+                color="#fff"
+              />
+            </UI.Clickable>
+            <UI.Spacer medium />
+            <UI.Clickable onClick={() => navigation.navigate('Search')}>
+              <UI.Icon name="ios-search" color="#fff" />
+            </UI.Clickable>
           </>
         }
       />
-      <Layout>
+      <UI.Layout>
         <View style={styles.container}>
           <Swiper
             paginationStyle={{bottom: 5}}
@@ -68,23 +62,23 @@ const VendorListScreen = ({navigation}) => {
             height={100}
             loop
             autoplay>
-            <Clickable>
+            <UI.Clickable>
               <Image style={styles.advert} source={shoe1} />
-            </Clickable>
-            <Clickable>
+            </UI.Clickable>
+            <UI.Clickable>
               <Image style={styles.advert} source={shoe2} />
-            </Clickable>
-            <Clickable>
+            </UI.Clickable>
+            <UI.Clickable>
               <Image style={styles.advert} source={bag1} />
-            </Clickable>
-            <Clickable>
+            </UI.Clickable>
+            <UI.Clickable>
               <Image style={styles.advert} source={female3} />
-            </Clickable>
+            </UI.Clickable>
           </Swiper>
         </View>
 
         <View style={styles.container}>
-          <Text style={styles.title}>Featured Vendors</Text>
+          <UI.Text style={styles.title}>Featured Vendors</UI.Text>
         </View>
         <ScrollView
           style={{paddingLeft: 10}}
@@ -127,18 +121,18 @@ const VendorListScreen = ({navigation}) => {
           />
         </ScrollView>
 
-        <Spacer />
+        <UI.Spacer />
         <View style={styles.container}>
-          <Row>
-            <Column size="10">
-              <Text style={styles.title}>All Vendors</Text>
-            </Column>
-            <Column size="2" style={{alignItems: 'flex-end'}}>
-              <Clickable onClick={() => setShowSearchBar(!showSearchBar)}>
-                <Icon name={showSearchBar ? 'md-close' : 'ios-search'} />
-              </Clickable>
-            </Column>
-          </Row>
+          <UI.Row>
+            <UI.Column size="10">
+              <UI.Text style={styles.title}>All Vendors</UI.Text>
+            </UI.Column>
+            <UI.Column size="2" style={{alignItems: 'flex-end'}}>
+              <UI.Clickable onClick={() => setShowSearchBar(!showSearchBar)}>
+                <UI.Icon name={showSearchBar ? 'md-close' : 'ios-search'} />
+              </UI.Clickable>
+            </UI.Column>
+          </UI.Row>
 
           {showSearchBar && (
             <View style={styles.searchBar}>
@@ -153,43 +147,8 @@ const VendorListScreen = ({navigation}) => {
             image={female1}
             verified
           />
-          <VendorList
-            verified={false}
-            onClick={() => navigation.navigate('VendorShop')}
-            location="Victoria Island, Lagos. Nigeria"
-            name="Shop and Smile"
-            image={male1}
-          />
-          <VendorList
-            verified
-            onClick={() => navigation.navigate('VendorShop')}
-            location="Victoria Island, Lagos. Nigeria"
-            name="Shop and Smile"
-            image={female2}
-          />
-          <VendorList
-            verified={false}
-            onClick={() => navigation.navigate('VendorShop')}
-            location="Victoria Island, Lagos. Nigeria"
-            name="Shop and Smile"
-            image={female3}
-          />
-          <VendorList
-            verified={false}
-            onClick={() => navigation.navigate('VendorShop')}
-            location="Victoria Island, Lagos. Nigeria"
-            name="Shop and Smile"
-            image={male1}
-          />
-          <VendorList
-            verified
-            onClick={() => navigation.navigate('VendorShop')}
-            location="Victoria Island, Lagos. Nigeria"
-            name="Shop and Smile"
-            image={female1}
-          />
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
@@ -214,4 +173,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VendorListScreen;
+const mapStateToProps = (state) => {
+  return {
+    offline: !state.network.isConnected,
+  };
+};
+
+export default connect(mapStateToProps)(VendorListScreen);
