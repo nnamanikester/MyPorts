@@ -7,7 +7,7 @@ import EmptyItem from '../../components/EmptyItem';
 import {primaryColor} from '../../components/common/variables';
 import {connect} from 'react-redux';
 import {CUSTOMER_SAVES} from '../../apollo/queries';
-import {CREATE_SAVE} from '../../apollo/mutations';
+import {CREATE_SAVE, CLEAR_SAVED_ITEMS} from '../../apollo/mutations';
 import {useLazyQuery, useMutation} from '@apollo/react-hooks';
 
 const SavedItemsScreen = ({navigation, offline, customer}) => {
@@ -17,6 +17,7 @@ const SavedItemsScreen = ({navigation, offline, customer}) => {
     pollInterval: 500,
   });
   const [deleteItem] = useMutation(CREATE_SAVE);
+  const [deleteItems] = useMutation(CLEAR_SAVED_ITEMS);
 
   React.useMemo(() => {
     if (!offline) {
@@ -52,6 +53,21 @@ const SavedItemsScreen = ({navigation, offline, customer}) => {
           'Unable to delete item! Plealse try again!',
           ToastAndroid.SHORT,
         );
+      });
+  };
+
+  const handleClearItems = () => {
+    deleteItems({
+      variables: {
+        customerId: customer.id,
+      },
+    })
+      .then((res) => {
+        ToastAndroid.show('Saved items Cleared!', ToastAndroid.SHORT);
+        setItems([]);
+      })
+      .catch((e) => {
+        ToastAndroid.show('Unable to clear saved items!', ToastAndroid.SHORT);
       });
   };
 
@@ -131,6 +147,7 @@ const SavedItemsScreen = ({navigation, offline, customer}) => {
         <View style={styles.container}>
           {items.length > 0 ? (
             <UI.Button
+              onClick={() => handleClearItems()}
               iconLeft={<UI.Icon color="#fff" name="md-close" />}
               iconRight={<UI.Icon color={primaryColor} name="md-close" />}>
               <UI.Text color="#fff">Clear Items</UI.Text>
