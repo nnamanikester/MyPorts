@@ -15,7 +15,7 @@ import * as UI from '../../components/common';
 import AsyncStorage from '@react-native-community/async-storage';
 import {ToastAndroid} from 'react-native';
 
-const CreateProfileScreen = ({checkNetworkStatus, offline}) => {
+const CreateProfileScreen = ({checkNetworkStatus, offline, setStorage}) => {
   const [customerStep, setCustomerStep] = useState(0);
   const [vendorStep, setVendorStep] = useState(0);
 
@@ -53,6 +53,7 @@ const CreateProfileScreen = ({checkNetworkStatus, offline}) => {
           'An error occured while trying to create your profile!',
           ToastAndroid.SHORT,
         );
+        return err;
       });
     }
   };
@@ -83,6 +84,7 @@ const CreateProfileScreen = ({checkNetworkStatus, offline}) => {
             'An error occured while trying to create your profile!',
             ToastAndroid.SHORT,
           );
+          return err;
         });
     }
   };

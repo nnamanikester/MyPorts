@@ -13,6 +13,7 @@ export const VENDOR = gql`
         name
         email
         phone
+        location
         description
       }
     }

@@ -231,7 +231,7 @@ const ShopSettingsScreen = ({
           <View style={styles.inputContainer}>
             <UI.Spacer medium />
             <UI.Button onClick={() => handleUpdateProfile()}>
-              Save Changes
+              <UI.Text color="#fff">Save Changes</UI.Text>
             </UI.Button>
           </View>
         </View>
