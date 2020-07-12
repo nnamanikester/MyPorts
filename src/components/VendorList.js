@@ -22,14 +22,7 @@ const VendorList = ({name, location, image, onClick, verified}) => {
                     color={primaryColor}
                     name="verified"
                   />
-                ) : (
-                  <Icon
-                    size={16}
-                    type="Octicons"
-                    color={info}
-                    name="unverified"
-                  />
-                )}
+                ) : null}
               </Text>
               <Text note>{location}</Text>
             </View>

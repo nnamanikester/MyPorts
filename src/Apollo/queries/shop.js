@@ -46,3 +46,25 @@ export const GET_SHOPS = gql`
     }
   }
 `;
+
+export const GET_SHOP = gql`
+  query shop($id: String!) {
+    shop(id: $id) {
+      id
+      isVerified
+      reviews
+      products
+      status
+      profile {
+        id
+        name
+        email
+        phone
+        description
+        location
+        logo
+        coverPhoto
+      }
+    }
+  }
+`;
