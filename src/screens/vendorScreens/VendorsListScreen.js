@@ -159,7 +159,7 @@ const VendorListScreen = ({navigation, offline}) => {
                 return (
                   <FeaturedVendor
                     key={s.id + i}
-                    onClick={() => navigation.navigate('VendorShop')}
+                    onClick={() => navigation.navigate('VendorShop', {s})}
                     location={s.profile.location}
                     name={s.profile.name}
                     image={{uri: s.profile.logo}}
@@ -198,7 +198,7 @@ const VendorListScreen = ({navigation, offline}) => {
               return (
                 <VendorList
                   key={s.id + i}
-                  onClick={() => navigation.navigate('VendorShop')}
+                  onClick={() => navigation.navigate('VendorShop', {s})}
                   location={s.profile.location}
                   name={s.profile.name}
                   image={{uri: s.profile.logo}}

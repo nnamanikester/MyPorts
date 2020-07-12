@@ -396,16 +396,6 @@ const SingleProductScreen = ({
                     })
                   : null}
                 <UI.Spacer />
-                {product && (
-                  <UI.Link
-                    onClick={() =>
-                      navigation.navigate('VendorShop', {
-                        id: product.vendor.id,
-                      })
-                    }>
-                    Vendor Details
-                  </UI.Link>
-                )}
               </UI.AccordionItem>
               <UI.AccordionItem headerText="Shipping Information">
                 <UI.Row style={{justifyContent: 'space-between'}}>

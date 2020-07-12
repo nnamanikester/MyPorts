@@ -1,22 +1,8 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, Image} from 'react-native';
-import {
-  Layout,
-  Row,
-  Icon,
-  Spacer,
-  Text,
-  Link,
-  Rating,
-  ProgressBar,
-  Divider,
-  Button,
-  Modal,
-  TextInput,
-} from '../../components/common';
+import React from 'react';
+import {View, StyleSheet, Image, ToastAndroid} from 'react-native';
+import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import Product from '../../components/Product';
-import ContactVendor from '../../components/ContactVendor';
 import SearchBar from '../../components/SearchBar';
 import {
   female2,
@@ -27,150 +13,178 @@ import {
   male1,
 } from '../../assets/images';
 import {grayColor, info, primaryColor} from '../../components/common/variables';
+import {GET_SHOP} from '../../apollo/queries';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {connect} from 'react-redux';
 
-const VendorShopScreen = ({navigation}) => {
-  const [openChat, setOpenChat] = useState(false);
-  const [openReview, setOpenReview] = useState(false);
-  const [showSearchBar, setShowSearchBar] = useState(false);
-  const [verified, setVerified] = useState(true);
+const VendorShopScreen = ({navigation, route: {params}, offline}) => {
+  const {s} = params;
+  const [openReview, setOpenReview] = React.useState(false);
+  const [showSearchBar, setShowSearchBar] = React.useState(false);
+  const [shop, setShop] = React.useState({});
+
+  const [getShop, {data, loading, error}] = useLazyQuery(GET_SHOP, {
+    variables: {
+      id: s.id,
+    },
+    pollInterval: 500,
+  });
+
+  React.useMemo(() => {
+    if (!offline) {
+      getShop();
+    }
+    if (data) {
+      setShop(data.shop);
+    }
+  }, [data]);
+
+  React.useMemo(() => {
+    if (error) {
+      ToastAndroid.show('Error loading vendor shop!', ToastAndroid.LONG);
+    }
+  }, [error]);
 
   return (
     <>
+      <UI.Loading show={loading || error ? true : false} />
       <Header
         isCart
-        title="Tiana Rosser"
+        title={s.profile.name}
         headerLeft={
-          <Link onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-          </Link>
+          <UI.Link onClick={() => navigation.goBack()}>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+          </UI.Link>
         }
         headerRight={
           <>
-            <Link
+            <UI.Link
               onClick={() => navigation.navigate('Cart')}
               activeOpacity={0.7}>
-              <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </Link>
-            <Spacer medium />
-            <Link onClick={() => navigation.navigate('Search')}>
-              <Icon name="ios-search" color="#fff" />
-            </Link>
+              <UI.Icon
+                name="shopping-bag"
+                size={22}
+                type="Feather"
+                color="#fff"
+              />
+            </UI.Link>
+            <UI.Spacer medium />
+            <UI.Link onClick={() => navigation.navigate('Search')}>
+              <UI.Icon name="ios-search" color="#fff" />
+            </UI.Link>
           </>
         }
       />
-      <Layout style={styles.layout}>
+      <UI.Layout style={styles.layout}>
         <View style={styles.header}>
           <View>
-            <Image style={styles.coverImage} source={female4} />
+            <Image
+              style={styles.coverImage}
+              source={{uri: s.profile.coverPhoto}}
+            />
           </View>
-          <Row>
+          <UI.Row>
             <View>
               <View style={styles.logoContainer}>
-                <Image style={styles.logo} source={male1} />
+                <Image style={styles.logo} source={{uri: s.profile.logo}} />
               </View>
             </View>
 
             <View style={styles.shopDetails}>
-              <Spacer />
-              <Text style={styles.shopTitle}>
-                Tiana Rosser {'  '}
-                {verified ? (
-                  <Icon
+              <UI.Spacer />
+              <UI.Text style={styles.shopTitle}>
+                {s.profile.name}{' '}
+                {s.isVerified ? (
+                  <UI.Icon
                     size={18}
                     type="Octicons"
                     color={primaryColor}
                     name="verified"
                   />
-                ) : (
-                  <Icon
-                    size={18}
-                    type="Octicons"
-                    color={info}
-                    name="unverified"
-                  />
-                )}
-              </Text>
-              <Spacer />
-              <Text style={styles.shopDescription}>
-                I was part of something special. Eventually, you do.
-              </Text>
+                ) : null}
+              </UI.Text>
+              <UI.Text style={styles.shopDescription}>
+                {s.profile.description}
+              </UI.Text>
             </View>
-          </Row>
+          </UI.Row>
 
-          <Spacer />
+          <UI.Spacer />
 
-          <Row style={styles.contact}>
+          <UI.Row style={styles.contact}>
             <View style={styles.contactLeft}>
-              <Icon name="ios-mail" color={primaryColor} />
-              <Spacer />
-              <Link>Email</Link>
+              <UI.Icon name="ios-mail" color={primaryColor} />
+              <UI.Spacer />
+              <UI.Link to={`mailto:${s.profile.email}`}>Email</UI.Link>
             </View>
 
             <View style={styles.contactRight}>
-              <Icon name="ios-call" color={primaryColor} />
-              <Spacer />
-              <Link>Phone</Link>
+              <UI.Icon name="ios-call" color={primaryColor} />
+              <UI.Spacer />
+              <UI.Link to={`tel:${s.profile.phone}`}>Phone</UI.Link>
             </View>
-          </Row>
+          </UI.Row>
 
-          <Spacer />
+          <UI.Spacer />
 
-          <Row style={{justifyContent: 'space-between', paddingHorizontal: 10}}>
-            <Text style={styles.title}>Ratings and Reviews</Text>
-            <Link onClick={() => navigation.navigate('VendorShopReview')}>
+          <UI.Row
+            style={{justifyContent: 'space-between', paddingHorizontal: 10}}>
+            <UI.Text style={styles.title}>Ratings and Reviews</UI.Text>
+            <UI.Link onClick={() => navigation.navigate('VendorShopReview')}>
               See All Reviews
-            </Link>
-          </Row>
+            </UI.Link>
+          </UI.Row>
 
           <View style={styles.reviewSection}>
             <View style={styles.ratingPoint}>
-              <Text size={50}>4.0</Text>
-              <Rating size={15} s4={1} />
-              <Text>10,000</Text>
+              <UI.Text size={50}>4.0</UI.Text>
+              <UI.Rating size={15} s4={1} />
+              <UI.Text>10,000</UI.Text>
             </View>
 
             <View style={styles.ratingGraph}>
-              <ProgressBar label="5" percent={75} />
-              <ProgressBar label="4" percent={15} />
-              <ProgressBar label="3" percent={2} />
-              <ProgressBar label="2" percent={3} />
-              <ProgressBar label="1" percent={5} />
+              <UI.ProgressBar label="5" percent={75} />
+              <UI.ProgressBar label="4" percent={15} />
+              <UI.ProgressBar label="3" percent={2} />
+              <UI.ProgressBar label="2" percent={3} />
+              <UI.ProgressBar label="1" percent={5} />
             </View>
           </View>
 
-          <Spacer />
+          <UI.Spacer />
 
-          <Divider />
+          <UI.Divider />
 
           <View style={{paddingHorizontal: 10}}>
-            <Button onClick={() => setOpenReview(true)}>
-              <Icon size={20} name="md-create" color="#fff" />
+            <UI.Button onClick={() => setOpenReview(true)}>
+              <UI.Icon size={20} name="md-create" color="#fff" />
               {'   '}
-              <Text color="#fff">Write a review</Text>
-            </Button>
-            <Spacer />
+              <UI.Text color="#fff">Write a review</UI.Text>
+            </UI.Button>
+            <UI.Spacer />
           </View>
         </View>
 
-        <Divider />
+        <UI.Divider />
 
         <View style={styles.container}>
-          <Row style={{justifyContent: 'space-between', paddingHorizontal: 10}}>
-            <Text style={styles.title}>Recent Products</Text>
-            <Link onClick={() => setShowSearchBar(!showSearchBar)}>
-              <Icon name={showSearchBar ? 'md-close' : 'ios-search'} />
-            </Link>
-          </Row>
+          <UI.Row
+            style={{justifyContent: 'space-between', paddingHorizontal: 10}}>
+            <UI.Text style={styles.title}>Recent Products</UI.Text>
+            <UI.Link onClick={() => setShowSearchBar(!showSearchBar)}>
+              <UI.Icon name={showSearchBar ? 'md-close' : 'ios-search'} />
+            </UI.Link>
+          </UI.Row>
 
           {showSearchBar && (
-            <View style={styles.searchBar}>
+            <View>
               <SearchBar placeholder="What are you looking for?" />
             </View>
           )}
 
-          <Spacer />
+          <UI.Spacer />
 
-          <Row style={{justifyContent: 'space-between'}}>
+          <UI.Row style={{justifyContent: 'space-between'}}>
             <Product
               quantity="89"
               image={female1}
@@ -218,39 +232,36 @@ const VendorShopScreen = ({navigation}) => {
               name="Gucci Bag"
               onClick={() => navigation.navigate('SingleProduct')}
             />
-          </Row>
+          </UI.Row>
         </View>
-      </Layout>
+      </UI.Layout>
 
-      <ContactVendor
-        isOpen={openChat}
-        onChatOpen={() => setOpenChat(true)}
-        onChatClose={() => setOpenChat(false)}
-        chatImage={male1}
-      />
+      <UI.FAB size={60} type="outline">
+        <UI.Icon name="ios-chatbubbles" color={primaryColor} />
+      </UI.FAB>
 
-      <Modal show={openReview}>
-        <Text heading>Write a Review</Text>
-        <Spacer medium />
-        <Rating />
-        <Spacer medium />
+      <UI.Modal show={openReview}>
+        <UI.Text heading>Write a Review</UI.Text>
+        <UI.Spacer medium />
+        <UI.Rating />
+        <UI.Spacer medium />
         <View style={{width: '100%'}}>
-          <TextInput placeholder="Comment..." autoFocus multiline />
+          <UI.TextInput placeholder="Comment..." autoFocus multiline />
         </View>
-        <Divider />
-        <Row style={{justifyContent: 'space-between'}}>
-          <Button
+        <UI.Divider />
+        <UI.Row style={{justifyContent: 'space-between'}}>
+          <UI.Button
             onClick={() => setOpenReview(false)}
             size="small"
             type="ghost">
             Cancel
-          </Button>
-          <Spacer />
-          <Button onClick={() => setOpenReview(false)} size="small">
-            <Text color="#fff">Submit</Text>
-          </Button>
-        </Row>
-      </Modal>
+          </UI.Button>
+          <UI.Spacer />
+          <UI.Button onClick={() => setOpenReview(false)} size="small">
+            <UI.Text color="#fff">Submit</UI.Text>
+          </UI.Button>
+        </UI.Row>
+      </UI.Modal>
     </>
   );
 };
@@ -337,4 +348,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VendorShopScreen;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    offline: !state.network.isConnecte,
+  };
+};
+
+export default connect(mapStateToProps)(VendorShopScreen);

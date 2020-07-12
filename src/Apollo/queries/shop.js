@@ -36,6 +36,7 @@ export const GET_SHOPS = gql`
             email
             phone
             logo
+            location
             coverPhoto
             description
           }
@@ -52,8 +53,18 @@ export const GET_SHOP = gql`
     shop(id: $id) {
       id
       isVerified
-      reviews
-      products
+      reviews {
+        id
+        customer {
+          id
+          firstName
+          lastName
+          phone
+          photo
+        }
+        rating
+        comment
+      }
       status
       profile {
         id
