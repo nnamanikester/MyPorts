@@ -29,6 +29,10 @@ export const GET_SHOPS = gql`
           user {
             id
           }
+          reviews {
+            id
+            rating
+          }
           featured
           profile {
             id

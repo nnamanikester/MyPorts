@@ -4,24 +4,59 @@ import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import Product from '../../components/Product';
 import SearchBar from '../../components/SearchBar';
-import {
-  female2,
-  female3,
-  female1,
-  shoe1,
-  female4,
-  male1,
-} from '../../assets/images';
 import {grayColor, info, primaryColor} from '../../components/common/variables';
-import {GET_SHOP} from '../../apollo/queries';
+import {GET_SHOP, GET_PRODUCTS} from '../../apollo/queries';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {connect} from 'react-redux';
+import EmptyItem from '../../components/EmptyItem';
+import {
+  calculateRating,
+  calculateRatePecentage,
+} from '../../utils/calculations';
 
 const VendorShopScreen = ({navigation, route: {params}, offline}) => {
   const {s} = params;
   const [openReview, setOpenReview] = React.useState(false);
   const [showSearchBar, setShowSearchBar] = React.useState(false);
+  const [searchText, setSearchText] = React.useState('');
   const [shop, setShop] = React.useState({});
+  const [products, setProducts] = React.useState([]);
+  const [fetching, setFetching] = React.useState(false);
+  const [s1, setS1] = React.useState(
+    s.reviews.map((r) => {
+      if (r.rating === 1) {
+        return r.rating;
+      }
+    }),
+  );
+  const [s2, setS2] = React.useState(
+    s.reviews.map((r) => {
+      if (r.rating === 2) {
+        return r.rating;
+      }
+    }),
+  );
+  const [s3, setS3] = React.useState(
+    s.reviews.map((r) => {
+      if (r.rating === 3) {
+        return r.rating;
+      }
+    }),
+  );
+  const [s4, setS4] = React.useState(
+    s.reviews.map((r) => {
+      if (r.rating === 4) {
+        return r.rating;
+      }
+    }),
+  );
+  const [s5, setS5] = React.useState(
+    s.reviews.map((r) => {
+      if (r.rating === 5) {
+        return r.rating;
+      }
+    }),
+  );
 
   const [getShop, {data, loading, error}] = useLazyQuery(GET_SHOP, {
     variables: {
@@ -29,6 +64,38 @@ const VendorShopScreen = ({navigation, route: {params}, offline}) => {
     },
     pollInterval: 500,
   });
+
+  const [
+    getProducts,
+    {loading: pLoading, data: pData, error: pError, refetch, fetchMore},
+  ] = useLazyQuery(GET_PRODUCTS, {
+    variables: {
+      first: 42,
+      where: {
+        name_contains: searchText,
+        vendor: {
+          id: s.id,
+        },
+        status: 1,
+      },
+      orderBy: 'createdAt_DESC',
+    },
+  });
+
+  React.useMemo(() => {
+    if (!offline) {
+      getProducts();
+    }
+    if (pData) {
+      setProducts(pData.products.edges.map((p) => p.node));
+    }
+  }, [pData]);
+
+  React.useMemo(() => {
+    if (pError) {
+      ToastAndroid.show('Unable to get Shop Products!', ToastAndroid.LONG);
+    }
+  }, [pError]);
 
   React.useMemo(() => {
     if (!offline) {
@@ -44,6 +111,47 @@ const VendorShopScreen = ({navigation, route: {params}, offline}) => {
       ToastAndroid.show('Error loading vendor shop!', ToastAndroid.LONG);
     }
   }, [error]);
+
+  // Fetch more products onEndReach for pagination.
+  const fetchMoreProducts = () => {
+    if (!pData) {
+      return;
+    }
+    setFetching(true);
+    // Check if  there's a next page.
+    if (pData.products.pageInfo.hasNextPage) {
+      // Fetch more products
+      fetchMore({
+        variables: {
+          after: pData.products.pageInfo.endCursor,
+        },
+        // Update the cached data with the fetched product
+        updateQuery: (prev, {fetchMoreResult}) => {
+          if (prev.products.pageInfo.hasNextPage) {
+            // if the previous page info has next page
+            setFetching(false);
+            // return the products with the new data added to cache
+            return {
+              products: {
+                edges: [
+                  ...prev.products.edges,
+                  ...fetchMoreResult.products.edges,
+                ],
+                pageInfo: {...fetchMoreResult.products.pageInfo},
+                __typename: fetchMoreResult.products.__typename,
+              },
+            };
+          } else {
+            // If not, return the precious cached data
+            setFetching(false);
+            return prev;
+          }
+        },
+      });
+    } else {
+      setFetching(false);
+    }
+  };
 
   return (
     <>
@@ -75,7 +183,10 @@ const VendorShopScreen = ({navigation, route: {params}, offline}) => {
           </>
         }
       />
-      <UI.Layout style={styles.layout}>
+      <UI.Layout
+        onRefresh={() => refetch()}
+        onEndReached={() => fetchMoreProducts()}
+        style={styles.layout}>
         <View style={styles.header}>
           <View>
             <Image
@@ -137,17 +248,43 @@ const VendorShopScreen = ({navigation, route: {params}, offline}) => {
 
           <View style={styles.reviewSection}>
             <View style={styles.ratingPoint}>
-              <UI.Text size={50}>4.0</UI.Text>
-              <UI.Rating size={15} s4={1} />
-              <UI.Text>10,000</UI.Text>
+              <UI.Text size={50}>
+                {calculateRating(s.reviews.map((r) => r.rating))}
+              </UI.Text>
+              <UI.Rating
+                size={15}
+                s1={s1.length}
+                s2={s2.length}
+                s3={s3.length}
+                s4={s4.length}
+                s5={s5.length}
+              />
+              <UI.Text>
+                {s.reviews.length > 0 ? s.reviews.length : 'No rating'}
+              </UI.Text>
             </View>
 
             <View style={styles.ratingGraph}>
-              <UI.ProgressBar label="5" percent={75} />
-              <UI.ProgressBar label="4" percent={15} />
-              <UI.ProgressBar label="3" percent={2} />
-              <UI.ProgressBar label="2" percent={3} />
-              <UI.ProgressBar label="1" percent={5} />
+              <UI.ProgressBar
+                label="5"
+                percent={calculateRatePecentage(s5, 5)}
+              />
+              <UI.ProgressBar
+                label="4"
+                percent={calculateRatePecentage(s4, 4)}
+              />
+              <UI.ProgressBar
+                label="3"
+                percent={calculateRatePecentage(s3, 3)}
+              />
+              <UI.ProgressBar
+                label="2"
+                percent={calculateRatePecentage(s2, 2)}
+              />
+              <UI.ProgressBar
+                label="1"
+                percent={calculateRatePecentage(s1, 1)}
+              />
             </View>
           </View>
 
@@ -168,8 +305,7 @@ const VendorShopScreen = ({navigation, route: {params}, offline}) => {
         <UI.Divider />
 
         <View style={styles.container}>
-          <UI.Row
-            style={{justifyContent: 'space-between', paddingHorizontal: 10}}>
+          <UI.Row style={{justifyContent: 'space-between'}}>
             <UI.Text style={styles.title}>Recent Products</UI.Text>
             <UI.Link onClick={() => setShowSearchBar(!showSearchBar)}>
               <UI.Icon name={showSearchBar ? 'md-close' : 'ios-search'} />
@@ -178,61 +314,54 @@ const VendorShopScreen = ({navigation, route: {params}, offline}) => {
 
           {showSearchBar && (
             <View>
-              <SearchBar placeholder="What are you looking for?" />
+              <UI.Spacer />
+              <SearchBar
+                hideFilterIcon
+                value={searchText}
+                onChangeText={(value) => setSearchText(value)}
+                placeholder="What are you looking for?"
+              />
+              <UI.Spacer />
             </View>
           )}
 
           <UI.Spacer />
 
           <UI.Row style={{justifyContent: 'space-between'}}>
-            <Product
-              quantity="89"
-              image={female1}
-              name="Water Proof Bag"
-              onClick={() => navigation.navigate('SingleProduct')}
-            />
-
-            <Product
-              quantity="14"
-              image={male1}
-              name="Table Spoon"
-              onClick={() => navigation.navigate('SingleProduct')}
-            />
-
-            <Product
-              image={female2}
-              name="Female belt holder"
-              quantity="31"
-              onClick={() => navigation.navigate('SingleProduct')}
-            />
-
-            <Product
-              quantity="45"
-              image={female3}
-              name="Balenciaga Shoe"
-              onClick={() => navigation.navigate('SingleProduct')}
-            />
-
-            <Product
-              quantity="15"
-              image={shoe1}
-              name="Adidas Shoe"
-              onClick={() => navigation.navigate('SingleProduct')}
-            />
-            <Product
-              quantity="20"
-              image={female3}
-              name="Nike Shoe"
-              onClick={() => navigation.navigate('SingleProduct')}
-            />
-
-            <Product
-              quantity="8"
-              image={female3}
-              name="Gucci Bag"
-              onClick={() => navigation.navigate('SingleProduct')}
-            />
+            {products &&
+              products.map((p, i) => {
+                return (
+                  <Product
+                    key={p.id + i}
+                    quantity={p.quantity}
+                    image={{uri: p.images[0].url}}
+                    name={p.name}
+                    onClick={() =>
+                      navigation.navigate('SingleProduct', {product: p})
+                    }
+                  />
+                );
+              })}
           </UI.Row>
+
+          {pLoading || pError || fetching ? (
+            <View style={{alignItems: 'center', flex: 1}}>
+              <UI.Spacer />
+              <UI.Spinner area={40} show />
+            </View>
+          ) : null}
+
+          {!pLoading && !products.length > 0 && !pError ? (
+            <>
+              <UI.Spacer medium />
+              <EmptyItem
+                icon={<UI.Icon color={info} size={100} name="ios-basket" />}
+                show
+                title="No product found!"
+                message="There are no products yet! Please check back later."
+              />
+            </>
+          ) : null}
         </View>
       </UI.Layout>
 
@@ -350,7 +479,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    offline: !state.network.isConnecte,
+    offline: !state.network.isConnected,
   };
 };
 
