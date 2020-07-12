@@ -4,15 +4,7 @@ import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import VendorList from '../../components/VendorList';
 import {StyleSheet, ScrollView, View, Image, ToastAndroid} from 'react-native';
-import {
-  female1,
-  female2,
-  female3,
-  male1,
-  shoe1,
-  shoe2,
-  bag1,
-} from '../../assets/images';
+import {female3, shoe1, shoe2, bag1} from '../../assets/images';
 import FeaturedVendor from '../../components/FeaturedVendor';
 import SearchBar from '../../components/SearchBar';
 import Swiper from 'react-native-swiper';

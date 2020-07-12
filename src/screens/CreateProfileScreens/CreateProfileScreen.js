@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useMutation } from '@apollo/react-hooks';
-import { CREATE_CUSTOMER, CREATE_VENDOR } from '../../apollo/mutations/';
-import { setStorage } from '../../redux/actions/AuthActions';
+import React, {useState, useEffect} from 'react';
+import {useMutation} from '@apollo/react-hooks';
+import {CREATE_CUSTOMER, CREATE_VENDOR} from '../../apollo/mutations/';
+import {setStorage} from '../../redux/actions/AuthActions';
 import CustomerStep1 from './customerSteps/CustomerStep1';
 import CustomerStep2 from './customerSteps/CustomerStep2';
 import VendorStep1 from './vendorSteps/VendorStep1';
 import VendorStep2 from './vendorSteps/VendorStep2';
 import CreateProfileInitial from './CreateProfileInitial';
-import { TOKEN_STORAGE, USER_STORAGE } from '../../constants';
-import { connect } from 'react-redux';
-import { checkNetworkStatus } from '../../redux/actions/NetworkActions';
+import {TOKEN_STORAGE, USER_STORAGE} from '../../constants';
+import {connect} from 'react-redux';
+import {checkNetworkStatus} from '../../redux/actions/NetworkActions';
 import NetworkErrorIndicator from '../../components/NetworkErrorIndicator';
 import * as UI from '../../components/common';
 import AsyncStorage from '@react-native-community/async-storage';
+import {ToastAndroid} from 'react-native';
 
-const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
+const CreateProfileScreen = ({checkNetworkStatus, offline}) => {
   const [customerStep, setCustomerStep] = useState(0);
   const [vendorStep, setVendorStep] = useState(0);
 
@@ -27,15 +28,16 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
   const [vendorEmail, setVendorEmail] = useState('');
   const [vendorPhone, setVendorPhone] = useState('');
   const [vendorDescription, setVendorDescription] = useState('');
+  const [vendorLocation, setVendorLocation] = useState('');
   const [vendorLogo, setVendorLogo] = useState(null);
   const [vendorCoverPhoto, setVendorCoverPhoto] = useState(null);
 
   const [
     createCustomer,
-    { data: customerData, loading: customerLoading },
+    {data: customerData, loading: customerLoading},
   ] = useMutation(CREATE_CUSTOMER);
 
-  const [createVendor, { loading: vendorLoading }] = useMutation(CREATE_VENDOR);
+  const [createVendor, {loading: vendorLoading}] = useMutation(CREATE_VENDOR);
 
   const handleCreateCustomer = () => {
     checkNetworkStatus();
@@ -47,7 +49,10 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
           phone: customerPhone,
         },
       }).catch((err) => {
-        alert('An error occured while trying to create your profile!');
+        ToastAndroid.show(
+          'An error occured while trying to create your profile!',
+          ToastAndroid.SHORT,
+        );
       });
     }
   };
@@ -61,6 +66,7 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
           name: vendorShopName,
           email: vendorEmail,
           phone: vendorPhone,
+          location: vendorLocation,
           logo: vendorLogo,
           description: vendorDescription,
           coverPhoto: vendorCoverPhoto,
@@ -73,7 +79,10 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
           setStorage(user, token);
         })
         .catch((err) => {
-          alert('An error occured while tryin to create your profile!');
+          ToastAndroid.show(
+            'An error occured while trying to create your profile!',
+            ToastAndroid.SHORT,
+          );
         });
     }
   };
@@ -143,6 +152,8 @@ const CreateProfileScreen = ({ checkNetworkStatus, offline }) => {
       <VendorStep2
         description={vendorDescription}
         onDescription={(value) => setVendorDescription(value)}
+        location={vendorLocation}
+        onLocation={(value) => setVendorLocation(value)}
         coverPhoto={vendorCoverPhoto}
         onCoverPhoto={(value) => setVendorCoverPhoto(value)}
         logo={vendorLogo}
@@ -161,6 +172,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { checkNetworkStatus, setStorage })(
+export default connect(mapStateToProps, {checkNetworkStatus, setStorage})(
   CreateProfileScreen,
 );

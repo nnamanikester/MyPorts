@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as UI from '../../../components/common';
 import ImagePicker from 'react-native-image-picker';
-import {
-  info,
-  lightColor,
-  grayColor,
-} from '../../../components/common/variables';
-import { StyleSheet, View, Image } from 'react-native';
+import {info, lightColor} from '../../../components/common/variables';
+import {StyleSheet, View, Image} from 'react-native';
+import {imagePickerOptions} from '../../../constants';
 
 const VendorStep2 = ({
   show,
@@ -18,22 +15,16 @@ const VendorStep2 = ({
   onCoverPhoto,
   description,
   onDescription,
+  location,
+  onLocation,
 }) => {
-  if (!show) return null;
-  const [error, setError] = useState(null);
-
-  const options = {
-    title: 'Upload Profile Picture',
-    takePhotoButtonTitle: 'Launch camera',
-    chooseFromLibraryButtonTitle: 'Choose image from gallery',
-    storageOptions: {
-      skipBackup: true,
-      path: 'MyPorts',
-    },
-  };
+  const [error, setError] = React.useState(null);
+  if (!show) {
+    return null;
+  }
 
   const handleLogoUpload = () => {
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.showImagePicker(imagePickerOptions, (response) => {
       if (response.didCancel) {
         return;
       } else if (response.error) {
@@ -45,7 +36,7 @@ const VendorStep2 = ({
   };
 
   const handleCoverPhotoUpload = () => {
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.showImagePicker(imagePickerOptions, (response) => {
       if (response.didCancel) {
         return;
       } else if (response.error) {
@@ -58,7 +49,7 @@ const VendorStep2 = ({
 
   return (
     <>
-      <UI.Layout style={{ paddingHorizontal: 10, paddingTop: 10 }}>
+      <UI.Layout style={{paddingHorizontal: 10, paddingTop: 10}}>
         <View style={styles.pageTitle}>
           <UI.Text h1>Complete Your Shop Profile</UI.Text>
 
@@ -72,8 +63,8 @@ const VendorStep2 = ({
           style={styles.coverImage}>
           {coverPhoto ? (
             <Image
-              style={{ width: '100%', height: '100%' }}
-              source={{ uri: coverPhoto.uri }}
+              style={{width: '100%', height: '100%'}}
+              source={{uri: coverPhoto.uri}}
             />
           ) : (
             <>
@@ -88,7 +79,7 @@ const VendorStep2 = ({
             onClick={() => handleLogoUpload()}
             style={styles.logoContainer}>
             {logo ? (
-              <Image style={styles.logo} source={{ uri: logo.uri }} />
+              <Image style={styles.logo} source={{uri: logo.uri}} />
             ) : (
               <>
                 <UI.Icon color={lightColor} name="ios-add" size={50} />
@@ -99,6 +90,20 @@ const VendorStep2 = ({
         </View>
 
         <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <UI.Text heading>
+              Location <UI.Text color="red">*</UI.Text>
+            </UI.Text>
+
+            <UI.Spacer />
+
+            <UI.TextInput
+              placeholder="123 Street, State."
+              value={location}
+              onChangeText={onLocation}
+            />
+          </View>
+
           <View style={styles.inputContainer}>
             <UI.Text heading>Shop Description</UI.Text>
 
@@ -116,7 +121,7 @@ const VendorStep2 = ({
           <UI.Spacer large />
 
           <View style={styles.inputContainer}>
-            <UI.Row style={{ justifyContent: 'space-between' }}>
+            <UI.Row style={{justifyContent: 'space-between'}}>
               <UI.Button
                 showIconDivider
                 type="outline"
@@ -135,6 +140,7 @@ const VendorStep2 = ({
               </UI.Button>
             </UI.Row>
           </View>
+          <UI.Spacer medium />
         </View>
       </UI.Layout>
     </>

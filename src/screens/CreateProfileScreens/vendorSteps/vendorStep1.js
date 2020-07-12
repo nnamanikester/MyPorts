@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as UI from '../../../components/common';
-import { danger, info } from '../../../components/common/variables';
-import { StyleSheet, View } from 'react-native';
-import { validateEmail } from '../../../utils';
+import {danger, info} from '../../../components/common/variables';
+import {StyleSheet, View} from 'react-native';
+import {validateEmail} from '../../../utils';
 
 const VendorStep1 = ({
   show,
@@ -15,15 +15,19 @@ const VendorStep1 = ({
   email,
   phone,
 }) => {
-  if (!show) return null;
-
-  const [error, setError] = useState(null);
+  const [error, setError] = React.useState(null);
+  if (!show) {
+    return null;
+  }
 
   const handleNext = () => {
     setError(null);
-    if (!shopName || !email || !phone)
-      return setError('Shop name, email and phone number is required!');
-    if (!validateEmail(email)) return setError('Invalid email address!');
+    if (!shopName || !email || !phone) {
+      return setError('All fields marked with * are required!');
+    }
+    if (!validateEmail(email)) {
+      return setError('Invalid email address!');
+    }
     return onNext();
   };
 
@@ -38,29 +42,35 @@ const VendorStep1 = ({
           </UI.Text>
         </View>
         <View style={styles.inputContainer}>
-          <UI.Text heading>Shop name</UI.Text>
+          <UI.Text heading>
+            Shop name <UI.Text color="red">*</UI.Text>
+          </UI.Text>
 
           <UI.Spacer />
 
           <UI.TextInput
-            placeholder="John"
+            placeholder="My Shop"
             value={shopName}
             onChangeText={onShopName}
           />
         </View>
         <View style={styles.inputContainer}>
-          <UI.Text heading>Shop email address</UI.Text>
+          <UI.Text heading>
+            Shop email address <UI.Text color="red">*</UI.Text>
+          </UI.Text>
 
           <UI.Spacer />
 
           <UI.TextInput
-            placeholder="Doe"
+            placeholder="myshopemail@email.com"
             value={email}
             onChangeText={onEmail}
           />
         </View>
         <View style={styles.inputContainer}>
-          <UI.Text heading>Contact phone</UI.Text>
+          <UI.Text heading>
+            Contact phone <UI.Text color="red">*</UI.Text>
+          </UI.Text>
 
           <UI.Spacer />
 
@@ -73,7 +83,7 @@ const VendorStep1 = ({
         </View>
 
         {error ? (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <UI.Spacer medium />
             <UI.Icon size={20} name="ios-close-circle-outline" color={danger} />
             <UI.Spacer size={3} />
@@ -84,7 +94,7 @@ const VendorStep1 = ({
         <UI.Spacer medium />
 
         <View style={styles.inputContainer}>
-          <UI.Row style={{ justifyContent: 'space-between' }}>
+          <UI.Row style={{justifyContent: 'space-between'}}>
             <UI.Button
               showIconDivider
               type="outline"

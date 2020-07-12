@@ -7,6 +7,7 @@ export const UPDATE_VENDOR_PROFILE = gql`
     $email: String!
     $phone: String!
     $description: String
+    $location: String
   ) {
     updateVendorProfile(
       id: $id
@@ -14,6 +15,7 @@ export const UPDATE_VENDOR_PROFILE = gql`
       email: $email
       phone: $phone
       description: $description
+      location: $location
     ) {
       id
       coverPhoto
@@ -22,6 +24,7 @@ export const UPDATE_VENDOR_PROFILE = gql`
       email
       phone
       description
+      location
     }
   }
 `;

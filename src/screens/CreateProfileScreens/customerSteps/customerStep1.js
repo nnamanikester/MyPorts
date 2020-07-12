@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import * as UI from '../../../components/common';
-import { danger, info } from '../../../components/common/variables';
-import { StyleSheet, View } from 'react-native';
+import {danger, info} from '../../../components/common/variables';
+import {StyleSheet, View} from 'react-native';
 
 const CustomerStep1 = ({
   show,
@@ -14,14 +14,16 @@ const CustomerStep1 = ({
   lastName,
   phone,
 }) => {
-  if (!show) return null;
-
   const [error, setError] = useState(null);
+  if (!show) {
+    return null;
+  }
 
   const handleNext = () => {
     setError(null);
-    if (!firstName || !lastName)
-      return setError('First name and Last name is required!');
+    if (!firstName || !lastName) {
+      return setError('All fields marked with * are required!');
+    }
     return onNext();
   };
 
@@ -36,7 +38,9 @@ const CustomerStep1 = ({
           </UI.Text>
         </View>
         <View style={styles.inputContainer}>
-          <UI.Text heading>First name</UI.Text>
+          <UI.Text heading>
+            First name <UI.Text color="red">*</UI.Text>
+          </UI.Text>
 
           <UI.Spacer />
 
@@ -47,7 +51,9 @@ const CustomerStep1 = ({
           />
         </View>
         <View style={styles.inputContainer}>
-          <UI.Text heading>Last name</UI.Text>
+          <UI.Text heading>
+            Last name <UI.Text color="red">*</UI.Text>
+          </UI.Text>
 
           <UI.Spacer />
 
@@ -71,7 +77,7 @@ const CustomerStep1 = ({
         </View>
 
         {error ? (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <UI.Spacer medium />
             <UI.Icon size={20} name="ios-close-circle-outline" color={danger} />
             <UI.Spacer size={3} />
@@ -82,7 +88,7 @@ const CustomerStep1 = ({
         <UI.Spacer medium />
 
         <View style={styles.inputContainer}>
-          <UI.Row style={{ justifyContent: 'space-between' }}>
+          <UI.Row style={{justifyContent: 'space-between'}}>
             <UI.Button
               showIconDivider
               type="outline"
