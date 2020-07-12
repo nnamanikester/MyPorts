@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import VendorList from '../../components/VendorList';
-import {StyleSheet, ScrollView, View, Image} from 'react-native';
+import {StyleSheet, ScrollView, View, Image, ToastAndroid} from 'react-native';
 import {
   female1,
   female2,
@@ -16,18 +16,86 @@ import {
 import FeaturedVendor from '../../components/FeaturedVendor';
 import SearchBar from '../../components/SearchBar';
 import Swiper from 'react-native-swiper';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {GET_SHOPS} from '../../apollo/queries';
 
-const VendorListScreen = ({navigation}) => {
+const VendorListScreen = ({navigation, offline}) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [searchText, setSearchText] = React.useState('');
+  const [fetching, setFetching] = React.useState(false);
+  const [shops, setShops] = React.useState([]);
+
+  const [getShop, {data, loading, error, refetch, fetchMore}] = useLazyQuery(
+    GET_SHOPS,
+    {
+      variables: {
+        orderBy: 'createdAt_DESC',
+        where: {
+          profile: {
+            name_contains: searchText,
+          },
+          status: 1,
+        },
+        first: 20,
+      },
+    },
+  );
+
+  React.useMemo(() => {
+    if (!offline) {
+      getShop();
+    }
+
+    if (data) {
+      setShops(data.shops.edges.map((s) => s.node));
+    }
+  }, [data]);
+
+  React.useMemo(() => {
+    if (error) {
+      ToastAndroid.show('Error loading products!', ToastAndroid.SHORT);
+    }
+  }, [error]);
+
+  const fetchMoreShops = () => {
+    if (!data) {
+      return;
+    }
+    setFetching(true);
+    // Check if  there's a next page.
+    if (data.shops.pageInfo.hasNextPage) {
+      // Fetch more products
+      fetchMore({
+        variables: {
+          after: data.shops.pageInfo.endCursor,
+        },
+        // Update the cached data with the fetched product
+        updateQuery: (prev, {fetchMoreResult}) => {
+          if (prev.shops.pageInfo.hasNextPage) {
+            // if the previous page info has next page
+            setFetching(false);
+            // return the products with the new data added to cache
+            return {
+              shops: {
+                edges: [...prev.shops.edges, ...fetchMoreResult.shops.edges],
+                pageInfo: {...fetchMoreResult.shops.pageInfo},
+                __typename: fetchMoreResult.shops.__typename,
+              },
+            };
+          } else {
+            // If not, return the previous cached data
+            setFetching(false);
+            return prev;
+          }
+        },
+      });
+    } else {
+      setFetching(false);
+    }
+  };
 
   return (
     <>
-      <UI.ActionBar
-        show={showSearchBar}
-        onCloseButtonClick={() => setShowSearchBar(false)}>
-        <UI.Radio selected={2} data={[{label: 'Date'}, {label: 'Month'}]} />
-      </UI.ActionBar>
-
       <Header
         isCart
         title="Vendors"
@@ -53,7 +121,10 @@ const VendorListScreen = ({navigation}) => {
           </>
         }
       />
-      <UI.Layout>
+      <UI.Layout
+        onEndReached={() => fetchMoreShops()}
+        onRefresh={() => refetch()}
+        refreshing={loading}>
         <View style={styles.container}>
           <Swiper
             paginationStyle={{bottom: 5}}
@@ -136,17 +207,39 @@ const VendorListScreen = ({navigation}) => {
 
           {showSearchBar && (
             <View style={styles.searchBar}>
-              <SearchBar placeholder="Search your favorite vendor" />
+              <SearchBar
+                value={searchText}
+                onChangeText={(value) => setSearchText(value)}
+                hideFilterIcon
+                placeholder="Search your favorite vendor"
+              />
             </View>
           )}
 
-          <VendorList
-            onClick={() => navigation.navigate('VendorShop')}
-            location="Victoria Island, Lagos. Nigeria"
-            name="Shop and Smile"
-            image={female1}
-            verified
-          />
+          {shops &&
+            shops.map((s, i) => {
+              return (
+                <VendorList
+                  key={s.id + i}
+                  onClick={() => navigation.navigate('VendorShop')}
+                  location="Victoria Island, Lagos. Nigeria"
+                  name={s.profile.name}
+                  image={{uri: s.profile.logo}}
+                  verified={s.isVerified}
+                />
+              );
+            })}
+
+          <UI.Spacer />
+
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <UI.Spinner show={fetching || loading || error} area={40} />
+            {!fetching && !loading && !error && (
+              <UI.Text>No more shops!</UI.Text>
+            )}
+          </View>
+
+          <UI.Spacer medium />
         </View>
       </UI.Layout>
     </>

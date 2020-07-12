@@ -5,7 +5,13 @@ import {TextInput as TeIp} from 'react-native';
 import {StyleSheet, View} from 'react-native';
 
 const SearchBar = (props) => {
-  const {placeholder, onChangeText, value, onFilterClick} = props;
+  const {
+    placeholder,
+    onChangeText,
+    value,
+    onFilterClick,
+    hideFilterIcon,
+  } = props;
   return (
     <View style={styles.container}>
       <TextInput
@@ -16,9 +22,11 @@ const SearchBar = (props) => {
         placeholder={placeholder}
         onChangeText={onChangeText}
         iconRight={
-          <Link onClick={onFilterClick}>
-            <Icon name="ios-options" />
-          </Link>
+          !hideFilterIcon ? (
+            <Link onClick={onFilterClick}>
+              <Icon name="ios-options" />
+            </Link>
+          ) : null
         }
       />
     </View>

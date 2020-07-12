@@ -30,7 +30,7 @@ const ProductsScreen = ({navigation, offline}) => {
     },
   });
 
-  React.useEffect(() => {
+  React.useMemo(() => {
     if (!offline) {
       getProducts();
     }
@@ -38,9 +38,9 @@ const ProductsScreen = ({navigation, offline}) => {
     if (data) {
       setProducts(data.products.edges.map((p) => p.node));
     }
-  }, [data, offline, getProducts]);
+  }, [data]);
 
-  React.useEffect(() => {
+  React.useMemo(() => {
     if (error) {
       ToastAndroid.show('Error loading products!', ToastAndroid.SHORT);
     }
@@ -208,26 +208,6 @@ const ProductsScreen = ({navigation, offline}) => {
           <UI.Text style={styles.title}>Latest Products</UI.Text>
           <UI.Spacer />
           <UI.Row style={{justifyContent: 'space-between'}}>
-            {(loading || error) && (
-              <Skeleton>
-                <View>
-                  <View style={{width: 120, height: 120, borderRadius: 5}} />
-                  <View style={{width: 120, height: 10, marginVertical: 5}} />
-                  <View style={{width: 120, height: 10}} />
-                </View>
-                <View>
-                  <View style={{width: 120, height: 120, borderRadius: 5}} />
-                  <View style={{width: 120, height: 10, marginVertical: 5}} />
-                  <View style={{width: 120, height: 10}} />
-                </View>
-                <View>
-                  <View style={{width: 120, height: 120, borderRadius: 5}} />
-                  <View style={{width: 120, height: 10, marginVertical: 5}} />
-                  <View style={{width: 120, height: 10}} />
-                </View>
-              </Skeleton>
-            )}
-
             {!loading && !error && !products.length > 0 && (
               <>
                 <UI.Spacer large />
@@ -262,7 +242,7 @@ const ProductsScreen = ({navigation, offline}) => {
           <UI.Spacer medium />
 
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <UI.Spinner show={fetching} area={40} />
+            <UI.Spinner show={fetching || loading || error} area={40} />
             {!fetching && !loading && !error && (
               <UI.Text>No more products!</UI.Text>
             )}
