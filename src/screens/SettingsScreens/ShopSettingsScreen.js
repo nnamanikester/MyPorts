@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import * as UI from '../../components/common';
-import { View, StyleSheet, Image } from 'react-native';
+import {View, StyleSheet, Image, ToastAndroid} from 'react-native';
 import Header from '../../components/Header';
-import { lightColor, info } from '../../components/common/variables';
-import { connect } from 'react-redux';
-import { useMutation } from '@apollo/react-hooks';
-import { UPDATE_VENDOR_PROFILE } from '../../apollo/mutations';
-import { setVendorProfile } from '../../redux/actions/VendorActions';
-import { validateEmail } from '../../utils';
+import {lightColor, info, danger} from '../../components/common/variables';
+import {connect} from 'react-redux';
+import {useMutation} from '@apollo/react-hooks';
+import {UPDATE_VENDOR_PROFILE} from '../../apollo/mutations';
+import {setVendorProfile} from '../../redux/actions/VendorActions';
+import {validateEmail} from '../../utils';
 
 const ShopSettingsScreen = ({
   navigation,
@@ -15,22 +15,25 @@ const ShopSettingsScreen = ({
   setVendorProfile,
   offline,
 }) => {
-  const [errors, setErrors] = useState({});
-  const [success, setSuccess] = useState(false);
-  const [name, setName] = useState(profile.name);
-  const [email, setEmail] = useState(profile.email);
-  const [phone, setPhone] = useState(profile.phone);
-  const [description, setDescription] = useState(profile.description);
+  const [errors, setErrors] = React.useState({});
+  const [name, setName] = React.useState(profile.name);
+  const [email, setEmail] = React.useState(profile.email);
+  const [phone, setPhone] = React.useState(profile.phone);
+  const [location, setLocation] = React.useState(profile.location);
+  const [description, setDescription] = React.useState(profile.description);
 
-  const [updateVendorProfle, { loading }] = useMutation(UPDATE_VENDOR_PROFILE);
+  const [updateVendorProfle, {loading}] = useMutation(UPDATE_VENDOR_PROFILE);
 
   const handleUpdateProfile = () => {
-    setSuccess(false);
-    if (!name) return setErrors({ name: 'Shop name cannot be blank!' });
-    if (!validateEmail(email))
-      return setErrors({ email: 'Invalid email address!' });
-    if (!phone)
-      return setErrors({ phone: 'Please provide a contact phone number!' });
+    if (!name) {
+      return setErrors({name: 'Shop name cannot be blank!'});
+    }
+    if (!validateEmail(email)) {
+      return setErrors({email: 'Invalid email address!'});
+    }
+    if (!phone) {
+      return setErrors({phone: 'Please provide a contact phone number!'});
+    }
 
     if (!offline) {
       updateVendorProfle({
@@ -39,18 +42,29 @@ const ShopSettingsScreen = ({
           name,
           email,
           phone,
+          location,
           description,
         },
       })
         .then((res) => {
           setVendorProfile(res.data.updateVendorProfile);
-          setSuccess(true);
+          ToastAndroid.show(
+            'Profile updated successfully!',
+            ToastAndroid.SHORT,
+          );
         })
         .catch((err) => {
-          alert('An error occured while trying to update shop details!');
+          ToastAndroid.show(
+            'An error occured while trying to update shop details!',
+            ToastAndroid.LONG,
+          );
+          return err;
         });
     } else {
-      alert("Cannot update profile, please check if you're connected");
+      ToastAndroid.show(
+        "Cannot update profile, please check if you're connected",
+        ToastAndroid.LONG,
+      );
     }
   };
 
@@ -77,13 +91,13 @@ const ShopSettingsScreen = ({
         }
       />
       <UI.Layout>
-        <View style={{ flex: 1 }}>
+        <View style={{flex: 1}}>
           <UI.Spacer size={2} />
           <UI.Clickable onClick={() => {}} style={styles.coverImage}>
             {profile.coverPhoto ? (
               <Image
-                style={{ width: '100%', height: '100%' }}
-                source={{ uri: profile.coverPhoto }}
+                style={{width: '100%', height: '100%'}}
+                source={{uri: profile.coverPhoto}}
               />
             ) : (
               <>
@@ -96,7 +110,7 @@ const ShopSettingsScreen = ({
           <View>
             <UI.Clickable onClick={() => {}} style={styles.logoContainer}>
               {profile.logo ? (
-                <Image style={styles.logo} source={{ uri: profile.logo }} />
+                <Image style={styles.logo} source={{uri: profile.logo}} />
               ) : (
                 <>
                   <UI.Icon color={lightColor} name="ios-add" size={50} />
@@ -114,7 +128,7 @@ const ShopSettingsScreen = ({
             <UI.Spacer />
 
             {errors.name ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <UI.Spacer />
                 <UI.Icon
                   size={20}
@@ -140,7 +154,7 @@ const ShopSettingsScreen = ({
             <UI.Spacer />
 
             {errors.email ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <UI.Spacer />
                 <UI.Icon
                   size={20}
@@ -167,7 +181,7 @@ const ShopSettingsScreen = ({
             <UI.Spacer />
 
             {errors.phone ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <UI.Spacer />
                 <UI.Icon
                   size={20}
@@ -189,6 +203,18 @@ const ShopSettingsScreen = ({
           </View>
 
           <View style={styles.inputContainer}>
+            <UI.Text heading>Location</UI.Text>
+
+            <UI.Spacer />
+
+            <UI.TextInput
+              onChangeText={(value) => setLocation(value)}
+              value={location}
+              placeholder="Enter your shop location"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
             <UI.Text heading>Description</UI.Text>
 
             <UI.Spacer />
@@ -196,6 +222,8 @@ const ShopSettingsScreen = ({
             <UI.TextInput
               onChangeText={(value) => setDescription(value)}
               value={description}
+              multiline
+              maxLength={100}
               placeholder="Enter shop's description"
             />
           </View>
@@ -211,15 +239,6 @@ const ShopSettingsScreen = ({
         <UI.Spacer large />
         <UI.Spacer large />
       </UI.Layout>
-      {success && (
-        <UI.Toast
-          timeout={3000}
-          onTimeout={() => {
-            setSuccess(false);
-          }}
-          message="Profile updated successfully!"
-        />
-      )}
     </>
   );
 };
@@ -270,6 +289,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setVendorProfile })(
-  ShopSettingsScreen,
-);
+export default connect(mapStateToProps, {setVendorProfile})(ShopSettingsScreen);

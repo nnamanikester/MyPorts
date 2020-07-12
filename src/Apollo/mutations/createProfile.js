@@ -7,6 +7,7 @@ export const CREATE_VENDOR = gql`
     $email: String!
     $phone: String!
     $logo: Upload
+    $location: String
     $coverPhoto: Upload
     $description: String
   ) {
@@ -15,6 +16,7 @@ export const CREATE_VENDOR = gql`
       email: $email
       phone: $phone
       logo: $logo
+      location: $location
       coverPhoto: $coverPhoto
       description: $description
     ) {
