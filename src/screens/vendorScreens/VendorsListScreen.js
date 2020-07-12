@@ -23,8 +23,10 @@ const VendorListScreen = ({navigation, offline}) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [searchText, setSearchText] = React.useState('');
   const [fetching, setFetching] = React.useState(false);
+  const [showTitle, setShowTitle] = React.useState(false);
   const [shops, setShops] = React.useState([]);
 
+  // Query to get the vendor shops
   const [getShop, {data, loading, error, refetch, fetchMore}] = useLazyQuery(
     GET_SHOPS,
     {
@@ -57,6 +59,7 @@ const VendorListScreen = ({navigation, offline}) => {
     }
   }, [error]);
 
+  // A function to get more shops on end reached
   const fetchMoreShops = () => {
     if (!data) {
       return;
@@ -148,50 +151,32 @@ const VendorListScreen = ({navigation, offline}) => {
           </Swiper>
         </View>
 
-        <View style={styles.container}>
-          <UI.Text style={styles.title}>Featured Vendors</UI.Text>
-        </View>
+        {showTitle && (
+          <View style={styles.container}>
+            <UI.Text style={styles.title}>Featured Vendors</UI.Text>
+          </View>
+        )}
         <ScrollView
           style={{paddingLeft: 10}}
           horizontal
           showsHorizontalScrollIndicator={false}>
-          <FeaturedVendor
-            onClick={() => navigation.navigate('VendorShop')}
-            location="Victoria Island, Lagos. Nigeria"
-            name="Shop and Smile"
-            image={female1}
-            verified
-          />
-          <FeaturedVendor
-            verified={false}
-            onClick={() => navigation.navigate('VendorShop')}
-            location="Victoria Island, Lagos. Nigeria"
-            name="Shop and Smile"
-            image={female2}
-          />
-          <FeaturedVendor
-            verified
-            onClick={() => navigation.navigate('VendorShop')}
-            location="Victoria Island, Lagos. Nigeria"
-            name="Shop and Smile"
-            image={female3}
-          />
-          <FeaturedVendor
-            verified={false}
-            onClick={() => navigation.navigate('VendorShop')}
-            location="Victoria Island, Lagos. Nigeria"
-            name="Shop and Smile"
-            image={male1}
-          />
-          <FeaturedVendor
-            verified
-            onClick={() => navigation.navigate('VendorShop')}
-            location="Victoria Island, Lagos. Nigeria"
-            name="Shop and Smile"
-            image={female2}
-          />
+          {shops &&
+            shops.map((s, i) => {
+              if (s.featured) {
+                setShowTitle(true);
+                return (
+                  <FeaturedVendor
+                    key={s.id + i}
+                    onClick={() => navigation.navigate('VendorShop')}
+                    location={s.profile.location}
+                    name={s.profile.name}
+                    image={{uri: s.profile.logo}}
+                    verified={s.isVerified}
+                  />
+                );
+              }
+            })}
         </ScrollView>
-
         <UI.Spacer />
         <View style={styles.container}>
           <UI.Row>
@@ -222,7 +207,7 @@ const VendorListScreen = ({navigation, offline}) => {
                 <VendorList
                   key={s.id + i}
                   onClick={() => navigation.navigate('VendorShop')}
-                  location="Victoria Island, Lagos. Nigeria"
+                  location={s.profile.location}
                   name={s.profile.name}
                   image={{uri: s.profile.logo}}
                   verified={s.isVerified}
