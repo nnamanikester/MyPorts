@@ -288,11 +288,10 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
               </UI.Text>
               <UI.Rating
                 size={15}
-                s1={s1.length}
-                s2={s2.length}
-                s3={s3.length}
-                s4={s4.length}
-                s5={s5.length}
+                value={parseInt(
+                  calculateRating(s.reviews.map((r) => r.rating)),
+                )}
+                disableClicks
               />
               <UI.Text>
                 {s.reviews.length > 0 ? s.reviews.length : 'No rating'}
