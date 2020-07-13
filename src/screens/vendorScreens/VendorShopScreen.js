@@ -16,13 +16,13 @@ import {
 } from '../../utils/calculations';
 
 const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
-  const {s} = params;
   const [openReview, setOpenReview] = React.useState(false);
   const [showSearchBar, setShowSearchBar] = React.useState(false);
   const [searchText, setSearchText] = React.useState('');
   const [comment, setComment] = React.useState('');
   const [rating, setRating] = React.useState(null);
-  const [shop, setShop] = React.useState({});
+  const [reviewErrors, setReviewErrors] = React.useState(null);
+  const [s, setS] = React.useState(params.s);
   const [products, setProducts] = React.useState([]);
   const [fetching, setFetching] = React.useState(false);
   const [s1] = React.useState(
@@ -107,7 +107,7 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
       getShop();
     }
     if (data) {
-      setShop(data.shop);
+      setS(data.shop);
     }
   }, [data]);
 
@@ -159,6 +159,12 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
   };
 
   const handleCreateReveiw = () => {
+    if (!rating) {
+      return setReviewErrors('Rating is required!');
+    }
+    if (!comment) {
+      return setReviewErrors('Comment is required!');
+    }
     if (!offline) {
       createReview({
         variables: {
@@ -184,7 +190,7 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
 
   return (
     <>
-      <UI.Loading show={loading || error ? true : false} />
+      <UI.Loading show={loading || error || rLoading ? true : false} />
       <Header
         isCart
         title={s.profile.name}
@@ -400,13 +406,29 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
 
       <UI.Modal show={openReview}>
         <UI.Text heading>Write a Review</UI.Text>
+
         <UI.Spacer medium />
-        <UI.Rating />
-        <UI.Spacer medium />
+
+        <UI.Rating value={rating} onClick={(value) => setRating(value)} />
+
+        <UI.Spacer />
+
+        {reviewErrors ? <UI.Text color="red">{reviewErrors}</UI.Text> : null}
+
+        <UI.Spacer />
+
         <View style={{width: '100%'}}>
-          <UI.TextInput placeholder="Comment..." autoFocus multiline />
+          <UI.TextInput
+            value={comment}
+            onChangeText={(value) => setComment(value)}
+            placeholder="Comment..."
+            autoFocus
+            multiline
+          />
         </View>
+
         <UI.Divider />
+
         <UI.Row style={{justifyContent: 'space-between'}}>
           <UI.Button
             onClick={() => setOpenReview(false)}
@@ -414,7 +436,9 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
             type="ghost">
             Cancel
           </UI.Button>
+
           <UI.Spacer />
+
           <UI.Button onClick={() => handleCreateReveiw()} size="small">
             <UI.Text color="#fff">Submit</UI.Text>
           </UI.Button>
