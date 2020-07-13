@@ -1,12 +1,13 @@
 import React from 'react';
-import {View, StyleSheet, Image, ToastAndroid} from 'react-native';
+import {View, StyleSheet, Image, ToastAndroid, Alert} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import Product from '../../components/Product';
 import SearchBar from '../../components/SearchBar';
 import {grayColor, info, primaryColor} from '../../components/common/variables';
 import {GET_SHOP, GET_PRODUCTS} from '../../apollo/queries';
-import {useLazyQuery} from '@apollo/react-hooks';
+import {CREATE_REVIEW} from '../../apollo/mutations';
+import {useLazyQuery, useMutation} from '@apollo/react-hooks';
 import {connect} from 'react-redux';
 import EmptyItem from '../../components/EmptyItem';
 import {
@@ -14,11 +15,13 @@ import {
   calculateRatePecentage,
 } from '../../utils/calculations';
 
-const VendorShopScreen = ({navigation, route: {params}, offline}) => {
+const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
   const {s} = params;
   const [openReview, setOpenReview] = React.useState(false);
   const [showSearchBar, setShowSearchBar] = React.useState(false);
   const [searchText, setSearchText] = React.useState('');
+  const [comment, setComment] = React.useState('');
+  const [rating, setRating] = React.useState(null);
   const [shop, setShop] = React.useState({});
   const [products, setProducts] = React.useState([]);
   const [fetching, setFetching] = React.useState(false);
@@ -81,6 +84,8 @@ const VendorShopScreen = ({navigation, route: {params}, offline}) => {
       orderBy: 'createdAt_DESC',
     },
   });
+
+  const [createReview, {loading: rLoading}] = useMutation(CREATE_REVIEW);
 
   React.useMemo(() => {
     if (!offline) {
@@ -150,6 +155,30 @@ const VendorShopScreen = ({navigation, route: {params}, offline}) => {
       });
     } else {
       setFetching(false);
+    }
+  };
+
+  const handleCreateReveiw = () => {
+    if (!offline) {
+      createReview({
+        variables: {
+          comment,
+          rating,
+          customerId: customer.id,
+          vendorId: s.id,
+        },
+      })
+        .then((res) => {
+          setOpenReview(false);
+          ToastAndroid.show(
+            'Successfully sent a review! Thanks for the review.',
+            ToastAndroid.SHORT,
+          );
+        })
+        .catch((e) => {
+          setOpenReview(false);
+          Alert.alert('Unable to review at this time. Please try again!');
+        });
     }
   };
 
@@ -386,7 +415,7 @@ const VendorShopScreen = ({navigation, route: {params}, offline}) => {
             Cancel
           </UI.Button>
           <UI.Spacer />
-          <UI.Button onClick={() => setOpenReview(false)} size="small">
+          <UI.Button onClick={() => handleCreateReveiw()} size="small">
             <UI.Text color="#fff">Submit</UI.Text>
           </UI.Button>
         </UI.Row>
@@ -480,6 +509,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, ownProps) => {
   return {
     offline: !state.network.isConnected,
+    customer: state.customer.profile,
   };
 };
 
