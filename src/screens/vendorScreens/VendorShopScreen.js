@@ -22,35 +22,35 @@ const VendorShopScreen = ({navigation, route: {params}, offline}) => {
   const [shop, setShop] = React.useState({});
   const [products, setProducts] = React.useState([]);
   const [fetching, setFetching] = React.useState(false);
-  const [s1, setS1] = React.useState(
+  const [s1] = React.useState(
     s.reviews.map((r) => {
       if (r.rating === 1) {
         return r.rating;
       }
     }),
   );
-  const [s2, setS2] = React.useState(
+  const [s2] = React.useState(
     s.reviews.map((r) => {
       if (r.rating === 2) {
         return r.rating;
       }
     }),
   );
-  const [s3, setS3] = React.useState(
+  const [s3] = React.useState(
     s.reviews.map((r) => {
       if (r.rating === 3) {
         return r.rating;
       }
     }),
   );
-  const [s4, setS4] = React.useState(
+  const [s4] = React.useState(
     s.reviews.map((r) => {
       if (r.rating === 4) {
         return r.rating;
       }
     }),
   );
-  const [s5, setS5] = React.useState(
+  const [s5] = React.useState(
     s.reviews.map((r) => {
       if (r.rating === 5) {
         return r.rating;
