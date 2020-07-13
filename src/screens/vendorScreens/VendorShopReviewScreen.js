@@ -25,7 +25,6 @@ const VendorShopReviewScreen = ({navigation}) => {
     <>
       <Header
         title="Shop and Smile"
-        subtitle="Ratings and Reviews"
         headerLeft={
           <Link onClick={() => navigation.goBack()}>
             <Icon name="ios-arrow-back" color="#fff" />
@@ -34,7 +33,7 @@ const VendorShopReviewScreen = ({navigation}) => {
       />
       <Layout>
         <Spacer />
-        <Text h2>Shhop and Smile</Text>
+        <Text h2>Ratings & Reviews</Text>
         <Spacer />
         <View style={styles.container}>
           <Comment

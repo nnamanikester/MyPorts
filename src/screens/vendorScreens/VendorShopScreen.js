@@ -159,6 +159,7 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
   };
 
   const handleCreateReveiw = () => {
+    setReviewErrors(null);
     if (!rating) {
       return setReviewErrors('Rating is required!');
     }
@@ -186,6 +187,8 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
           Alert.alert('Unable to review at this time. Please try again!');
         });
     }
+    setRating(0);
+    setComment('');
   };
 
   return (
@@ -430,7 +433,11 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
 
         <UI.Row style={{justifyContent: 'space-between'}}>
           <UI.Button
-            onClick={() => setOpenReview(false)}
+            onClick={() => {
+              setRating(0);
+              setComment('');
+              setOpenReview(false);
+            }}
             size="small"
             type="ghost">
             Cancel
