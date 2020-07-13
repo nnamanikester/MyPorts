@@ -26,14 +26,15 @@ const Comment = ({
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           {rating && <Rating value={rating} size={15} />}
           <Spacer />
-          <Text note>
-            {date} {'   '}{' '}
-            {showEdit && (
-              <Clickable onClick={onEditClick}>
-                <Icon color={primaryColor} name="ios-create" />
-              </Clickable>
-            )}
-          </Text>
+          <Text note>{date}</Text>
+          <Spacer />
+          {showEdit && (
+            <Clickable onClick={onEditClick}>
+              <Text note color={primaryColor}>
+                Edit <Icon size={16} color={primaryColor} name="md-create" />
+              </Text>
+            </Clickable>
+          )}
         </View>
       </View>
       <Spacer />

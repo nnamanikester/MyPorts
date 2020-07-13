@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image, Dimensions} from 'react-native';
 import {Text, Clickable} from './common';
 
 const Product = ({name, vendor, quantity, image, onClick}) => {
@@ -29,13 +29,13 @@ const Product = ({name, vendor, quantity, image, onClick}) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 120,
+    width: Dimensions.get('screen').width / 3.5,
     marginBottom: 10,
   },
   imageContainer: {},
   image: {
     width: '100%',
-    height: 120,
+    height: Dimensions.get('screen').width / 3.5,
     borderRadius: 5,
   },
   content: {

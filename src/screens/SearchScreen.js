@@ -70,24 +70,6 @@ const SearchScreen = ({navigation, offline}) => {
     }
   };
 
-  // React.useEffect(() => {
-  //   if (!offline) {
-  //     fetchSearchTerms();
-  //   }
-
-  //   if (data) {
-  //     setProducts(data.products.edges.map((p) => p.node));
-  //   }
-  //   if (searchTermsData) {
-  //     setRecentSearches(searchTermsData.searchTerms);
-  //     if (searchTermsData.searchTerms.length > 5) {
-  //       setShowAllTerms(false);
-  //     } else {
-  //       setShowAllTerms(true);
-  //     }
-  //   }
-  // }, [data, searchTermsData]);
-
   React.useMemo(() => {
     if (data) {
       setProducts(data.products.edges.map((p) => p.node));
@@ -117,7 +99,7 @@ const SearchScreen = ({navigation, offline}) => {
 
   // Fetch more products onEndReach for pagination.
   const fetchMoreProducts = () => {
-    if (!products.length > 0 && term) {
+    if (!data) {
       return;
     }
     setFetching(true);

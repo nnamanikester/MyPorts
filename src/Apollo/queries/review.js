@@ -14,7 +14,7 @@ export const REVIEWS = gql`
       rating
       createdAt
       updatedAt
-      venddor {
+      vendor {
         id
       }
     }

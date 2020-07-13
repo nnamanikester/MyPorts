@@ -280,10 +280,8 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
             style={{justifyContent: 'space-between', paddingHorizontal: 10}}>
             <UI.Text style={styles.title}>Ratings and Reviews</UI.Text>
             <UI.Link
-              onClick={() =>
-                navigation.navigate('VendorShopReview', {id: s.id})
-              }>
-              See All Reviews
+              onClick={() => navigation.navigate('VendorShopReview', {s})}>
+              See Reviews
             </UI.Link>
           </UI.Row>
 

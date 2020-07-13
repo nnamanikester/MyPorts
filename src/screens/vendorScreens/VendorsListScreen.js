@@ -210,7 +210,10 @@ const VendorListScreen = ({navigation, offline}) => {
           <UI.Spacer />
 
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <UI.Spinner show={fetching || loading || error} area={40} />
+            <UI.Spinner
+              show={fetching || loading || error ? true : false}
+              area={40}
+            />
             {!fetching && !loading && !error && (
               <UI.Text>No more shops!</UI.Text>
             )}

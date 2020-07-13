@@ -48,6 +48,9 @@ const ProductsScreen = ({navigation, offline}) => {
 
   // Fetch more products onEndReach for pagination.
   const fetchMoreProducts = () => {
+    if (!data) {
+      return;
+    }
     setFetching(true);
     // Check if  there's a next page.
     if (data.products.pageInfo.hasNextPage) {

@@ -3,7 +3,6 @@ import {View, StyleSheet, ToastAndroid, Alert} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import Comment from '../../components/Comment';
-import {female4} from '../../assets/images';
 import {useLazyQuery, useMutation} from '@apollo/react-hooks';
 import {CREATE_REVIEW} from '../../apollo/mutations';
 import {REVIEWS} from '../../apollo/queries';
@@ -17,7 +16,6 @@ const VendorShopReviewScreen = ({
   offline,
   customer,
 }) => {
-  const {id} = params;
   const [openModal, setOpenModal] = React.useState(false);
   const [reviews, setReviews] = React.useState([]);
   const [comment, setComment] = React.useState('');
@@ -26,7 +24,7 @@ const VendorShopReviewScreen = ({
 
   const [getReviews, {data, loading, error, refetch}] = useLazyQuery(REVIEWS, {
     variables: {
-      id,
+      id: params.s.id,
     },
     pollInterval: 500,
   });
@@ -66,7 +64,7 @@ const VendorShopReviewScreen = ({
           comment,
           rating,
           customerId: customer.id,
-          vendorId: id,
+          vendorId: params.s.id,
         },
       })
         .then((res) => {
@@ -89,7 +87,7 @@ const VendorShopReviewScreen = ({
     <>
       <UI.Loading show={loading || rLoading} />
       <Header
-        title="Shop and Smile"
+        title={params.s.name}
         headerLeft={
           <UI.Link onClick={() => navigation.goBack()}>
             <UI.Icon name="ios-arrow-back" color="#fff" />
@@ -97,7 +95,7 @@ const VendorShopReviewScreen = ({
         }
       />
       <UI.Layout refreshing={loading} onRefresh={() => refetch()}>
-        <UI.UI.Spacer />
+        <UI.Spacer />
         <UI.Text h2>Ratings & Reviews</UI.Text>
         <UI.Spacer />
         <View style={styles.container}>
