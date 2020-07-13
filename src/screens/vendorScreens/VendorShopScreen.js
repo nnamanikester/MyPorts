@@ -279,7 +279,10 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
           <UI.Row
             style={{justifyContent: 'space-between', paddingHorizontal: 10}}>
             <UI.Text style={styles.title}>Ratings and Reviews</UI.Text>
-            <UI.Link onClick={() => navigation.navigate('VendorShopReview')}>
+            <UI.Link
+              onClick={() =>
+                navigation.navigate('VendorShopReview', {id: s.id})
+              }>
               See All Reviews
             </UI.Link>
           </UI.Row>
@@ -294,7 +297,6 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
                 value={parseInt(
                   calculateRating(s.reviews.map((r) => r.rating)),
                 )}
-                disableClicks
               />
               <UI.Text>
                 {s.reviews.length > 0 ? s.reviews.length : 'No rating'}
@@ -411,7 +413,11 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
 
         <UI.Spacer medium />
 
-        <UI.Rating value={rating} onClick={(value) => setRating(value)} />
+        <UI.Rating
+          clickable
+          value={rating}
+          onClick={(value) => setRating(value)}
+        />
 
         <UI.Spacer />
 

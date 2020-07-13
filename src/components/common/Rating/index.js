@@ -5,7 +5,7 @@ import {Icon} from '../Icon';
 import {primaryColor} from '../variables';
 import {Clickable} from '../Clickable';
 
-const Rating = ({onClick, size, value, disableClicks}) => {
+const Rating = ({onClick, size, value, clickable}) => {
   const [averageRating, setAverageRating] = React.useState(value);
   const [stars, setStars] = React.useState({
     star1: '#E8E8E8',
@@ -17,7 +17,7 @@ const Rating = ({onClick, size, value, disableClicks}) => {
   });
 
   const handleClick = (rate) => {
-    if (disableClicks) {
+    if (!clickable) {
       return;
     }
     setAverageRating(rate);
@@ -114,13 +114,13 @@ Rating.propTypes = {
   /**
    * Determines if the stars are clickable. Defaults to false.
    */
-  disableClicks: PropTypes.bool,
+  clickable: PropTypes.bool,
 };
 
 Rating.defaultProps = {
   onClick: () => {},
   value: 0,
-  disableClicks: false,
+  clickable: false,
 };
 
 export {Rating};

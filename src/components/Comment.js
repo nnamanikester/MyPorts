@@ -1,20 +1,18 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Text, Spacer, Rating, Divider, Clickable} from './common';
-
+import {Text, Spacer, Rating, Divider, Clickable, Icon} from './common';
 import Avatar from './Avatar';
+import {primaryColor} from './common/variables';
 
 const Comment = ({
   name,
-  s1,
-  s2,
-  s3,
-  s4,
-  s5,
+  rating,
   date,
   image,
   comment,
   onCommentClick,
+  showEdit,
+  onEditClick,
 }) => {
   return (
     <Clickable onClick={onCommentClick} style={styles.container}>
@@ -26,11 +24,16 @@ const Comment = ({
         </View>
         <Spacer />
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          {(s1 || s2 || s3 || s4 || s5) && (
-            <Rating s4={s4} s3={s3} s2={s2} s1={s1} s5={s5} size={15} />
-          )}
+          {rating && <Rating value={rating} size={15} />}
           <Spacer />
-          <Text note>{date}</Text>
+          <Text note>
+            {date} {'   '}{' '}
+            {showEdit && (
+              <Clickable onClick={onEditClick}>
+                <Icon color={primaryColor} name="ios-create" />
+              </Clickable>
+            )}
+          </Text>
         </View>
       </View>
       <Spacer />
