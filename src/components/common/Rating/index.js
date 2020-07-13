@@ -8,7 +8,7 @@ import {Clickable} from '../Clickable';
 const Rating = ({onClick, s1, s2, s3, s4, s5, size, value}) => {
   const [totalRatings] = React.useState(s1 + s2 + s3 + s4 + s5);
   const [averageRating, setAverageRating] = React.useState(0);
-  const [value, setValue] = React.useState(value);
+  const [star, setStar] = React.useState(value);
 
   React.useMemo(() => {
     const s1Percentage = 0;
