@@ -447,8 +447,8 @@ const SingleProductScreen = ({
               <UI.Text color="#fff">Add to cart</UI.Text>
             </UI.Button>
             <UI.Spacer />
-            <UI.Button type="ghost">
-              <UI.Text>Save for later</UI.Text>
+            <UI.Button type="ghost" onClick={() => handleSave()}>
+              <UI.Text>{saved ? 'Unsave Product' : 'Save for later'}</UI.Text>
             </UI.Button>
           </View>
 
