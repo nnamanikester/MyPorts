@@ -14,6 +14,7 @@ import {
   calculateRating,
   calculateRatePecentage,
 } from '../../utils/calculations';
+import {formatShortNumber} from '../../utils/numberFormat';
 
 const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
   const [openReview, setOpenReview] = React.useState(false);
@@ -297,7 +298,9 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
                 )}
               />
               <UI.Text>
-                {s.reviews.length > 0 ? s.reviews.length : 'No rating'}
+                {s.reviews.length > 0
+                  ? formatShortNumber(s.reviews.length)
+                  : 'No rating'}
               </UI.Text>
             </View>
 
