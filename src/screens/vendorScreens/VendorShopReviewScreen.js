@@ -88,7 +88,7 @@ const VendorShopReviewScreen = ({
     <>
       <UI.Loading show={loading || rLoading} />
       <Header
-        title={params.s.name}
+        title={params.s.profile.name}
         headerLeft={
           <UI.Link onClick={() => navigation.goBack()}>
             <UI.Icon name="ios-arrow-back" color="#fff" />
