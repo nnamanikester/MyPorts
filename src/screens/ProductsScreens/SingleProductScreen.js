@@ -1,6 +1,6 @@
 import React from 'react';
 import Swiper from 'react-native-swiper';
-import {StyleSheet, View, Image, ToastAndroid} from 'react-native';
+import {StyleSheet, View, Image, ToastAndroid, Alert} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import Comment from '../../components/Comment';
@@ -50,7 +50,7 @@ const SingleProductScreen = ({
 
   const [
     getComments,
-    {data: commentData, loading: commentsLoading, error},
+    {data: commentData, loading: commentsLoading},
   ] = useLazyQuery(PRODUCT_COMMENTS, {
     variables: {id: p.id},
     pollInterval: 500,
@@ -139,7 +139,7 @@ const SingleProductScreen = ({
 
     // Alert the user if an error occured while creating comment
     if (createCommentError) {
-      alert('Unable to comment at the time. Please try again!');
+      Alert.alert('Error', 'Unable to comment at the time. Please try again!');
     }
   }, [commentData, createCommentData, createCommentError]);
 
@@ -508,7 +508,9 @@ const SingleProductScreen = ({
             </View>
             {comments.length > 0 &&
               comments.map((comment, i) => {
-                if (i > 2) return null;
+                if (i > 2) {
+                  return null;
+                }
                 return (
                   <Comment
                     key={comment.id}
