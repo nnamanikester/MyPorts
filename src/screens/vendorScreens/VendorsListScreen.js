@@ -3,14 +3,7 @@ import {connect} from 'react-redux';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import VendorList from '../../components/VendorList';
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Image,
-  ToastAndroid,
-  Alert,
-} from 'react-native';
+import {StyleSheet, ScrollView, View, Image, Alert} from 'react-native';
 import {female3, shoe1, shoe2, bag1} from '../../assets/images';
 import FeaturedVendor from '../../components/FeaturedVendor';
 import SearchBar from '../../components/SearchBar';

@@ -8,7 +8,6 @@ import FeaturedProduct from '../../components/FeaturedProduct';
 import {ScrollView, StyleSheet, View, Image, Alert} from 'react-native';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_PRODUCTS} from '../../apollo/queries';
-import Skeleton from 'react-native-skeleton-placeholder';
 import EmptyItem from '../../components/EmptyItem';
 import {female2, female3, bag1, shoe1, shoe2} from '../../assets/images';
 import {info} from '../../components/common/variables';
