@@ -5,7 +5,7 @@ import Swiper from 'react-native-swiper';
 import Header from '../../components/Header';
 import Product from '../../components/Product';
 import FeaturedProduct from '../../components/FeaturedProduct';
-import {ScrollView, StyleSheet, View, Image, ToastAndroid} from 'react-native';
+import {ScrollView, StyleSheet, View, Image, Alert} from 'react-native';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_PRODUCTS} from '../../apollo/queries';
 import Skeleton from 'react-native-skeleton-placeholder';
@@ -30,11 +30,13 @@ const ProductsScreen = ({navigation, offline}) => {
     },
   });
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     if (!offline) {
       getProducts();
     }
+  }, []);
 
+  React.useMemo(() => {
     if (data) {
       setProducts(data.products.edges.map((p) => p.node));
     }
@@ -42,7 +44,11 @@ const ProductsScreen = ({navigation, offline}) => {
 
   React.useMemo(() => {
     if (error) {
-      ToastAndroid.show('Error loading products!', ToastAndroid.SHORT);
+      Alert.alert(
+        'Network Error!',
+        'An error occured trying to load products. Please check if you are connected to the internet and try again.',
+        [{text: 'Try again', onPress: () => getProducts()}],
+      );
     }
   }, [error]);
 

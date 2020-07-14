@@ -3,13 +3,21 @@ import {connect} from 'react-redux';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import VendorList from '../../components/VendorList';
-import {StyleSheet, ScrollView, View, Image, ToastAndroid} from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  Image,
+  ToastAndroid,
+  Alert,
+} from 'react-native';
 import {female3, shoe1, shoe2, bag1} from '../../assets/images';
 import FeaturedVendor from '../../components/FeaturedVendor';
 import SearchBar from '../../components/SearchBar';
 import Swiper from 'react-native-swiper';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_SHOPS} from '../../apollo/queries';
+import Skeleton from 'react-native-skeleton-placeholder';
 
 const VendorListScreen = ({navigation, offline}) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
@@ -35,11 +43,13 @@ const VendorListScreen = ({navigation, offline}) => {
     },
   );
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     if (!offline) {
       getShop();
     }
+  }, []);
 
+  React.useMemo(() => {
     if (data) {
       setShops(data.shops.edges.map((s) => s.node));
     }
@@ -47,7 +57,11 @@ const VendorListScreen = ({navigation, offline}) => {
 
   React.useMemo(() => {
     if (error) {
-      ToastAndroid.show('Error loading products!', ToastAndroid.SHORT);
+      Alert.alert(
+        'Network Error!',
+        'An error occured trying to load vendors. Please check if you are connected to the internet and try again.',
+        [{text: 'Try again', onPress: () => getShop()}],
+      );
     }
   }, [error]);
 
@@ -119,7 +133,7 @@ const VendorListScreen = ({navigation, offline}) => {
       <UI.Layout
         onEndReached={() => fetchMoreShops()}
         onRefresh={() => refetch()}
-        refreshing={loading}>
+        refreshing={fetching}>
         <View style={styles.container}>
           <Swiper
             paginationStyle={{bottom: 5}}
@@ -193,6 +207,29 @@ const VendorListScreen = ({navigation, offline}) => {
             </View>
           )}
 
+          {loading && (
+            <Skeleton>
+              <Skeleton.Item
+                borderRadius={5}
+                width="100%"
+                height={150}
+                marginVertical={10}
+              />
+              <Skeleton.Item
+                borderRadius={5}
+                width="100%"
+                height={150}
+                marginVertical={10}
+              />
+              <Skeleton.Item
+                borderRadius={5}
+                width="100%"
+                height={150}
+                marginVertical={10}
+              />
+            </Skeleton>
+          )}
+
           {shops &&
             shops.map((s, i) => {
               return (
@@ -210,12 +247,9 @@ const VendorListScreen = ({navigation, offline}) => {
           <UI.Spacer />
 
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <UI.Spinner
-              show={fetching || loading || error ? true : false}
-              area={40}
-            />
+            <UI.Spinner show={fetching} area={40} />
             {!fetching && !loading && !error && (
-              <UI.Text>No more shops!</UI.Text>
+              <UI.Text>No more vendors!</UI.Text>
             )}
           </View>
 

@@ -4,7 +4,7 @@ import * as UI from '../components/common';
 import Header from '../components/Header';
 import Category from '../components/Category';
 import EmptyItem from '../components/EmptyItem';
-import {StyleSheet, View, ToastAndroid, Dimensions} from 'react-native';
+import {StyleSheet, View, Dimensions, Alert} from 'react-native';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_CATEGORIES} from '../apollo/queries';
 import Skeleton from 'react-native-skeleton-placeholder';
@@ -14,15 +14,18 @@ const CategoriesScreen = ({navigation, offline}) => {
 
   const [getCategories, {data, loading, error}] = useLazyQuery(GET_CATEGORIES);
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     if (!offline) {
       getCategories();
     }
+  });
 
+  React.useMemo(() => {
     if (error) {
-      ToastAndroid.show(
-        'Unable to get categories at this time.',
-        ToastAndroid.SHORT,
+      Alert.alert(
+        'Network Error!',
+        'An error occured trying to load categories. Please check if you are connected to the internet and try again.',
+        [{text: 'Try again', onPress: () => getCategories()}],
       );
     }
   }, [error]);

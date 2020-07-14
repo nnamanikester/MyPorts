@@ -41,9 +41,10 @@ const VendorShopReviewScreen = ({
 
   React.useMemo(() => {
     if (error) {
-      ToastAndroid.show(
-        'An error occured while loading reviews!',
-        ToastAndroid.LONG,
+      Alert.alert(
+        'Network Error!',
+        'An error occured trying to load Reviews. Please check if you are connected to the internet and try again.',
+        [{text: 'Try again', onPress: () => getReviews()}],
       );
     }
   }, [error]);
