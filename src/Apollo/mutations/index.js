@@ -6,5 +6,6 @@ export * from './user';
 export * from './product';
 export * from './address';
 export * from './review';
+export * from './cart';
 
 export * from './imageUpload';

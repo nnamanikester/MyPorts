@@ -30,6 +30,7 @@
     "apollo-link": "^1.2.14",
     "apollo-link-error": "^1.1.13",
     "apollo-link-http": "^1.5.17",
+    "apollo-link-ws": "^1.0.20",
     "apollo-upload-client": "^13.0.0",
     "babel-eslint": "^10.1.0",
     "eslint-config-airbnb": "^18.1.0",
@@ -64,7 +65,8 @@
     "react-native-vector-icons": "^6.6.0",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "subscriptions-transport-ws": "^0.9.17"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
