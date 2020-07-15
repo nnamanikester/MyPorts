@@ -6,8 +6,9 @@ import Header from '../../components/Header';
 import Product from '../../components/Product';
 import FeaturedProduct from '../../components/FeaturedProduct';
 import {ScrollView, StyleSheet, View, Image, Alert} from 'react-native';
-import {useLazyQuery} from '@apollo/react-hooks';
+import {useLazyQuery, useSubscription} from '@apollo/react-hooks';
 import {GET_PRODUCTS} from '../../apollo/queries';
+import {SUBSCRIBE_TO_PRODUCT} from '../../apollo/subcriptions';
 import EmptyItem from '../../components/EmptyItem';
 import {female2, female3, bag1, shoe1, shoe2} from '../../assets/images';
 import {info} from '../../components/common/variables';
@@ -18,7 +19,7 @@ const ProductsScreen = ({navigation, offline}) => {
 
   const [
     getProducts,
-    {loading, data, error, refetch, fetchMore},
+    {loading, data, error, refetch, fetchMore, subscribeToMore},
   ] = useLazyQuery(GET_PRODUCTS, {
     variables: {
       first: 42,
@@ -50,6 +51,47 @@ const ProductsScreen = ({navigation, offline}) => {
       );
     }
   }, [error]);
+
+  const {error: prodError} = useSubscription(SUBSCRIBE_TO_PRODUCT, {
+    onSubcriptionData: (data) => {
+      console.log('SUBSCRIPTION DATA ---------');
+      console.log(data);
+    },
+  });
+
+  console.log('anything');
+
+  if (prodError) {
+    console.log('SUbscription ');
+    console.log(prodError);
+  }
+
+  const subscribeToProducts = (subscribeToMore) => {
+    subscribeToMore({
+      document: SUBSCRIBE_TO_PRODUCT,
+      updateQuery: (prev, {subscriptionData}) => {
+        if (!subscriptionData.data) {
+          return prev;
+        }
+        const newProduct = subscriptionData.data.newProduct;
+        const exists = prev.products.edges.find(
+          (node) => node.id === newProduct.id,
+        );
+        if (exists) {
+          return prev;
+        }
+
+        console.log('previous', prev);
+        console.log('SubscriptionData', subscriptionData);
+        return {
+          products: {
+            edges: [...prev.products.edges, ...newProduct.node],
+            __typename: prev.products.__typename,
+          },
+        };
+      },
+    });
+  };
 
   // Fetch more products onEndReach for pagination.
   const fetchMoreProducts = () => {
@@ -232,6 +274,7 @@ const ProductsScreen = ({navigation, offline}) => {
               !error &&
               products.length > 0 &&
               products.map((p, i) => {
+                subscribeToProducts(subscribeToMore);
                 return (
                   <Product
                     key={p.id + i}

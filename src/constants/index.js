@@ -1,7 +1,8 @@
 // HTTP/WS URLS
 export const BASE_URL = '//localhost:4000';
 export const API_URL = `http:${BASE_URL}/api`;
-export const WS_URL = `ws:${BASE_URL}/api`;
+export const WS_URL = `ws:${BASE_URL}/subscription`;
+export const EMULATOR_WS_URL = 'ws://192.168.43.164:4000/subscription';
 export const EMULATOR_API_URL = 'http://192.168.43.164:4000/api';
 
 // STORAGE KEYS

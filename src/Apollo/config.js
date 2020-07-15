@@ -1,6 +1,6 @@
 // import ApolloClient, { ApolloLink } from 'apollo-boost';
 import AsyncStorage from '@react-native-community/async-storage';
-import {EMULATOR_API_URL, TOKEN_STORAGE, WS_URL} from '../constants';
+import {EMULATOR_API_URL, TOKEN_STORAGE, EMULATOR_WS_URL} from '../constants';
 import {createUploadLink} from 'apollo-upload-client';
 import {ApolloClient} from 'apollo-client';
 import {InMemoryCache} from 'apollo-cache-inmemory';
@@ -56,12 +56,12 @@ const errorLink = onError(({graphQLErrors, networkError}) => {
 });
 
 const wsLink = new WebSocketLink({
-  uri: WS_URL,
-  options: async () => {
-    // const token = await AsyncStorage.getItem(TOKEN_STORAGE);
-    return {
-      reconnect: true,
-    };
+  uri: EMULATOR_WS_URL,
+  options: {
+    reconnect: true,
+    connectionParams: async () => ({
+      Authorization: await AsyncStorage.getItem(TOKEN_STORAGE),
+    }),
   },
 });
 
@@ -70,6 +70,7 @@ const uploadLink = createUploadLink({
 });
 
 const httpLink = ApolloLink.from([errorLink, requestLink, uploadLink]);
+// const httpLink = errorLink.concat(requestLink).concat(uploadLink);
 
 const link = split(
   ({query}) => {

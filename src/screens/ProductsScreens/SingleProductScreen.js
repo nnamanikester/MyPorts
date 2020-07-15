@@ -125,6 +125,10 @@ const SingleProductScreen = ({
     offline,
   ]);
 
+  // React.useEffect(() => {
+
+  // }, []);
+
   React.useEffect(() => {
     // Set fetched comments to the comment state
     if (commentData) {
