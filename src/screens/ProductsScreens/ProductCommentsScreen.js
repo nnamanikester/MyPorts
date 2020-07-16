@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Alert} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import Comment from '../../components/Comment';
@@ -51,7 +51,7 @@ const ProductCommentsScreen = ({
       setCommentText('');
     }
     if (createCommentError) {
-      alert('Unable to comment at the time. Please try again!');
+      Alert.alert('Error', 'Unable to comment at the time. Please try again!');
     }
   }, [
     commentData,
@@ -63,7 +63,9 @@ const ProductCommentsScreen = ({
   ]);
 
   const handleCreateComment = () => {
-    if (!commentText) return;
+    if (!commentText) {
+      return;
+    }
     createComment({
       variables: {
         comment: commentText,
