@@ -6,6 +6,7 @@ import {checkNetworkStatus} from '../redux/actions/NetworkActions';
 import {CUSTOMER_PROFILE} from '../apollo/queries';
 import {useLazyQuery} from '@apollo/react-hooks';
 import * as UI from '../components/common';
+import {Alert} from 'react-native';
 
 import TabNavigation from './MainFlows/MainTabNavigation';
 import DraweNavigation from './MainFlows/MainDrawerNavigation';
@@ -26,7 +27,6 @@ import OrderDetails from '../screens/UserScreens/OrderDetailsScreen';
 import ReferAndEarn from '../screens/UserScreens/ReferAndEarnScreen';
 
 // Vendor Screens
-import VendorShopSearch from '../screens/vendorScreens/VendorShopSearchScreen';
 import VendorShopReview from '../screens/vendorScreens/VendorShopReviewScreen';
 import VendorShop from '../screens/vendorScreens/VendorShopScreen';
 
@@ -75,9 +75,15 @@ const StackNavigation = ({setCustomerProfile, offline}) => {
       customerProfile();
     }
 
-    if (data) setCustomerProfile(data.customerProfile);
+    if (data) {
+      setCustomerProfile(data.customerProfile);
+    }
     if (error) {
-      alert('Unable to load profile details');
+      Alert.alert(
+        'Network Error!',
+        'Unablle to load profile. please check your internet connection and try again.',
+        [{text: 'Try again', onPress: () => customerProfile()}],
+      );
     }
   }, [data]);
 
@@ -111,7 +117,6 @@ const StackNavigation = ({setCustomerProfile, offline}) => {
         <Stack.Screen name="SavedItems" component={SavedItems} />
 
         {/* Vendor Screens */}
-        <Stack.Screen name="VendorShopSearch" component={VendorShopSearch} />
         <Stack.Screen name="VendorShopReview" component={VendorShopReview} />
         <Stack.Screen name="VendorShop" component={VendorShop} />
 
