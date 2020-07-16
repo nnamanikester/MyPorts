@@ -52,19 +52,19 @@ const ProductsScreen = ({navigation, offline}) => {
     }
   }, [error]);
 
-  const {error: prodError} = useSubscription(SUBSCRIBE_TO_PRODUCT, {
-    onSubcriptionData: (data) => {
-      console.log('SUBSCRIPTION DATA ---------');
-      console.log(data);
-    },
-  });
+  // const {error: prodError} = useSubscription(SUBSCRIBE_TO_PRODUCT, {
+  //   onSubcriptionData: (data) => {
+  //     console.log('SUBSCRIPTION DATA ---------');
+  //     console.log(data);
+  //   },
+  // });
 
-  console.log('anything');
+  // console.log('anything');
 
-  if (prodError) {
-    console.log('SUbscription ');
-    console.log(prodError);
-  }
+  // if (prodError) {
+  //   console.log('SUbscription ');
+  //   console.log(prodError);
+  // }
 
   const subscribeToProducts = (subscribeToMore) => {
     subscribeToMore({

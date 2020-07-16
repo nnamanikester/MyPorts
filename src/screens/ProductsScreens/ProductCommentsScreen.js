@@ -43,24 +43,36 @@ const ProductCommentsScreen = ({
     if (!offline) {
       getComments();
     }
+  }, []);
+
+  React.useMemo(() => {
     if (commentData) {
       setComments(commentData.productComments);
     }
+  }, [commentData]);
+
+  React.useMemo(() => {
+    if (error) {
+      Alert.alert(
+        'Network Error!',
+        'An error occured while loadding comments. Please check your internet connection and try again.',
+        [{text: 'Try again', onPress: () => getComments()}],
+      );
+    }
+  }, [error]);
+
+  React.useMemo(() => {
     if (createCommentData) {
       setOpenModal(false);
       setCommentText('');
     }
+  }, [createCommentData]);
+
+  React.useMemo(() => {
     if (createCommentError) {
       Alert.alert('Error', 'Unable to comment at the time. Please try again!');
     }
-  }, [
-    commentData,
-    createCommentData,
-    createCommentError,
-    error,
-    offline,
-    getComments,
-  ]);
+  }, [createCommentError]);
 
   const handleCreateComment = () => {
     if (!commentText) {
