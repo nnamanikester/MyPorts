@@ -88,10 +88,14 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
 
   const [createReview, {loading: rLoading}] = useMutation(CREATE_REVIEW);
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     if (!offline) {
+      getShop();
       getProducts();
     }
+  }, []);
+
+  React.useMemo(() => {
     if (pData) {
       setProducts(pData.products.edges.map((p) => p.node));
     }
@@ -99,14 +103,15 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
 
   React.useMemo(() => {
     if (pError) {
-      ToastAndroid.show('Unable to get Shop Products!', ToastAndroid.LONG);
+      Alert.alert(
+        'Network Error!',
+        'An error occured trying to load products. Please check if you are connected to the internet and try again.',
+        [{text: 'Try again', onPress: () => getProducts()}],
+      );
     }
   }, [pError]);
 
   React.useMemo(() => {
-    if (!offline) {
-      getShop();
-    }
     if (data) {
       setS(data.shop);
     }
@@ -114,7 +119,11 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
 
   React.useMemo(() => {
     if (error) {
-      ToastAndroid.show('Error loading vendor shop!', ToastAndroid.LONG);
+      Alert.alert(
+        'Network Error!',
+        'An error occured trying to load shop details. Please check if you are connected to the internet and try again.',
+        [{text: 'Try again', onPress: () => getShop()}],
+      );
     }
   }, [error]);
 
@@ -194,7 +203,7 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
 
   return (
     <>
-      <UI.Loading show={loading || error || rLoading ? true : false} />
+      <UI.Loading show={loading || rLoading} />
       <Header
         isCart
         title={s.profile.name}
