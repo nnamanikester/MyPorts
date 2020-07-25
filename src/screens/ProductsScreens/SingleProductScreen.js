@@ -11,6 +11,7 @@ import {
   CREATE_LIKE,
   CREATE_SAVE,
   CREATE_SHARE,
+  ADD_ITEM_TO_CART,
 } from '../../apollo/mutations';
 import {formatMoney, formatShortNumber} from '../../utils';
 import EmptyItem from '../../components/EmptyItem';
@@ -38,6 +39,8 @@ const SingleProductScreen = ({
   const [showCommentBox, setShowCommentBox] = React.useState(false);
   const [liked, setLiked] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
+  const [quantity, setQuantity] = React.useState(`${p.quantity}`);
+  const [errors, setErrors] = React.useState({});
 
   // Queries and mutations
   const [
@@ -85,6 +88,10 @@ const SingleProductScreen = ({
       customerId: customer.id,
     },
   });
+
+  const [addItemToCart, {loading: addItemLoading}] = useMutation(
+    ADD_ITEM_TO_CART,
+  );
 
   // Functions to run on component mount
   React.useEffect(() => {
@@ -206,6 +213,44 @@ const SingleProductScreen = ({
       })
       .catch((e) => {
         console.log(e);
+      });
+  };
+
+  const handleQuantity = (val) => {
+    setErrors({});
+    setQuantity(val);
+    if (val > p.quantity) {
+      setErrors({
+        quantity: `Quantity cannot be greater than ${p.quantity}`,
+      });
+      return false;
+    }
+    if (!val || val < 1) {
+      setErrors({
+        quantity: 'Quantity is required and should not be less than 1',
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const handleAddToCart = () => {
+    if (!handleQuantity(quantity)) {
+      return;
+    }
+
+    addItemToCart({
+      variables: {
+        customerId: customer.id,
+        quantity: parseInt(quantity),
+        productId: p.id,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch(() => {
+        Alert.alert('Error!', 'Unalbe to add item to cart. Please try again');
       });
   };
 
@@ -435,16 +480,29 @@ const SingleProductScreen = ({
 
             <View>
               <UI.Text heading>Quantity</UI.Text>
+              {errors.quantity ? (
+                <UI.Text note color="red">
+                  {errors.quantity}
+                </UI.Text>
+              ) : null}
               <UI.TextInput
                 keyboardType="number-pad"
                 placeholder="Enter quantity"
+                value={quantity}
+                onChangeText={(value) => handleQuantity(value)}
               />
             </View>
 
             <UI.Spacer />
 
-            <UI.Button>
-              <UI.Text color="#fff">Add to cart</UI.Text>
+            <UI.Button
+              type={addItemLoading ? 'disabled' : null}
+              onClick={() => handleAddToCart()}>
+              {addItemLoading ? (
+                <UI.Spinner area={40} />
+              ) : (
+                <UI.Text color="#fff">Add to cart</UI.Text>
+              )}
             </UI.Button>
             <UI.Spacer />
             <UI.Button type="ghost" onClick={() => handleSave()}>
