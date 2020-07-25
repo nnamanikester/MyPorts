@@ -18,7 +18,7 @@ const CategoriesScreen = ({navigation, offline}) => {
     if (!offline) {
       getCategories();
     }
-  });
+  }, []);
 
   React.useMemo(() => {
     if (error) {
