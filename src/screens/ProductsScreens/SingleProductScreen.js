@@ -25,12 +25,16 @@ import {
 import {connect} from 'react-redux';
 import moment from 'moment';
 import Share from 'react-native-share';
+import AsyncStorage from '@react-native-community/async-storage';
+import {CART_STORAGE} from '../../constants';
+import setCartStorage from '../../redux/actions/CartActions';
 
 const SingleProductScreen = ({
   navigation,
   route: {params},
   offline,
   customer,
+  setCartStorage,
 }) => {
   const p = params.product;
   const [comments, setComments] = React.useState([]);
@@ -205,7 +209,7 @@ const SingleProductScreen = ({
       filename: p.name,
       url: p.images[0].url,
     };
-    console.log('clicked');
+
     Share.open(options)
       .then(() => {
         shareProduct();
@@ -246,7 +250,12 @@ const SingleProductScreen = ({
         productId: p.id,
       },
     })
-      .then((res) => {
+      .then(async (res) => {
+        await AsyncStorage.setItem(
+          CART_STORAGE,
+          JSON.stringify(res.data.addItemToCart),
+        );
+        setCartStorage(res.data.addItemToCart);
         console.log(res.data);
       })
       .catch(() => {
@@ -687,4 +696,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(SingleProductScreen);
+export default connect(mapStateToProps, {setCartStorage})(SingleProductScreen);
