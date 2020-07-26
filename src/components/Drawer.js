@@ -96,7 +96,7 @@ const Drawer = ({
           icon={({size, color}) => (
             <>
               <Icon size={size} color={color} name="md-cart" />
-              {cart.items.length > 0 && (
+              {cart.items && cart.items.length > 0 && (
                 <Badge style={{elevation: 1}} color={danger} />
               )}
             </>

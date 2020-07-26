@@ -12,6 +12,40 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
 
   const handleRemoveItem = (id) => {};
 
+  const handleClearitems = () => {};
+
+  const calculateOrders = () => {
+    let total = 0;
+    cart.items.forEach((i) => {
+      total += i.product.price * i.quantity;
+    });
+    return total.toString();
+  };
+
+  const calculateShipping = () => {
+    let total = 0;
+    cart.items.forEach((i) => {
+      total += i.product.shipping;
+    });
+    return total.toString();
+  };
+
+  const calculateDiscount = () => {
+    let total = 0;
+    cart.items.forEach((i) => {
+      total += i.product.price * i.quantity;
+    });
+    return total.toString();
+  };
+
+  const calculateTotal = () => {
+    return (
+      parseInt(calculateOrders()) +
+      parseInt(calculateShipping()) -
+      parseInt(calculateDiscount())
+    );
+  };
+
   return (
     <>
       <UI.Loading show={loading} />
@@ -52,7 +86,7 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
                       product: item.product,
                     })
                   }
-                  onCloseButtonClick={() => handleRemoveItem(item.product.id)}
+                  onCloseButtonClick={() => handleRemoveItem(item.id)}
                 />
               );
             })
@@ -61,19 +95,19 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
         <UI.Spacer medium />
 
         <View style={styles.container}>
-          <UI.Text heading>Enter your coupon code here</UI.Text>
+          {/* <UI.Text heading>Enter your coupon code here</UI.Text>
 
           <UI.Spacer />
 
           <UI.TextInput placeholder="Coupon Code" />
 
-          <UI.Spacer medium />
+          <UI.Spacer medium /> */}
 
           <OrderSummary
-            order="63,000"
-            shipping="3,000"
-            discount="1,300"
-            total="66,000"
+            order={calculateOrders()}
+            shipping={calculateShipping()}
+            discount={calculateDiscount()}
+            total={calculateTotal()}
           />
 
           <UI.Spacer large />

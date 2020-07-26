@@ -32,7 +32,7 @@ const Header = ({
       {headerRight && (
         <View style={styles.rightContainerStyle}>
           {headerRight}
-          {isCart && cart.items.length > 0 && (
+          {isCart && cart.items && cart.items.length > 0 && (
             <Badge style={{elevation: 1, top: 8, left: 30}} color={danger} />
           )}
         </View>
