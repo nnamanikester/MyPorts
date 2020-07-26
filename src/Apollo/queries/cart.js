@@ -1,17 +1,10 @@
 import gql from 'graphql-tag';
 
-export const ADD_ITEM_TO_CART = gql`
-  mutation addItemToCart(
-    $customerId: String!
-    $productId: String!
-    $quantity: Int!
-  ) {
-    addItemToCart(
-      customerId: $customerId
-      productId: $productId
-      quantity: $quantity
-    ) {
+export const CART = gql`
+  query cart($customerId: String!) {
+    cart(customerId: $customerId) {
       id
+      quantity
       customer {
         id
       }

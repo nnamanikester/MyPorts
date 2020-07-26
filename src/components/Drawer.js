@@ -9,7 +9,14 @@ import {logUserOut} from '../redux/actions/AuthActions';
 import {danger} from './common/variables';
 import Permissions from './Permissions';
 
-const Drawer = ({navigation, user, customer, vendorProfile, logUserOut}) => {
+const Drawer = ({
+  navigation,
+  user,
+  customer,
+  vendorProfile,
+  logUserOut,
+  cart,
+}) => {
   return (
     <DrawerContentScrollView style={styles.drawer}>
       {/* Drawer Header */}
@@ -89,7 +96,9 @@ const Drawer = ({navigation, user, customer, vendorProfile, logUserOut}) => {
           icon={({size, color}) => (
             <>
               <Icon size={size} color={color} name="md-cart" />
-              <Badge style={{elevation: 1}} color={danger} />
+              {cart.items.length > 0 && (
+                <Badge style={{elevation: 1}} color={danger} />
+              )}
             </>
           )}
           label={({color, focused}) => <Text color={color}>Shopping Cart</Text>}
@@ -125,7 +134,7 @@ const Drawer = ({navigation, user, customer, vendorProfile, logUserOut}) => {
         onPress={() => navigation.navigate('ReferAndEarn')}
       />
 
-      <Permissions.CustomerAndGuest>
+      {/* <Permissions.CustomerAndGuest>
         <DrawerItem
           icon={({size, color}) => (
             <>
@@ -138,7 +147,7 @@ const Drawer = ({navigation, user, customer, vendorProfile, logUserOut}) => {
           )}
           onPress={() => navigation.navigate('Coupons')}
         />
-      </Permissions.CustomerAndGuest>
+      </Permissions.CustomerAndGuest> */}
 
       <Divider />
 
@@ -221,6 +230,7 @@ const mapStateToProps = (state) => {
     user: state.auth.user,
     customer: state.customer.profile,
     vendorProfile: state.vendor.profile,
+    cart: state.cart,
   };
 };
 

@@ -1,91 +1,73 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {
-  Text,
-  Layout,
-  Icon,
-  Spacer,
-  TextInput,
-  Button,
-  Loading,
-  Clickable,
-} from '../../components/common';
+import * as UI from '../../components/common';
 import Header from '../../components/Header';
-import {female4, female1, female2} from '../../assets/images';
 import CartItem from '../../components/CartItem';
 import OrderSummary from '../../components/OrderSummary';
+import {connect} from 'react-redux';
+import {setCartStorage} from '../../redux/actions/CartActions';
 
-const CartScreen = ({navigation}) => {
-  const [loading, setLoading] = useState(false);
+const CartScreen = ({navigation, cart, setCartStorage}) => {
+  const [loading] = React.useState(false);
 
-  const goToCheckout = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      navigation.navigate('ShippingDetails');
-    }, 3000);
-  };
+  const handleRemoveItem = (id) => {};
 
   return (
     <>
-      <Loading show={loading} />
+      <UI.Loading show={loading} />
       <Header
         title="Shopping Bag"
         headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="md-close" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.goBack()}>
+            <UI.Icon name="md-close" color="#fff" />
+          </UI.Clickable>
         }
         headerRight={
           <>
-            <Clickable onClick={() => navigation.navigate('Search')}>
-              <Icon name="ios-search" color="#fff" />
-            </Clickable>
+            <UI.Clickable onClick={() => navigation.navigate('Search')}>
+              <UI.Icon name="ios-search" color="#fff" />
+            </UI.Clickable>
           </>
         }
       />
-      <Layout>
-        <Spacer medium />
-        <CartItem
-          name="Leather Show Bag"
-          shipping="1,000"
-          quantity="5"
-          image={female2}
-          price="2,300"
-          onClick={() => navigation.navigate('SingleProduct')}
-          onCloseButtonClick={() => {}}
-        />
+      <UI.Layout>
+        <UI.Spacer medium />
 
-        <CartItem
-          name="Leather Show Bag"
-          shipping="1,000"
-          quantity="5"
-          image={female1}
-          price="2,300"
-          onClick={() => navigation.navigate('SingleProduct')}
-          onCloseButtonClick={() => {}}
-        />
+        {cart.items && cart.items.length > 1
+          ? cart.items.map((item, i) => {
+              return (
+                <CartItem
+                  key={item.id + i}
+                  name={item.product.name}
+                  shipping={
+                    item.product.shipping === 0
+                      ? 'Free'
+                      : `${item.product.shipping}`
+                  }
+                  quantity={item.quantity}
+                  image={{uri: item.product.images[0].url}}
+                  price={`${item.product.price * item.quantity}`}
+                  onClick={() =>
+                    navigation.navigate('SingleProduct', {
+                      product: item.product,
+                    })
+                  }
+                  onCloseButtonClick={() => handleRemoveItem(item.product.id)}
+                />
+              );
+            })
+          : null}
 
-        <CartItem
-          name="Leather Show Bag"
-          shipping="1,000"
-          quantity="5"
-          image={female4}
-          price="2,300"
-          onClick={() => navigation.navigate('SingleProduct')}
-          onCloseButtonClick={() => {}}
-        />
-
-        <Spacer medium />
+        <UI.Spacer medium />
 
         <View style={styles.container}>
-          <Text heading>Enter your coupon code here</Text>
+          <UI.Text heading>Enter your coupon code here</UI.Text>
 
-          <Spacer />
+          <UI.Spacer />
 
-          <TextInput placeholder="Coupon Code" />
+          <UI.TextInput placeholder="Coupon Code" />
 
-          <Spacer medium />
+          <UI.Spacer medium />
 
           <OrderSummary
             order="63,000"
@@ -94,18 +76,18 @@ const CartScreen = ({navigation}) => {
             total="66,000"
           />
 
-          <Spacer large />
+          <UI.Spacer large />
 
-          <Button
+          <UI.Button
             showIconDivider
-            iconRight={<Icon name="ios-arrow-forward" color="#fff" />}
-            onClick={() => goToCheckout()}>
-            <Text color="#fff">Place Order</Text>
-          </Button>
+            iconRight={<UI.Icon name="ios-arrow-forward" color="#fff" />}
+            onClick={() => {}}>
+            <UI.Text color="#fff">Place Order</UI.Text>
+          </UI.Button>
 
-          <Spacer large />
+          <UI.Spacer large />
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
@@ -116,4 +98,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CartScreen;
+const mapStateToProps = (state) => {
+  return {
+    cart: state.cart,
+  };
+};
+
+export default connect(mapStateToProps, {setCartStorage})(CartScreen);

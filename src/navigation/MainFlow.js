@@ -1,12 +1,14 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {createStackNavigator} from '@react-navigation/stack';
 import {setCustomerProfile} from '../redux/actions/CustomerActions';
+import {setCartStorage} from '../redux/actions/CartActions';
 import {checkNetworkStatus} from '../redux/actions/NetworkActions';
 import {CUSTOMER_PROFILE} from '../apollo/queries';
 import {useLazyQuery} from '@apollo/react-hooks';
 import * as UI from '../components/common';
 import {Alert} from 'react-native';
+import {CART} from '../apollo/queries';
 
 import TabNavigation from './MainFlows/MainTabNavigation';
 import DraweNavigation from './MainFlows/MainDrawerNavigation';
@@ -61,15 +63,27 @@ import LawEnforcementPolicy from '../screens/pages/LawEnforcementPolicyScreen';
 import PrivacyPolicy from '../screens/pages/PrivacyPolicyScreen';
 import ReturnPolicy from '../screens/pages/ReturnPolicyScreen';
 import TermsOfUse from '../screens/pages/TermsOfUseScreen';
+import AsyncStorage from '@react-native-community/async-storage';
+import {CART_STORAGE} from '../constants';
 
 const Stack = createStackNavigator();
 
-const StackNavigation = ({setCustomerProfile, offline}) => {
+const StackNavigation = ({
+  setCustomerProfile,
+  cart,
+  offline,
+  setCartStorage,
+  customer,
+}) => {
   const [customerProfile, {loading, data, error}] = useLazyQuery(
     CUSTOMER_PROFILE,
   );
+  const [
+    getCartItems,
+    {loading: itemsLoading, data: items, error: itemsError},
+  ] = useLazyQuery(CART, {variables: {customerId: customer.id}});
 
-  useEffect(() => {
+  React.useEffect(() => {
     checkNetworkStatus();
     if (!offline) {
       customerProfile();
@@ -87,9 +101,35 @@ const StackNavigation = ({setCustomerProfile, offline}) => {
     }
   }, [data]);
 
+  React.useMemo(() => {
+    async function getCart() {
+      const cartItems = await AsyncStorage.getItem(CART_STORAGE);
+      setCartStorage(JSON.parse(cartItems));
+    }
+
+    getCart();
+  }, [cart]);
+
+  React.useEffect(() => {
+    getCartItems();
+  }, []);
+
+  React.useMemo(() => {
+    if (items) {
+      const setCart = async () => {
+        const cartItems = await AsyncStorage.setItem(
+          CART_STORAGE,
+          JSON.stringify(items.cart),
+        );
+        setCartStorage(JSON.parse(cartItems));
+      };
+      setCart();
+    }
+  }, [items]);
+
   return (
     <>
-      <UI.Loading show={loading} />
+      <UI.Loading show={loading || itemsLoading} />
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{
@@ -174,7 +214,11 @@ const StackNavigation = ({setCustomerProfile, offline}) => {
 const mapStateToProps = (state) => {
   return {
     offline: !state.network.isConnected,
+    cart: state.cart,
+    customer: state.customer.profile,
   };
 };
 
-export default connect(mapStateToProps, {setCustomerProfile})(StackNavigation);
+export default connect(mapStateToProps, {setCustomerProfile, setCartStorage})(
+  StackNavigation,
+);

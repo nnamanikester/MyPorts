@@ -28,6 +28,8 @@ const Badge = ({children, style, medium, large, small, color}) => {
         ...style,
       }}>
       <Text
+        note
+        color="#fff"
         style={{
           alignItems: 'center',
           justifyContent: 'center',

@@ -27,7 +27,7 @@ import moment from 'moment';
 import Share from 'react-native-share';
 import AsyncStorage from '@react-native-community/async-storage';
 import {CART_STORAGE} from '../../constants';
-import setCartStorage from '../../redux/actions/CartActions';
+import {setCartStorage} from '../../redux/actions/CartActions';
 
 const SingleProductScreen = ({
   navigation,
@@ -256,10 +256,11 @@ const SingleProductScreen = ({
           JSON.stringify(res.data.addItemToCart),
         );
         setCartStorage(res.data.addItemToCart);
-        console.log(res.data);
+        ToastAndroid.show('Item added to cart!', ToastAndroid.SHORT);
       })
-      .catch(() => {
+      .catch((e) => {
         Alert.alert('Error!', 'Unalbe to add item to cart. Please try again');
+        console.log(e);
       });
   };
 
