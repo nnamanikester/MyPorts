@@ -2,8 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text, Badge} from './common';
-import {primaryColor, lightColor} from './common/variables';
+import {primaryColor} from './common/variables';
 import {danger} from './common/variables';
+import {connect} from 'react-redux';
 
 const Header = ({
   isCart,
@@ -12,8 +13,11 @@ const Header = ({
   headerLeft,
   title,
   style,
+  cart,
 }) => {
-  if (hideHeader) return null;
+  if (hideHeader) {
+    return null;
+  }
 
   return (
     <View style={{...styles.container, ...style}}>
@@ -28,7 +32,7 @@ const Header = ({
       {headerRight && (
         <View style={styles.rightContainerStyle}>
           {headerRight}
-          {isCart && (
+          {isCart && cart.items.length > 0 && (
             <Badge style={{elevation: 1, top: 8, left: 30}} color={danger} />
           )}
         </View>
@@ -83,4 +87,10 @@ Header.defaultProps = {
   title: 'Title',
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    cart: state.cart,
+  };
+};
+
+export default connect(mapStateToProps)(Header);
