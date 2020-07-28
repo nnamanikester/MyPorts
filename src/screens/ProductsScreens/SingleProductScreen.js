@@ -35,6 +35,7 @@ const SingleProductScreen = ({
   offline,
   customer,
   setCartStorage,
+  cart,
 }) => {
   const p = params.product;
   const [comments, setComments] = React.useState([]);
@@ -45,6 +46,7 @@ const SingleProductScreen = ({
   const [saved, setSaved] = React.useState(false);
   const [quantity, setQuantity] = React.useState(`${p.quantity}`);
   const [errors, setErrors] = React.useState({});
+  const [modalOpen, setModalOpen] = React.useState(false);
 
   // Queries and mutations
   const [
@@ -257,6 +259,7 @@ const SingleProductScreen = ({
         );
         setCartStorage(res.data.addItemToCart);
         ToastAndroid.show('Item added to cart!', ToastAndroid.SHORT);
+        setModalOpen(true);
       })
       .catch((e) => {
         Alert.alert('Error!', 'Unalbe to add item to cart. Please try again');
@@ -628,6 +631,42 @@ const SingleProductScreen = ({
         </View>
         <UI.Spacer large />
       </UI.Layout>
+
+      {/* ITEM ADDED TO CART SUCCESS MODAL */}
+      <UI.Modal show={modalOpen}>
+        <UI.Text h3>Item Added to Cart!</UI.Text>
+
+        <UI.Spacer large />
+
+        <Image
+          style={{width: 150, height: 150}}
+          source={{uri: p.images[0].url}}
+        />
+        <UI.Text style={{textAlign: 'center'}}>{p.name}</UI.Text>
+        <UI.Text style={{textAlign: 'center'}} bold>
+          {formatMoney(p.price * quantity)}
+        </UI.Text>
+        <UI.Text style={{textAlign: 'center'}}>{quantity}</UI.Text>
+
+        <UI.Spacer large />
+
+        <UI.Button
+          onClick={() => {
+            setModalOpen(false);
+            navigation.navigate('Cart');
+          }}>
+          <UI.Text color="#fff">
+            Go to cart {'  '} <UI.Icon name="md-cart" color="#fff" size={18} />
+          </UI.Text>
+        </UI.Button>
+
+        <UI.Spacer />
+
+        <UI.Button type="ghost" onClick={() => setModalOpen(false)}>
+          <UI.Text>Continue Shopping</UI.Text>
+        </UI.Button>
+      </UI.Modal>
+      {/* /ITEM ADDED TO CART SUCCESS MODAL */}
     </>
   );
 };
@@ -696,6 +735,7 @@ const mapStateToProps = (state) => {
   return {
     offline: !state.network.isConnected,
     customer: state.customer.profile,
+    cart: state.cart,
   };
 };
 
