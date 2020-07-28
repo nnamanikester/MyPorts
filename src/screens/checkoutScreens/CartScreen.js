@@ -8,6 +8,8 @@ import {connect} from 'react-redux';
 import {setCartStorage} from '../../redux/actions/CartActions';
 import {useMutation} from '@apollo/react-hooks';
 import {REMOVE_CART_ITEM, CLEAR_CART} from '../../apollo/mutations';
+import EmptyItem from '../../components/EmptyItem';
+import {info} from '../../components/common/variables';
 
 const CartScreen = ({navigation, cart, setCartStorage}) => {
   const [loading] = React.useState(false);
@@ -18,7 +20,8 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
   // const [clearCart, {loading: clearCartLoading}] = useMutation(CLEAR_CART);
 
   const handleRemoveItem = (id) => {
-    console.log(id);
+    const tempCart = cart;
+    setCartStorage({...cart, items: cart.items.filter((i) => i.id !== id)});
     removeItem({
       variables: {
         itemId: id,
@@ -27,8 +30,10 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
     })
       .then((res) => {
         setCartStorage(res.data.removeCartItem);
+        ToastAndroid.show('Item removed!', ToastAndroid.SHORT);
       })
       .catch((e) => {
+        setCartStorage(tempCart);
         ToastAndroid.show(
           'An error occured while trying to remove item.',
           ToastAndroid.SHORT,
@@ -106,33 +111,44 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
       <UI.Layout>
         <UI.Spacer medium />
 
-        {cart && cart.items && cart.items.length > 1
-          ? cart.items.map((item, i) => {
-              return (
-                <CartItem
-                  key={item.id + i}
-                  name={item.product.name}
-                  shipping={`${item.product.shipping}`}
-                  quantity={item.quantity}
-                  image={{uri: item.product.images[0].url}}
-                  price={`${item.product.price * item.quantity}`}
-                  discount={`${
-                    (item.product.fixedDiscount ||
-                      calculatePercentageDiscount(
-                        item.product.price,
-                        item.product.percentageDiscount,
-                      )) * item.quantity
-                  }`}
-                  onClick={() =>
-                    navigation.navigate('SingleProduct', {
-                      product: item.product,
-                    })
-                  }
-                  onCloseButtonClick={() => handleRemoveItem(item.id)}
-                />
-              );
-            })
-          : null}
+        {cart && cart.items && cart.items.length > 0 ? (
+          cart.items.map((item, i) => {
+            return (
+              <CartItem
+                key={item.id + i}
+                name={item.product.name}
+                shipping={`${item.product.shipping}`}
+                quantity={item.quantity}
+                image={{uri: item.product.images[0].url}}
+                price={`${item.product.price * item.quantity}`}
+                discount={`${
+                  (item.product.fixedDiscount ||
+                    calculatePercentageDiscount(
+                      item.product.price,
+                      item.product.percentageDiscount,
+                    )) * item.quantity
+                }`}
+                onClick={() =>
+                  navigation.navigate('SingleProduct', {
+                    product: item.product,
+                  })
+                }
+                onCloseButtonClick={() => handleRemoveItem(item.id)}
+              />
+            );
+          })
+        ) : (
+          <View>
+            <UI.Spacer large />
+            <EmptyItem
+              icon={<UI.Icon color={info} size={100} name="md-cart" />}
+              show
+              title="You Cart is Empty!"
+              message="Items you added to the cart will appear here."
+            />
+            <UI.Spacer large />
+          </View>
+        )}
 
         <UI.Spacer medium />
 
@@ -146,15 +162,16 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
           <UI.Spacer medium /> */}
 
           <OrderSummary
-            order={calculateOrders()}
-            shipping={calculateShipping()}
-            discount={calculateDiscount()}
-            total={calculateTotal()}
+            order={calculateOrders() || '0'}
+            shipping={calculateShipping() || '0'}
+            discount={calculateDiscount() || '0'}
+            total={calculateTotal() || '0'}
           />
 
           <UI.Spacer large />
 
           <UI.Button
+            type={cart && cart.items && cart.items.length > 0 ? '' : 'disabled'}
             showIconDivider
             iconRight={<UI.Icon name="ios-arrow-forward" color="#fff" />}
             onClick={() => {}}>

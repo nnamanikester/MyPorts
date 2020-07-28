@@ -509,7 +509,9 @@ const SingleProductScreen = ({
               type={addItemLoading ? 'disabled' : null}
               onClick={() => handleAddToCart()}>
               {addItemLoading ? (
-                <UI.Spinner area={40} />
+                <UI.Text style={{textTransform: 'lowercase'}}>
+                  Adding...
+                </UI.Text>
               ) : (
                 <UI.Text color="#fff">Add to cart</UI.Text>
               )}
