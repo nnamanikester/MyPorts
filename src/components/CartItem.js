@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Text, Icon, ListItem, Link} from './common';
+import {Text, Icon, ListItem, Clickable} from './common';
 import Avater from './Avatar';
 import {info, primaryColor} from './common/variables';
 import {formatMoney} from '../utils';
@@ -53,9 +53,9 @@ const CartItem = ({
         right={
           <View style={{alignItems: 'flex-end'}}>
             {!hideCloseButton && (
-              <Link onCLick={onCloseButtonClick}>
+              <Clickable onClick={onCloseButtonClick}>
                 <Icon name="md-close" />
-              </Link>
+              </Clickable>
             )}
             {price && parseInt(discount) > 0 && (
               <Text textDecoration="lineThrough" note color={primaryColor}>

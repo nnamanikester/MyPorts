@@ -69,7 +69,7 @@ const Button = ({
 
   return (
     <Clickable
-      onClick={onClick}
+      onClick={disabled === 1 ? null : onClick}
       style={{
         ...styles.button,
         ...smallStyle,

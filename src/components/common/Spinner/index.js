@@ -12,17 +12,24 @@ const Spinner = ({show, area, style, tint}) => {
     return null;
   }
   return (
-    <Spin
-      isVisible={show}
-      size={area || 20}
-      color={tint || primaryColor}
-      type="Circle"
-      style={{...styles.spinner, ...style}}
-    />
+    <View style={styles.container}>
+      <Spin
+        isVisible={show}
+        size={area}
+        color={tint}
+        type="Circle"
+        style={{...styles.spinner, ...style}}
+      />
+    </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    elevation: 10,
+    position: 'relative',
+  },
+});
 
 Spinner.propTypes = {
   /**
