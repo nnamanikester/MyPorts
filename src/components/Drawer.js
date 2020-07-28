@@ -96,7 +96,7 @@ const Drawer = ({
           icon={({size, color}) => (
             <>
               <Icon size={size} color={color} name="md-cart" />
-              {cart.items && cart.items.length > 0 && (
+              {cart && cart.items && cart.items.length > 0 && (
                 <Badge style={{elevation: 1}} color={danger} />
               )}
             </>
@@ -195,7 +195,7 @@ const Drawer = ({
         icon={({size, color}) => (
           <Icon size={size} color={color} name="ios-log-out" />
         )}
-        label={({color, focused}) => <Text>Log Out</Text>}
+        label={({color, focused}) => <Text color={color}>Log Out</Text>}
         onPress={() => logUserOut()}
       />
       <Spacer large />

@@ -1,18 +1,48 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ToastAndroid} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import CartItem from '../../components/CartItem';
 import OrderSummary from '../../components/OrderSummary';
 import {connect} from 'react-redux';
 import {setCartStorage} from '../../redux/actions/CartActions';
+import {useMutation} from '@apollo/react-hooks';
+import {REMOVE_CART_ITEM, CLEAR_CART} from '../../apollo/mutations';
 
 const CartScreen = ({navigation, cart, setCartStorage}) => {
   const [loading] = React.useState(false);
 
-  const handleRemoveItem = (id) => {};
+  const [removeItem, {loading: removeItemLoading}] = useMutation(
+    REMOVE_CART_ITEM,
+  );
+  // const [clearCart, {loading: clearCartLoading}] = useMutation(CLEAR_CART);
 
-  const handleClearitems = () => {};
+  const handleRemoveItem = (id) => {
+    console.log(id);
+    removeItem({
+      variables: {
+        itemId: id,
+        cartId: cart.id,
+      },
+    })
+      .then((res) => {
+        setCartStorage(res.data.removeCartItem);
+      })
+      .catch((e) => {
+        ToastAndroid.show(
+          'An error occured while trying to remove item.',
+          ToastAndroid.SHORT,
+        );
+      });
+  };
+
+  // const handleClearitems = () => {
+  //   clearCart({
+  //     variables: {
+  //       id: cart.id,
+  //     },
+  //   });
+  // };
 
   const calculateOrders = () => {
     let total = 0;
@@ -36,6 +66,10 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
       total += i.product.price * i.quantity;
     });
     return total.toString();
+  };
+
+  const calculatePercentageDiscount = (price, percent) => {
+    return (price / 100) * percent;
   };
 
   const calculateTotal = () => {
@@ -73,14 +107,17 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
                 <CartItem
                   key={item.id + i}
                   name={item.product.name}
-                  shipping={
-                    item.product.shipping === 0
-                      ? 'Free'
-                      : `${item.product.shipping}`
-                  }
+                  shipping={`${item.product.shipping}`}
                   quantity={item.quantity}
                   image={{uri: item.product.images[0].url}}
                   price={`${item.product.price * item.quantity}`}
+                  discount={`${
+                    item.product.fixedDiscount ||
+                    calculatePercentageDiscount(
+                      item.product.price,
+                      item.product.percentageDiscount,
+                    )
+                  }`}
                   onClick={() =>
                     navigation.navigate('SingleProduct', {
                       product: item.product,

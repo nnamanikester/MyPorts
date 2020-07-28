@@ -1,10 +1,9 @@
 import gql from 'graphql-tag';
 
 export const CART = gql`
-  query cart($customerId: String!) {
-    cart(customerId: $customerId) {
+  {
+    cart {
       id
-      quantity
       customer {
         id
       }

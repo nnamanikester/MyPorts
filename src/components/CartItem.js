@@ -2,13 +2,15 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text, Icon, ListItem, Link} from './common';
 import Avater from './Avatar';
-import {info} from './common/variables';
+import {info, primaryColor} from './common/variables';
+import {formatMoney} from '../utils';
 
 const CartItem = ({
   onClick,
   price,
   shipping,
   quantity,
+  discount,
   name,
   image,
   hideCloseButton,
@@ -23,13 +25,27 @@ const CartItem = ({
           <>
             {name && <Text heading>{name}</Text>}
             {quantity && (
-              <Text>
-                Quantity: <Text color={info}>{quantity}</Text>
+              <Text note>
+                Quantity:{' '}
+                <Text note color={info}>
+                  {quantity}
+                </Text>
               </Text>
             )}
             {shipping && (
-              <Text>
-                Shipping: <Text color={info}>{shipping}</Text>
+              <Text note>
+                Shipping:{' '}
+                <Text note color={info}>
+                  {parseInt(shipping) === 0 ? 'Free' : formatMoney(shipping)}
+                </Text>
+              </Text>
+            )}
+            {discount && (
+              <Text note>
+                Discount:{' '}
+                <Text note color={primaryColor}>
+                  - {formatMoney(discount)}
+                </Text>
               </Text>
             )}
           </>
@@ -41,7 +57,17 @@ const CartItem = ({
                 <Icon name="md-close" />
               </Link>
             )}
-            {price && <Text>NGN {price}</Text>}
+            {price && parseInt(discount) > 0 && (
+              <Text textDecoration="lineThrough" note color={primaryColor}>
+                {formatMoney(price)}
+              </Text>
+            )}
+            {price && parseInt(discount) > 0 && (
+              <Text note>{formatMoney(price - parseInt(discount))}</Text>
+            )}
+            {price && parseInt(discount) === 0 && (
+              <Text>{formatMoney(price)}</Text>
+            )}
           </View>
         }
       />

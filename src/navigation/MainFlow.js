@@ -73,7 +73,6 @@ const StackNavigation = ({
   cart,
   offline,
   setCartStorage,
-  customer,
 }) => {
   const [customerProfile, {loading, data, error}] = useLazyQuery(
     CUSTOMER_PROFILE,
@@ -81,7 +80,11 @@ const StackNavigation = ({
   const [
     getCartItems,
     {loading: itemsLoading, data: items, error: itemsError},
-  ] = useLazyQuery(CART, {variables: {customerId: customer.id}});
+  ] = useLazyQuery(CART);
+
+  React.useEffect(() => {
+    getCartItems();
+  }, []);
 
   React.useEffect(() => {
     checkNetworkStatus();
@@ -102,25 +105,20 @@ const StackNavigation = ({
   }, [data]);
 
   React.useMemo(() => {
-    async function getCart() {
-      const cartItems = await AsyncStorage.getItem(CART_STORAGE);
-      setCartStorage(JSON.parse(cartItems));
+    if (!items) {
+      async function getCart() {
+        const cartItems = await AsyncStorage.getItem(CART_STORAGE);
+        setCartStorage(JSON.parse(cartItems));
+      }
+      getCart();
     }
-
-    getCart();
   }, [cart]);
-
-  React.useEffect(() => {
-    getCartItems();
-  }, []);
 
   React.useMemo(() => {
     if (items) {
       const setCart = async () => {
-        const cartItems = await AsyncStorage.setItem(
-          CART_STORAGE,
-          JSON.stringify(items.cart),
-        );
+        await AsyncStorage.setItem(CART_STORAGE, JSON.stringify(items.cart));
+        const cartItems = await AsyncStorage.getItem(CART_STORAGE);
         setCartStorage(JSON.parse(cartItems));
       };
       setCart();
@@ -215,7 +213,6 @@ const mapStateToProps = (state) => {
   return {
     offline: !state.network.isConnected,
     cart: state.cart,
-    customer: state.customer.profile,
   };
 };
 

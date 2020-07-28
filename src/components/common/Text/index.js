@@ -18,6 +18,7 @@ const Text = ({
   style,
   color,
   numberOfLines,
+  textDecoration,
 }) => {
   const textStyle = {};
 
@@ -55,6 +56,11 @@ const Text = ({
 
   if (bold) {
     textStyle.fontFamily = 'SFPD-semi-bold';
+  }
+
+  switch (textDecoration) {
+    case 'lineThrough':
+      textStyle.textDecorationLine = 'line-through';
   }
 
   return (
