@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text, Spacer, Row, Divider} from './common';
 import {primaryColor} from './common/variables';
+import {formatMoney} from '../utils';
 
 const OrderSummary = ({order, shipping, discount, total}) => {
   return (
@@ -8,7 +9,7 @@ const OrderSummary = ({order, shipping, discount, total}) => {
       {order && (
         <Row style={{justifyContent: 'space-between'}}>
           <Text heading>Order: </Text>
-          <Text>NGN {order}</Text>
+          <Text>{formatMoney(order)}</Text>
         </Row>
       )}
 
@@ -17,7 +18,7 @@ const OrderSummary = ({order, shipping, discount, total}) => {
       {shipping && (
         <Row style={{justifyContent: 'space-between'}}>
           <Text heading>Shipping: </Text>
-          <Text>NGN {shipping}</Text>
+          <Text>{formatMoney(shipping)}</Text>
         </Row>
       )}
 
@@ -26,7 +27,7 @@ const OrderSummary = ({order, shipping, discount, total}) => {
       {discount && (
         <Row style={{justifyContent: 'space-between'}}>
           <Text heading>Discount: </Text>
-          <Text color={primaryColor}>- NGN {discount}</Text>
+          <Text color={primaryColor}>- {formatMoney(discount)}</Text>
         </Row>
       )}
 
@@ -36,7 +37,7 @@ const OrderSummary = ({order, shipping, discount, total}) => {
       {total && (
         <Row style={{justifyContent: 'space-between'}}>
           <Text bold>Total: </Text>
-          <Text bold>NGN {total}</Text>
+          <Text bold>{formatMoney(total)}</Text>
         </Row>
       )}
     </>

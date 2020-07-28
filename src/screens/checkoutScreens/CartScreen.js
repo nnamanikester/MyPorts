@@ -60,16 +60,21 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
     return total.toString();
   };
 
+  const calculatePercentageDiscount = (price, percent) => {
+    return (price / 100) * percent;
+  };
+
   const calculateDiscount = () => {
     let total = 0;
     cart.items.forEach((i) => {
-      total += i.product.price * i.quantity;
+      total +=
+        (i.product.fixedDiscount ||
+          calculatePercentageDiscount(
+            i.product.price,
+            i.product.percentageDiscount,
+          )) * i.quantity;
     });
     return total.toString();
-  };
-
-  const calculatePercentageDiscount = (price, percent) => {
-    return (price / 100) * percent;
   };
 
   const calculateTotal = () => {
@@ -112,11 +117,11 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
                   image={{uri: item.product.images[0].url}}
                   price={`${item.product.price * item.quantity}`}
                   discount={`${
-                    item.product.fixedDiscount ||
-                    calculatePercentageDiscount(
-                      item.product.price,
-                      item.product.percentageDiscount,
-                    )
+                    (item.product.fixedDiscount ||
+                      calculatePercentageDiscount(
+                        item.product.price,
+                        item.product.percentageDiscount,
+                      )) * item.quantity
                   }`}
                   onClick={() =>
                     navigation.navigate('SingleProduct', {
