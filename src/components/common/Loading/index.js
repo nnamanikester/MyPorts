@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#fffa',
     zIndex: 99999999999,
-    elevation: 15,
   },
   spinner: {},
 });

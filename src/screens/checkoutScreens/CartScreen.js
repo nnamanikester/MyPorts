@@ -101,7 +101,7 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
       <UI.Layout>
         <UI.Spacer medium />
 
-        {cart.items && cart.items.length > 1
+        {cart && cart.items && cart.items.length > 1
           ? cart.items.map((item, i) => {
               return (
                 <CartItem
