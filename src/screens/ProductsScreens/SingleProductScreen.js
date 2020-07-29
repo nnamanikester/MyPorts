@@ -245,6 +245,14 @@ const SingleProductScreen = ({
       return;
     }
 
+    if (cart && cart.items) {
+      cart.items.forEach((i) => {
+        if (i.product.id !== p.id) {
+          return;
+        }
+      });
+    }
+
     addItemToCart({
       variables: {
         customerId: customer.id,

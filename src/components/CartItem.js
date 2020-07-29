@@ -1,8 +1,16 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Text, Icon, ListItem, Clickable} from './common';
+import {
+  Text,
+  Icon,
+  ListItem,
+  Clickable,
+  TextInput,
+  Column,
+  Row,
+} from './common';
 import Avater from './Avatar';
-import {info, primaryColor} from './common/variables';
+import {info, primaryColor, inactiveColor} from './common/variables';
 import {formatMoney} from '../utils';
 
 const CartItem = ({
@@ -15,23 +23,17 @@ const CartItem = ({
   image,
   hideCloseButton,
   onCloseButtonClick,
+  onQuantityChange,
+  quantityError,
 }) => {
   return (
     <View>
       <ListItem
         onClick={onClick}
-        left={<Avater src={image} large />}
+        left={<Avater src={image} size={85} />}
         body={
           <>
             {name && <Text heading>{name}</Text>}
-            {quantity && (
-              <Text note>
-                Quantity:{' '}
-                <Text note color={info}>
-                  {quantity}
-                </Text>
-              </Text>
-            )}
             {shipping && (
               <Text note>
                 Shipping:{' '}
@@ -47,6 +49,27 @@ const CartItem = ({
                   - {formatMoney(discount)}
                 </Text>
               </Text>
+            )}
+            {quantity && (
+              <Row style={{alignItems: 'center'}}>
+                <Column size="2">
+                  <Text note>QTY: </Text>
+                </Column>
+                <Column size="10">
+                  <TextInput
+                    style={{
+                      zIndex: 99999999999,
+                      height: 32,
+                      padding: 0,
+                      borderColor: quantityError ? 'red' : inactiveColor,
+                    }}
+                    placeholder="Quantity"
+                    value={`${quantity}`}
+                    onChangeText={onQuantityChange}
+                    keyboardType="number-pad"
+                  />
+                </Column>
+              </Row>
             )}
           </>
         }

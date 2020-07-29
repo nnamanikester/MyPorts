@@ -13,6 +13,9 @@ import {info} from '../../components/common/variables';
 
 const CartScreen = ({navigation, cart, setCartStorage}) => {
   const [loading] = React.useState(false);
+  const [quantityError, setQuantityError] = React.useState(false);
+  const [removeItemModal, setRemoveItemModal] = React.useState(false);
+  const [removeItemId, setRemoveItemId] = React.useState(null);
 
   const [removeItem, {loading: removeItemLoading}] = useMutation(
     REMOVE_CART_ITEM,
@@ -48,6 +51,11 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
   //     },
   //   });
   // };
+
+  const handleRemoveItemModal = (id) => {
+    setRemoveItemModal(true);
+    setRemoveItemId(id);
+  };
 
   const calculateOrders = () => {
     let total = 0;
@@ -90,6 +98,36 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
     );
   };
 
+  const onQuantityChange = (value, item) => {
+    if (parseInt(value) < 1) {
+      handleRemoveItemModal(item.id);
+      setQuantityError(true);
+      return;
+    }
+    if (parseInt(value) > item.product.quantity) {
+      setQuantityError(true);
+      return;
+    }
+
+    setQuantityError(false);
+
+    setCartStorage({
+      ...cart,
+      items: [
+        ...cart.items.map((ci) => {
+          if (ci.id === item.id) {
+            return {
+              ...item,
+              quantity: value,
+            };
+          } else {
+            return item;
+          }
+        }),
+      ],
+    });
+  };
+
   return (
     <>
       <UI.Loading show={loading} />
@@ -118,7 +156,7 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
                 key={item.id + i}
                 name={item.product.name}
                 shipping={`${item.product.shipping}`}
-                quantity={item.quantity}
+                quantity={item.quantity || '0'}
                 image={{uri: item.product.images[0].url}}
                 price={`${item.product.price * item.quantity}`}
                 discount={`${
@@ -134,6 +172,8 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
                   })
                 }
                 onCloseButtonClick={() => handleRemoveItem(item.id)}
+                quantityError={quantityError}
+                onQuantityChange={(value) => onQuantityChange(value, item)}
               />
             );
           })
@@ -181,6 +221,13 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
           <UI.Spacer large />
         </View>
       </UI.Layout>
+      <UI.Modal show={removeItemModal}>
+        <UI.Text h3>Are your sure you want to remove this item?</UI.Text>
+
+        <UI.Button onClick={() => handleRemoveItem(removeItemId)}>
+          <UI.Text>Remove Item</UI.Text>
+        </UI.Button>
+      </UI.Modal>
     </>
   );
 };
