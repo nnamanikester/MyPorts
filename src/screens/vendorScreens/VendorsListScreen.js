@@ -3,15 +3,20 @@ import {connect} from 'react-redux';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import VendorList from '../../components/VendorList';
-import {StyleSheet, ScrollView, View, Image, Alert} from 'react-native';
-import {female3, shoe1, shoe2, bag1} from '../../assets/images';
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  Image,
+  Alert,
+  Linking,
+} from 'react-native';
 import FeaturedVendor from '../../components/FeaturedVendor';
 import SearchBar from '../../components/SearchBar';
 import Swiper from 'react-native-swiper';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_SHOPS} from '../../apollo/queries';
 import Skeleton from 'react-native-skeleton-placeholder';
-import {Linking} from 'expo';
 
 const VendorListScreen = ({navigation, offline, adverts}) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
@@ -128,6 +133,7 @@ const VendorListScreen = ({navigation, offline, adverts}) => {
         onEndReached={() => fetchMoreShops()}
         onRefresh={() => refetch()}
         refreshing={fetching}>
+        {/* ADVERTS */}
         <View style={styles.container}>
           {adverts && (
             <Swiper
@@ -151,6 +157,7 @@ const VendorListScreen = ({navigation, offline, adverts}) => {
             </Swiper>
           )}
         </View>
+        {/* /ADVERTS */}
 
         {showTitle && (
           <View style={styles.container}>

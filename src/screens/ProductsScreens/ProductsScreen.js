@@ -5,7 +5,14 @@ import Swiper from 'react-native-swiper';
 import Header from '../../components/Header';
 import Product from '../../components/Product';
 import FeaturedProduct from '../../components/FeaturedProduct';
-import {ScrollView, StyleSheet, View, Image, Alert} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Image,
+  Alert,
+  Linking,
+} from 'react-native';
 import {useLazyQuery, useSubscription} from '@apollo/react-hooks';
 import {GET_PRODUCTS} from '../../apollo/queries';
 import {SUBSCRIBE_TO_PRODUCT} from '../../apollo/subcriptions';
@@ -13,7 +20,7 @@ import EmptyItem from '../../components/EmptyItem';
 import {female3, bag1, shoe1, shoe2} from '../../assets/images';
 import {info} from '../../components/common/variables';
 
-const ProductsScreen = ({navigation, offline}) => {
+const ProductsScreen = ({navigation, offline, adverts}) => {
   const [products, setProducts] = React.useState([]);
   const [fetching, setFetching] = React.useState(false);
   const [featuredAvailable, setFeaturedAvailable] = React.useState(false);
@@ -185,28 +192,31 @@ const ProductsScreen = ({navigation, offline}) => {
         refreshing={loading}
         onRefresh={() => refetch()}
         onEndReached={() => fetchMoreProducts()}>
+        {/* ADVERTS */}
         <View style={styles.container}>
-          <Swiper
-            paginationStyle={{bottom: 5}}
-            animated
-            autoplayTimeout={10}
-            height={100}
-            loop
-            autoplay>
-            <UI.Clickable>
-              <Image style={styles.advert} source={shoe1} />
-            </UI.Clickable>
-            <UI.Clickable>
-              <Image style={styles.advert} source={shoe2} />
-            </UI.Clickable>
-            <UI.Clickable>
-              <Image style={styles.advert} source={bag1} />
-            </UI.Clickable>
-            <UI.Clickable>
-              <Image style={styles.advert} source={female3} />
-            </UI.Clickable>
-          </Swiper>
+          {adverts && (
+            <Swiper
+              paginationStyle={{bottom: 5}}
+              animated
+              autoplayTimeout={10}
+              height={100}
+              loop
+              autoplay>
+              {adverts.map((a, i) => {
+                if (a.type === 2) {
+                  return (
+                    <UI.Clickable
+                      key={a.id + i}
+                      onClick={() => Linking.openURL(a.url)}>
+                      <Image style={styles.advert} source={{uri: a.imageUrl}} />
+                    </UI.Clickable>
+                  );
+                }
+              })}
+            </Swiper>
+          )}
         </View>
+        {/* /ADVERTS */}
 
         {featuredAvailable ? (
           <View style={styles.container}>
@@ -331,6 +341,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     offline: !state.network.isConnected,
+    adverts: state.adverts,
   };
 };
 
