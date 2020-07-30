@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Alert} from 'react-native';
 import * as UI from '../../components/common';
 import {primaryColor} from '../../components/common/variables';
 import Header from '../../components/Header';
@@ -50,13 +50,25 @@ const ProfileScreen = ({navigation, offline, customer, checkNetworkStatus}) => {
       customerWallet();
       customerSaves({variables: {id: customer.id}});
     }
-    if (walletData) setBalance(walletData.customerWallet.balance);
-    if (savesData) setSavesCount(savesData.customerSaves.length);
-    if (ordersData) setOrdersCount(ordersData.customerOrders.length);
+    if (walletData) {
+      setBalance(walletData.customerWallet.balance);
+    }
+    if (savesData) {
+      setSavesCount(savesData.customerSaves.length);
+    }
+    if (ordersData) {
+      setOrdersCount(ordersData.customerOrders.length);
+    }
 
-    if (walletError) alert('Unable to get balance.');
-    if (savesError) alert('Unable to get saved items.');
-    if (ordersError) alert('Unable to get order history.');
+    if (walletError) {
+      Alert.alert('Error', 'Unable to get balance.');
+    }
+    if (savesError) {
+      Alert.alert('Error', 'Unable to get saved items.');
+    }
+    if (ordersError) {
+      Alert.alert('Error', 'Unable to get order history.');
+    }
   }, [walletData, savesData, ordersData]);
 
   return (

@@ -10,7 +10,7 @@ import {useLazyQuery, useSubscription} from '@apollo/react-hooks';
 import {GET_PRODUCTS} from '../../apollo/queries';
 import {SUBSCRIBE_TO_PRODUCT} from '../../apollo/subcriptions';
 import EmptyItem from '../../components/EmptyItem';
-import {female2, female3, bag1, shoe1, shoe2} from '../../assets/images';
+import {female3, bag1, shoe1, shoe2} from '../../assets/images';
 import {info} from '../../components/common/variables';
 
 const ProductsScreen = ({navigation, offline}) => {
