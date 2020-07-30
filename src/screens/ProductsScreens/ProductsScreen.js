@@ -13,11 +13,9 @@ import {
   Alert,
   Linking,
 } from 'react-native';
-import {useLazyQuery, useSubscription} from '@apollo/react-hooks';
+import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_PRODUCTS} from '../../apollo/queries';
-import {SUBSCRIBE_TO_PRODUCT} from '../../apollo/subcriptions';
 import EmptyItem from '../../components/EmptyItem';
-import {female3, bag1, shoe1, shoe2} from '../../assets/images';
 import {info} from '../../components/common/variables';
 
 const ProductsScreen = ({navigation, offline, adverts}) => {
@@ -48,7 +46,7 @@ const ProductsScreen = ({navigation, offline, adverts}) => {
 
   const [
     getProducts,
-    {loading, data, error, refetch, fetchMore, subscribeToMore},
+    {loading, data, error, refetch, fetchMore},
   ] = useLazyQuery(GET_PRODUCTS, {
     variables: {
       first: 42,
@@ -80,45 +78,6 @@ const ProductsScreen = ({navigation, offline, adverts}) => {
       );
     }
   }, [error]);
-
-  const {error: prodError} = useSubscription(SUBSCRIBE_TO_PRODUCT, {
-    onSubcriptionData: (dataa) => {
-      console.log('SUBSCRIPTION DATA ---------');
-      console.log(dataa);
-    },
-  });
-
-  if (prodError) {
-    console.log('SUbscription ');
-    console.log(prodError);
-  }
-
-  const subscribeToProducts = (subscribeToMore) => {
-    subscribeToMore({
-      document: SUBSCRIBE_TO_PRODUCT,
-      updateQuery: (prev, {subscriptionData}) => {
-        if (!subscriptionData.data) {
-          return prev;
-        }
-        const newProduct = subscriptionData.data.newProduct;
-        const exists = prev.products.edges.find(
-          (node) => node.id === newProduct.id,
-        );
-        if (exists) {
-          return prev;
-        }
-
-        console.log('previous', prev);
-        console.log('SubscriptionData', subscriptionData);
-        return {
-          products: {
-            edges: [...prev.products.edges, ...newProduct.node],
-            __typename: prev.products.__typename,
-          },
-        };
-      },
-    });
-  };
 
   // Fetch more products onEndReach for pagination.
   const fetchMoreProducts = () => {
@@ -291,7 +250,6 @@ const ProductsScreen = ({navigation, offline, adverts}) => {
               !error &&
               products.length > 0 &&
               products.map((p, i) => {
-                subscribeToProducts(subscribeToMore);
                 return (
                   <Product
                     key={p.id + i}

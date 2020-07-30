@@ -104,7 +104,9 @@ const CategoriesScreen = ({navigation, offline}) => {
               return (
                 <Category
                   key={c.id + i}
-                  onClick={() => navigation.navigate('ProductsByCategory', {c})}
+                  onClick={() =>
+                    navigation.navigate('ProductsByCategory', {category: c})
+                  }
                   title={c.name}
                   image={{uri: c.imageUrl}}
                   subtitle={`${c.products.length} Items`}

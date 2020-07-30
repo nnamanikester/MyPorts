@@ -129,11 +129,7 @@ const StackNavigation = ({
 
   React.useMemo(() => {
     if (advertsData) {
-      let allAdverts = [];
-      advertsData.adverts.edges.forEach((a) => {
-        allAdverts.push(a.node);
-      });
-      setAdverts(allAdverts);
+      setAdverts(advertsData.adverts.edges.map((a) => a.node));
     }
   }, [advertsData]);
 

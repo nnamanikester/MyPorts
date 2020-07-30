@@ -1,107 +1,178 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {
-  Layout,
-  Spacer,
-  Text,
-  Icon,
-  Row,
-  Column,
-  Clickable,
-} from '../../components/common';
-import Avatar from '../../components/Avatar';
+import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import Product from '../../components/Product';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {
-  female1,
-  female2,
-  female3,
-  male1,
-  bag1,
-  shoe1,
-  shoe2,
-} from '../../assets/images';
-import {primaryColor} from '../../components/common/variables';
+import {StyleSheet, View, Alert} from 'react-native';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {GET_PRODUCTS} from '../../apollo/queries';
+import EmptyItem from '../../components/EmptyItem';
+import {info} from '../../components/common/variables';
 
-const ProductsByCategoryScreen = ({navigation}) => {
-  const [hideHeader, setHideHeader] = useState(false);
+const ProductsByCategoryScreen = ({navigation, offline, route: {params}}) => {
+  const {category} = params;
+  const [products, setProducts] = React.useState([]);
+  const [fetching, setFetching] = React.useState(false);
+
+  const [
+    getProducts,
+    {loading, data, error, refetch, fetchMore},
+  ] = useLazyQuery(GET_PRODUCTS, {
+    variables: {
+      first: 42,
+      where: {
+        AND: {
+          status: 1,
+          category: {
+            id: category.id,
+          },
+        },
+      },
+      orderBy: 'createdAt_DESC',
+    },
+  });
+
+  React.useEffect(() => {
+    if (!offline) {
+      getProducts();
+    }
+  }, []);
+
+  React.useMemo(() => {
+    if (data) {
+      setProducts(data.products.edges.map((p) => p.node));
+    }
+  }, [data]);
+
+  React.useMemo(() => {
+    if (error) {
+      Alert.alert(
+        'Network Error!',
+        'An error occured trying to load products. Please check if you are connected to the internet and try again.',
+        [{text: 'Try again', onPress: () => getProducts()}],
+      );
+    }
+  }, [error]);
+
+  // Fetch more products onEndReach for pagination.
+  const fetchMoreProducts = () => {
+    if (!data) {
+      return;
+    }
+    setFetching(true);
+    // Check if  there's a next page.
+    if (data.products.pageInfo.hasNextPage) {
+      // Fetch more products
+      fetchMore({
+        variables: {
+          after: data.products.pageInfo.endCursor,
+        },
+        // Update the cached data with the fetched product
+        updateQuery: (prev, {fetchMoreResult}) => {
+          if (prev.products.pageInfo.hasNextPage) {
+            // if the previous page info has next page
+            setFetching(false);
+            // return the products with the new data added to cache
+            return {
+              products: {
+                edges: [
+                  ...prev.products.edges,
+                  ...fetchMoreResult.products.edges,
+                ],
+                pageInfo: {...fetchMoreResult.products.pageInfo},
+                __typename: fetchMoreResult.products.__typename,
+              },
+            };
+          } else {
+            // If not, return the precious cached data
+            setFetching(false);
+            return prev;
+          }
+        },
+      });
+    } else {
+      setFetching(false);
+    }
+  };
 
   return (
     <>
       <Header
         isCart
-        title="Category"
+        title={category.name}
         headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" size={25} color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.goBack()}>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+          </UI.Clickable>
         }
         headerRight={
           <>
-            <Clickable onClick={() => navigation.navigate('Cart')}>
-              <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </Clickable>
-            <Spacer medium />
-            <Clickable onClick={() => navigation.navigate('Search')}>
-              <Icon name="ios-search" color="#fff" />
-            </Clickable>
+            <UI.Clickable onClick={() => navigation.navigate('Cart')}>
+              <UI.Icon
+                name="shopping-bag"
+                size={22}
+                type="Feather"
+                color="#fff"
+              />
+            </UI.Clickable>
+            <UI.Spacer medium />
+            <UI.Clickable onClick={() => navigation.navigate('Search')}>
+              <UI.Icon name="ios-search" color="#fff" />
+            </UI.Clickable>
           </>
         }
       />
-      <Layout>
+      <UI.Layout
+        refreshing={loading}
+        onRefresh={() => refetch()}
+        onEndReached={() => fetchMoreProducts()}>
         <View style={styles.container}>
-          <View style={{paddingLeft: 15}}>
-            <Text style={styles.title}>Men</Text>
-          </View>
-          <Spacer />
-          <Row style={{justifyContent: 'space-between'}}>
-            <Product
-              quantity="89"
-              image={female1}
-              name="Water Proof Bag"
-              vendor="Chiomy Styles"
-            />
+          <UI.Text style={styles.title}>{category.name} Products</UI.Text>
+          <UI.Spacer />
+          <UI.Row style={{justifyContent: 'space-between'}}>
+            {!loading && !error && !products.length > 0 && (
+              <>
+                <UI.Spacer large />
+                <EmptyItem
+                  icon={<UI.Icon color={info} size={100} name="ios-basket" />}
+                  show
+                  title="No product found!"
+                  message="There are no products yet! Please check back later."
+                />
+              </>
+            )}
 
-            <Product
-              quantity="14"
-              image={male1}
-              name="Table Spoon"
-              vendor="Benson Utilities"
-            />
-            <Product
-              image={female2}
-              name="Female belt holder"
-              vendor="Genny Collections"
-              quantity="31"
-            />
-            <Product
-              quantity="45"
-              image={female3}
-              name="Balenciaga Shoe"
-              vendor="Chucks Ventiany"
-            />
-            <Product
-              quantity="15"
-              image={shoe1}
-              name="Adidas Shoe"
-              vendor="Adidas"
-            />
-            <Product
-              quantity="20"
-              image={female3}
-              name="Nike Shoe"
-              vendor="Nike"
-            />
-            <Product
-              quantity="8"
-              image={female3}
-              name="Gucci Bag"
-              vendor="Cossy Viantae"
-            />
-          </Row>
+            {!loading &&
+              !error &&
+              products.length > 0 &&
+              products.map((p, i) => {
+                return (
+                  <Product
+                    key={p.id + i}
+                    quantity={p.quantity}
+                    image={{uri: p.images[0].url}}
+                    name={p.name}
+                    vendor={p.category.name}
+                    onClick={() =>
+                      navigation.navigate('SingleProduct', {product: p})
+                    }
+                  />
+                );
+              })}
+          </UI.Row>
+
+          <UI.Spacer medium />
+
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <UI.Spinner show={fetching || loading || error} area={40} />
+            {!fetching && !loading && !error && (
+              <UI.Text>No more products!</UI.Text>
+            )}
+          </View>
+
+          <UI.Spacer large />
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
@@ -109,11 +180,23 @@ const ProductsByCategoryScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 10,
+    paddingHorizontal: 10,
   },
   title: {
     fontSize: 20,
     fontFamily: 'SFPD-regular',
   },
+  advert: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 5,
+  },
 });
 
-export default ProductsByCategoryScreen;
+const mapStateToProps = (state) => {
+  return {
+    offline: !state.network.isConnected,
+  };
+};
+
+export default connect(mapStateToProps)(ProductsByCategoryScreen);
