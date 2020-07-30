@@ -3,12 +3,13 @@ import {connect} from 'react-redux';
 import {createStackNavigator} from '@react-navigation/stack';
 import {setCustomerProfile} from '../redux/actions/CustomerActions';
 import {setCartStorage} from '../redux/actions/CartActions';
+import {setAdverts} from '../redux/actions/AdvertActions';
 import {checkNetworkStatus} from '../redux/actions/NetworkActions';
 import {CUSTOMER_PROFILE} from '../apollo/queries';
 import {useLazyQuery} from '@apollo/react-hooks';
 import * as UI from '../components/common';
 import {Alert} from 'react-native';
-import {CART} from '../apollo/queries';
+import {CART, ADVERTS} from '../apollo/queries';
 
 import TabNavigation from './MainFlows/MainTabNavigation';
 import DraweNavigation from './MainFlows/MainDrawerNavigation';
@@ -73,6 +74,7 @@ const StackNavigation = ({
   cart,
   offline,
   setCartStorage,
+  setAdverts,
 }) => {
   const [customerProfile, {loading, data, error}] = useLazyQuery(
     CUSTOMER_PROFILE,
@@ -81,10 +83,14 @@ const StackNavigation = ({
     getCartItems,
     {loading: itemsLoading, data: items, error: itemsError},
   ] = useLazyQuery(CART);
+  const [getAdverts, {data: advertsData, error: advertsError}] = useLazyQuery(
+    ADVERTS,
+  );
 
-  React.useEffect(() => {
+  React.useMemo(() => {
     getCartItems();
-  }, []);
+    getAdverts();
+  }, [itemsError, advertsError]);
 
   React.useEffect(() => {
     checkNetworkStatus();
@@ -113,6 +119,12 @@ const StackNavigation = ({
       getCart();
     }
   }, [cart]);
+
+  React.useMemo(() => {
+    if (advertsData) {
+      setAdverts(advertsData.adverts);
+    }
+  }, [advertsData]);
 
   React.useMemo(() => {
     if (items) {
@@ -213,9 +225,12 @@ const mapStateToProps = (state) => {
   return {
     offline: !state.network.isConnected,
     cart: state.cart,
+    adverts: state.adverts,
   };
 };
 
-export default connect(mapStateToProps, {setCustomerProfile, setCartStorage})(
-  StackNavigation,
-);
+export default connect(mapStateToProps, {
+  setCustomerProfile,
+  setCartStorage,
+  setAdverts,
+})(StackNavigation);

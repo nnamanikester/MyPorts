@@ -9,3 +9,4 @@ export * from './address';
 export * from './shop';
 export * from './review';
 export * from './cart';
+export * from './advert';
