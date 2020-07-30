@@ -25,3 +25,19 @@ export const CREATE_REVIEW = gql`
     }
   }
 `;
+
+export const UPDATE_REVIEW = gql`
+  mutation updateReview($id: String!, $comment: String, $rating: Int) {
+    updateReview(id: $id, comment: $comment, rating: $rating) {
+      id
+      vendor {
+        id
+      }
+      customer {
+        id
+      }
+      comment
+      rating
+    }
+  }
+`;

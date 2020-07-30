@@ -4,7 +4,7 @@ import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import Comment from '../../components/Comment';
 import {useLazyQuery, useMutation} from '@apollo/react-hooks';
-import {CREATE_REVIEW} from '../../apollo/mutations';
+import {CREATE_REVIEW, UPDATE_REVIEW} from '../../apollo/mutations';
 import {REVIEWS} from '../../apollo/queries';
 import {connect} from 'react-redux';
 import moment from 'moment';
@@ -17,10 +17,12 @@ const VendorShopReviewScreen = ({
   customer,
 }) => {
   const [openModal, setOpenModal] = React.useState(false);
+  const [openEditModal, setOpenEditModal] = React.useState(false);
   const [reviews, setReviews] = React.useState([]);
   const [comment, setComment] = React.useState('');
   const [rating, setRating] = React.useState(null);
   const [reviewErrors, setReviewErrors] = React.useState(null);
+  const [editingReview, setEditingReview] = React.useState(null);
 
   const [getReviews, {data, loading, error, refetch}] = useLazyQuery(REVIEWS, {
     variables: {
@@ -50,8 +52,9 @@ const VendorShopReviewScreen = ({
   }, [error]);
 
   const [createReview, {loading: rLoading}] = useMutation(CREATE_REVIEW);
+  const [updateReview, {loading: urLoading}] = useMutation(UPDATE_REVIEW);
 
-  const handleCreateReveiw = () => {
+  const handleCreateReview = () => {
     setReviewErrors(null);
     if (!rating) {
       return setReviewErrors('Rating is required!');
@@ -77,16 +80,58 @@ const VendorShopReviewScreen = ({
         })
         .catch((e) => {
           setOpenModal(false);
-          Alert.alert('Unable to review at this time. Please try again!');
+          Alert.alert(
+            'Error',
+            'Unable to review at this time. Please try again!',
+          );
         });
     }
     setRating(0);
     setComment('');
   };
 
+  const handleEditReview = (r) => {
+    setOpenEditModal(true);
+    setEditingReview(r);
+    setRating(r.rating);
+    setComment(r.comment);
+  };
+
+  const handleUpdateReview = () => {
+    setReviewErrors(null);
+    if (!rating) {
+      return setReviewErrors('Rating is required!');
+    }
+    if (!comment) {
+      return setReviewErrors('Comment is required!');
+    }
+    if (!offline) {
+      updateReview({
+        variables: {
+          comment,
+          rating,
+          id: editingReview.id,
+        },
+      })
+        .then((res) => {
+          setOpenEditModal(false);
+          ToastAndroid.show('Review updated successfully!', ToastAndroid.SHORT);
+          setRating(0);
+          setComment('');
+        })
+        .catch((e) => {
+          setOpenModal(false);
+          Alert.alert(
+            'Error',
+            'Unable to update review at this time. Please try again!',
+          );
+        });
+    }
+  };
+
   return (
     <>
-      <UI.Loading show={loading || rLoading} />
+      <UI.Loading show={loading || rLoading || urLoading} />
       <Header
         title={params.s.profile.name}
         headerLeft={
@@ -108,10 +153,10 @@ const VendorShopReviewScreen = ({
                   name={`${r.customer.firstName} ${r.customer.lastName}`}
                   comment={r.comment}
                   image={{uri: r.customer.photo}}
-                  value={r.rating}
+                  rating={r.rating}
                   date={moment(r.createdAt).format('DD/MM/YYYY')}
                   showEdit={r.customer.id === customer.id}
-                  onEditClick={() => {}}
+                  onEditClick={() => handleEditReview(r)}
                 />
               );
             })}
@@ -171,8 +216,57 @@ const VendorShopReviewScreen = ({
 
           <UI.Spacer />
 
-          <UI.Button onClick={() => handleCreateReveiw()} size="small">
+          <UI.Button onClick={() => handleCreateReview()} size="small">
             <UI.Text color="#fff">Submit</UI.Text>
+          </UI.Button>
+        </UI.Row>
+      </UI.Modal>
+
+      <UI.Modal show={openEditModal}>
+        <UI.Text heading>Edit Review</UI.Text>
+
+        <UI.Spacer medium />
+
+        <UI.Rating
+          clickable
+          value={rating}
+          onClick={(value) => setRating(value)}
+        />
+
+        <UI.Spacer />
+
+        {reviewErrors ? <UI.Text color="red">{reviewErrors}</UI.Text> : null}
+
+        <UI.Spacer />
+
+        <View style={{width: '100%'}}>
+          <UI.TextInput
+            value={comment}
+            onChangeText={(value) => setComment(value)}
+            placeholder="Comment..."
+            autoFocus
+            multiline
+          />
+        </View>
+
+        <UI.Divider />
+
+        <UI.Row style={{justifyContent: 'space-between'}}>
+          <UI.Button
+            onClick={() => {
+              setRating(0);
+              setComment('');
+              setOpenEditModal(false);
+            }}
+            size="small"
+            type="ghost">
+            Cancel
+          </UI.Button>
+
+          <UI.Spacer />
+
+          <UI.Button onClick={() => handleUpdateReview()} size="small">
+            <UI.Text color="#fff">Update</UI.Text>
           </UI.Button>
         </UI.Row>
       </UI.Modal>
