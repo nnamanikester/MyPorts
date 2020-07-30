@@ -16,6 +16,28 @@ import {info} from '../../components/common/variables';
 const ProductsScreen = ({navigation, offline}) => {
   const [products, setProducts] = React.useState([]);
   const [fetching, setFetching] = React.useState(false);
+  const [featuredAvailable, setFeaturedAvailable] = React.useState(false);
+  const [boostedAvailable, setBoostedAvailable] = React.useState(false);
+
+  React.useMemo(() => {
+    if (products && products.length > 0) {
+      products.forEach((p) => {
+        if (p.featured) {
+          return setFeaturedAvailable(true);
+        }
+      });
+    }
+  }, [products]);
+
+  React.useMemo(() => {
+    if (products && products.length > 0) {
+      products.forEach((p) => {
+        if (p.boosted) {
+          return setBoostedAvailable(true);
+        }
+      });
+    }
+  }, [products]);
 
   const [
     getProducts,
@@ -185,71 +207,58 @@ const ProductsScreen = ({navigation, offline}) => {
             </UI.Clickable>
           </Swiper>
         </View>
-        <View style={styles.container}>
-          <UI.Text style={styles.title}>Top Selling Products</UI.Text>
-          <UI.Spacer />
-        </View>
+
+        {featuredAvailable ? (
+          <View style={styles.container}>
+            <UI.Text style={styles.title}>Top Selling Products</UI.Text>
+            <UI.Spacer />
+          </View>
+        ) : null}
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <FeaturedProduct
-            quantity="8"
-            image={bag1}
-            name="Gucci Bag"
-            vendor="Shop And Smile"
-            onClick={() => navigation.navigate('SingleProduct')}
-          />
-          <FeaturedProduct
-            quantity="89"
-            image={shoe1}
-            name="Water Proof Bag"
-            vendor="Ugoski Wears"
-            onClick={() => navigation.navigate('SingleProduct')}
-          />
-          <FeaturedProduct
-            quantity="14"
-            image={shoe2}
-            name="Table Spoon"
-            vendor="Benard Shoes"
-            onClick={() => navigation.navigate('SingleProduct')}
-          />
-          <FeaturedProduct
-            image={female2}
-            name="Female belt holder"
-            vendor="Viky Coperate wears"
-            quantity="31"
-            onClick={() => navigation.navigate('SingleProduct')}
-          />
-          <FeaturedProduct
-            quantity="45"
-            image={female3}
-            name="Balenciaga Shoe"
-            vendor="Kriative Collections"
-            onClick={() => navigation.navigate('SingleProduct')}
-          />
+          {!loading && !error && products.length > 0
+            ? products.map((p, i) => {
+                if (p.featured) {
+                  return (
+                    <FeaturedProduct
+                      key={p.id + i}
+                      quantity={`${p.quantity}`}
+                      image={{uri: p.images[0].url}}
+                      name={p.name}
+                      vendor={p.category.name}
+                      onClick={() =>
+                        navigation.navigate('SingleProduct', {product: p})
+                      }
+                    />
+                  );
+                }
+              })
+            : null}
         </ScrollView>
 
-        <View style={styles.container}>
-          <UI.Text style={styles.title}>Shop Our Collections</UI.Text>
-          <UI.Spacer />
-        </View>
+        {boostedAvailable && (
+          <View style={styles.container}>
+            <UI.Text style={styles.title}>Shop Our Collections</UI.Text>
+            <UI.Spacer />
+          </View>
+        )}
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <FeaturedProduct
-            image={bag1}
-            onClick={() => navigation.navigate('SingleProduct')}
-          />
-          <FeaturedProduct
-            image={shoe1}
-            onClick={() => navigation.navigate('SingleProduct')}
-          />
-          <FeaturedProduct
-            image={shoe2}
-            onClick={() => navigation.navigate('SingleProduct')}
-          />
-          <FeaturedProduct
-            image={female3}
-            onClick={() => navigation.navigate('SingleProduct')}
-          />
+          {!loading && !error && products.length > 0
+            ? products.map((p, i) => {
+                if (p.boosted) {
+                  return (
+                    <FeaturedProduct
+                      key={p.id + i}
+                      image={{uri: p.images[0].url}}
+                      onClick={() =>
+                        navigation.navigate('SingleProduct', {product: p})
+                      }
+                    />
+                  );
+                }
+              })
+            : null}
         </ScrollView>
 
         <View style={styles.container}>

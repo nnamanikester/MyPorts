@@ -45,6 +45,8 @@ export const GET_PRODUCTS = gql`
           fixedDiscount
           percentageDiscount
           status
+          featured
+          boosted
         }
       }
     }
