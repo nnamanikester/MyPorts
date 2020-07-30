@@ -85,6 +85,13 @@ const StackNavigation = ({
   ] = useLazyQuery(CART);
   const [getAdverts, {data: advertsData, error: advertsError}] = useLazyQuery(
     ADVERTS,
+    {
+      variables: {
+        where: {
+          status: 1,
+        },
+      },
+    },
   );
 
   React.useMemo(() => {
@@ -122,7 +129,11 @@ const StackNavigation = ({
 
   React.useMemo(() => {
     if (advertsData) {
-      setAdverts(advertsData.adverts);
+      let allAdverts = [];
+      advertsData.adverts.edges.forEach((a) => {
+        allAdverts.push(a.node);
+      });
+      setAdverts(allAdverts);
     }
   }, [advertsData]);
 

@@ -11,8 +11,9 @@ import Swiper from 'react-native-swiper';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_SHOPS} from '../../apollo/queries';
 import Skeleton from 'react-native-skeleton-placeholder';
+import {Linking} from 'expo';
 
-const VendorListScreen = ({navigation, offline}) => {
+const VendorListScreen = ({navigation, offline, adverts}) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [searchText, setSearchText] = React.useState('');
   const [fetching, setFetching] = React.useState(false);
@@ -128,26 +129,27 @@ const VendorListScreen = ({navigation, offline}) => {
         onRefresh={() => refetch()}
         refreshing={fetching}>
         <View style={styles.container}>
-          <Swiper
-            paginationStyle={{bottom: 5}}
-            animated
-            autoplayTimeout={10}
-            height={100}
-            loop
-            autoplay>
-            <UI.Clickable>
-              <Image style={styles.advert} source={shoe1} />
-            </UI.Clickable>
-            <UI.Clickable>
-              <Image style={styles.advert} source={shoe2} />
-            </UI.Clickable>
-            <UI.Clickable>
-              <Image style={styles.advert} source={bag1} />
-            </UI.Clickable>
-            <UI.Clickable>
-              <Image style={styles.advert} source={female3} />
-            </UI.Clickable>
-          </Swiper>
+          {adverts && (
+            <Swiper
+              paginationStyle={{bottom: 5}}
+              animated
+              autoplayTimeout={10}
+              height={100}
+              loop
+              autoplay>
+              {adverts.map((a, i) => {
+                if (a.type === 1) {
+                  return (
+                    <UI.Clickable
+                      key={a.id + i}
+                      onClick={() => Linking.openURL(a.url)}>
+                      <Image style={styles.advert} source={{uri: a.imageUrl}} />
+                    </UI.Clickable>
+                  );
+                }
+              })}
+            </Swiper>
+          )}
         </View>
 
         {showTitle && (
@@ -276,6 +278,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     offline: !state.network.isConnected,
+    adverts: state.adverts,
   };
 };
 

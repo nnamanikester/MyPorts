@@ -1,6 +1,6 @@
 export const setAdverts = (adverts) => {
   return {
-    type: 'SET_ADVERT',
+    type: 'SET_ADVERTS',
     payload: adverts,
   };
 };
