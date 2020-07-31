@@ -1,5 +1,5 @@
 import React from 'react';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import Dashboard from '../../screens/VDScreens/VDHomeScreen';
 import DrawerContent from '../../components/Drawer';
 import SettingsScreen from '../../screens/SettingsScreens/SettingsScreen';

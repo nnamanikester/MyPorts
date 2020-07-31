@@ -1,13 +1,13 @@
 import React from 'react';
-import { Icon, TextInput, FAB } from './common';
-import { View, StyleSheet } from 'react-native';
+import {Icon, TextInput, FAB} from './common';
+import {View, StyleSheet} from 'react-native';
 
-const ConversationEntry = () => {
+const ConversationEntry = (props) => {
   return (
     <>
       <View style={styles.container}>
-        <View style={{ flex: 1 }}>
-          <TextInput multiline placeholder="Type message here..." />
+        <View style={{flex: 1}}>
+          <TextInput {...props} multiline placeholder="Type message here..." />
         </View>
         <FAB
           size={50}

@@ -32,6 +32,7 @@ import ReferAndEarn from '../screens/UserScreens/ReferAndEarnScreen';
 // Vendor Screens
 import VendorShopReview from '../screens/vendorScreens/VendorShopReviewScreen';
 import VendorShop from '../screens/vendorScreens/VendorShopScreen';
+import VDConversation from '../screens/VDScreens/VDConversationScreen';
 
 // Checkout Screens
 import Payment from '../screens/checkoutScreens/PaymentScreen';
@@ -176,6 +177,7 @@ const StackNavigation = ({
         {/* Vendor Screens */}
         <Stack.Screen name="VendorShopReview" component={VendorShopReview} />
         <Stack.Screen name="VendorShop" component={VendorShop} />
+        <Stack.Screen name="VDConversation" component={VDConversation} />
 
         {/* Checkout Screens */}
         <Stack.Screen name="Cart" component={Cart} />

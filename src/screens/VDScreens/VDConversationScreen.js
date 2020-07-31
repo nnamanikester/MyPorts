@@ -1,54 +1,80 @@
-import React, { useState } from 'react';
-import {
-  Layout,
-  Spacer,
-  Clickable,
-  Icon,
-  Avatar,
-  Option,
-} from '../../components/common';
-import { View, StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import * as UI from '../../components/common';
+import {View, StyleSheet, Alert} from 'react-native';
 import Header from '../../components/Header';
 import Message from '../../components/Message';
 import ConversationEntry from '../../components/ConversationEntry';
-import { food3 } from '../../assets/images';
+import {warning, danger} from '../../components/common/variables';
+import {useLazyQuery, useMutation} from '@apollo/react-hooks';
 
-const VDConversationScreen = ({ navigation }) => {
+const VDConversationScreen = ({navigation, route: {params}}) => {
+  const {customer, vendor} = params;
+
   const [selected, setSelected] = useState(false);
+  const [message, setMessage] = useState('');
 
   const onSelectMessage = () => {
     return setSelected(true);
   };
 
+  const handleSendMessage = () => {
+    // Send Message
+  };
+
   return (
     <>
       <Header
-        title="John Kester"
+        title={vendor.profile.name}
         headerLeft={
-          <Clickable
-            style={{ flexDirection: 'row', alignItems: 'center' }}
+          <UI.Clickable
+            style={{flexDirection: 'row', alignItems: 'center'}}
             onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-            <Spacer />
-            <Avatar src={food3} rounded />
-          </Clickable>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+            <UI.Spacer />
+            <UI.Avatar src={{uri: vendor.profile.logo}} rounded />
+          </UI.Clickable>
         }
         headerRight={
           <View>
-            <Option
-              icon={<Icon color="#fff" name="md-more" />}
+            <UI.Option
+              icon={<UI.Icon color="#fff" name="ios-more" />}
               options={[
-                { label: 'End Chat', action: () => alert('Chat ended') },
+                {
+                  label: 'End Chat',
+                  action: () => Alert.alert('Message', 'Chat ended'),
+                },
+                {
+                  label: 'Copy',
+                  action: () => {},
+                },
+                {
+                  label: 'Delete',
+                  action: () => {},
+                },
+                {
+                  label: 'Clear Conversation',
+                  action: () => {},
+                },
               ]}
             />
           </View>
         }
       />
-      <Layout>
+      <View style={styles.info}>
+        <UI.Text note>
+          This chat will automatically be closed in{' '}
+          <UI.Text note color={danger}>
+            24hrs
+          </UI.Text>
+        </UI.Text>
+      </View>
+      <UI.Layout>
         <View style={styles.container}>
           <Message
             onClick={() => {
-              if (selected) setSelected(false);
+              if (selected) {
+                setSelected(false);
+              }
             }}
             onSelect={onSelectMessage}
             selected={selected}
@@ -59,7 +85,9 @@ const VDConversationScreen = ({ navigation }) => {
           />
           <Message
             onClick={() => {
-              if (selected) setSelected(false);
+              if (selected) {
+                setSelected(false);
+              }
             }}
             onSelect={onSelectMessage}
             selected={selected}
@@ -69,7 +97,9 @@ const VDConversationScreen = ({ navigation }) => {
           />
           <Message
             onClick={() => {
-              if (selected) setSelected(false);
+              if (selected) {
+                setSelected(false);
+              }
             }}
             onSelect={onSelectMessage}
             selected={selected}
@@ -80,7 +110,9 @@ const VDConversationScreen = ({ navigation }) => {
           />
           <Message
             onClick={() => {
-              if (selected) setSelected(false);
+              if (selected) {
+                setSelected(false);
+              }
             }}
             onSelect={onSelectMessage}
             selected={selected}
@@ -90,7 +122,9 @@ const VDConversationScreen = ({ navigation }) => {
           />
           <Message
             onClick={() => {
-              if (selected) setSelected(false);
+              if (selected) {
+                setSelected(false);
+              }
             }}
             selected={selected}
             message="Alright thanks. Please, I need 2k urgently... Please!!! it's really holding me on my neck right now."
@@ -101,7 +135,9 @@ const VDConversationScreen = ({ navigation }) => {
           />
           <Message
             onClick={() => {
-              if (selected) setSelected(false);
+              if (selected) {
+                setSelected(false);
+              }
             }}
             onSelect={onSelectMessage}
             selected={selected}
@@ -111,7 +147,9 @@ const VDConversationScreen = ({ navigation }) => {
           />
           <Message
             onClick={() => {
-              if (selected) setSelected(false);
+              if (selected) {
+                setSelected(false);
+              }
             }}
             onSelect={onSelectMessage}
             selected={selected}
@@ -121,7 +159,9 @@ const VDConversationScreen = ({ navigation }) => {
           />
           <Message
             onClick={() => {
-              if (selected) setSelected(false);
+              if (selected) {
+                setSelected(false);
+              }
             }}
             onSelect={onSelectMessage}
             selected={selected}
@@ -130,8 +170,11 @@ const VDConversationScreen = ({ navigation }) => {
             right
           />
         </View>
-      </Layout>
-      <ConversationEntry />
+      </UI.Layout>
+      <ConversationEntry
+        value={message}
+        onChangeText={(value) => setMessage(value)}
+      />
     </>
   );
 };
@@ -140,6 +183,12 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 5,
     paddingTop: 10,
+  },
+  info: {
+    backgroundColor: warning,
+    paddingHorizontal: 20,
+    paddingVertical: 2,
+    alignItems: 'center',
   },
 });
 

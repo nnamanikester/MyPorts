@@ -414,7 +414,12 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
         </View>
       </UI.Layout>
 
-      <UI.FAB size={60} type="outline">
+      <UI.FAB
+        onClick={() =>
+          navigation.navigate('VDConversation', {vendor: s, customer})
+        }
+        size={60}
+        type="outline">
         <UI.Icon name="ios-chatbubbles" color={primaryColor} />
       </UI.FAB>
 
