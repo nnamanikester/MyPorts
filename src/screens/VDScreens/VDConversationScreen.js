@@ -5,7 +5,7 @@ import Header from '../../components/Header';
 import Message from '../../components/Message';
 import ConversationEntry from '../../components/ConversationEntry';
 import {warning, danger} from '../../components/common/variables';
-import {useLazyQuery, useMutation} from '@apollo/react-hooks';
+import {useLazyQuery, useMutation, useQuery} from '@apollo/react-hooks';
 import {CREATE_CHAT, UPDATE_CHAT, DELETE_CHAT} from '../../apollo/mutations';
 import {GET_ACTIVE_CHAT} from '../../apollo/queries';
 
@@ -13,13 +13,16 @@ const VDConversationScreen = ({navigation, route: {params}}) => {
   const {customer, vendor} = params;
 
   const [selected, setSelected] = React.useState(false);
+
   const [message, setMessage] = React.useState('');
+  const [chat, setChat] = React.useState({});
   const [activeChat, setActiveChat] = React.useState(false);
 
-  const [
-    getActiveChat,
-    {data: activeChatData, loading: activeChatLoading, error: activeChatError},
-  ] = useLazyQuery(GET_ACTIVE_CHAT, {
+  const {
+    data: activeChatData,
+    loading: activeChatLoading,
+    error: activeChatError,
+  } = useQuery(GET_ACTIVE_CHAT, {
     variables: {
       vendorId: vendor.id,
       customerId: customer.id,
@@ -33,14 +36,10 @@ const VDConversationScreen = ({navigation, route: {params}}) => {
     },
   });
 
-  React.useEffect(() => {
-    getActiveChat();
-  }, []);
-
   React.useMemo(() => {
-    if (activeChatData) {
+    if (activeChatData && activeChatData.getActiveChat.length > 0) {
+      setChat(activeChatData.getActiveChat[0]);
       setActiveChat(true);
-      console.log(activeChatData);
     } else {
       setActiveChat(false);
     }
@@ -51,7 +50,6 @@ const VDConversationScreen = ({navigation, route: {params}}) => {
       Alert.alert(
         'Network Error!',
         'Please check if you are connected to the internet and try again.',
-        [{text: 'Try again', onPress: () => getActiveChat()}],
       );
     }
   }, [activeChatError]);
@@ -221,14 +219,27 @@ const VDConversationScreen = ({navigation, route: {params}}) => {
           </View>
         )}
 
-        {!activeChat && (
+        {!activeChat && !activeChatLoading && (
           <View style={styles.startChatContainer}>
             <UI.Text bold style={{textAlign: 'center'}}>
               Have a complaint or want to talk to {vendor.profile.name} about a
               product?
             </UI.Text>
             <UI.Spacer medium />
-            <UI.Button onClick={() => createChat()}>
+            <UI.Button
+              onClick={() =>
+                createChat()
+                  .then((res) => {
+                    setChat(res.data.createChat);
+                    setActiveChat(true);
+                  })
+                  .catch(() => {
+                    Alert.alert(
+                      'Error!',
+                      'Error startin chat session. Please try again',
+                    );
+                  })
+              }>
               <UI.Text color="#fff">Start a Chat Session</UI.Text>
             </UI.Button>
           </View>

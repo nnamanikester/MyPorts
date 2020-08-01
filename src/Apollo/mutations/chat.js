@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 export const CREATE_CHAT = gql`
   mutation createChat($customerId: String!, $vendorId: String!) {
-    createChat(cutomerId: $customerId, vendorId: $vendorId) {
+    createChat(customerId: $customerId, vendorId: $vendorId) {
       id
       messages {
         id
