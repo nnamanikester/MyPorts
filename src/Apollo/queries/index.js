@@ -10,3 +10,4 @@ export * from './shop';
 export * from './review';
 export * from './cart';
 export * from './advert';
+export * from './chat';

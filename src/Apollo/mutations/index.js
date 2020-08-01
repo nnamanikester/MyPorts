@@ -7,5 +7,6 @@ export * from './product';
 export * from './address';
 export * from './review';
 export * from './cart';
+export * from './chat';
 
 export * from './imageUpload';
