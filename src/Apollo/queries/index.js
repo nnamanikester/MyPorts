@@ -11,3 +11,4 @@ export * from './review';
 export * from './cart';
 export * from './advert';
 export * from './chat';
+export * from './message';

@@ -3,6 +3,7 @@ import {Icon, TextInput, FAB} from './common';
 import {View, StyleSheet} from 'react-native';
 
 const ConversationEntry = (props) => {
+  const {sending, onSubmit} = props;
   return (
     <>
       <View style={styles.container}>
@@ -10,7 +11,9 @@ const ConversationEntry = (props) => {
           <TextInput {...props} multiline placeholder="Type message here..." />
         </View>
         <FAB
+          onClick={onSubmit}
           size={50}
+          type={sending ? 'disabled' : ''}
           shape="squared"
           style={{
             position: 'relative',

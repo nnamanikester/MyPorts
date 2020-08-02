@@ -8,5 +8,6 @@ export * from './address';
 export * from './review';
 export * from './cart';
 export * from './chat';
+export * from './message';
 
 export * from './imageUpload';

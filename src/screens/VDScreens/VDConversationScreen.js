@@ -1,20 +1,27 @@
 import React from 'react';
 import * as UI from '../../components/common';
-import {View, StyleSheet, Alert, Dimensions} from 'react-native';
+import {View, StyleSheet, Alert, Dimensions, ToastAndroid} from 'react-native';
 import Header from '../../components/Header';
 import Message from '../../components/Message';
 import ConversationEntry from '../../components/ConversationEntry';
 import {warning, danger} from '../../components/common/variables';
 import {useLazyQuery, useMutation, useQuery} from '@apollo/react-hooks';
-import {CREATE_CHAT, UPDATE_CHAT, DELETE_CHAT} from '../../apollo/mutations';
-import {GET_ACTIVE_CHAT} from '../../apollo/queries';
+import {
+  CREATE_CHAT,
+  UPDATE_CHAT,
+  DELETE_CHAT,
+  SEND_MESSAGE,
+} from '../../apollo/mutations';
+import {GET_ACTIVE_CHAT, GET_MESSAGES} from '../../apollo/queries';
+import {connect} from 'react-redux';
 
-const VDConversationScreen = ({navigation, route: {params}}) => {
+const VDConversationScreen = ({navigation, route: {params}, user}) => {
   const {customer, vendor} = params;
 
   const [selected, setSelected] = React.useState(false);
 
   const [message, setMessage] = React.useState('');
+  const [messages, setMessages] = React.useState([]);
   const [chat, setChat] = React.useState({});
   const [activeChat, setActiveChat] = React.useState(false);
 
@@ -36,6 +43,17 @@ const VDConversationScreen = ({navigation, route: {params}}) => {
     },
   });
 
+  const [
+    getMessages,
+    {data: messageData, loading: messageLoading},
+  ] = useLazyQuery(GET_MESSAGES, {
+    pollInterval: 500,
+  });
+
+  const [sendMessage, {loading: sendMessageLoading}] = useMutation(
+    SEND_MESSAGE,
+  );
+
   React.useMemo(() => {
     if (activeChatData && activeChatData.getActiveChat.length > 0) {
       setChat(activeChatData.getActiveChat[0]);
@@ -46,10 +64,22 @@ const VDConversationScreen = ({navigation, route: {params}}) => {
   }, [activeChatData]);
 
   React.useMemo(() => {
+    getMessages({
+        variables: {
+          id: chat.id,
+        },
+      });
+    if (messageData) {
+      setMessages(messageData.messages);
+    }
+  }, [messageData]);
+
+  React.useMemo(() => {
     if (activeChatError) {
       Alert.alert(
         'Network Error!',
         'Please check if you are connected to the internet and try again.',
+        [{text: 'Try again', onPress: () => navigation.goBack()}],
       );
     }
   }, [activeChatError]);
@@ -60,11 +90,27 @@ const VDConversationScreen = ({navigation, route: {params}}) => {
 
   const handleSendMessage = () => {
     // Send Message
+    sendMessage({
+      variables: {
+        sender: user.id,
+        chatId: chat.id,
+        message,
+      },
+    })
+      .then((res) => {
+        setMessages([...messages, res.data.sendMessage]);
+        setMessage('');
+      })
+      .catch(() => {
+        ToastAndroid.show('Error Sending Message!', ToastAndroid.SHORT);
+      });
   };
 
   return (
     <>
-      <UI.Loading show={activeChatLoading || createChatLoading} />
+      <UI.Loading
+        show={activeChatLoading || createChatLoading || messageLoading}
+      />
       <Header
         title={vendor.profile.name}
         headerLeft={
@@ -117,105 +163,25 @@ const VDConversationScreen = ({navigation, route: {params}}) => {
       <UI.Layout>
         {activeChat && (
           <View style={styles.container}>
-            <Message
-              onClick={() => {
-                if (selected) {
-                  setSelected(false);
-                }
-              }}
-              onSelect={onSelectMessage}
-              selected={selected}
-              message="Hello"
-              time="12:45pm"
-              sent
-              right
-            />
-            <Message
-              onClick={() => {
-                if (selected) {
-                  setSelected(false);
-                }
-              }}
-              onSelect={onSelectMessage}
-              selected={selected}
-              message="What's up?"
-              time="12:46pm"
-              sent
-            />
-            <Message
-              onClick={() => {
-                if (selected) {
-                  setSelected(false);
-                }
-              }}
-              onSelect={onSelectMessage}
-              selected={selected}
-              message="I'm fine. I wanted to ask if you can do me a favor."
-              time="12:47pm"
-              sent
-              right
-            />
-            <Message
-              onClick={() => {
-                if (selected) {
-                  setSelected(false);
-                }
-              }}
-              onSelect={onSelectMessage}
-              selected={selected}
-              message="Ok dear. Say it, I'm all ears."
-              time="12:48pm"
-              sent
-            />
-            <Message
-              onClick={() => {
-                if (selected) {
-                  setSelected(false);
-                }
-              }}
-              selected={selected}
-              message="Alright thanks. Please, I need 2k urgently... Please!!! it's really holding me on my neck right now."
-              time="12:49pm"
-              onSelect={onSelectMessage}
-              sent
-              right
-            />
-            <Message
-              onClick={() => {
-                if (selected) {
-                  setSelected(false);
-                }
-              }}
-              onSelect={onSelectMessage}
-              selected={selected}
-              message="Ok bye!"
-              time="12:50pm"
-              sent
-            />
-            <Message
-              onClick={() => {
-                if (selected) {
-                  setSelected(false);
-                }
-              }}
-              onSelect={onSelectMessage}
-              selected={selected}
-              message="Hello!"
-              time="12:51pm"
-              right
-            />
-            <Message
-              onClick={() => {
-                if (selected) {
-                  setSelected(false);
-                }
-              }}
-              onSelect={onSelectMessage}
-              selected={selected}
-              message="Are you there?"
-              time="12:52pm"
-              right
-            />
+            {messages && messages.length > 0
+              ? messages.map((m, i) => {
+                  return (
+                    <Message
+                      key={m.id + i}
+                      onClick={() => {
+                        if (selected) {
+                          setSelected(false);
+                        }
+                      }}
+                      onSelect={onSelectMessage}
+                      selected={selected}
+                      message={m.message}
+                      time={m.createdAt}
+                      right={m.sender.id === user.id}
+                    />
+                  );
+                })
+              : null}
           </View>
         )}
 
@@ -249,6 +215,8 @@ const VDConversationScreen = ({navigation, route: {params}}) => {
         <ConversationEntry
           value={message}
           onChangeText={(value) => setMessage(value)}
+          sending={sendMessageLoading}
+          onSubmit={() => handleSendMessage()}
         />
       )}
     </>
@@ -274,4 +242,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VDConversationScreen;
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps)(VDConversationScreen);

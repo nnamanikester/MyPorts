@@ -7,10 +7,7 @@ export const GET_ACTIVE_CHAT = gql`
       messages {
         id
         message
-        from {
-          id
-        }
-        to {
+        sender {
           id
         }
         createdAt

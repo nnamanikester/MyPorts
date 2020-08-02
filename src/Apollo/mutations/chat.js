@@ -7,10 +7,7 @@ export const CREATE_CHAT = gql`
       messages {
         id
         message
-        from {
-          id
-        }
-        to {
+        sender {
           id
         }
         createdAt
@@ -35,10 +32,7 @@ export const UPDATE_CHAT = gql`
       messages {
         id
         message
-        from {
-          id
-        }
-        to {
+        sender {
           id
         }
         createdAt

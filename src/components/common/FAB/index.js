@@ -76,7 +76,7 @@ const FAB = ({onClick, children, size, shape, type, style}) => {
         ...shapeStyle,
         ...style,
       }}
-      onClick={onClick}>
+      onClick={type === 'disabled' ? null : onClick}>
       <Text color={color}>{children}</Text>
     </Clickable>
   );

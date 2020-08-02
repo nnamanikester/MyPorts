@@ -1,17 +1,9 @@
 import React from 'react';
-import { Text, Spacer, Clickable, Icon, Avatar } from './common';
-import { View, StyleSheet } from 'react-native';
-import { primaryColor, info, lightColor } from './common/variables';
+import {Text, Clickable} from './common';
+import {View, StyleSheet} from 'react-native';
+import {primaryColor, lightColor} from './common/variables';
 
-const Message = ({
-  onSelect,
-  onClick,
-  selected,
-  right,
-  message,
-  time,
-  sent,
-}) => {
+const Message = ({onSelect, onClick, selected, right, message, time}) => {
   return (
     <>
       <Clickable
@@ -20,8 +12,8 @@ const Message = ({
         onLongPress={onSelect}
         style={
           selected
-            ? { ...styles.chatBox, ...styles.selected }
-            : { ...styles.chatBox }
+            ? {...styles.chatBox, ...styles.selected}
+            : {...styles.chatBox}
         }>
         <View style={right ? styles.chatRight : styles.chatLeft}>
           <>
@@ -37,9 +29,9 @@ const Message = ({
               <Text style={right ? styles.timeRight : styles.timeLeft}>
                 {time}
               </Text>
-              <Spacer size={2} />
+              {/* <Spacer size={2} />
               <Icon
-                style={{ marginVertical: -7 }}
+                style={{marginVertical: -7}}
                 name={sent ? 'ios-checkmark' : 'ios-time'}
                 color={
                   right && sent
@@ -51,7 +43,7 @@ const Message = ({
                     : '#ddd'
                 }
                 size={!sent ? 14 : 28}
-              />
+              /> */}
             </View>
           </>
         </View>
