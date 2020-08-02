@@ -14,6 +14,7 @@ import {
 } from '../../apollo/mutations';
 import {GET_ACTIVE_CHAT, GET_MESSAGES} from '../../apollo/queries';
 import {connect} from 'react-redux';
+import moment from 'moment';
 
 const VDConversationScreen = ({navigation, route: {params}, user}) => {
   const {customer, vendor} = params;
@@ -34,6 +35,7 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
       vendorId: vendor.id,
       customerId: customer.id,
     },
+    pollInterval: 500,
   });
 
   const [createChat, {loading: createChatLoading}] = useMutation(CREATE_CHAT, {
@@ -43,13 +45,6 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
     },
   });
 
-  const [
-    getMessages,
-    {data: messageData, loading: messageLoading},
-  ] = useLazyQuery(GET_MESSAGES, {
-    pollInterval: 500,
-  });
-
   const [sendMessage, {loading: sendMessageLoading}] = useMutation(
     SEND_MESSAGE,
   );
@@ -57,22 +52,12 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
   React.useMemo(() => {
     if (activeChatData && activeChatData.getActiveChat.length > 0) {
       setChat(activeChatData.getActiveChat[0]);
+      setMessages(activeChatData.getActiveChat[0].messages);
       setActiveChat(true);
     } else {
       setActiveChat(false);
     }
   }, [activeChatData]);
-
-  React.useMemo(() => {
-    getMessages({
-        variables: {
-          id: chat.id,
-        },
-      });
-    if (messageData) {
-      setMessages(messageData.messages);
-    }
-  }, [messageData]);
 
   React.useMemo(() => {
     if (activeChatError) {
@@ -94,7 +79,7 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
       variables: {
         sender: user.id,
         chatId: chat.id,
-        message,
+        message: message.trim(),
       },
     })
       .then((res) => {
@@ -109,10 +94,10 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
   return (
     <>
       <UI.Loading
-        show={activeChatLoading || createChatLoading || messageLoading}
+        show={activeChatLoading || createChatLoading}
       />
       <Header
-        title={vendor.profile.name}
+        title={user.isCustomer ? vendor.profile.name : `${customer.firstName} ${customer.lastName}`}
         headerLeft={
           <UI.Clickable
             style={{flexDirection: 'row', alignItems: 'center'}}
@@ -176,7 +161,7 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
                       onSelect={onSelectMessage}
                       selected={selected}
                       message={m.message}
-                      time={m.createdAt}
+                      time={moment(m.createdAt).format("hh:mm a")}
                       right={m.sender.id === user.id}
                     />
                   );
@@ -217,6 +202,8 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
           onChangeText={(value) => setMessage(value)}
           sending={sendMessageLoading}
           onSubmit={() => handleSendMessage()}
+          autoCorrect={true}
+          autoCapitalize="sentences"
         />
       )}
     </>

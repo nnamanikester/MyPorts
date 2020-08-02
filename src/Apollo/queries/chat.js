@@ -19,6 +19,36 @@ export const GET_ACTIVE_CHAT = gql`
       customer {
         id
       }
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const GET_VENDOR_CHATS = gql`
+  query getVendorChats($id: String!) {
+    getVendorChats(id: $id) {
+      id
+      messages {
+        id
+        message
+        sender {
+          id
+        }
+        createdAt
+        updatedAt
+      }
+      vendor {
+        id
+      }
+      customer {
+        id
+        photo
+        firstName
+        lastName
+      }
+      status
       createdAt
       updatedAt
     }

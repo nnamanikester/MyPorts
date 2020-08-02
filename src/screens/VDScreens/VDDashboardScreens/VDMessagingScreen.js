@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Text,
-  Layout,
-  ListItem,
-  Icon,
-  Spacer,
-  Avatar,
-  FAB,
-  Badge,
-} from '../../../components/common';
+import * as UI from '../../../components/common';
 import { food3, image9, shoe3 } from '../../../assets/images';
 import { StyleSheet, View } from 'react-native';
 import {
@@ -16,52 +7,63 @@ import {
   danger,
   primaryColor,
 } from '../../../components/common/variables';
+import {useLazyQuery, useQuery} from '@apollo/react-hooks';
+import {GET_VENDOR_CHATS} from '../../../apollo/queries';
+import {connect} from 'react-redux';
 
-const VDMessagingScreen = ({ navigation }) => {
+const VDMessagingScreen = ({ navigation, vendor }) => {
+  const [chats, setChats] = React.useState([]);
+
+  const {data, loading, error} = useQuery(GET_VENDOR_CHATS, {
+    variables: {
+      id: vendor.id,
+    },
+    pollInterval: 500,
+  });
+
+  React.useMemo(() => {
+    if(data) {
+      setChats(data.getVendorChats);
+      console.log(data.getVendorChats)
+    }
+  }, [data]);
+
   return (
     <>
-      <Layout>
-        <Spacer />
-        <ListItem
-          marked
-          onClick={() => navigation.navigate('VDConversation')}
-          left={<Avatar medium rounded src={food3} />}
-          body={
-            <>
-              <Text heading>John Kester</Text>
-              <Text numberOfLines={1} note>
-                How much can I get the shoes?
-              </Text>
-            </>
-          }
-          right={
-            <View style={{ justifyContent: 'space-between' }}>
-              <Text color={success} note style={styles.status}>
-                Active
-              </Text>
-            </View>
-          }
-        />
-        <ListItem
-          onClick={() => navigation.navigate('VDConversation')}
-          left={<Avatar medium rounded src={shoe3} />}
-          body={
-            <>
-              <Text heading>Martin Luther</Text>
-              <Text numberOfLines={1} color="" note>
-                I want you to make it 300 naira na, so that i can invite others.
-              </Text>
-            </>
-          }
-          right={
-            <View style={{ justifyContent: 'space-between' }}>
-              <Text color={danger} note style={styles.status}>
-                Closed
-              </Text>
-            </View>
-          }
-        />
-      </Layout>
+    <UI.Loading show={loading} />
+      <UI.Layout>
+
+        <UI.Spacer />
+
+        {chats && chats.length > 0 ? chats.map((c, i) => {
+          if(c.messages.length > 0) {
+            return (
+              <UI.ListItem
+              key={c.id + i}
+              marked={c.status === 1}
+              onClick={() => navigation.navigate('VDConversation', {customer: c.customer, vendor})}
+              left={<UI.Avatar medium rounded src={{uri: c.customer.photo}} />}
+              body={
+                <>
+                  <UI.Text heading>{`${c.customer.firstName} ${c.customer.lastName}`}</UI.Text>
+                  <UI.Text numberOfLines={1} note>
+                    {c.messages.length > 0 ? c.messages[c.messages.length - 1].message : ""}
+                  </UI.Text>
+                </>
+              }
+              right={
+                <View style={{ justifyContent: 'space-between' }}>
+                  <UI.Text color={c.status === 1 ? success : danger} note style={styles.status}>
+                    {c.status === 1 ? "Active" : "Closed"}
+                  </UI.Text>
+                </View>
+              }
+              />
+              );
+            }
+        }) : null}
+
+      </UI.Layout>
     </>
   );
 };
@@ -74,4 +76,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VDMessagingScreen;
+const mapStateToProps = (state) => {
+  return {
+    vendor: state.vendor,
+  };
+};
+
+export default connect(mapStateToProps)(VDMessagingScreen);
