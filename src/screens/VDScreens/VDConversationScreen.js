@@ -8,7 +8,7 @@ import {warning, danger} from '../../components/common/variables';
 import {useLazyQuery, useMutation, useQuery} from '@apollo/react-hooks';
 import {
   CREATE_CHAT,
-  UPDATE_CHAT,
+  END_CHAT,
   DELETE_CHAT,
   SEND_MESSAGE,
 } from '../../apollo/mutations';
@@ -48,6 +48,12 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
   const [sendMessage, {loading: sendMessageLoading}] = useMutation(
     SEND_MESSAGE,
   );
+
+  const [endChat, {loading: endChatLoading}] = useMutation(END_CHAT, {
+    variables: {
+      id: chat.id,
+    },
+  });
 
   React.useMemo(() => {
     if (activeChatData && activeChatData.getActiveChat.length > 0) {
@@ -94,7 +100,7 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
   return (
     <>
       <UI.Loading
-        show={activeChatLoading || createChatLoading}
+        show={activeChatLoading || createChatLoading || endChatLoading}
       />
       <Header
         title={user.isCustomer ? vendor.profile.name : `${customer.firstName} ${customer.lastName}`}
@@ -115,20 +121,25 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
                 options={[
                   {
                     label: 'End Chat',
-                    action: () => Alert.alert('Message', 'Chat ended'),
+                    action: () => endChat().then(res => {
+                      ToastAndroid.show("Chat Ended!", ToastAndroid.LONG);
+                      setChat(res.data.endChat);
+                    }).catch(() => {
+                      ToastAndroid.show("Unable to end chat at the moment. Please try again!", ToastAndroid.LONG);
+                    }),
                   },
-                  {
-                    label: 'Copy',
-                    action: () => {},
-                  },
-                  {
-                    label: 'Delete',
-                    action: () => {},
-                  },
-                  {
-                    label: 'Clear Conversation',
-                    action: () => {},
-                  },
+                  // {
+                  //   label: 'Copy',
+                  //   action: () => {},
+                  // },
+                  // {
+                  //   label: 'Delete',
+                  //   action: () => {},
+                  // },
+                  // {
+                  //   label: 'Clear Conversation',
+                  //   action: () => {},
+                  // },
                 ]}
               />
             )}
