@@ -1,8 +1,8 @@
 import React from 'react';
 import * as UI from '../../../../components/common';
 import Header from '../../../../components/Header';
-import {View, StyleSheet, Alert} from 'react-native';
-import {CREATE_PRODUCT} from '../../../../apollo/mutations/product';
+import {View, StyleSheet, Alert, ToastAndroid} from 'react-native';
+import {UPDATE_PRODUCT} from '../../../../apollo/mutations/product';
 import {useMutation} from '@apollo/react-hooks';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
@@ -11,38 +11,42 @@ import StepFour from './StepFour';
 import StepFive from './StepFive';
 import {connect} from 'react-redux';
 
-const VDAddProductScreen = ({navigation, offline}) => {
-  const [createProduct, {loading, error}] = useMutation(CREATE_PRODUCT);
+const VDEditProductScreen = ({navigation, offline, route: {params}}) => {
+  const {product} = params;
+
+  const [updateProduct, {loading}] = useMutation(UPDATE_PRODUCT);
 
   const [step, setStep] = React.useState(1);
 
   // STEP 1
-  const [images, setImages] = React.useState([]);
+  const [images, setImages] = React.useState([...product.images]);
 
   // STEP 2
-  const [name, setName] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [category, setCategory] = React.useState(null);
+  const [name, setName] = React.useState(product.name);
+  const [description, setDescription] = React.useState(product.description);
+  const [category, setCategory] = React.useState(product.category.id);
 
   // STEP 3
-  const [specifications, setSpecifications] = React.useState([]);
+  const [specifications, setSpecifications] = React.useState([
+    ...product.specifications,
+  ]);
 
   // STEP 4
-  const [quantity, setQuantity] = React.useState(null);
-  const [price, setPrice] = React.useState(null);
-  const [shipping, setShipping] = React.useState(null);
-  const [fixedDiscount, setFixedDiscount] = React.useState(null);
-  const [percentageDiscount, setPercentageDiscount] = React.useState(null);
-
-  React.useEffect(() => {
-    if (error) {
-      alert('Unable to create product. Please try again!');
-    }
-  }, [error]);
+  const [quantity, setQuantity] = React.useState(`${product.quantity}`);
+  const [price, setPrice] = React.useState(`${product.price}`);
+  const [shipping, setShipping] = React.useState(`${product.shipping}`);
+  const [fixedDiscount, setFixedDiscount] = React.useState(
+    product.fixedDiscount ? `${product.fixedDiscount}` : product.fixedDiscount,
+  );
+  const [percentageDiscount, setPercentageDiscount] = React.useState(
+    product.percentageDiscount
+      ? `${product.percentageDiscount}`
+      : product.percentageDiscount,
+  );
 
   const handleCreateProduct = () => {
     if (!offline) {
-      createProduct({
+      updateProduct({
         variables: {
           name,
           description,
@@ -56,9 +60,14 @@ const VDAddProductScreen = ({navigation, offline}) => {
           percentageDiscount: parseInt(percentageDiscount),
           status: 1,
         },
-      }).then((res) => {
-        navigation.goBack();
-      });
+      })
+        .then((res) => {
+          ToastAndroid.show('Product Updated Successfully!', ToastAndroid.LONG);
+          navigation.goBack();
+        })
+        .catch(() => {
+          Alert.alert('Error!', 'Unable to update product. Please try again!');
+        });
     } else {
       Alert.alert(
         'Network Error!',
@@ -69,7 +78,7 @@ const VDAddProductScreen = ({navigation, offline}) => {
 
   const handleSaveForLater = () => {
     if (!offline) {
-      createProduct({
+      updateProduct({
         variables: {
           name,
           description,
@@ -83,12 +92,19 @@ const VDAddProductScreen = ({navigation, offline}) => {
           percentageDiscount: parseInt(percentageDiscount),
           status: 0,
         },
-      }).then((res) => {
-        console.log(res.data.createProduct);
-        navigation.goBack();
-      });
+      })
+        .then((res) => {
+          ToastAndroid.show('Product Updated Successfully!', ToastAndroid.LONG);
+          navigation.goBack();
+        })
+        .catch(() => {
+          Alert.alert('Error!', 'Unable to update product. Please try again!');
+        });
     } else {
-      alert("Please check if you're connected to the internet");
+      Alert.alert(
+        'Network Error!',
+        "Please check if you're connected to the internet",
+      );
     }
   };
 
@@ -96,7 +112,7 @@ const VDAddProductScreen = ({navigation, offline}) => {
     <>
       <UI.Loading show={loading} />
       <Header
-        title="Create Product"
+        title="Update Product"
         headerLeft={
           <>
             <UI.Clickable onClick={() => navigation.goBack()}>
@@ -194,4 +210,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(VDAddProductScreen);
+export default connect(mapStateToProps)(VDEditProductScreen);

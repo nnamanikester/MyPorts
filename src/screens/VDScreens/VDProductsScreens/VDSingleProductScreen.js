@@ -1,15 +1,51 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import {View, StyleSheet, Image, Alert, ToastAndroid} from 'react-native';
 import * as UI from '../../../components/common';
+import {primaryColor} from '../../../components/common/variables';
 import Header from '../../../components/Header';
 import Swiper from 'react-native-swiper';
-import { formatMoney } from '../../../utils';
+import {formatMoney} from '../../../utils';
+import {DELETE_PRODUCT} from '../../../apollo/mutations';
+import {useMutation} from '@apollo/react-hooks';
 
-const VDSingleProductScreen = ({ navigation, route: { params } }) => {
-  const { product } = params;
+const VDSingleProductScreen = ({navigation, route: {params}}) => {
+  const {product} = params;
+  const [deleteProduct, {loading: deleteLoading}] = useMutation(
+    DELETE_PRODUCT,
+    {
+      variables: {
+        id: product.id,
+      },
+    },
+  );
+
+  const handleDeleteProduct = () => {
+    Alert.alert('Warning!', 'Are you sure you want to delete this product?', [
+      {
+        text: 'DELETE',
+        onPress: () =>
+          deleteProduct()
+            .then(() => {
+              ToastAndroid.show(
+                'Product Deleted Successfully!',
+                ToastAndroid.SHORT,
+              );
+              navigation.goBack();
+            })
+            .catch(() => {
+              ToastAndroid.show(
+                'Unable to delete product at this time. Please try again!',
+                ToastAndroid.SHORT,
+              );
+            }),
+      },
+      {text: 'Cancel'},
+    ]);
+  };
 
   return (
     <>
+      <UI.Loading show={deleteLoading} />
       <Header
         title={product.name}
         headerLeft={
@@ -20,21 +56,32 @@ const VDSingleProductScreen = ({ navigation, route: { params } }) => {
           </>
         }
         headerRight={
-          <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-            <UI.Clickable>
+          <View style={{alignItems: 'center', flexDirection: 'row'}}>
+            <UI.Clickable
+              onClick={() => navigation.navigate('VDEditProduct', {product})}>
               <UI.Icon size={25} name="md-create" color="#fff" />
             </UI.Clickable>
             <UI.Spacer size={12} />
-            <UI.Clickable>
+            <UI.Clickable onClick={() => handleDeleteProduct()}>
               <UI.Icon size={25} name="md-trash" color="#fff" />
             </UI.Clickable>
             <UI.Spacer size={12} />
             <UI.Option
               options={[
-                { label: 'Publish', action: () => {} },
-                { label: 'Revert to draft', action: () => {} },
+                {
+                  label: product.status === 1 ? 'Revert to draft' : 'Publish',
+                  action: () => {},
+                },
+                {
+                  label: 'Edit',
+                  action: () => navigation.navigate('VDEditProduct', {product}),
+                },
+                {
+                  label: 'Delete',
+                  action: () => handleDeleteProduct(),
+                },
               ]}
-              icon={<UI.Icon name="md-more" color="#fff" />}
+              icon={<UI.Icon name="ios-more" color="#fff" />}
             />
           </View>
         }
@@ -48,12 +95,13 @@ const VDSingleProductScreen = ({ navigation, route: { params } }) => {
               product.images.map((image, index) => (
                 <View key={`${image.url + index}`}>
                   <Image
-                    style={{ width: '100%', height: '100%', borderRadius: 5 }}
-                    source={{ uri: image.url }}
+                    style={{width: '100%', height: '100%', borderRadius: 5}}
+                    source={{uri: image.url}}
                   />
                 </View>
               ))}
           </Swiper>
+
           <View style={styles.titleContainer}>
             <UI.Text style={styles.category} heading>
               {product.category.name}
@@ -136,9 +184,9 @@ const styles = StyleSheet.create({
   category: {
     position: 'absolute',
     right: 10,
-    backgroundColor: '#0009',
+    backgroundColor: primaryColor,
     paddingHorizontal: 5,
-    top: 10,
+    top: 30,
     color: '#fff',
     textTransform: 'uppercase',
   },

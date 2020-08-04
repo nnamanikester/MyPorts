@@ -26,8 +26,8 @@ export const CREATE_CHAT = gql`
 `;
 
 export const END_CHAT = gql`
-  mutation updateChat($id: String!) {
-    updateChat(id: $id) {
+  mutation endChat($id: String!) {
+    endChat(id: $id) {
       id
       messages {
         id

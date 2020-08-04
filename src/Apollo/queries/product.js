@@ -34,6 +34,7 @@ export const GET_PRODUCTS = gql`
           price
           category {
             name
+            id
           }
           description
           quantity
@@ -65,6 +66,7 @@ export const GET_SINGLE_PRODUCT = gql`
       price
       category {
         name
+        id
       }
       vendor {
         id

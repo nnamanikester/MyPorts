@@ -19,8 +19,6 @@ import moment from 'moment';
 const VDConversationScreen = ({navigation, route: {params}, user}) => {
   const {customer, vendor} = params;
 
-  const [selected, setSelected] = React.useState(false);
-
   const [message, setMessage] = React.useState('');
   const [messages, setMessages] = React.useState([]);
   const [chat, setChat] = React.useState({});
@@ -75,10 +73,6 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
     }
   }, [activeChatError]);
 
-  const onSelectMessage = () => {
-    return setSelected(true);
-  };
-
   const handleSendMessage = () => {
     // Send Message
     sendMessage({
@@ -103,7 +97,11 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
         show={activeChatLoading || createChatLoading || endChatLoading}
       />
       <Header
-        title={user.isCustomer ? vendor.profile.name : `${customer.firstName} ${customer.lastName}`}
+        title={
+          user.isCustomer
+            ? vendor.profile.name
+            : `${customer.firstName} ${customer.lastName}`
+        }
         headerLeft={
           <UI.Clickable
             style={{flexDirection: 'row', alignItems: 'center'}}
@@ -121,12 +119,18 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
                 options={[
                   {
                     label: 'End Chat',
-                    action: () => endChat().then(res => {
-                      ToastAndroid.show("Chat Ended!", ToastAndroid.LONG);
-                      setChat(res.data.endChat);
-                    }).catch(() => {
-                      ToastAndroid.show("Unable to end chat at the moment. Please try again!", ToastAndroid.LONG);
-                    }),
+                    action: () =>
+                      endChat()
+                        .then((res) => {
+                          ToastAndroid.show('Chat Ended!', ToastAndroid.LONG);
+                          setChat(res.data.endChat);
+                        })
+                        .catch(() => {
+                          ToastAndroid.show(
+                            'Unable to end chat at the moment. Please try again!',
+                            ToastAndroid.LONG,
+                          );
+                        }),
                   },
                   // {
                   //   label: 'Copy',
@@ -164,15 +168,15 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
                   return (
                     <Message
                       key={m.id + i}
-                      onClick={() => {
-                        if (selected) {
-                          setSelected(false);
-                        }
-                      }}
-                      onSelect={onSelectMessage}
-                      selected={selected}
+                      // onClick={() => {
+                      //   if (selected) {
+                      //     setSelected(false);
+                      //   }
+                      // }}
+                      // onSelect={onSelectMessage}
+                      // selected={selected}
                       message={m.message}
-                      time={moment(m.createdAt).format("hh:mm a")}
+                      time={moment(m.createdAt).format('hh:mm a')}
                       right={m.sender.id === user.id}
                     />
                   );
@@ -193,7 +197,7 @@ const VDConversationScreen = ({navigation, route: {params}, user}) => {
                 createChat()
                   .then((res) => {
                     setChat(res.data.createChat);
-                    setActiveChat(true);
+                    setActiveChat(false);
                   })
                   .catch(() => {
                     Alert.alert(

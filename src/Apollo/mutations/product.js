@@ -68,6 +68,7 @@ export const CREATE_LIKE = gql`
       price
       category {
         name
+        id
       }
       vendor {
         id
@@ -129,6 +130,7 @@ export const CREATE_SAVE = gql`
       price
       category {
         name
+        id
       }
       vendor {
         id
@@ -188,6 +190,46 @@ export const CREATE_SHARE = gql`
       product {
         id
       }
+    }
+  }
+`;
+
+export const DELETE_PRODUCT = gql`
+  mutation deleteProduct($id: String!) {
+    deleteProduct(id: $id) {
+      id
+    }
+  }
+`;
+
+export const UPDATE_PRODUCT = gql`
+  mutation updateProduct(
+    $name: String!
+    $description: String!
+    $category: String!
+    $images: [ProductImageInput!]!
+    $specifications: [ProductSpecificationInput!]!
+    $quantity: Int!
+    $price: Float!
+    $shipping: Float!
+    $fixedDiscount: Float
+    $percentageDiscount: Int
+    $status: Int!
+  ) {
+    updateProduct(
+      name: $name
+      description: $description
+      category: $category
+      images: $images
+      specifications: $specifications
+      quantity: $quantity
+      price: $price
+      shipping: $shipping
+      fixedDiscount: $fixedDiscount
+      percentageDiscount: $percentageDiscount
+      status: $status
+    ) {
+      id
     }
   }
 `;

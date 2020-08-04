@@ -1,6 +1,6 @@
 import React from 'react';
 import * as UI from '../../../components/common';
-import {View, FlatList, ScrollView} from 'react-native';
+import {View, FlatList, ScrollView, Alert} from 'react-native';
 import SearchBar from '../../../components/SearchBar';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_PRODUCTS} from '../../../apollo/queries';
@@ -39,24 +39,26 @@ const VDProductsScreen = ({navigation, offline, vendor}) => {
         name_contains: searchText,
         status_in: status.value,
       },
-      first: 20,
+      first: 15,
       orderBy: filter.value,
     },
-    pollInterval: 500,
   });
 
   React.useEffect(() => {
     if (!offline) {
       getProducts();
     } else {
-      alert("Please check if you're connected to the internet!");
+      Alert.alert(
+        'Netowrk Error!',
+        "Please check if you're connected to the internet!",
+      );
     }
     if (data) {
       setProducts(data.products.edges.map((p) => p.node));
     }
 
     if (error) {
-      alert('Unable to fetch your products!');
+      Alert.alert('Error!', 'Unable to fetch your products!');
     }
   }, [data]);
 
@@ -68,6 +70,9 @@ const VDProductsScreen = ({navigation, offline, vendor}) => {
 
   // Fetch more products onEndReach for pagination.
   const fetchMoreProducts = () => {
+    if (!data) {
+      return;
+    }
     setFetching(true);
     // Check if  there's a next page.
     if (data.products.pageInfo.hasNextPage) {
@@ -106,7 +111,7 @@ const VDProductsScreen = ({navigation, offline, vendor}) => {
 
   return (
     <>
-      <UI.Layout noScroll>
+      <View style={{backgroundColor: '#fff'}}>
         <UI.Spacer />
 
         <SearchBar
@@ -115,7 +120,12 @@ const VDProductsScreen = ({navigation, offline, vendor}) => {
           value={searchText}
           onFilterClick={() => setShowFilter(true)}
         />
+      </View>
 
+      <UI.Layout
+        onRefresh={() => refetch()}
+        refreshing={loading}
+        onEndReached={() => fetchMoreProducts()}>
         <UI.Spacer />
 
         {!loading && !error && !products.length > 0 && (
@@ -174,58 +184,45 @@ const VDProductsScreen = ({navigation, offline, vendor}) => {
           </ScrollView>
         )}
 
-        {!loading && !error && products.length > 0 && (
-          <>
-            <FlatList
-              ListFooterComponentStyle={{
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              ListFooterComponent={
-                <>
-                  <UI.Spacer />
-                  <UI.Spinner show={fetching} area={40} />
-                  {!fetching && <UI.Text>No more products</UI.Text>}
-                  <UI.Spacer large />
-                </>
-              }
-              onEndReached={() => fetchMoreProducts()}
-              onEndReachedThreshold={0.3}
-              refreshing={loading}
-              onRefresh={() => refetch()}
-              showsVerticalScrollIndicator={false}
-              data={products}
-              keyExtractor={(item) => item.id}
-              renderItem={({item}) => (
-                <UI.ListItem
-                  key={item.id}
-                  onClick={() =>
-                    navigation.navigate('VDSingleProduct', {
-                      product: item,
-                    })
-                  }
-                  left={<UI.Avatar medium src={{uri: item.images[0].url}} />}
-                  body={
-                    <>
-                      <UI.Text heading>{item.name}</UI.Text>
-                      <UI.Text note color="">
-                        {moment(item.createdAt).format('DD/MM/YYYY')}
-                      </UI.Text>
-                    </>
-                  }
-                  right={
-                    <View style={{alignItems: 'flex-end'}}>
-                      <UI.Text>{formatMoney(item.price)}</UI.Text>
-                      <UI.Text>
-                        {item.status === 1 ? 'Published' : 'Draft'}
-                      </UI.Text>
-                    </View>
-                  }
-                />
-              )}
-            />
-          </>
-        )}
+        {!loading &&
+          !error &&
+          products.length > 0 &&
+          products.map((item, i) => {
+            return (
+              <UI.ListItem
+                key={item.id + i}
+                onClick={() =>
+                  navigation.navigate('VDSingleProduct', {
+                    product: item,
+                  })
+                }
+                left={<UI.Avatar medium src={{uri: item.images[0].url}} />}
+                body={
+                  <>
+                    <UI.Text heading>{item.name}</UI.Text>
+                    <UI.Text note color="">
+                      {moment(item.createdAt).format('DD/MM/YYYY')}
+                    </UI.Text>
+                  </>
+                }
+                right={
+                  <View style={{alignItems: 'flex-end'}}>
+                    <UI.Text>{formatMoney(item.price)}</UI.Text>
+                    <UI.Text>
+                      {item.status === 1 ? 'Published' : 'Draft'}
+                    </UI.Text>
+                  </View>
+                }
+              />
+            );
+          })}
+
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <UI.Spacer />
+          <UI.Spinner show={fetching} area={40} />
+          {!fetching && <UI.Text>No more products</UI.Text>}
+          <UI.Spacer large />
+        </View>
       </UI.Layout>
 
       <UI.FAB onClick={() => navigation.navigate('VDAddProduct')} size={60}>

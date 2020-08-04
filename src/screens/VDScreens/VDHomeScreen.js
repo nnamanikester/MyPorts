@@ -1,25 +1,19 @@
 import React from 'react';
-import { View } from 'react-native';
+import {View} from 'react-native';
 import Header from '../../components/Header';
-import {
-  TopTab,
-  Icon,
-  Clickable,
-  Badge,
-  Option,
-} from '../../components/common';
+import {TopTab, Icon, Clickable, Badge, Option} from '../../components/common';
 import VDAnalyticsScreen from './VDDashboardScreens/VDAnalyticsScreen';
 import VDProductsScreen from './VDDashboardScreens/VDProductsScreen';
 import VDSettingsScreen from './VDDashboardScreens/VDSettingsScreen';
 import VDMessagingScreen from './VDDashboardScreens/VDMessagingScreen';
 import VDOrdersScreen from './VDDashboardScreens/VDOrdersScreen';
-import { primaryColor, danger } from '../../components/common/variables';
+import {primaryColor, danger} from '../../components/common/variables';
 
-const VDHome = ({ navigation }) => {
+const VDHome = ({navigation}) => {
   return (
     <>
       <Header
-        style={{ elevation: 0 }}
+        style={{elevation: 0}}
         title="Dashboard"
         headerLeft={
           <Clickable onClick={() => navigation.openDrawer()}>
@@ -29,7 +23,7 @@ const VDHome = ({ navigation }) => {
         headerRight={
           <Option
             icon={<Icon name="md-more" color="#fff" />}
-            options={[{ label: 'Report a problem', action: () => {} }]}
+            options={[{label: 'Report a problem', action: () => {}}]}
           />
         }
       />
@@ -48,9 +42,9 @@ const VDHome = ({ navigation }) => {
             name: 'VDAnalyticsTab',
             component: VDAnalyticsScreen,
             options: {
-              tabBarIcon: ({ focused, color, size }) => (
+              tabBarIcon: ({focused, color, size}) => (
                 <Icon
-                  style={{ width: 80 }}
+                  style={{width: 80}}
                   name="ios-stats"
                   size={focused ? 30 : size}
                   color={color}
@@ -62,9 +56,9 @@ const VDHome = ({ navigation }) => {
             name: 'VDProductsTab',
             component: VDProductsScreen,
             options: {
-              tabBarIcon: ({ focused, color, size }) => (
+              tabBarIcon: ({focused, color, size}) => (
                 <Icon
-                  style={{ width: 80 }}
+                  style={{width: 80}}
                   name="ios-basket"
                   size={focused ? 30 : size}
                   color={color}
@@ -76,15 +70,15 @@ const VDHome = ({ navigation }) => {
             name: 'VDMessagingTab',
             component: VDMessagingScreen,
             options: {
-              tabBarIcon: ({ focused, color, size }) => (
+              tabBarIcon: ({focused, color, size}) => (
                 <>
                   <Icon
                     name="ios-chatbubbles"
-                    style={{ width: 80 }}
+                    style={{width: 80}}
                     size={focused ? 30 : size}
                     color={color}
                   />
-                  <Badge color={danger} style={{ elevation: 0, right: -5 }} />
+                  <Badge color={danger} style={{elevation: 0, right: -5}} />
                 </>
               ),
             },
@@ -93,15 +87,15 @@ const VDHome = ({ navigation }) => {
             name: 'VDOrdersTab',
             component: VDOrdersScreen,
             options: {
-              tabBarIcon: ({ focused, color, size }) => (
+              tabBarIcon: ({focused, color, size}) => (
                 <>
                   <Icon
                     name="md-cart"
                     size={focused ? 30 : size}
                     color={color}
-                    style={{ width: 80 }}
+                    style={{width: 80}}
                   />
-                  <Badge color={danger} style={{ elevation: 0, right: -5 }} />
+                  <Badge color={danger} style={{elevation: 0, right: -5}} />
                 </>
               ),
             },
@@ -110,10 +104,10 @@ const VDHome = ({ navigation }) => {
             name: 'VDShopSettingsTab',
             component: VDSettingsScreen,
             options: {
-              tabBarIcon: ({ focused, color, size }) => (
+              tabBarIcon: ({focused, color, size}) => (
                 <Icon
                   name="ios-settings"
-                  style={{ width: 80 }}
+                  style={{width: 80}}
                   size={focused ? 30 : size}
                   color={color}
                 />
