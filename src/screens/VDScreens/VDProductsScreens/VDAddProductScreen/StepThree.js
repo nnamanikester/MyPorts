@@ -1,7 +1,15 @@
 import React from 'react';
 import * as UI from '../../../../components/common';
+import {StyleSheet} from 'react-native';
+import {inactiveColor} from '../../../../components/common/variables';
 
-const StepThree = ({ show, onContinue, specifications, onAddSpec }) => {
+const StepThree = ({
+  show,
+  onContinue,
+  specifications,
+  onAddSpec,
+  onRemoveItem,
+}) => {
   if (!show) return null;
 
   const [spec, setSpec] = React.useState('');
@@ -37,19 +45,33 @@ const StepThree = ({ show, onContinue, specifications, onAddSpec }) => {
 
       {!specifications && <UI.Text>No specification yet</UI.Text>}
 
-      {specifications.map((spec) => {
+      {specifications.map((spec, i) => {
         return (
-          <UI.ListItem
-            key={`${spec.specification + spec.value}`}
-            left={<UI.Text heading>{spec.specification}</UI.Text>}
-            body={<UI.Text>{spec.value}</UI.Text>}
-          />
+          <UI.Row
+            style={styles.list}
+            key={`${spec.specification + spec.value}`}>
+            <UI.Column size="4">
+              <UI.Text heading>
+                <UI.Text heading>{spec.specification}</UI.Text>
+              </UI.Text>
+            </UI.Column>
+            <UI.Column size="6">
+              <UI.Text heading>
+                <UI.Text>{spec.value}</UI.Text>
+              </UI.Text>
+            </UI.Column>
+            <UI.Column style={{alignItems: 'center'}} size="2">
+              <UI.Clickable onClick={() => onRemoveItem(i)}>
+                <UI.Icon name="md-close" />
+              </UI.Clickable>
+            </UI.Column>
+          </UI.Row>
         );
       })}
 
       <UI.Spacer medium />
 
-      <UI.Row style={{ justifyContent: 'space-between' }}>
+      <UI.Row style={{justifyContent: 'space-between'}}>
         <UI.Column size="5">
           <UI.Text heading>Specification</UI.Text>
           <UI.TextInput
@@ -84,5 +106,13 @@ const StepThree = ({ show, onContinue, specifications, onAddSpec }) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  list: {
+    marginBottom: 10,
+    borderBottomColor: inactiveColor,
+    borderBottomWidth: 1,
+  },
+});
 
 export default StepThree;

@@ -1,8 +1,8 @@
 import React from 'react';
 import Swiper from 'react-native-swiper';
-import { StyleSheet, View, Image } from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 import * as UI from '../../../../components/common';
-import { formatMoney } from '../../../../utils';
+import {formatMoney} from '../../../../utils';
 
 const StepFive = ({
   images,
@@ -16,7 +16,6 @@ const StepFive = ({
   percentageDiscount,
   show,
   onFinish,
-  onSaveDraft,
 }) => {
   if (!show) return null;
 
@@ -32,7 +31,7 @@ const StepFive = ({
       <Swiper animated autoplayTimeout={5} height={250} loop autoplay>
         {images.map((image, index) => (
           <View key={`${image.url + index}`}>
-            <Image style={styles.featured} source={{ uri: image.url }} />
+            <Image style={styles.featured} source={{uri: image.url}} />
           </View>
         ))}
       </Swiper>
@@ -95,13 +94,7 @@ const StepFive = ({
       <UI.Spacer medium />
 
       <UI.Button onClick={onFinish}>
-        <UI.Text color="#fff">Publish</UI.Text>
-      </UI.Button>
-
-      <UI.Spacer />
-
-      <UI.Button onClick={onSaveDraft} type="ghost">
-        Save for later
+        <UI.Text color="#fff">Update</UI.Text>
       </UI.Button>
 
       <UI.Spacer large />

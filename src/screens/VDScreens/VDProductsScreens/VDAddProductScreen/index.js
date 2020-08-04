@@ -142,6 +142,11 @@ const VDAddProductScreen = ({navigation, offline}) => {
                 {specification: spec, value},
               ])
             }
+            onRemoveItem={(i) =>
+              setSpecifications(
+                specifications.filter((_, index) => i !== index),
+              )
+            }
             onContinue={() => setStep(step + 1)}
             show={step === 3}
           />

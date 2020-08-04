@@ -41,7 +41,7 @@ const StepFour = ({
 
   return (
     <>
-      <UI.Text h3>Add Product Pricing</UI.Text>
+      <UI.Text h3>Update Product Pricing</UI.Text>
       <UI.Text color="" note>
         Use the form below to set product quantity and price for each.
       </UI.Text>
@@ -137,9 +137,9 @@ const StepFour = ({
         <UI.ListItem
           body={
             <>
-              <UI.Text heading>Add Discount</UI.Text>
+              <UI.Text heading>Update Discount</UI.Text>
               <UI.Text note color="">
-                Do you have discount for this product?
+                Do you need to update the product discount?
               </UI.Text>
             </>
           }

@@ -44,53 +44,36 @@ const VDEditProductScreen = ({navigation, offline, route: {params}}) => {
       : product.percentageDiscount,
   );
 
-  const handleCreateProduct = () => {
+  const handleUpdateProduct = () => {
     if (!offline) {
       updateProduct({
         variables: {
-          name,
-          description,
-          category,
-          images,
-          specifications,
-          quantity: parseInt(quantity),
-          price: parseFloat(price),
-          shipping: parseFloat(shipping),
-          fixedDiscount: parseFloat(fixedDiscount),
-          percentageDiscount: parseInt(percentageDiscount),
-          status: 1,
-        },
-      })
-        .then((res) => {
-          ToastAndroid.show('Product Updated Successfully!', ToastAndroid.LONG);
-          navigation.goBack();
-        })
-        .catch(() => {
-          Alert.alert('Error!', 'Unable to update product. Please try again!');
-        });
-    } else {
-      Alert.alert(
-        'Network Error!',
-        "Please check if you're connected to the internet",
-      );
-    }
-  };
-
-  const handleSaveForLater = () => {
-    if (!offline) {
-      updateProduct({
-        variables: {
-          name,
-          description,
-          category,
-          images,
-          specifications,
-          quantity: parseInt(quantity),
-          price: parseFloat(price),
-          shipping: parseFloat(shipping),
-          fixedDiscount: parseFloat(fixedDiscount),
-          percentageDiscount: parseInt(percentageDiscount),
-          status: 0,
+          where: {
+            id: product.id,
+          },
+          data: {
+            name,
+            description,
+            category: {
+              connect: {
+                id: category,
+              },
+            },
+            images: {
+              create: images.map((im) => ({url: im.url})),
+            },
+            specifications: {
+              create: specifications.map((s) => ({
+                value: s.value,
+                specification: s.specification,
+              })),
+            },
+            quantity: parseInt(quantity),
+            price: parseFloat(price),
+            shipping: parseFloat(shipping),
+            fixedDiscount: parseFloat(fixedDiscount),
+            percentageDiscount: parseInt(percentageDiscount),
+          },
         },
       })
         .then((res) => {
@@ -158,6 +141,11 @@ const VDEditProductScreen = ({navigation, offline, route: {params}}) => {
                 {specification: spec, value},
               ])
             }
+            onRemoveItem={(i) =>
+              setSpecifications(
+                specifications.filter((_, index) => i !== index),
+              )
+            }
             onContinue={() => setStep(step + 1)}
             show={step === 3}
           />
@@ -188,9 +176,8 @@ const VDEditProductScreen = ({navigation, offline, route: {params}}) => {
             shipping={shipping}
             fixedDiscount={fixedDiscount}
             percentageDiscount={percentageDiscount}
-            onFinish={() => handleCreateProduct()}
+            onFinish={() => handleUpdateProduct()}
             show={step === 5}
-            onSaveDraft={() => handleSaveForLater()}
           />
         </View>
       </UI.Layout>

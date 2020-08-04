@@ -5,7 +5,7 @@ import {primaryColor} from '../../../components/common/variables';
 import Header from '../../../components/Header';
 import Swiper from 'react-native-swiper';
 import {formatMoney} from '../../../utils';
-import {DELETE_PRODUCT} from '../../../apollo/mutations';
+import {DELETE_PRODUCT, UPDATE_PRODUCT} from '../../../apollo/mutations';
 import {useMutation} from '@apollo/react-hooks';
 
 const VDSingleProductScreen = ({navigation, route: {params}}) => {
@@ -18,6 +18,8 @@ const VDSingleProductScreen = ({navigation, route: {params}}) => {
       },
     },
   );
+
+  const [updateProduct, {loading}] = useMutation(UPDATE_PRODUCT);
 
   const handleDeleteProduct = () => {
     Alert.alert('Warning!', 'Are you sure you want to delete this product?', [
@@ -43,9 +45,32 @@ const VDSingleProductScreen = ({navigation, route: {params}}) => {
     ]);
   };
 
+  const handleUpdateProductStatus = (status) => {
+    updateProduct({
+      variables: {
+        where: {
+          id: product.id,
+        },
+        data: {
+          status,
+        },
+      },
+    })
+      .then((res) => {
+        ToastAndroid.show('Status Updated Successfully!', ToastAndroid.LONG);
+        navigation.goBack();
+      })
+      .catch(() => {
+        Alert.alert(
+          'Error!',
+          'Unable to update product status. Please try again!',
+        );
+      });
+  };
+
   return (
     <>
-      <UI.Loading show={deleteLoading} />
+      <UI.Loading show={deleteLoading || loading} />
       <Header
         title={product.name}
         headerLeft={
@@ -70,7 +95,11 @@ const VDSingleProductScreen = ({navigation, route: {params}}) => {
               options={[
                 {
                   label: product.status === 1 ? 'Revert to draft' : 'Publish',
-                  action: () => {},
+                  action: () => {
+                    return handleUpdateProductStatus(
+                      product.status === 1 ? 0 : 1,
+                    );
+                  },
                 },
                 {
                   label: 'Edit',

@@ -1,7 +1,15 @@
 import React from 'react';
 import * as UI from '../../../../components/common';
+import {StyleSheet} from 'react-native';
+import {inactiveColor} from '../../../../components/common/variables';
 
-const StepThree = ({show, onContinue, specifications, onAddSpec}) => {
+const StepThree = ({
+  show,
+  onContinue,
+  specifications,
+  onAddSpec,
+  onRemoveItem,
+}) => {
   if (!show) {
     return null;
   }
@@ -21,7 +29,7 @@ const StepThree = ({show, onContinue, specifications, onAddSpec}) => {
 
   return (
     <>
-      <UI.Text h3>Add Product Specifications (Optional)</UI.Text>
+      <UI.Text h3>Update Product Specifications (Optional)</UI.Text>
       <UI.Text color="" note>
         Follow the below step to add your product's specifications.
       </UI.Text>
@@ -32,7 +40,7 @@ const StepThree = ({show, onContinue, specifications, onAddSpec}) => {
         <UI.Column size="4">
           <UI.Text heading>Specification</UI.Text>
         </UI.Column>
-        <UI.Column size="5">
+        <UI.Column size="8">
           <UI.Text heading>Value</UI.Text>
         </UI.Column>
       </UI.Row>
@@ -41,13 +49,27 @@ const StepThree = ({show, onContinue, specifications, onAddSpec}) => {
 
       {!specifications && <UI.Text>No specification yet</UI.Text>}
 
-      {specifications.map((spec) => {
+      {specifications.map((spec, i) => {
         return (
-          <UI.ListItem
-            key={`${spec.specification + spec.value}`}
-            left={<UI.Text heading>{spec.specification}</UI.Text>}
-            body={<UI.Text>{spec.value}</UI.Text>}
-          />
+          <UI.Row
+            style={styles.list}
+            key={`${spec.specification + spec.value}`}>
+            <UI.Column size="4">
+              <UI.Text heading>
+                <UI.Text heading>{spec.specification}</UI.Text>
+              </UI.Text>
+            </UI.Column>
+            <UI.Column size="6">
+              <UI.Text heading>
+                <UI.Text>{spec.value}</UI.Text>
+              </UI.Text>
+            </UI.Column>
+            <UI.Column style={{alignItems: 'center'}} size="2">
+              <UI.Clickable onClick={() => onRemoveItem(i)}>
+                <UI.Icon name="md-close" />
+              </UI.Clickable>
+            </UI.Column>
+          </UI.Row>
         );
       })}
 
@@ -88,5 +110,13 @@ const StepThree = ({show, onContinue, specifications, onAddSpec}) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  list: {
+    marginBottom: 10,
+    borderBottomColor: inactiveColor,
+    borderBottomWidth: 1,
+  },
+});
 
 export default StepThree;

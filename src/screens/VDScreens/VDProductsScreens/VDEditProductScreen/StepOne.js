@@ -32,7 +32,7 @@ const StepOne = ({onContinue, show, images, onImages, onImageClick}) => {
 
   return (
     <>
-      <UI.Text h3>Add Product Images</UI.Text>
+      <UI.Text h3>Update Product Images</UI.Text>
 
       <UI.Text color="" note>
         Upload at least 2 images that shows clearly your product.

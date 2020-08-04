@@ -51,7 +51,7 @@ const StepTwo = ({
 
   return (
     <>
-      <UI.Text h3>Add Product Info</UI.Text>
+      <UI.Text h3>Update Product Info</UI.Text>
       <UI.Text color="" note>
         Fill the form below to tell your customers about your product.
       </UI.Text>

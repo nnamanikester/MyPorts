@@ -204,31 +204,10 @@ export const DELETE_PRODUCT = gql`
 
 export const UPDATE_PRODUCT = gql`
   mutation updateProduct(
-    $name: String!
-    $description: String!
-    $category: String!
-    $images: [ProductImageInput!]!
-    $specifications: [ProductSpecificationInput!]!
-    $quantity: Int!
-    $price: Float!
-    $shipping: Float!
-    $fixedDiscount: Float
-    $percentageDiscount: Int
-    $status: Int!
+    $data: ProductUpdateInput!
+    $where: ProductWhereUniqueInput!
   ) {
-    updateProduct(
-      name: $name
-      description: $description
-      category: $category
-      images: $images
-      specifications: $specifications
-      quantity: $quantity
-      price: $price
-      shipping: $shipping
-      fixedDiscount: $fixedDiscount
-      percentageDiscount: $percentageDiscount
-      status: $status
-    ) {
+    updateProduct(data: $data, where: $where) {
       id
     }
   }
