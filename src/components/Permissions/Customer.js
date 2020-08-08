@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 class Customer extends Component {
   constructor(props) {
@@ -6,7 +6,7 @@ class Customer extends Component {
     this.state = {};
   }
   render() {
-    const { token, user, children } = this.props;
+    const {token, user, children} = this.props;
     if (user && user.isCustomer) {
       return children;
     } else {

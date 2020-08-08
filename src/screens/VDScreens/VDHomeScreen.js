@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import Header from '../../components/Header';
-import {TopTab, Icon, Clickable, Badge, Option} from '../../components/common';
+import * as UI from '../../components/common';
 import VDAnalyticsScreen from './VDDashboardScreens/VDAnalyticsScreen';
 import VDProductsScreen from './VDDashboardScreens/VDProductsScreen';
 import VDSettingsScreen from './VDDashboardScreens/VDSettingsScreen';
@@ -13,21 +13,29 @@ const VDHome = ({navigation}) => {
   return (
     <>
       <Header
+        isCart
         style={{elevation: 0}}
         title="Dashboard"
         headerLeft={
-          <Clickable onClick={() => navigation.openDrawer()}>
-            <Icon name="ios-menu" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.openDrawer()}>
+            <UI.Icon name="ios-menu" color="#fff" />
+          </UI.Clickable>
         }
         headerRight={
-          <Option
-            icon={<Icon name="md-more" color="#fff" />}
-            options={[{label: 'Report a problem', action: () => {}}]}
-          />
+          <>
+            <UI.Clickable
+              onClick={() => navigation.navigate('VDNotifications')}>
+              <UI.Icon name="ios-notifications" color="#fff" />
+            </UI.Clickable>
+            <UI.Spacer medium />
+            <UI.Option
+              icon={<UI.Icon name="ios-more" color="#fff" />}
+              options={[{label: 'Report a problem', action: () => {}}]}
+            />
+          </>
         }
       />
-      <TopTab
+      <UI.TopTab
         tabBarOptions={{
           showLabel: false,
           showIcon: true,
@@ -43,7 +51,7 @@ const VDHome = ({navigation}) => {
             component: VDAnalyticsScreen,
             options: {
               tabBarIcon: ({focused, color, size}) => (
-                <Icon
+                <UI.Icon
                   style={{width: 80}}
                   name="ios-stats"
                   size={focused ? 30 : size}
@@ -57,7 +65,7 @@ const VDHome = ({navigation}) => {
             component: VDProductsScreen,
             options: {
               tabBarIcon: ({focused, color, size}) => (
-                <Icon
+                <UI.Icon
                   style={{width: 80}}
                   name="ios-basket"
                   size={focused ? 30 : size}
@@ -72,13 +80,13 @@ const VDHome = ({navigation}) => {
             options: {
               tabBarIcon: ({focused, color, size}) => (
                 <>
-                  <Icon
+                  <UI.Icon
                     name="ios-chatbubbles"
                     style={{width: 80}}
                     size={focused ? 30 : size}
                     color={color}
                   />
-                  <Badge color={danger} style={{elevation: 0, right: -5}} />
+                  <UI.Badge color={danger} style={{elevation: 0, right: -5}} />
                 </>
               ),
             },
@@ -89,13 +97,13 @@ const VDHome = ({navigation}) => {
             options: {
               tabBarIcon: ({focused, color, size}) => (
                 <>
-                  <Icon
+                  <UI.Icon
                     name="md-cart"
                     size={focused ? 30 : size}
                     color={color}
                     style={{width: 80}}
                   />
-                  <Badge color={danger} style={{elevation: 0, right: -5}} />
+                  <UI.Badge color={danger} style={{elevation: 0, right: -5}} />
                 </>
               ),
             },
@@ -105,7 +113,7 @@ const VDHome = ({navigation}) => {
             component: VDSettingsScreen,
             options: {
               tabBarIcon: ({focused, color, size}) => (
-                <Icon
+                <UI.Icon
                   name="ios-settings"
                   style={{width: 80}}
                   size={focused ? 30 : size}

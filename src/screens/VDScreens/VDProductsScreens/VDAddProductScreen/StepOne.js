@@ -9,11 +9,18 @@ import {
 } from '../../../../components/common/variables';
 import {imagePickerOptions} from '../../../../constants';
 import {processImage} from '../../../../utils';
+import axios from 'axios';
+import {useMutation} from '@apollo/react-hooks';
+import {SINGLE_UPLOAD} from '../../../../apollo/mutations';
 
 const StepOne = ({onContinue, show, images, onImages, onImageClick}) => {
   if (!show) {
     return null;
   }
+
+  const [singleUpload, {loading}] = useMutation(SINGLE_UPLOAD);
+
+  // const [loading, setLoading] = React.useState(false);
 
   const handleSelectImage = () => {
     ImagePicker.showImagePicker(imagePickerOptions, (response) => {
@@ -22,16 +29,54 @@ const StepOne = ({onContinue, show, images, onImages, onImageClick}) => {
       } else if (response.error) {
         Alert.alert('Error', response.error);
       } else {
-        const file = processImage(response);
-        // Upload Photo
-        // return onImages(url = 'url from uploadrd photo');
-        return onImages(response.uri);
+        // const data = processImage(response);
+
+        const formData = new FormData();
+        formData.append('image', 'Name');
+        // formData.append('image', {
+        //   uri: response.uri,
+        //   type: response.type,
+        //   name: response.fileName,
+        // });
+        // setLoading(true);
+
+        singleUpload({
+          variables: {
+            file: {
+              uri: response.uri,
+              type: response.type,
+              name: response.fileName,
+              upload_preset: 'myports',
+            },
+          },
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+
+        // const file = processImage(data)
+        // axios
+        //   .post('https://myports.destreetboard.com/api/upload-image', formData)
+        //   .then((res) => {
+        //     // onImages(res.secure_url);
+        //     console.log(res);
+        //     setLoading(false);
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //     setLoading(false);
+        //     Alert.alert('Error', 'An Error Occured While Uploading');
+        //   });
       }
     });
   };
 
   return (
     <>
+      <UI.Loading show={loading} />
       <UI.Text h3>Add Product Images</UI.Text>
 
       <UI.Text color="" note>

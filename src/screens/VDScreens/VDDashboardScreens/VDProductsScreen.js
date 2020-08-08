@@ -1,6 +1,6 @@
 import React from 'react';
 import * as UI from '../../../components/common';
-import {View, FlatList, ScrollView, Alert} from 'react-native';
+import {View, ScrollView, Alert} from 'react-native';
 import SearchBar from '../../../components/SearchBar';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_PRODUCTS} from '../../../apollo/queries';

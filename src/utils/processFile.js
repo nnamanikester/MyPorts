@@ -1,4 +1,4 @@
-import { ReactNativeFile } from 'extract-files';
+import {ReactNativeFile} from 'extract-files';
 
 export const processImage = (photo) => {
   return new ReactNativeFile({

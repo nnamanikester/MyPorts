@@ -51,25 +51,31 @@ const CartItem = ({
               </Text>
             )}
             {quantity && (
-              <Row style={{alignItems: 'center'}}>
-                <Column size="2">
-                  <Text note>QTY: </Text>
-                </Column>
-                <Column size="10">
-                  <TextInput
-                    style={{
-                      zIndex: 99999999999,
-                      height: 32,
-                      padding: 0,
-                      borderColor: quantityError ? 'red' : inactiveColor,
-                    }}
-                    placeholder="Quantity"
-                    value={`${quantity}`}
-                    onChangeText={onQuantityChange}
-                    keyboardType="number-pad"
-                  />
-                </Column>
-              </Row>
+              <Text note>
+                Quantity:{' '}
+                <Text note color={info}>
+                  {quantity}
+                </Text>
+              </Text>
+              // <Row style={{alignItems: 'center'}}>
+              //   <Column size="2">
+              //     <Text note>QTY: </Text>
+              //   </Column>
+              //   <Column size="10">
+              //     <TextInput
+              //       style={{
+              //         zIndex: 99999999999,
+              //         height: 32,
+              //         padding: 0,
+              //         borderColor: quantityError ? 'red' : inactiveColor,
+              //       }}
+              //       placeholder="Quantity"
+              //       value={`${quantity}`}
+              //       onChangeText={onQuantityChange}
+              //       keyboardType="number-pad"
+              //     />
+              //   </Column>
+              // </Row>
             )}
           </>
         }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 class Vendor extends Component {
   constructor(props) {
@@ -6,7 +6,7 @@ class Vendor extends Component {
     this.state = {};
   }
   render() {
-    const { user, token, children } = this.props;
+    const {user, token, children} = this.props;
     if (user && user.isVendor) {
       return children;
     } else {

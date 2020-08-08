@@ -1,29 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import React, {useEffect} from 'react';
+import {View, StyleSheet, Image, Alert} from 'react-native';
 import * as UI from '../../components/common';
-import { female4, male1 } from '../../assets/images';
+import {female4, male1} from '../../assets/images';
 import {
   grayColor,
   info,
   primaryColor,
+  inactiveColor,
 } from '../../components/common/variables';
 import Skeleton from 'react-native-skeleton-placeholder';
-import { connect } from 'react-redux';
-import { useLazyQuery } from '@apollo/react-hooks';
-import { VENDOR } from '../../apollo/queries';
-import { setVendor } from '../../redux/actions/VendorActions';
+import {connect} from 'react-redux';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {VENDOR} from '../../apollo/queries';
+import {setVendor} from '../../redux/actions/VendorActions';
 
-const VDShopPreviewScreen = ({ navigation, offline, setVendor, vendor }) => {
-  const [getVendor, { loading, data, error }] = useLazyQuery(VENDOR);
+const VDShopPreviewScreen = ({navigation, offline, setVendor, vendor}) => {
+  const [getVendor, {loading, data, error}] = useLazyQuery(VENDOR);
 
   useEffect(() => {
     if (!offline) {
-      if (!data && !error) getVendor();
+      if (!data && !error) {
+        getVendor();
+      }
       if (data) {
         setVendor(data.getVendor);
       }
       if (error) {
-        alert('An errror occured while trying to load data!');
+        Alert.alert('Error!', 'An errror occured while trying to load data!');
       }
     }
   }, [data, error]);
@@ -88,23 +91,23 @@ const VDShopPreviewScreen = ({ navigation, offline, setVendor, vendor }) => {
 
           <UI.Spacer />
 
-          <View style={{ paddingHorizontal: 10 }}>
+          <View style={{paddingHorizontal: 10}}>
             <UI.Text style={styles.title}>Ratings and Reviews</UI.Text>
           </View>
 
           <View style={styles.reviewSection}>
             <View style={styles.ratingPoint}>
-              <UI.Text size={50}>4.0</UI.Text>
+              <UI.Text size={50}>5.0</UI.Text>
               <UI.Rating size={15} s4={1} />
-              <UI.Text>10,000</UI.Text>
+              <UI.Text>0</UI.Text>
             </View>
 
             <View style={styles.ratingGraph}>
-              <UI.ProgressBar label="5" percent={75} />
-              <UI.ProgressBar label="4" percent={15} />
-              <UI.ProgressBar label="3" percent={2} />
-              <UI.ProgressBar label="2" percent={3} />
-              <UI.ProgressBar label="1" percent={5} />
+              <UI.ProgressBar label="5" percent={0} />
+              <UI.ProgressBar label="4" percent={0} />
+              <UI.ProgressBar label="3" percent={0} />
+              <UI.ProgressBar label="2" percent={0} />
+              <UI.ProgressBar label="1" percent={0} />
             </View>
           </View>
 
@@ -112,7 +115,7 @@ const VDShopPreviewScreen = ({ navigation, offline, setVendor, vendor }) => {
 
           <UI.Divider />
 
-          <View style={{ paddingHorizontal: 10 }}>
+          <View style={{paddingHorizontal: 10}}>
             <UI.Button>
               <UI.Icon size={20} name="md-create" color="#fff" />
               {'   '}
@@ -125,16 +128,16 @@ const VDShopPreviewScreen = ({ navigation, offline, setVendor, vendor }) => {
         <UI.Divider />
 
         <View style={styles.container}>
-          <View style={{ paddingHorizontal: 10 }}>
+          <View style={{paddingHorizontal: 10}}>
             <UI.Text style={styles.title}>Recent Products</UI.Text>
           </View>
 
           <UI.Spacer />
 
-          <UI.Row style={{ justifyContent: 'space-between' }}>
-            <Skeleton>
+          <UI.Row style={{justifyContent: 'space-between'}}>
+            <Skeleton highlightColor={inactiveColor}>
               <View>
-                <View style={{ width: 120, height: 120, borderRadius: 5 }} />
+                <View style={{width: 120, height: 120, borderRadius: 5}} />
                 <View
                   style={{
                     width: 120,
@@ -153,7 +156,7 @@ const VDShopPreviewScreen = ({ navigation, offline, setVendor, vendor }) => {
                 />
               </View>
               <View>
-                <View style={{ width: 120, height: 120, borderRadius: 5 }} />
+                <View style={{width: 120, height: 120, borderRadius: 5}} />
                 <View
                   style={{
                     width: 120,
@@ -172,7 +175,121 @@ const VDShopPreviewScreen = ({ navigation, offline, setVendor, vendor }) => {
                 />
               </View>
               <View>
-                <View style={{ width: 120, height: 120, borderRadius: 5 }} />
+                <View style={{width: 120, height: 120, borderRadius: 5}} />
+                <View
+                  style={{
+                    width: 120,
+                    height: 12,
+                    marginTop: 10,
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{
+                    width: 120,
+                    height: 12,
+                    marginTop: 10,
+                    borderRadius: 5,
+                  }}
+                />
+              </View>
+              <View>
+                <View style={{width: 120, height: 120, borderRadius: 5}} />
+                <View
+                  style={{
+                    width: 120,
+                    height: 12,
+                    marginTop: 10,
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{
+                    width: 120,
+                    height: 12,
+                    marginTop: 10,
+                    borderRadius: 5,
+                  }}
+                />
+              </View>
+              <View>
+                <View style={{width: 120, height: 120, borderRadius: 5}} />
+                <View
+                  style={{
+                    width: 120,
+                    height: 12,
+                    marginTop: 10,
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{
+                    width: 120,
+                    height: 12,
+                    marginTop: 10,
+                    borderRadius: 5,
+                  }}
+                />
+              </View>
+              <View>
+                <View style={{width: 120, height: 120, borderRadius: 5}} />
+                <View
+                  style={{
+                    width: 120,
+                    height: 12,
+                    marginTop: 10,
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{
+                    width: 120,
+                    height: 12,
+                    marginTop: 10,
+                    borderRadius: 5,
+                  }}
+                />
+              </View>
+              <View>
+                <View style={{width: 120, height: 120, borderRadius: 5}} />
+                <View
+                  style={{
+                    width: 120,
+                    height: 12,
+                    marginTop: 10,
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{
+                    width: 120,
+                    height: 12,
+                    marginTop: 10,
+                    borderRadius: 5,
+                  }}
+                />
+              </View>
+              <View>
+                <View style={{width: 120, height: 120, borderRadius: 5}} />
+                <View
+                  style={{
+                    width: 120,
+                    height: 12,
+                    marginTop: 10,
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{
+                    width: 120,
+                    height: 12,
+                    marginTop: 10,
+                    borderRadius: 5,
+                  }}
+                />
+              </View>
+              <View>
+                <View style={{width: 120, height: 120, borderRadius: 5}} />
                 <View
                   style={{
                     width: 120,
@@ -287,4 +404,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setVendor })(VDShopPreviewScreen);
+export default connect(mapStateToProps, {setVendor})(VDShopPreviewScreen);

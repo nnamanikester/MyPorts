@@ -16,6 +16,7 @@ import VDTransactions from '../screens/VDScreens/VDTransactionsScreen';
 import VDWithdrawalRequest from '../screens/VDScreens/VDWithdrawalRequestScreen';
 import VDOrderDetails from '../screens/VDScreens/VDOrderDetailsScreen';
 import ReferAndEarn from '../screens/UserScreens/ReferAndEarnScreen';
+import VDNotifications from '../screens/VDScreens/VDNotificationsScreen';
 
 // VD Product Screens
 import VDAddProduct from '../screens/VDScreens/VDProductsScreens/VDAddProductScreen';
@@ -81,6 +82,7 @@ const VDFlow = ({offline, setVendorProfile, setVendor}) => {
         <Stack.Screen name="VDTransactions" component={VDTransactions} />
         <Stack.Screen name="VDOrderDetails" component={VDOrderDetails} />
         <Stack.Screen name="ReferAndEarn" component={ReferAndEarn} />
+        <Stack.Screen name="VDNotifications" component={VDNotifications} />
 
         {/* VD Product Screens */}
         <Stack.Screen name="VDAddProduct" component={VDAddProduct} />

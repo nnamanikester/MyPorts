@@ -5,6 +5,7 @@ import {Text, Badge} from './common';
 import {primaryColor} from './common/variables';
 import {danger} from './common/variables';
 import {connect} from 'react-redux';
+import Permissions from './Permissions';
 
 const Header = ({
   isCart,
@@ -32,9 +33,16 @@ const Header = ({
       {headerRight && (
         <View style={styles.rightContainerStyle}>
           {headerRight}
-          {isCart && cart && cart.items && cart.items.length > 0 && (
-            <Badge style={{elevation: 1, top: 8, left: 30}} color={danger} />
-          )}
+          <Permissions.Customer>
+            {isCart && cart && cart.items && cart.items.length > 0 ? (
+              <Badge style={{elevation: 1, top: 8, left: 30}} color={danger} />
+            ) : null}
+          </Permissions.Customer>
+          <Permissions.Vendor>
+            {isCart && (
+              <Badge style={{elevation: 1, top: 12, left: 20}} color={danger} />
+            )}
+          </Permissions.Vendor>
         </View>
       )}
     </View>
