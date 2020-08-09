@@ -5,6 +5,8 @@ import CustomerReducer from './CustomerReducer';
 import VendorReducer from './VendorReducer';
 import CartReducer from './CartReducer';
 import AdvertReducer from './AdvertReducer';
+import WalletReducer from './WalletReducer';
+import AddressReducer from './AddressReducer';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -13,4 +15,6 @@ export default combineReducers({
   vendor: VendorReducer,
   cart: CartReducer,
   adverts: AdvertReducer,
+  wallet: WalletReducer,
+  address: AddressReducer,
 });

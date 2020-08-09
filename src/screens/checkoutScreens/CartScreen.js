@@ -6,21 +6,58 @@ import CartItem from '../../components/CartItem';
 import OrderSummary from '../../components/OrderSummary';
 import {connect} from 'react-redux';
 import {setCartStorage} from '../../redux/actions/CartActions';
-import {useMutation} from '@apollo/react-hooks';
+import {setAddress} from '../../redux/actions/AddressActions';
+import {setWallet} from '../../redux/actions/WalletActions';
+import {useMutation, useQuery} from '@apollo/react-hooks';
 import {REMOVE_CART_ITEM} from '../../apollo/mutations';
+import {GET_WALLET, GET_ADDRESSES} from '../../apollo/queries';
 import EmptyItem from '../../components/EmptyItem';
 import {info} from '../../components/common/variables';
+import {formatMoney} from '../../utils';
 
-const CartScreen = ({navigation, cart, setCartStorage}) => {
+const CartScreen = ({
+  navigation,
+  cart,
+  setCartStorage,
+  setWallet,
+  setAddress,
+  customer,
+  wallet,
+  address,
+}) => {
   const [loading] = React.useState(false);
-  const [quantityError, setQuantityError] = React.useState(false);
-  const [removeItemModal, setRemoveItemModal] = React.useState(false);
-  const [removeItemId, setRemoveItemId] = React.useState(null);
+  const [optAddress, setOptAddress] = React.useState({});
 
   const [removeItem, {loading: removeItemLoading}] = useMutation(
     REMOVE_CART_ITEM,
   );
+
+  const {loading: walletLoading, data: walletData} = useQuery(GET_WALLET);
+
+  const {loading: addressLoading, data: addressData} = useQuery(GET_ADDRESSES, {
+    variables: {
+      customerId: customer.id,
+    },
+  });
+
   // const [clearCart, {loading: clearCartLoading}] = useMutation(CLEAR_CART);
+
+  React.useMemo(() => {
+    if (walletData) {
+      setWallet(walletData.getWallet);
+    }
+  }, [walletData]);
+
+  React.useMemo(() => {
+    if (addressData) {
+      addressData.addresses.forEach((a) => {
+        setOptAddress(a);
+        if (a.default !== null) {
+          setAddress(a);
+        }
+      });
+    }
+  }, [addressData]);
 
   const handleRemoveItem = (id) => {
     const tempCart = cart;
@@ -51,11 +88,6 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
   //     },
   //   });
   // };
-
-  const handleRemoveItemModal = (id) => {
-    setRemoveItemModal(true);
-    setRemoveItemId(id);
-  };
 
   const calculateOrders = () => {
     let total = 0;
@@ -98,39 +130,11 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
     );
   };
 
-  const onQuantityChange = (value, item) => {
-    if (parseInt(value) < 1) {
-      handleRemoveItemModal(item.id);
-      setQuantityError(true);
-      return;
-    }
-    if (parseInt(value) > item.product.quantity) {
-      setQuantityError(true);
-      return;
-    }
-
-    setQuantityError(false);
-
-    setCartStorage({
-      ...cart,
-      items: [
-        ...cart.items.map((ci) => {
-          if (ci.id === item.id) {
-            return {
-              ...item,
-              quantity: value,
-            };
-          } else {
-            return item;
-          }
-        }),
-      ],
-    });
-  };
-
   return (
     <>
-      <UI.Loading show={loading || removeItemLoading} />
+      <UI.Loading
+        show={loading || removeItemLoading || walletLoading || addressLoading}
+      />
       <Header
         title="Shopping Bag"
         headerLeft={
@@ -172,8 +176,6 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
                   })
                 }
                 onCloseButtonClick={() => handleRemoveItem(item.id)}
-                quantityError={quantityError}
-                onQuantityChange={(value) => onQuantityChange(value, item)}
               />
             );
           })
@@ -212,11 +214,46 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
 
           <UI.Spacer />
 
-          <UI.Text h3>Shipping Details</UI.Text>
+          <UI.Row>
+            <UI.Column size="6">
+              <UI.Text h3>Payment</UI.Text>
+            </UI.Column>
+            <UI.Column style={{alignItems: 'flex-end'}} size="6">
+              <UI.Link onClick={() => {}}>Fund Wallet</UI.Link>
+            </UI.Column>
+          </UI.Row>
 
-          <UI.Spacer medium />
+          <UI.ListItem
+            left={<UI.Text>MyPorts Balance</UI.Text>}
+            right={
+              <UI.Text bold>
+                {wallet.id ? formatMoney(wallet.balance) : 0}
+              </UI.Text>
+            }
+          />
 
-          <UI.Text h3>Payment Details</UI.Text>
+          <UI.Spacer />
+
+          <UI.Text h3>Ships to</UI.Text>
+
+          <UI.ListItem
+            left={<UI.Icon name="ios-pin" color={info} />}
+            body={
+              <>
+                <UI.Text>
+                  {address.id ? (
+                    <UI.Text numberOfLines={1}>{address.address}</UI.Text>
+                  ) : optAddress.id ? (
+                    <UI.Text numberOfLines={1}>{optAddress.address}</UI.Text>
+                  ) : null}
+                </UI.Text>
+              </>
+            }
+          />
+
+          <UI.Link onClick={() => navigation.navigate('ManageAddresses')}>
+            Change Default Address
+          </UI.Link>
 
           <UI.Spacer large />
 
@@ -225,19 +262,13 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
             showIconDivider
             iconRight={<UI.Icon name="ios-arrow-forward" color="#fff" />}
             onClick={() => navigation.navigate('ShippingDetails')}>
-            <UI.Text color="#fff">Place Order</UI.Text>
+            <UI.Text color="#fff">Pay Now</UI.Text>
           </UI.Button>
 
           <UI.Spacer large />
+          <UI.Spacer large />
         </View>
       </UI.Layout>
-      <UI.Modal show={removeItemModal}>
-        <UI.Text h3>Are you sure you want to remove this item?</UI.Text>
-
-        <UI.Button onClick={() => handleRemoveItem(removeItemId)}>
-          <UI.Text>Remove Item</UI.Text>
-        </UI.Button>
-      </UI.Modal>
     </>
   );
 };
@@ -251,7 +282,14 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     cart: state.cart,
+    wallet: state.wallet,
+    address: state.address,
+    customer: state.customer.profile,
   };
 };
 
-export default connect(mapStateToProps, {setCartStorage})(CartScreen);
+export default connect(mapStateToProps, {
+  setCartStorage,
+  setAddress,
+  setWallet,
+})(CartScreen);
