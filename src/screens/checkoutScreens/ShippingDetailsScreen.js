@@ -1,18 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {
-  Text,
-  Layout,
-  Icon,
-  ListItem,
-  Spacer,
-  TextInput,
-  Loading,
-  Button,
-  Divider,
-  Link,
-  Clickable,
-} from '../../components/common';
+import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import {info, primaryColor} from '../../components/common/variables';
 
@@ -28,45 +16,49 @@ const CheckoutScreen = ({navigation}) => {
     }, 3000);
   };
 
+  useMemo(() => {
+    return;
+  }, []);
+
   return (
     <>
-      <Loading show={loading} />
+      <UI.Loading show={loading} />
       <Header
         title="Shipping Details"
         headerLeft={
-          <Clickable onPress={() => navigation.goBack()}>
-            <Icon name="md-close" color="#fff" />
-          </Clickable>
+          <UI.Clickable onPress={() => navigation.goBack()}>
+            <UI.Icon name="md-close" color="#fff" />
+          </UI.Clickable>
         }
         headerRight={
           <>
-            <Clickable onClick={() => navigation.navigate('Search')}>
-              <Icon name="ios-search" color="#fff" />
-            </Clickable>
+            <UI.Clickable onClick={() => navigation.navigate('Search')}>
+              <UI.Icon name="ios-search" color="#fff" />
+            </UI.Clickable>
           </>
         }
       />
-      <Layout>
-        <Spacer medium />
+      <UI.Layout>
+        <UI.Spacer medium />
         <View style={styles.container}>
-          <Text heading>
+          <UI.Text heading>
             Order number is -{' '}
-            <Text heading color={primaryColor}>
+            <UI.Text heading color={primaryColor}>
               389yH658300
-            </Text>
-          </Text>
+            </UI.Text>
+          </UI.Text>
 
-          <Spacer medium />
+          <UI.Spacer medium />
 
-          <Text heading>Shipping Details</Text>
+          <UI.Text heading>Shipping Details</UI.Text>
 
-          <Divider />
+          <UI.Divider />
 
           {!newAddress && (
             <>
-              <ListItem
+              <UI.ListItem
                 marked={true}
-                left={<Icon name="ios-pin" color={info} />}
+                left={<UI.Icon name="ios-pin" color={info} />}
                 body={
                   <>
                     <View
@@ -74,132 +66,77 @@ const CheckoutScreen = ({navigation}) => {
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                       }}>
-                      <Text heading>Tiana Rosser</Text>
-                      <Link onClick={() => navigation.navigate('EditAddress')}>
-                        <Icon name="md-create" color={primaryColor} size={16} />
-                        {'  '}
-                        Edit
-                      </Link>
+                      <UI.Text heading>Tiana Rosser</UI.Text>
                     </View>
-                    <Text>
+                    <UI.Text>
                       Suit 13 Romchi plaza, oneday road, Awkunanaw, Enugu, Enugu
                       State.
-                    </Text>
-                    <Text>Nigeria</Text>
-                    <Text>400252</Text>
-                  </>
-                }
-              />
-              <ListItem
-                marked={false}
-                left={<Icon name="ios-pin" color={info} />}
-                body={
-                  <>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                      }}>
-                      <Text heading>Tiana Rosser</Text>
-                      <Link onClick={() => navigation.navigate('EditAddress')}>
-                        <Icon name="md-create" color={primaryColor} size={16} />
-                        {'  '}
-                        Edit
-                      </Link>
-                    </View>
-                    <Text>
-                      Suit 13 Romchi plaza, oneday road, Awkunanaw, Enugu, Enugu
-                      State.
-                    </Text>
-                    <Text>Nigeria</Text>
-                    <Text>400252</Text>
-                  </>
-                }
-              />
-              <ListItem
-                marked={false}
-                left={<Icon name="ios-pin" color={info} />}
-                body={
-                  <>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                      }}>
-                      <Text heading>Tiana Rosser</Text>
-                      <Link onClick={() => navigation.navigate('EditAddress')}>
-                        <Icon name="md-create" color={primaryColor} size={16} />
-                        {'  '}
-                        Edit
-                      </Link>
-                    </View>
-                    <Text>
-                      Suit 13 Romchi plaza, oneday road, Awkunanaw, Enugu, Enugu
-                      State.
-                    </Text>
-                    <Text>Nigeria</Text>
-                    <Text>400252</Text>
+                    </UI.Text>
+                    <UI.Text>Nigeria</UI.Text>
+                    <UI.Text>400252</UI.Text>
                   </>
                 }
               />
             </>
           )}
 
-          <Spacer />
+          <UI.Spacer />
 
           {!newAddress && (
-            <Link onClick={() => setNewAddress(true)}>Add New Address</Link>
+            <UI.Link onClick={() => setNewAddress(true)}>
+              Change Address
+            </UI.Link>
           )}
 
           {newAddress && (
             <View>
-              <Spacer medium />
-              <Text heading>Full Name</Text>
-              <Spacer />
-              <TextInput />
+              <UI.Spacer medium />
+              <UI.Text heading>Full Name</UI.Text>
+              <UI.Spacer />
+              <UI.TextInput />
 
-              <Spacer medium />
-              <Text heading> Street Address</Text>
-              <Spacer />
-              <TextInput />
+              <UI.Spacer medium />
+              <UI.Text heading> Street Address</UI.Text>
+              <UI.Spacer />
+              <UI.TextInput />
 
-              <Spacer medium />
-              <Text heading>State</Text>
-              <Spacer />
-              <TextInput />
+              <UI.Spacer medium />
+              <UI.Text heading>State</UI.Text>
+              <UI.Spacer />
+              <UI.TextInput />
 
-              <Spacer medium />
-              <Text heading>City</Text>
-              <Spacer />
-              <TextInput />
+              <UI.Spacer medium />
+              <UI.Text heading>City</UI.Text>
+              <UI.Spacer />
+              <UI.TextInput />
 
-              <Spacer medium />
-              <Text heading>Postal Code</Text>
-              <Spacer />
-              <TextInput />
+              <UI.Spacer medium />
+              <UI.Text heading>Postal Code</UI.Text>
+              <UI.Spacer />
+              <UI.TextInput />
 
-              <Spacer medium />
-              <Text heading>Phone</Text>
-              <Spacer />
-              <TextInput />
+              <UI.Spacer medium />
+              <UI.Text heading>Phone</UI.Text>
+              <UI.Spacer />
+              <UI.TextInput />
 
-              <Spacer medium />
-              <Button onClick={() => setNewAddress(false)}>
-                <Text color="#fff">Save</Text>
-              </Button>
+              <UI.Spacer medium />
+              <UI.Button onClick={() => setNewAddress(false)}>
+                <UI.Text color="#fff">Save</UI.Text>
+              </UI.Button>
             </View>
           )}
 
-          <Spacer large />
+          <UI.Spacer large />
 
-          <Button
+          <UI.Button
             onClick={() => continueToPayment()}
             type={newAddress ? 'disabled' : ''}>
-            <Text color="#fff">Continue to Payment</Text>
-          </Button>
+            <UI.Text color="#fff">Continue to Payment</UI.Text>
+          </UI.Button>
         </View>
-        <Spacer large />
-      </Layout>
+        <UI.Spacer large />
+      </UI.Layout>
     </>
   );
 };

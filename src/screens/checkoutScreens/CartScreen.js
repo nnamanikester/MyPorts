@@ -7,7 +7,7 @@ import OrderSummary from '../../components/OrderSummary';
 import {connect} from 'react-redux';
 import {setCartStorage} from '../../redux/actions/CartActions';
 import {useMutation} from '@apollo/react-hooks';
-import {REMOVE_CART_ITEM, CLEAR_CART} from '../../apollo/mutations';
+import {REMOVE_CART_ITEM} from '../../apollo/mutations';
 import EmptyItem from '../../components/EmptyItem';
 import {info} from '../../components/common/variables';
 
@@ -130,7 +130,7 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
 
   return (
     <>
-      <UI.Loading show={loading} />
+      <UI.Loading show={loading || removeItemLoading} />
       <Header
         title="Shopping Bag"
         headerLeft={
@@ -208,13 +208,23 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
             total={calculateTotal() || '0'}
           />
 
+          <UI.Divider />
+
+          <UI.Spacer />
+
+          <UI.Text h3>Shipping Details</UI.Text>
+
+          <UI.Spacer medium />
+
+          <UI.Text h3>Payment Details</UI.Text>
+
           <UI.Spacer large />
 
           <UI.Button
             type={cart && cart.items && cart.items.length > 0 ? '' : 'disabled'}
             showIconDivider
             iconRight={<UI.Icon name="ios-arrow-forward" color="#fff" />}
-            onClick={() => {}}>
+            onClick={() => navigation.navigate('ShippingDetails')}>
             <UI.Text color="#fff">Place Order</UI.Text>
           </UI.Button>
 
@@ -222,7 +232,7 @@ const CartScreen = ({navigation, cart, setCartStorage}) => {
         </View>
       </UI.Layout>
       <UI.Modal show={removeItemModal}>
-        <UI.Text h3>Are your sure you want to remove this item?</UI.Text>
+        <UI.Text h3>Are you sure you want to remove this item?</UI.Text>
 
         <UI.Button onClick={() => handleRemoveItem(removeItemId)}>
           <UI.Text>Remove Item</UI.Text>
