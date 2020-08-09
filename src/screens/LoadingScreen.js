@@ -1,8 +1,8 @@
 import React from 'react';
 import {Loading} from '../components/common';
 
-const SplashScreen = () => {
+const LoadingScreen = () => {
   return <Loading show />;
 };
 
-export default SplashScreen;
+export default LoadingScreen;

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {setStorage} from './redux/actions/AuthActions';
@@ -7,11 +7,12 @@ import MainFlow from './navigation/MainFlow';
 import AuthFlow from './navigation/AuthFlow';
 import VDFlow from './navigation/VDFlow';
 import WelcomeScreen from './screens/WelcomeScreen';
-import SplashScreen from './screens/SplashScreen';
+import LoadingScreen from './screens/LoadingScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import NetworkError from './components/NetworkError';
 import CreateProfileFLow from './navigation/CreateProfileFlow';
 import {TOKEN_STORAGE, USER_STORAGE} from './constants';
+import SplashScreen from 'react-native-splash-screen';
 
 const NavigationFlows = ({
   isSkipped,
@@ -21,9 +22,9 @@ const NavigationFlows = ({
   offline,
   checkNetworkStatus,
 }) => {
-  const [appLoading, setAppLoading] = useState(false);
+  const [appLoading, setAppLoading] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     checkNetworkStatus();
     checkStorage();
   }, [setStorage]);
@@ -51,7 +52,10 @@ const NavigationFlows = ({
   }
 
   if (appLoading) {
-    return <SplashScreen />;
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 5000);
+    return <LoadingScreen />;
   }
 
   if (offline) {

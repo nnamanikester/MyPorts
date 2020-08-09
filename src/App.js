@@ -8,11 +8,16 @@ import {ApolloProvider} from '@apollo/react-hooks';
 import {client} from './apollo/config';
 import {primaryColor} from './components/common/variables';
 import {Platform, StatusBar, View, StyleSheet} from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 
 const App = () => {
   const store = createStore(reducers, {}, applyMiddleware(Thunk));
+
+  SplashScreen.show();
+  // React.useEffect(() => {
+  // }, []);
 
   return (
     <>
