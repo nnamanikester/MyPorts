@@ -1,15 +1,14 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { chip, visa, masterCard } from '../assets/icons';
-import { grayColor, primaryColor } from './common/variables';
-import { Card, Text, Spacer, Avatar } from './common';
+import {View, StyleSheet} from 'react-native';
+import {chip, logo} from '../assets/icons';
+import {grayColor, primaryColor} from './common/variables';
+import {Card, Text, Spacer, Avatar} from './common';
 
-const WalletCard = ({ cardNo, name, balance }) => {
+const WalletCard = ({cardNo, name, balance}) => {
   return (
     <Card style={styles.creditCard}>
       <View style={styles.creditCardHeader}>
         <Avatar src={chip} />
-        <Avatar src={visa} />
       </View>
       <Spacer medium />
       <View style={styles.creditCardBody}>
@@ -36,7 +35,7 @@ const WalletCard = ({ cardNo, name, balance }) => {
           </Text>
         </View>
         <View>
-          <Avatar medium src={masterCard} />
+          <Avatar medium src={logo} />
         </View>
       </View>
       <View>

@@ -51,6 +51,7 @@ import ManageWallets from '../screens/SettingsScreens/ManageWalletsScreen';
 import UpdateProfile from '../screens/SettingsScreens/UpdateProfileScreen';
 import ChangeEmailAddress from '../screens/SettingsScreens/ChangeEmailAddressScreen';
 import ChangePassword from '../screens/SettingsScreens/ChangePasswordScreen';
+import FundWallet from '../screens/SettingsScreens/FundWalletScreen';
 
 // Pages Screen
 import PickupPolicy from '../screens/pages/PickupPolicyScreen';
@@ -192,6 +193,7 @@ const StackNavigation = ({
         <Stack.Screen name="LegalAndTerms" component={LegalAndTerms} />
         <Stack.Screen name="ManageAddresses" component={ManageAddresses} />
         <Stack.Screen name="ManageWallets" component={ManageWallets} />
+        <Stack.Screen name="FundWallet" component={FundWallet} />
         <Stack.Screen
           name="ChangeEmailAddress"
           component={ChangeEmailAddress}

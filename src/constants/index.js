@@ -6,6 +6,12 @@ export const EMULATOR_WS_URL = 'ws://myports-api.herokuapp.com/subscription';
 export const EMULATOR_API_URL = 'https://myports-api.herokuapp.com/api';
 export const UPLOAD_URL = 'https://myports.destreetboard.com/api';
 
+// PAYSTACK
+export const PAYSTACK_PUBLIC_KEY =
+  'pk_test_24cc03b9f161d1d69c537068affbb394fe5e2140';
+export const PAYSTACK_SECRETE_KEY =
+  'sk_test_1a65c42fc5d93e4fcb6a67dcdb960ad1adb56185';
+
 // STORAGE KEYS
 export const TOKEN_STORAGE = '@myports/token';
 export const USER_STORAGE = '@myports/user';

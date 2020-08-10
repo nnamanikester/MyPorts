@@ -12,7 +12,7 @@ import {useMutation, useQuery} from '@apollo/react-hooks';
 import {REMOVE_CART_ITEM} from '../../apollo/mutations';
 import {GET_WALLET, GET_ADDRESSES} from '../../apollo/queries';
 import EmptyItem from '../../components/EmptyItem';
-import {info} from '../../components/common/variables';
+import {info, danger} from '../../components/common/variables';
 import {formatMoney} from '../../utils';
 
 const CartScreen = ({
@@ -27,6 +27,9 @@ const CartScreen = ({
 }) => {
   const [loading] = React.useState(false);
   const [optAddress, setOptAddress] = React.useState({});
+  const [showFund, setShowFund] = React.useState(false);
+  const [amountError, setAmountError] = React.useState(false);
+  const [amount, setAmount] = React.useState('');
 
   const [removeItem, {loading: removeItemLoading}] = useMutation(
     REMOVE_CART_ITEM,
@@ -58,6 +61,15 @@ const CartScreen = ({
       });
     }
   }, [addressData]);
+
+  const handleAmountInput = (value) => {
+    setAmountError(false);
+    if (value > 0) {
+      return setAmount(value);
+    }
+    setAmount(value);
+    return setAmountError(true);
+  };
 
   const handleRemoveItem = (id) => {
     const tempCart = cart;
@@ -219,7 +231,7 @@ const CartScreen = ({
               <UI.Text h3>Payment</UI.Text>
             </UI.Column>
             <UI.Column style={{alignItems: 'flex-end'}} size="6">
-              <UI.Link onClick={() => {}}>Fund Wallet</UI.Link>
+              <UI.Link onClick={() => setShowFund(true)}>Fund Wallet</UI.Link>
             </UI.Column>
           </UI.Row>
 
@@ -269,6 +281,34 @@ const CartScreen = ({
           <UI.Spacer large />
         </View>
       </UI.Layout>
+      <UI.Modal show={showFund}>
+        <View style={{alignSelf: 'flex-end'}}>
+          <UI.Clickable onClick={() => setShowFund(false)}>
+            <UI.Icon size={36} name="md-close" />
+          </UI.Clickable>
+        </View>
+
+        <UI.Spacer large />
+
+        {amountError && <UI.Text color={danger}>Invalid amount!</UI.Text>}
+
+        <UI.TextInput
+          value={amount}
+          onChangeText={(value) => handleAmountInput(value)}
+          placeholder="Enter Amount"
+          keyboardType="number-pad"
+        />
+
+        <UI.Spacer />
+        <UI.Button
+          type={!amount > 0 || amountError ? 'disabled' : ''}
+          onClick={() => {
+            setShowFund(false);
+            navigation.navigate('FundWallet', {amount});
+          }}>
+          <UI.Text color="#fff">Pay Now</UI.Text>
+        </UI.Button>
+      </UI.Modal>
     </>
   );
 };

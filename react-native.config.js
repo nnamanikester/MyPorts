@@ -1,7 +1,9 @@
 module.exports = {
   project: {
     ios: {},
-    android: {},
+    android: {
+      appName: 'com.destreetboard.myports',
+    },
   },
   assets: ['./src/assets/fonts/'],
 };

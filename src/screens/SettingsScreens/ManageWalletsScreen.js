@@ -8,12 +8,16 @@ import {connect} from 'react-redux';
 import {useLazyQuery} from '@apollo/react-hooks';
 import Skeleton from 'react-native-skeleton-placeholder';
 import {formatMoney, formatCardNo} from '../../utils/index';
+import {danger} from '../../components/common/variables';
 
 const ManageWalletsScreen = ({navigation, offline}) => {
   const [getWallet, {loading, data, error}] = useLazyQuery(GET_WALLET);
   const [cardNo, setCardNo] = React.useState('');
   const [name, setName] = React.useState('');
   const [balance, setBalance] = React.useState('');
+  const [showFund, setShowFund] = React.useState(false);
+  const [amountError, setAmountError] = React.useState(false);
+  const [amount, setAmount] = React.useState('');
 
   React.useEffect(() => {
     if (!offline) {
@@ -29,10 +33,19 @@ const ManageWalletsScreen = ({navigation, offline}) => {
     }
   }, [data, error, offline, getWallet]);
 
+  const handleAmountInput = (value) => {
+    setAmountError(false);
+    if (value > 0) {
+      return setAmount(value);
+    }
+    setAmount(value);
+    return setAmountError(true);
+  };
+
   return (
     <>
       <Header
-        title="Manage Wallets"
+        title="Manage Wallet"
         headerLeft={
           <UI.Clickable onClick={() => navigation.goBack()}>
             <UI.Icon name="ios-arrow-back" color="#fff" />
@@ -60,12 +73,40 @@ const ManageWalletsScreen = ({navigation, offline}) => {
               <Skeleton.Item height={50} borderRadius={5} />
             </Skeleton>
           ) : (
-            <UI.Button>
+            <UI.Button onClick={() => setShowFund(true)}>
               <UI.Text color="#fff">Fund Wallet</UI.Text>
             </UI.Button>
           )}
         </View>
       </UI.Layout>
+      <UI.Modal show={showFund}>
+        <View style={{alignSelf: 'flex-end'}}>
+          <UI.Clickable onClick={() => setShowFund(false)}>
+            <UI.Icon size={36} name="md-close" />
+          </UI.Clickable>
+        </View>
+
+        <UI.Spacer large />
+
+        {amountError && <UI.Text color={danger}>Invalid amount!</UI.Text>}
+
+        <UI.TextInput
+          value={amount}
+          onChangeText={(value) => handleAmountInput(value)}
+          placeholder="Enter Amount"
+          keyboardType="number-pad"
+        />
+
+        <UI.Spacer />
+        <UI.Button
+          type={!amount > 0 || amountError ? 'disabled' : ''}
+          onClick={() => {
+            setShowFund(false);
+            navigation.navigate('FundWallet', {amount});
+          }}>
+          <UI.Text color="#fff">Pay Now</UI.Text>
+        </UI.Button>
+      </UI.Modal>
     </>
   );
 };
