@@ -252,13 +252,16 @@ const CartScreen = ({
             left={<UI.Icon name="ios-pin" color={info} />}
             body={
               <>
-                <UI.Text>
-                  {address.id ? (
-                    <UI.Text numberOfLines={1}>{address.address}</UI.Text>
-                  ) : optAddress.id ? (
-                    <UI.Text numberOfLines={1}>{optAddress.address}</UI.Text>
-                  ) : null}
-                </UI.Text>
+                {address.id ? (
+                  <UI.Text numberOfLines={1}>{address.address}</UI.Text>
+                ) : optAddress.id ? (
+                  <UI.Text numberOfLines={1}>{optAddress.address}</UI.Text>
+                ) : (
+                  <UI.Link
+                    onClick={() => navigation.navigate('ManageAddresses')}>
+                    + Add an Address
+                  </UI.Link>
+                )}
               </>
             }
           />

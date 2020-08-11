@@ -105,7 +105,7 @@ const NotificationsScreen = ({navigation}) => {
         }
       />
 
-      <Layout>
+      <Layout noScroll>
         <View style={styles.container}>
           <Text style={styles.title}>Offers</Text>
 
