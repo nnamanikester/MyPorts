@@ -7,7 +7,6 @@ import {
   Text,
   ListItem,
   Spacer,
-  Column,
   Row,
   Clickable,
 } from '../components/common';
@@ -16,7 +15,6 @@ import Avatar from '../components/Avatar';
 import {female1, female2, female3, male1} from '../assets/images';
 
 const NotificationsScreen = ({navigation}) => {
-  const [hideHeader, setHideHeader] = useState(false);
   const offers = [
     {
       key: '1',
