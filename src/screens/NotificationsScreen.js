@@ -1,15 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {View, StyleSheet, FlatList} from 'react-native';
-import {
-  Layout,
-  Icon,
-  Text,
-  ListItem,
-  Spacer,
-  Row,
-  Clickable,
-} from '../components/common';
+import * as UI from '../components/common';
 import Header from '../components/Header';
 import Avatar from '../components/Avatar';
 import {female1, female2, female3, male1} from '../assets/images';
@@ -49,36 +40,6 @@ const NotificationsScreen = ({navigation}) => {
       time: '2 minutes ago',
     },
   ];
-  const activities = [
-    {
-      key: '1',
-      heading: 'Claudia',
-      desc: 'sent you a message',
-      image: female1,
-      time: '2 minutes ago',
-    },
-    {
-      key: '2',
-      heading: 'Katharina',
-      desc: 'lked your photo',
-      image: female2,
-      time: '2 minutes ago',
-    },
-    {
-      key: '3',
-      heading: 'Tomas',
-      desc: 'asked to join a group',
-      image: female3,
-      time: '2 minutes ago',
-    },
-    {
-      key: '4',
-      heading: 'Manuel',
-      desc: 'sent you a message',
-      image: male1,
-      time: '2 minutes ago',
-    },
-  ];
 
   return (
     <>
@@ -86,88 +47,63 @@ const NotificationsScreen = ({navigation}) => {
         isCart
         title="Notifications"
         headerLeft={
-          <Clickable onClick={() => navigation.openDrawer()}>
-            <Icon name="ios-menu" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.openDrawer()}>
+            <UI.Icon name="ios-menu" color="#fff" />
+          </UI.Clickable>
         }
         headerRight={
           <>
-            <Clickable onClick={() => navigation.navigate('Cart')}>
-              <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </Clickable>
-            <Spacer medium />
-            <Clickable onClick={() => navigation.navigate('Search')}>
-              <Icon name="ios-search" color="#fff" />
-            </Clickable>
+            <UI.Clickable onClick={() => navigation.navigate('Cart')}>
+              <UI.Icon
+                name="shopping-bag"
+                size={22}
+                type="Feather"
+                color="#fff"
+              />
+            </UI.Clickable>
+            <UI.Spacer medium />
+            <UI.Clickable onClick={() => navigation.navigate('Search')}>
+              <UI.Icon name="ios-search" color="#fff" />
+            </UI.Clickable>
           </>
         }
       />
 
-      <Layout noScroll>
-        <View style={styles.container}>
-          <Text style={styles.title}>Offers</Text>
+      <UI.Layout>
+        <UI.Spacer medium />
 
-          <Spacer />
+        <UI.Text h3>All Notifications</UI.Text>
 
-          <View>
-            <FlatList
-              data={offers}
-              renderItem={({item}) => (
-                <ListItem
-                  marked={!item.isRead}
-                  right={<Text note>{item.time}</Text>}
-                  body={
-                    <>
-                      <Text heading>{item.heading}</Text>
-                      <Text>{item.desc}</Text>
-                    </>
-                  }
-                  left={<Avatar rounded src={item.image} />}
-                />
-              )}
+        <UI.Spacer />
+
+        {offers.map((o, i) => {
+          return (
+            <UI.ListItem
+              key={o.key + i}
+              marked={!o.isRead}
+              right={<UI.Text note>{o.time}</UI.Text>}
+              body={
+                <>
+                  <UI.Text heading>{o.heading}</UI.Text>
+                  <UI.Text>{o.desc}</UI.Text>
+                </>
+              }
+              left={<Avatar rounded src={o.image} />}
             />
-          </View>
+          );
+        })}
 
-          <Spacer medium />
-
-          <Text style={styles.title}>Activity</Text>
-
-          <View>
-            <FlatList
-              data={activities}
-              renderItem={({item}) => (
-                <ListItem
-                  body={
-                    <>
-                      <Row>
-                        <Text heading>{item.heading}</Text>
-                        <Spacer horizontal />
-                        <Text>{item.desc}</Text>
-                      </Row>
-                      <Text note>{item.time}</Text>
-                    </>
-                  }
-                  left={<Avatar rounded src={item.image} />}
-                />
-              )}
-            />
-          </View>
-        </View>
-        <Spacer large />
-      </Layout>
+        <UI.Spacer large />
+      </UI.Layout>
     </>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 20,
-    paddingHorizontal: 10,
-  },
-  title: {
-    fontSize: 20,
-    fontFamily: 'SFPD-regular',
-  },
-});
+const mapStateToProps = (state) => {
+  return {
+    customer: state.customer.profile,
+    notifications: state.notifications,
+  };
+};
 
-export default NotificationsScreen;
+export default connect(mapStateToProps)(NotificationsScreen);
