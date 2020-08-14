@@ -1,45 +1,44 @@
 import React from 'react';
-import * as UI from '../';
-import { StyleSheet, View } from 'react-native';
-import { primaryColor } from '../variables';
+import {Clickable} from '../Clickable';
+import {Icon} from '../Icon';
+import {Text} from '../Text';
+import {StyleSheet, View} from 'react-native';
+import {primaryColor} from '../variables';
 import PropTypes from 'prop-types';
 
 /**
  * A component that accepts array of numbers to display a pagination on the
  * screen
  */
-const Pagination = ({
-  currentPage,
-  pages,
-  onButtonClick,
-  clickableButtons,
-}) => {
-  const currentPageStyle = {
-    backgroundColor: primaryColor,
-    color: '#fff',
-  };
+const Pagination = ({currentPage, pages, onButtonClick, clickableButtons}) => {
+  // const currentPageStyle = {
+  //   backgroundColor: primaryColor,
+  //   color: '#fff',
+  // };
 
   return (
     <View style={styles.container}>
       {pages.map((page, index) => (
-        <UI.Clickable
+        <Clickable
           key={index}
           style={{
             ...styles.pageButton,
             backgroundColor: currentPage >= page ? primaryColor : '#fff0',
           }}
           onClick={() => {
-            if (clickableButtons) return onButtonClick(page);
+            if (clickableButtons) {
+              return onButtonClick(page);
+            }
             return;
           }}>
-          <UI.Text color={currentPage >= page ? '#fff' : '#000'}>
+          <Text color={currentPage >= page ? '#fff' : '#000'}>
             {currentPage > page ? (
-              <UI.Icon name="ios-checkmark" color="#fff" />
+              <Icon name="ios-checkmark" color="#fff" />
             ) : (
               page
             )}
-          </UI.Text>
-        </UI.Clickable>
+          </Text>
+        </Clickable>
       ))}
     </View>
   );
@@ -92,4 +91,4 @@ Pagination.defautProps = {
   clickableButtons: true,
 };
 
-export { Pagination };
+export {Pagination};

@@ -1,6 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, Image} from 'react-native';
-import {Text, Button, Spacer} from '../';
+import {Text} from '../Text';
+import {Button} from '../Button';
+import {Spacer} from '../Spacer';
 import PropTypes from 'prop-types';
 import {
   check,

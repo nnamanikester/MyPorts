@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import OptionsMenu from 'react-native-options-menu';
-import {Text, Icon, Clickable} from '..';
-import {View, StyleSheet, UIManager, findNodeHandle} from 'react-native';
+import {View} from 'react-native';
 import PropTypes from 'prop-types';
 
 /**

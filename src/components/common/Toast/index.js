@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Text} from '..';
+import {Text} from '../Text';
 import PropTypes from 'prop-types';
 import {grayColor} from '../variables';
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Text, Icon, Layout} from '..';
+import {Text} from '../Text';
+import {Icon} from '../Icon';
+import {Layout} from '../Layout';
 import PropTypes from 'prop-types';
 import {grayColor, primaryColor} from '../variables';
 import {Clickable} from '../Clickable';

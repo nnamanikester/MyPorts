@@ -1,7 +1,10 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Text, Row, Column, Spacer } from '..';
-import { inactiveColor, primaryColor } from '../variables';
+import {View, StyleSheet} from 'react-native';
+import {Text} from '../Text';
+import {Row} from '../Row';
+import {Column} from '../Column';
+import {Spacer} from '../Spacer';
+import {primaryColor} from '../variables';
 import PropTypes from 'prop-types';
 
 /**
@@ -20,18 +23,18 @@ import PropTypes from 'prop-types';
  * `totalLabel`: `String`,
  * }]
  */
-const ReportBoard = ({ data, containerStyle, titleStyle }) => {
+const ReportBoard = ({data, containerStyle, titleStyle}) => {
   return (
     <>
-      <View style={{ ...styles.container, ...containerStyle }}>
+      <View style={{...styles.container, ...containerStyle}}>
         {data.map((report, index) => {
           return (
             <View key={index}>
-              <Text style={{ ...styles.title, ...titleStyle }}>
+              <Text style={{...styles.title, ...titleStyle}}>
                 {report.title}
               </Text>
               <Row>
-                <Column style={{ alignItems: 'center' }} size="3">
+                <Column style={{alignItems: 'center'}} size="3">
                   <Text bold color="#fff">
                     {report.today}
                   </Text>
@@ -39,7 +42,7 @@ const ReportBoard = ({ data, containerStyle, titleStyle }) => {
                     {report.todayLabel || 'Today'}
                   </Text>
                 </Column>
-                <Column style={{ alignItems: 'center' }} size="3">
+                <Column style={{alignItems: 'center'}} size="3">
                   <Text bold color="#fff">
                     {report.week}
                   </Text>
@@ -47,7 +50,7 @@ const ReportBoard = ({ data, containerStyle, titleStyle }) => {
                     {report.weekLabel || 'This Week'}
                   </Text>
                 </Column>
-                <Column style={{ alignItems: 'center' }} size="3">
+                <Column style={{alignItems: 'center'}} size="3">
                   <Text bold color="#fff">
                     {report.month}
                   </Text>
@@ -55,7 +58,7 @@ const ReportBoard = ({ data, containerStyle, titleStyle }) => {
                     {report.monthLabel || 'This Month'}
                   </Text>
                 </Column>
-                <Column style={{ alignItems: 'center' }} size="3">
+                <Column style={{alignItems: 'center'}} size="3">
                   <Text bold color="#fff">
                     {report.total}
                   </Text>
@@ -114,4 +117,4 @@ ReportBoard.propTypes = {
   titleStyle: PropTypes.object,
 };
 
-export { ReportBoard };
+export {ReportBoard};

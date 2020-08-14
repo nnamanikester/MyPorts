@@ -253,6 +253,8 @@ const SingleProductScreen = ({
       });
     }
 
+    console.log(customer.id, p.id, quantity);
+
     addItemToCart({
       variables: {
         customerId: customer.id,
@@ -261,13 +263,14 @@ const SingleProductScreen = ({
       },
     })
       .then(async (res) => {
-        await AsyncStorage.setItem(
-          CART_STORAGE,
-          JSON.stringify(res.data.addItemToCart),
-        );
-        setCartStorage(res.data.addItemToCart);
-        ToastAndroid.show('Item added to cart!', ToastAndroid.SHORT);
-        setModalOpen(true);
+        // await AsyncStorage.setItem(
+        //   CART_STORAGE,
+        //   JSON.stringify(res.data.addItemToCart),
+        // );
+        console.log(res);
+        // setCartStorage(res.data.addItemToCart);
+        // ToastAndroid.show('Item added to cart!', ToastAndroid.SHORT);
+        // setModalOpen(true);
       })
       .catch((e) => {
         Alert.alert('Error!', 'Unalbe to add item to cart. Please try again');
