@@ -41,7 +41,6 @@ const FundWalletScreen = ({
             navigation.goBack();
           }}
           onSuccess={(e) => {
-            console.log(e);
             fundWallet({
               variables: {
                 amount: parseFloat(params.amount),
@@ -57,7 +56,10 @@ const FundWalletScreen = ({
                 navigation.goBack();
               })
               .catch((e) => {
-                console.log(e);
+                ToastAndroid.show(
+                  'Unable to verify payment. Please contact support',
+                  ToastAndroid.LONG,
+                );
               });
           }}
           autoStart

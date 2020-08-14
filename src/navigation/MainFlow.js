@@ -3,9 +3,10 @@ import {connect} from 'react-redux';
 import {createStackNavigator} from '@react-navigation/stack';
 import {setCustomerProfile} from '../redux/actions/CustomerActions';
 import {setCartStorage} from '../redux/actions/CartActions';
+import {setNotificationsStorage} from '../redux/actions/NotificationsAction';
 import {setAdverts} from '../redux/actions/AdvertActions';
 import {checkNetworkStatus} from '../redux/actions/NetworkActions';
-import {CUSTOMER_PROFILE} from '../apollo/queries';
+import {CUSTOMER_PROFILE, NOTIFICATIONS} from '../apollo/queries';
 import {useLazyQuery} from '@apollo/react-hooks';
 import * as UI from '../components/common';
 import {Alert} from 'react-native';
@@ -77,6 +78,9 @@ const StackNavigation = ({
   offline,
   setCartStorage,
   setAdverts,
+  notifications,
+  setNotificationsStorage,
+  user,
 }) => {
   const [customerProfile, {loading, data, error}] = useLazyQuery(
     CUSTOMER_PROFILE,
@@ -95,6 +99,32 @@ const StackNavigation = ({
       },
     },
   );
+
+  const [
+    getNotifications,
+    {loading: notLoading, data: notData, error: notError},
+  ] = useLazyQuery(NOTIFICATIONS, {
+    variables: {
+      first: 60,
+      where: {
+        user: {
+          id: user.id,
+        },
+      },
+      orderBy: 'createdAt_DESC',
+    },
+    pollInterval: 500,
+  });
+
+  React.useMemo(() => {
+    getNotifications();
+  }, [notError]);
+
+  React.useMemo(() => {
+    if (notData) {
+      setNotificationsStorage(notData.notifications.edges.map((n) => n.node));
+    }
+  }, [notData, notifications]);
 
   React.useMemo(() => {
     getCartItems();
@@ -148,7 +178,7 @@ const StackNavigation = ({
 
   return (
     <>
-      <UI.Loading show={loading || itemsLoading} />
+      <UI.Loading show={loading || itemsLoading || notLoading} />
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{
@@ -237,6 +267,7 @@ const mapStateToProps = (state) => {
     offline: !state.network.isConnected,
     cart: state.cart,
     adverts: state.adverts,
+    user: state.auth.user,
   };
 };
 
@@ -244,4 +275,5 @@ export default connect(mapStateToProps, {
   setCustomerProfile,
   setCartStorage,
   setAdverts,
+  setNotificationsStorage,
 })(StackNavigation);

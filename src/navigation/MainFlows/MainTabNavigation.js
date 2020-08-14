@@ -7,10 +7,25 @@ import NotificationsScreen from '../../screens/NotificationsScreen';
 import SettingsScreen from '../../screens/SettingsScreens/SettingsScreen';
 import {Icon, Text, Badge} from '../../components/common';
 import {danger} from '../../components/common/variables';
+import {connect} from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigation = () => {
+const TabNavigation = ({notifications}) => {
+  const [hasUnreadNotification, setHasUnreadNotification] = React.useState(
+    false,
+  );
+
+  React.useMemo(() => {
+    if (notifications && notifications.length > 0) {
+      notifications.forEach((n) => {
+        if (n.status === 1) {
+          setHasUnreadNotification(true);
+        }
+      });
+    }
+  }, [notifications]);
+
   return (
     <Tab.Navigator initialRouteName="Vendors">
       <Tab.Screen
@@ -73,14 +88,16 @@ const TabNavigation = () => {
                 color={color}
                 size={focused ? 32 : 28}
               />
-              <Badge
-                style={{
-                  right: 25,
-                  top: 5,
-                  elevation: 1,
-                }}
-                color={danger}
-              />
+              {hasUnreadNotification && (
+                <Badge
+                  style={{
+                    right: 30,
+                    top: 3,
+                    elevation: 0,
+                  }}
+                  color={danger}
+                />
+              )}
             </>
           ),
           tabBarLabel: ({color}) => (
@@ -108,4 +125,10 @@ const TabNavigation = () => {
   );
 };
 
-export default TabNavigation;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    notifications: state.notifications,
+  };
+};
+
+export default connect(mapStateToProps)(TabNavigation);

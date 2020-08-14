@@ -7,6 +7,7 @@ import CartReducer from './CartReducer';
 import AdvertReducer from './AdvertReducer';
 import WalletReducer from './WalletReducer';
 import AddressReducer from './AddressReducer';
+import NotificationsReducer from './NotificationsReducer';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
   adverts: AdvertReducer,
   wallet: WalletReducer,
   address: AddressReducer,
+  notifications: NotificationsReducer,
 });

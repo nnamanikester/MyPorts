@@ -10,5 +10,6 @@ export * from './cart';
 export * from './chat';
 export * from './message';
 export * from './wallet';
+export * from './notification';
 
 export * from './imageUpload';
