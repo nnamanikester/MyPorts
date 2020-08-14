@@ -85,6 +85,7 @@ const StackNavigation = ({
   const [customerProfile, {loading, data, error}] = useLazyQuery(
     CUSTOMER_PROFILE,
   );
+
   const [
     getCartItems,
     {loading: itemsLoading, data: items, error: itemsError},
@@ -136,7 +137,9 @@ const StackNavigation = ({
     if (!offline) {
       customerProfile();
     }
+  }, []);
 
+  React.useMemo(() => {
     if (data) {
       setCustomerProfile(data.customerProfile);
     }
@@ -147,7 +150,7 @@ const StackNavigation = ({
         [{text: 'Try again', onPress: () => customerProfile()}],
       );
     }
-  }, [data]);
+  }, [error]);
 
   React.useMemo(() => {
     if (!items) {

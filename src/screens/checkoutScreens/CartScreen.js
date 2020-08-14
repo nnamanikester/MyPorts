@@ -228,7 +228,7 @@ const CartScreen = ({
 
           <UI.Row>
             <UI.Column size="6">
-              <UI.Text h3>Payment</UI.Text>
+              <UI.Text h3>Wallet</UI.Text>
             </UI.Column>
             <UI.Column style={{alignItems: 'flex-end'}} size="6">
               <UI.Link onClick={() => setShowFund(true)}>Fund Wallet</UI.Link>

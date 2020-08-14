@@ -23,7 +23,7 @@ const NotificationsScreen = ({
     {loading, data, error, refetch, fetchMore},
   ] = useLazyQuery(NOTIFICATIONS, {
     variables: {
-      first: 60,
+      first: 20,
       where: {
         user: {
           id: user.id,
@@ -31,6 +31,7 @@ const NotificationsScreen = ({
       },
       orderBy: 'createdAt_DESC',
     },
+    pollInterval: 500,
   });
 
   const [markAsRead, {loading: marLoading}] = useMutation(UPDATE_NOTIFICATION);
@@ -66,11 +67,11 @@ const NotificationsScreen = ({
       },
     })
       .then((res) => {
-        let notification = notifications.find(
-          (n) => res.data.updateNotification.id === n.id,
-        );
-        notification.status = 2;
-        setNotificationsStorage([...notifications, notification]);
+        // let notification = notifications.find(
+        //   (n) => res.data.updateNotification.id === n.id,
+        // );
+        // notification.status = 2;
+        setNotificationsStorage(res.data.updateNotification);
       })
       .catch((e) => {
         ToastAndroid.show(
@@ -208,7 +209,7 @@ const NotificationsScreen = ({
                     )}
                   </View>
                 }
-                body={<UI.Text>{n.message}</UI.Text>}
+                body={<UI.Text size={13}>{n.message}</UI.Text>}
                 left={<View style={styles.imageIcon}>{ImageIcon}</View>}
               />
             );

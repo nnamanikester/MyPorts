@@ -20,6 +20,8 @@ const ManageAddressesScreen = ({navigation, offline, customer}) => {
     },
   );
 
+  console.log(customer);
+
   React.useEffect(() => {
     getAddresses();
   }, [getAddresses]);
