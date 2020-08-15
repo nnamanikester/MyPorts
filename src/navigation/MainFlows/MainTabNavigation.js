@@ -17,12 +17,18 @@ const TabNavigation = ({notifications}) => {
   );
 
   React.useMemo(() => {
+    let counter = 0;
     if (notifications && notifications.length > 0) {
       notifications.forEach((n) => {
         if (n.status === 1) {
-          setHasUnreadNotification(true);
+          counter++;
         }
       });
+    }
+    if (counter > 0) {
+      setHasUnreadNotification(true);
+    } else {
+      setHasUnreadNotification(false);
     }
   }, [notifications]);
 
