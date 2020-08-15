@@ -245,15 +245,18 @@ const SingleProductScreen = ({
       return;
     }
 
+    // Chech if product is already in cart
     if (cart && cart.items) {
+      let counter = 0;
       cart.items.forEach((i) => {
-        if (i.product.id !== p.id) {
-          return;
+        if (i.product.id === p.id) {
+          counter++;
         }
       });
+      if (counter > 0) {
+        return ToastAndroid.show('Item already in cart', ToastAndroid.SHORT);
+      }
     }
-
-    console.log(customer.id, p.id, quantity);
 
     addItemToCart({
       variables: {
@@ -271,9 +274,8 @@ const SingleProductScreen = ({
         ToastAndroid.show('Item added to cart!', ToastAndroid.SHORT);
         setModalOpen(true);
       })
-      .catch((e) => {
+      .catch(() => {
         Alert.alert('Error!', 'Unalbe to add item to cart. Please try again');
-        console.log(e);
       });
   };
 

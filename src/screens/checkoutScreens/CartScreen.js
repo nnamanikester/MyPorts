@@ -72,8 +72,6 @@ const CartScreen = ({
   };
 
   const handleRemoveItem = (id) => {
-    const tempCart = cart;
-    setCartStorage({...cart, items: cart.items.filter((i) => i.id !== id)});
     removeItem({
       variables: {
         itemId: id,
@@ -82,14 +80,18 @@ const CartScreen = ({
     })
       .then((res) => {
         setCartStorage(res.data.removeCartItem);
+        setCartStorage({
+          ...cart,
+          items: cart.items.filter((i) => i.id !== res.data.removeCartItem.id),
+        });
         ToastAndroid.show('Item removed!', ToastAndroid.SHORT);
       })
       .catch((e) => {
-        setCartStorage(tempCart);
         ToastAndroid.show(
           'An error occured while trying to remove item.',
           ToastAndroid.SHORT,
         );
+        console.log(e);
       });
   };
 
