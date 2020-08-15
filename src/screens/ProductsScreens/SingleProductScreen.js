@@ -276,7 +276,6 @@ const SingleProductScreen = ({
       })
       .catch((e) => {
         Alert.alert('Error!', 'Unalbe to add item to cart. Please try again');
-        console.log(e);
       });
   };
 
