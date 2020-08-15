@@ -67,18 +67,17 @@ const NotificationsScreen = ({
       },
     })
       .then((res) => {
-        // let notification = notifications.find(
-        //   (n) => res.data.updateNotification.id === n.id,
-        // );
-        // notification.status = 2;
-        setNotificationsStorage(res.data.updateNotification);
+        let notification = notifications.find(
+          (n) => res.data.updateNotification.id === n.id,
+        );
+        notification.status = 2;
+        setNotificationsStorage([...notifications, notification]);
       })
       .catch((e) => {
         ToastAndroid.show(
           'Please check your network connection and try again.',
           ToastAndroid.SHORT,
         );
-        console.log(e);
       });
   };
 

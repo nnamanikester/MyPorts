@@ -132,17 +132,14 @@ const StackNavigation = ({
     getAdverts();
   }, [itemsError, advertsError]);
 
-  React.useEffect(() => {
+  React.useMemo(() => {
     checkNetworkStatus();
     if (!offline) {
       customerProfile();
     }
-  }, []);
+  }, [error]);
 
   React.useMemo(() => {
-    if (data) {
-      setCustomerProfile(data.customerProfile);
-    }
     if (error) {
       Alert.alert(
         'Network Error!',
@@ -151,6 +148,12 @@ const StackNavigation = ({
       );
     }
   }, [error]);
+
+  React.useMemo(() => {
+    if (data) {
+      setCustomerProfile(data.customerProfile);
+    }
+  }, [data]);
 
   React.useMemo(() => {
     if (!items) {
