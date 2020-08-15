@@ -91,7 +91,6 @@ const CartScreen = ({
           'An error occured while trying to remove item.',
           ToastAndroid.SHORT,
         );
-        console.log(e);
       });
   };
 

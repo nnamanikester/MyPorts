@@ -274,8 +274,9 @@ const SingleProductScreen = ({
         ToastAndroid.show('Item added to cart!', ToastAndroid.SHORT);
         setModalOpen(true);
       })
-      .catch(() => {
+      .catch((e) => {
         Alert.alert('Error!', 'Unalbe to add item to cart. Please try again');
+        console.log(e);
       });
   };
 

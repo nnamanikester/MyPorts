@@ -19,6 +19,7 @@ export const CART = gql`
           createdAt
           price
           category {
+            id
             name
           }
           vendor {
