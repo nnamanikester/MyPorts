@@ -177,7 +177,7 @@ const CartScreen = ({
         }
         if (count > 0) {
           Alert.alert(
-            'Warning!',
+            'Message',
             'An item in your cart is no longer available! Please remove the item before you proceed',
           );
           return false;
@@ -189,9 +189,18 @@ const CartScreen = ({
   };
 
   const checkBalanceToTotal = () => {
-    // check if the user balance is greater than total amount and notify em to fund wallet.
-    // return true if greater.
+    // check if the user balance is greater than or equal to the total amount and notify em to fund wallet.
+    if (wallet.balance > calculateTotal()) {
+      // return true if greater.
+      return true;
+    }
+    Alert.alert(
+      'Message',
+      'Your MyPorts balance is lesser than the total payable amount. Fund your wallet to continue.',
+      [{text: 'Fund Wallet', onPress: () => setShowFund(true)}],
+    );
     // return false if less.
+    return false;
   };
 
   const handleCreateOrder = () => {
@@ -206,9 +215,11 @@ const CartScreen = ({
 
   const handlePayment = () => {
     // Check if the items in the cart are still in stock.
-    checkItemsInStock();
-    // if not instock, notify the user of the item and ask em to remove it. ()
-    // if in stock, Check if the balance is greater that the amount payable. ()
+    if (checkItemsInStock()) {
+      // if not instock, notify the user of the item and ask em to remove it. ()
+      // if in stock, Check if the balance is greater that the amount payable. ()
+      checkBalanceToTotal();
+    }
     // If it's not, notify the user to fund his/her wallet.
     // If it is, go ahead and reduct the amount payable from the wallet.
     // If successfull, create an order with the items in the cart.
