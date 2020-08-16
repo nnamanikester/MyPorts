@@ -2,13 +2,13 @@ import React from 'react';
 import {StyleSheet, View, ToastAndroid, Dimensions} from 'react-native';
 import * as UI from '../../components/common';
 import Avater from '../../components/Avatar';
-import Header from '../../components/Header';
 import EmptyItem from '../../components/EmptyItem';
 import {primaryColor} from '../../components/common/variables';
 import {connect} from 'react-redux';
 import {CUSTOMER_SAVES} from '../../apollo/queries';
 import {CREATE_SAVE, CLEAR_SAVED_ITEMS} from '../../apollo/mutations';
 import {useLazyQuery, useMutation} from '@apollo/react-hooks';
+import ScreenHeaderWithCart from '../../components/ScreenHeaderWithCart';
 
 const SavedItemsScreen = ({navigation, offline, customer}) => {
   const [items, setItems] = React.useState([]);
@@ -74,31 +74,13 @@ const SavedItemsScreen = ({navigation, offline, customer}) => {
   return (
     <>
       <UI.Loading show={loading} />
-      <Header
-        isCart
+
+      <ScreenHeaderWithCart
+        navigation={navigation}
         title="Saved Items"
-        headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
-            <UI.Icon name="ios-arrow-back" color="#fff" />
-          </UI.Clickable>
-        }
-        headerRight={
-          <>
-            <UI.Clickable onClick={() => navigation.navigate('Cart')}>
-              <UI.Icon
-                name="shopping-bag"
-                size={22}
-                type="Feather"
-                color="#fff"
-              />
-            </UI.Clickable>
-            <UI.Spacer medium />
-            <UI.Clickable onClick={() => navigation.navigate('Search')}>
-              <UI.Icon name="ios-search" color="#fff" />
-            </UI.Clickable>
-          </>
-        }
+        icon="back"
       />
+
       <UI.Layout>
         {!loading && !items.length > 0 && (
           <View style={styles.emptyContainer}>

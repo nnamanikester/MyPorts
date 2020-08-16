@@ -2,7 +2,6 @@ import React from 'react';
 import Swiper from 'react-native-swiper';
 import {StyleSheet, View, Image, ToastAndroid, Alert} from 'react-native';
 import * as UI from '../../components/common';
-import Header from '../../components/Header';
 import Comment from '../../components/Comment';
 import {useLazyQuery, useMutation} from '@apollo/react-hooks';
 import {PRODUCT_COMMENTS, GET_SINGLE_PRODUCT} from '../../apollo/queries';

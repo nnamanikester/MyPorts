@@ -59,6 +59,18 @@ export const CUSTOMER_REVIEWS = gql`
   query customerReviews($id: String!) {
     customerReviews(id: $id) {
       id
+      comment
+      rating
+      vendor {
+        id
+        profile {
+          id
+          name
+          logo
+        }
+      }
+      createdAt
+      updatedAt
     }
   }
 `;

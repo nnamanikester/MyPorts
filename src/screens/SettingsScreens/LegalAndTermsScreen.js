@@ -1,27 +1,16 @@
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
-import {
-  Layout,
-  Text,
-  Icon,
-  Spacer,
-  ListItem,
-  Clickable,
-} from '../../components/common';
-import Header from '../../components/Header';
+import React from 'react';
+import {Layout, Text, Icon, Spacer, ListItem} from '../../components/common';
+import ScreenHeaderWithoutRightIcon from '../../components/ScreenHeaderWithoutRightIcons';
 import {StyleSheet, View} from 'react-native';
 import {info} from '../../components/common/variables';
 
 const LegalAndTermsScreen = ({navigation}) => {
   return (
     <>
-      <Header
+      <ScreenHeaderWithoutRightIcon
+        navigation={navigation}
         title="Legal and Terms"
-        headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-          </Clickable>
-        }
+        icon="back"
       />
       <Layout>
         <View style={styles.container}>

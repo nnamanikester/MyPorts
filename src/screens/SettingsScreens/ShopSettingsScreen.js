@@ -76,6 +76,8 @@ const ShopSettingsScreen = ({
         headerLeft={
           <UI.Clickable onClick={() => navigation.goBack()}>
             <UI.Icon name="ios-arrow-back" color="#fff" />
+            <UI.Spacer medium />
+            <UI.Spacer />
           </UI.Clickable>
         }
         headerRight={

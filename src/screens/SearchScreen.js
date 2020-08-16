@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import * as UI from '../components/common';
-import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import EmptyItem from '../components/EmptyItem';
 import Product from '../components/Product';
@@ -10,6 +9,7 @@ import {GET_PRODUCTS, SEARCH_TERMS} from '../apollo/queries';
 import {CREATE_SEARCH_TERM} from '../apollo/mutations';
 import {connect} from 'react-redux';
 import {info} from '../components/common/variables';
+import ScreenHeaderWithoutRightIcon from '../components/ScreenHeaderWithoutRightIcons';
 
 const SearchScreen = ({navigation, offline}) => {
   // Defining state variables.
@@ -147,14 +147,13 @@ const SearchScreen = ({navigation, offline}) => {
   return (
     <>
       <UI.Loading show={loading} />
-      <Header
+
+      <ScreenHeaderWithoutRightIcon
         title="Search"
-        headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
-            <UI.Icon name="ios-arrow-back" size={25} color="#fff" />
-          </UI.Clickable>
-        }
+        navigation={navigation}
+        icon="back"
       />
+
       <UI.Layout onEndReached={() => fetchMoreProducts()}>
         <UI.Spacer />
 

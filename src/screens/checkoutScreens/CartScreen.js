@@ -151,9 +151,11 @@ const CartScreen = ({
       <Header
         title="Shopping Bag"
         headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
-            <UI.Spacer />
+          <UI.Clickable
+            style={{flexDirection: 'row'}}
+            onClick={() => navigation.goBack()}>
             <UI.Icon name="md-close" color="#fff" />
+            <UI.Spacer medium />
             <UI.Spacer />
           </UI.Clickable>
         }

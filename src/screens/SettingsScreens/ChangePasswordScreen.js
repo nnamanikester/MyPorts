@@ -1,10 +1,10 @@
 import React from 'react';
 import * as UI from '../../components/common';
-import {View, StyleSheet} from 'react-native';
-import Header from '../../components/Header';
+import {View, StyleSheet, Alert} from 'react-native';
 import {useMutation} from '@apollo/react-hooks';
 import {UPDATE_USER_PASSWORD} from '../../apollo/mutations';
 import {connect} from 'react-redux';
+import ScreenHeaderWithoutRightIcon from '../../components/ScreenHeaderWithoutRightIcons';
 import {danger} from '../../components/common/variables';
 
 const ChangePasswordScreen = ({navigation, offline}) => {
@@ -18,7 +18,7 @@ const ChangePasswordScreen = ({navigation, offline}) => {
 
   React.useEffect(() => {
     if (error) {
-      alert(error.graphQLErrors[0].message);
+      Alert.alert('Error', error.graphQLErrors[0].message);
     }
   }, [error]);
 
@@ -40,7 +40,7 @@ const ChangePasswordScreen = ({navigation, offline}) => {
         setSuccess(true);
       });
     } else {
-      alert("Please check if you're connected to the internet!");
+      Alert.alert('Error', "Please check if you're connected to the internet!");
     }
   };
 
@@ -58,14 +58,13 @@ const ChangePasswordScreen = ({navigation, offline}) => {
   return (
     <>
       <UI.Loading show={loading} />
-      <Header
+
+      <ScreenHeaderWithoutRightIcon
+        navigation={navigation}
         title="Change Password"
-        headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
-            <UI.Icon name="ios-arrow-back" color="#fff" />
-          </UI.Clickable>
-        }
+        icon="back"
       />
+
       <UI.Layout>
         <View style={styles.container}>
           <UI.Text heading>Use this form to change your password.</UI.Text>

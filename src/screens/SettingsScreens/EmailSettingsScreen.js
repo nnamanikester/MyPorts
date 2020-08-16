@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, StyleSheet, ToastAndroid} from 'react-native';
 import * as UI from '../../components/common';
-import Header from '../../components/Header';
 import {connect} from 'react-redux';
 import {useMutation} from '@apollo/react-hooks';
 import {UPDATE_EMAIL_SETTINGS} from '../../apollo/mutations';
+import ScreenHeaderWithoutRightIcon from '../../components/ScreenHeaderWithoutRightIcons';
 import {setEmailSettings} from '../../redux/actions/AuthActions';
 
 const EmailSettingsScreen = ({navigation, user, setEmailSettings, offline}) => {
@@ -43,14 +43,12 @@ const EmailSettingsScreen = ({navigation, user, setEmailSettings, offline}) => {
 
   return (
     <>
-      <Header
-        title="Email Settngs"
-        headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
-            <UI.Icon name="ios-arrow-back" color="#fff" />
-          </UI.Clickable>
-        }
+      <ScreenHeaderWithoutRightIcon
+        navigation={navigation}
+        title="Email Settings"
+        icon="back"
       />
+
       <UI.Layout>
         <View style={styles.container}>
           <UI.ListItem

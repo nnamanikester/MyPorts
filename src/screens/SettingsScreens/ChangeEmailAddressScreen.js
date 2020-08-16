@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import * as UI from '../../components/common';
-import {View, StyleSheet} from 'react-native';
-import Header from '../../components/Header';
+import {View, StyleSheet, Alert} from 'react-native';
 import {connect} from 'react-redux';
 import {useMutation} from '@apollo/react-hooks';
 import {validateEmail} from '../../utils';
@@ -9,6 +8,7 @@ import {danger} from '../../components/common/variables';
 import {UPDATE_USER_EMAIL} from '../../apollo/mutations';
 import {setStorage} from '../../redux/actions/AuthActions';
 import AsyncStorage from '@react-native-community/async-storage';
+import ScreenHeaderWithoutRightIcon from '../../components/ScreenHeaderWithoutRightIcons';
 import {TOKEN_STORAGE, USER_STORAGE} from '../../constants';
 
 const ChangeEmailAddressScreen = ({navigation, offline, user, setStorage}) => {
@@ -25,7 +25,7 @@ const ChangeEmailAddressScreen = ({navigation, offline, user, setStorage}) => {
 
   useEffect(() => {
     if (updateError && updateError.graphQLErrors) {
-      alert(updateError.graphQLErrors[0].message);
+      Alert.alert('Error', updateError.graphQLErrors[0].message);
     }
   }, [updateError]);
 
@@ -65,7 +65,8 @@ const ChangeEmailAddressScreen = ({navigation, offline, user, setStorage}) => {
         })
         .catch((err) => console.log(err));
     } else {
-      alert(
+      Alert.alert(
+        'Error',
         'Cannot update email!. \nPlease check if you are connected to the internet.',
       );
     }
@@ -85,14 +86,12 @@ const ChangeEmailAddressScreen = ({navigation, offline, user, setStorage}) => {
   return (
     <>
       <UI.Loading show={loading} />
-      <Header
+      <ScreenHeaderWithoutRightIcon
+        navigation={navigation}
         title="Change Email Address"
-        headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
-            <UI.Icon name="ios-arrow-back" color="#fff" />
-          </UI.Clickable>
-        }
+        icon="back"
       />
+
       <UI.Layout>
         <View style={styles.container}>
           <UI.Text heading>Use this form to change your email address.</UI.Text>

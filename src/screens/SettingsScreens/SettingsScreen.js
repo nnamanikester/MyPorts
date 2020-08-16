@@ -9,9 +9,8 @@ import {
   ListItem,
   Button,
   Row,
-  Clickable,
 } from '../../components/common';
-import Header from '../../components/Header';
+import ScreenHeaderWithoutRightIcon from '../../components/ScreenHeaderWithoutRightIcons';
 import {StyleSheet, View} from 'react-native';
 import {primaryColor, info} from '../../components/common/variables';
 import {logUserOut} from '../../redux/actions/AuthActions';
@@ -34,14 +33,12 @@ const SettingsScreen = ({navigation}) => {
           </Button>
         </Row>
       </Modal>
-      <Header
+
+      <ScreenHeaderWithoutRightIcon
+        navigation={navigation}
         title="Privacy and Settings"
-        headerLeft={
-          <Clickable onClick={() => navigation.openDrawer()}>
-            <Icon name="ios-menu" color="#fff" />
-          </Clickable>
-        }
       />
+
       <Layout>
         <View style={styles.container}>
           <Text color={primaryColor} style={styles.title}>

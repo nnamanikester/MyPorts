@@ -30,6 +30,7 @@ const UserComments = ({navigation, offline, customer}) => {
 
   return (
     <>
+      <UI.Loading show={loading} />
       <UI.Layout>
         <UI.Spacer />
         <View style={styles.container}>
@@ -64,6 +65,7 @@ const UserComments = ({navigation, offline, customer}) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
+    flex: 1,
   },
 });
 

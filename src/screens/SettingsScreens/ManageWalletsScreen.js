@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import * as UI from '../../components/common';
-import Header from '../../components/Header';
 import WalletCard from '../../components/WalletCard';
 import {GET_WALLET} from '../../apollo/queries/wallet';
 import {connect} from 'react-redux';
 import {useLazyQuery} from '@apollo/react-hooks';
 import Skeleton from 'react-native-skeleton-placeholder';
 import {formatMoney, formatCardNo} from '../../utils/index';
+import ScreenHeaderWithoutRightIcon from '../../components/ScreenHeaderWithoutRightIcons';
 import {danger} from '../../components/common/variables';
 
 const ManageWalletsScreen = ({navigation, offline}) => {
@@ -44,14 +44,12 @@ const ManageWalletsScreen = ({navigation, offline}) => {
 
   return (
     <>
-      <Header
+      <ScreenHeaderWithoutRightIcon
+        navigation={navigation}
         title="Manage Wallet"
-        headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
-            <UI.Icon name="ios-arrow-back" color="#fff" />
-          </UI.Clickable>
-        }
+        icon="back"
       />
+
       <UI.Layout>
         <View style={styles.container}>
           {loading ? (

@@ -1,59 +1,68 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Layout, Spacer} from '../../../components/common';
+import * as UI from '../../../components/common';
 import Comment from '../../../components/Comment';
-import {female4} from '../../../assets/images';
+import EmptyItem from '../../../components/EmptyItem';
+import {connect} from 'react-redux';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {CUSTOMER_REVIEWS} from '../../../apollo/queries';
+import moment from 'moment';
 
-const UserReviews = () => {
+const UserReviews = ({customer, offline, navigation}) => {
+  const [reviews, setReviews] = React.useState([]);
+  const [getReviews, {data, error, loading}] = useLazyQuery(CUSTOMER_REVIEWS);
+
+  React.useMemo(() => {
+    if (!offline) {
+      getReviews({
+        variables: {
+          id: customer.id,
+        },
+      });
+    }
+    console.log(error);
+  }, [error]);
+
+  React.useMemo(() => {
+    if (data) {
+      setReviews(data.customerReviews);
+      console.log(data);
+    }
+  }, [data]);
+
   return (
     <>
-      <Layout>
-        <Spacer />
+      <UI.Loading show={loading} />
+
+      <UI.Layout>
+        <UI.Spacer />
+
         <View style={styles.container}>
-          <Comment
-            name="You - Shop and Smile"
-            comment="Similique molestiae placeat qui molestias voluptate. Autem autem aut quo nobis officia illum deleniti omnis dolorum."
-            image={female4}
-            s4={3}
-            date="02/03/2020"
+          <EmptyItem
+            icon={
+              <UI.Icon name="comment-slash" size={50} type="FontAwesome5" />
+            }
+            show={!loading && !reviews.length > 0}
+            title="No Review Found!"
+            message="All your reviews to products will appear here"
           />
-          <Comment
-            name="You - Nike"
-            comment="Similique molestiae placeat qui molestias voluptate. Autem autem aut quo nobis officia illum deleniti omnis dolorum."
-            image={female4}
-            s4={3}
-            date="02/03/2020"
-          />
-          <Comment
-            name="You - Adidas"
-            comment="Similique molestiae placeat qui molestias voluptate. Autem autem aut quo nobis officia illum deleniti omnis dolorum."
-            image={female4}
-            s4={3}
-            date="02/03/2020"
-          />
-          <Comment
-            name="You - Rolex"
-            comment="Similique molestiae placeat qui molestias voluptate. Autem autem aut quo nobis officia illum deleniti omnis dolorum."
-            image={female4}
-            s4={3}
-            date="02/03/2020"
-          />
-          <Comment
-            name="You - Rolex"
-            comment="Similique molestiae placeat qui molestias voluptate. Autem autem aut quo nobis officia illum deleniti omnis dolorum."
-            image={female4}
-            s4={3}
-            date="02/03/2020"
-          />
-          <Comment
-            name="You - Rolex"
-            comment="Similique molestiae placeat qui molestias voluptate. Autem autem aut quo nobis officia illum deleniti omnis dolorum."
-            image={female4}
-            s4={3}
-            date="02/03/2020"
-          />
+
+          {!loading &&
+            reviews.length > 0 &&
+            reviews.map((r, i) => {
+              return (
+                <Comment
+                  key={r.id + i}
+                  name={`You - ${r.vendor.profile.name}`}
+                  comment={r.comment}
+                  image={{uri: r.vendor.profile.logo}}
+                  date={moment(r.createdAt).format('DD/MM/YYYY')}
+                  rating={r.rating}
+                />
+              );
+            })}
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
@@ -61,7 +70,15 @@ const UserReviews = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
+    flex: 1,
   },
 });
 
-export default UserReviews;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    offline: !state.network.isConnected,
+    customer: state.customer.profile,
+  };
+};
+
+export default connect(mapStateToProps)(UserReviews);

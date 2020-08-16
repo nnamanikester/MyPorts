@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, StyleSheet, ToastAndroid} from 'react-native';
 import * as UI from '../../components/common';
-import Header from '../../components/Header';
 import {connect} from 'react-redux';
 import {useMutation} from '@apollo/react-hooks';
 import {UPDATE_NOTIFICATION_SETTINGS} from '../../apollo/mutations';
+import ScreenHeaderWithoutRightIcon from '../../components/ScreenHeaderWithoutRightIcons';
 import {setNotificationSettings} from '../../redux/actions/AuthActions';
 import {primaryColor} from '../../components/common/variables';
 
@@ -61,14 +61,12 @@ const NotificationSettingsScreen = ({
 
   return (
     <>
-      <Header
-        title="Notification Settngs"
-        headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
-            <UI.Icon name="ios-arrow-back" color="#fff" />
-          </UI.Clickable>
-        }
+      <ScreenHeaderWithoutRightIcon
+        navigation={navigation}
+        title="Notification Settings"
+        icon="back"
       />
+
       <UI.Layout>
         <View style={styles.container}>
           <UI.Text color={primaryColor} style={styles.title}>

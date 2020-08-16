@@ -10,11 +10,10 @@ import {
   Spacer,
   Modal,
   Row,
-  Clickable,
 } from '../../components/common';
 import Permissions from '../../components/Permissions';
 import {View, StyleSheet} from 'react-native';
-import Header from '../../components/Header';
+import ScreenHeaderWithoutRightIcon from '../../components/ScreenHeaderWithoutRightIcons';
 import {info} from '../../components/common/variables';
 
 const AccountScreen = ({navigation, logUserOut}) => {
@@ -22,14 +21,12 @@ const AccountScreen = ({navigation, logUserOut}) => {
 
   return (
     <>
-      <Header
+      <ScreenHeaderWithoutRightIcon
+        navigation={navigation}
         title="Account Settings"
-        headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-          </Clickable>
-        }
+        icon="back"
       />
+
       <Layout>
         <View style={styles.container}>
           <Permissions.Customer>

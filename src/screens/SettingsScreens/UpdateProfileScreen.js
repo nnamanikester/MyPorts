@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import * as UI from '../../components/common';
 import {View, StyleSheet, ToastAndroid} from 'react-native';
-import Header from '../../components/Header';
 import Avatar from '../../components/Avatar';
 import {profilePhoto} from '../../assets/images';
 import {connect} from 'react-redux';
 import {checkNetworkStatus} from '../../redux/actions/NetworkActions';
 import {setCustomerProfile} from '../../redux/actions/CustomerActions';
 import {useMutation} from '@apollo/react-hooks';
+import ScreenHeaderWithoutRightIcon from '../../components/ScreenHeaderWithoutRightIcons';
 import {UPDATE_CUSTOMER} from '../../apollo/mutations';
 
 const days = [
@@ -104,7 +104,7 @@ const UpdateProfileScreen = ({
             ToastAndroid.SHORT,
           );
         })
-        .catch((err) => {
+        .catch(() => {
           ToastAndroid.show('Unable to update profile!', ToastAndroid.SHORT);
         });
     }
@@ -113,14 +113,13 @@ const UpdateProfileScreen = ({
   return (
     <>
       <UI.Loading show={loading} />
-      <Header
-        title="Update Pofile"
-        headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
-            <UI.Icon name="ios-arrow-back" color="#fff" />
-          </UI.Clickable>
-        }
+
+      <ScreenHeaderWithoutRightIcon
+        navigation={navigation}
+        title="Update Profile"
+        icon="back"
       />
+
       <UI.Layout>
         <View style={styles.container}>
           <View style={styles.profilePhoto}>

@@ -44,6 +44,8 @@ const ManageAddressesScreen = ({navigation, offline, customer}) => {
         headerLeft={
           <UI.Clickable onClick={() => navigation.goBack()}>
             <UI.Icon name="ios-arrow-back" color="#fff" />
+            <UI.Spacer medium />
+            <UI.Spacer />
           </UI.Clickable>
         }
         headerRight={
@@ -52,6 +54,7 @@ const ManageAddressesScreen = ({navigation, offline, customer}) => {
           </UI.Clickable>
         }
       />
+
       <UI.Layout onRefresh={() => refetch()}>
         <View style={styles.container}>
           {addresses.length > 0 &&
