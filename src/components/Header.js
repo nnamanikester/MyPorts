@@ -35,12 +35,12 @@ const Header = ({
           {headerRight}
           <Permissions.Customer>
             {isCart && cart && cart.items && cart.items.length > 0 ? (
-              <Badge style={{elevation: 1, top: 8, left: 30}} color={danger} />
+              <Badge style={{elevation: 1, top: 10, left: 26}} color={danger} />
             ) : null}
           </Permissions.Customer>
           <Permissions.Vendor>
             {isCart && (
-              <Badge style={{elevation: 1, top: 12, left: 20}} color={danger} />
+              <Badge style={{elevation: 0, top: 12, left: 20}} color={danger} />
             )}
           </Permissions.Vendor>
         </View>

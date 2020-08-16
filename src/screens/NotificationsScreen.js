@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as UI from '../components/common';
-import Header from '../components/Header';
 import {NOTIFICATIONS} from '../apollo/queries';
 import {UPDATE_NOTIFICATION} from '../apollo/mutations';
 import {useLazyQuery, useMutation} from '@apollo/react-hooks';
@@ -9,6 +8,7 @@ import {setNotificationsStorage} from '../redux/actions/NotificationsAction';
 import {ToastAndroid, StyleSheet, View} from 'react-native';
 import {primaryColor, success} from '../components/common/variables';
 import moment from 'moment';
+import ScreenHeaderWithCart from '../components/ScreenHeaderWithCart';
 
 const NotificationsScreen = ({
   navigation,
@@ -124,31 +124,7 @@ const NotificationsScreen = ({
 
   return (
     <>
-      <Header
-        isCart
-        title="Notifications"
-        headerLeft={
-          <UI.Clickable onClick={() => navigation.openDrawer()}>
-            <UI.Icon name="ios-menu" color="#fff" />
-          </UI.Clickable>
-        }
-        headerRight={
-          <>
-            <UI.Clickable onClick={() => navigation.navigate('Cart')}>
-              <UI.Icon
-                name="shopping-bag"
-                size={22}
-                type="Feather"
-                color="#fff"
-              />
-            </UI.Clickable>
-            <UI.Spacer medium />
-            <UI.Clickable onClick={() => navigation.navigate('Search')}>
-              <UI.Icon name="ios-search" color="#fff" />
-            </UI.Clickable>
-          </>
-        }
-      />
+      <ScreenHeaderWithCart navigation={navigation} title="Notifications" />
 
       <UI.Loading show={loading || marLoading} />
       <UI.Layout

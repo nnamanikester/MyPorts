@@ -28,6 +28,7 @@ import Share from 'react-native-share';
 import AsyncStorage from '@react-native-community/async-storage';
 import {CART_STORAGE} from '../../constants';
 import {setCartStorage} from '../../redux/actions/CartActions';
+import ScreenHeaderWithCart from '../../components/ScreenHeaderWithCart';
 
 const SingleProductScreen = ({
   navigation,
@@ -282,31 +283,13 @@ const SingleProductScreen = ({
   return (
     <>
       <UI.Loading show={productLoading} />
-      <Header
-        isCart
+
+      <ScreenHeaderWithCart
+        navigation={navigation}
+        icon="back"
         title={p.name}
-        headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
-            <UI.Icon name="ios-arrow-back" color="#fff" />
-          </UI.Clickable>
-        }
-        headerRight={
-          <>
-            <UI.Clickable onClick={() => navigation.navigate('Cart')}>
-              <UI.Icon
-                name="shopping-bag"
-                size={22}
-                type="Feather"
-                color="#fff"
-              />
-            </UI.Clickable>
-            <UI.Spacer medium />
-            <UI.Clickable onClick={() => navigation.navigate('Search')}>
-              <UI.Icon name="ios-search" color="#fff" />
-            </UI.Clickable>
-          </>
-        }
       />
+
       <UI.Layout onRefresh={() => refetch()} style={styles.layout}>
         <Swiper animated autoplayTimeout={5} height={300} loop autoplay>
           {p &&

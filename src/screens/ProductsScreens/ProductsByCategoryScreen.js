@@ -1,13 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as UI from '../../components/common';
-import Header from '../../components/Header';
 import Product from '../../components/Product';
 import {StyleSheet, View, Alert} from 'react-native';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_PRODUCTS} from '../../apollo/queries';
 import EmptyItem from '../../components/EmptyItem';
 import {info} from '../../components/common/variables';
+import ScreenHeaderWithCart from '../../components/ScreenHeaderWithCart';
 
 const ProductsByCategoryScreen = ({navigation, offline, route: {params}}) => {
   const {category} = params;
@@ -98,31 +98,12 @@ const ProductsByCategoryScreen = ({navigation, offline, route: {params}}) => {
 
   return (
     <>
-      <Header
-        isCart
+      <ScreenHeaderWithCart
+        navigation={navigation}
         title={category.name}
-        headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
-            <UI.Icon name="ios-arrow-back" color="#fff" />
-          </UI.Clickable>
-        }
-        headerRight={
-          <>
-            <UI.Clickable onClick={() => navigation.navigate('Cart')}>
-              <UI.Icon
-                name="shopping-bag"
-                size={22}
-                type="Feather"
-                color="#fff"
-              />
-            </UI.Clickable>
-            <UI.Spacer medium />
-            <UI.Clickable onClick={() => navigation.navigate('Search')}>
-              <UI.Icon name="ios-search" color="#fff" />
-            </UI.Clickable>
-          </>
-        }
+        icon="back"
       />
+
       <UI.Layout
         refreshing={loading}
         onRefresh={() => refetch()}

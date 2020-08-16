@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import * as UI from '../../components/common';
-import Header from '../../components/Header';
 import VendorList from '../../components/VendorList';
 import {
   StyleSheet,
@@ -17,6 +16,7 @@ import Swiper from 'react-native-swiper';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_SHOPS} from '../../apollo/queries';
 import Skeleton from 'react-native-skeleton-placeholder';
+import ScreenHeaderWithCart from '../../components/ScreenHeaderWithCart';
 
 const VendorListScreen = ({navigation, offline, adverts}) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
@@ -104,38 +104,15 @@ const VendorListScreen = ({navigation, offline, adverts}) => {
 
   return (
     <>
-      <Header
-        isCart
-        title="Vendors"
-        headerLeft={
-          <UI.Clickable onClick={() => navigation.openDrawer()}>
-            <UI.Icon name="ios-menu" color="#fff" />
-          </UI.Clickable>
-        }
-        headerRight={
-          <>
-            <UI.Clickable onClick={() => navigation.navigate('Cart')}>
-              <UI.Icon
-                name="shopping-bag"
-                size={22}
-                type="Feather"
-                color="#fff"
-              />
-            </UI.Clickable>
-            <UI.Spacer medium />
-            <UI.Clickable onClick={() => navigation.navigate('Search')}>
-              <UI.Icon name="ios-search" color="#fff" />
-            </UI.Clickable>
-          </>
-        }
-      />
+      <ScreenHeaderWithCart navigation={navigation} title="Vendors" />
+
       <UI.Layout
         onEndReached={() => fetchMoreShops()}
         onRefresh={() => refetch()}
         refreshing={fetching}>
         {/* ADVERTS */}
-        <View style={styles.container}>
-          {adverts && (
+        {adverts && (
+          <View style={styles.container}>
             <Swiper
               paginationStyle={{bottom: 5}}
               animated
@@ -155,8 +132,8 @@ const VendorListScreen = ({navigation, offline, adverts}) => {
                 }
               })}
             </Swiper>
-          )}
-        </View>
+          </View>
+        )}
         {/* /ADVERTS */}
 
         {showTitle && (

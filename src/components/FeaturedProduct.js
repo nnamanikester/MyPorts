@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('screen').width / 2,
     marginRight: 10,
     marginBottom: 5,
-    elevation: 0.2,
   },
   image: {
     width: '100%',

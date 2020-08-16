@@ -1,13 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as UI from '../components/common';
-import Header from '../components/Header';
 import Category from '../components/Category';
 import EmptyItem from '../components/EmptyItem';
 import {StyleSheet, View, Dimensions, Alert} from 'react-native';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_CATEGORIES} from '../apollo/queries';
 import Skeleton from 'react-native-skeleton-placeholder';
+import ScreenHeaderWithCart from '../components/ScreenHeaderWithCart';
 
 const CategoriesScreen = ({navigation, offline}) => {
   const [categories, setCategories] = React.useState([]);
@@ -38,31 +38,8 @@ const CategoriesScreen = ({navigation, offline}) => {
 
   return (
     <>
-      <Header
-        isCart
-        title="Categories"
-        headerLeft={
-          <UI.Clickable onClick={() => navigation.openDrawer()}>
-            <UI.Icon name="ios-menu" color="#fff" />
-          </UI.Clickable>
-        }
-        headerRight={
-          <>
-            <UI.Clickable onClick={() => navigation.navigate('Cart')}>
-              <UI.Icon
-                name="shopping-bag"
-                size={22}
-                type="Feather"
-                color="#fff"
-              />
-            </UI.Clickable>
-            <UI.Spacer medium />
-            <UI.Clickable onClick={() => navigation.navigate('Search')}>
-              <UI.Icon name="ios-search" color="#fff" />
-            </UI.Clickable>
-          </>
-        }
-      />
+      <ScreenHeaderWithCart navigation={navigation} title="Categories" />
+
       <UI.Layout>
         <View style={styles.container}>
           {loading && (

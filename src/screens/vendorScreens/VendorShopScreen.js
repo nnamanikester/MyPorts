@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Image, ToastAndroid, Alert} from 'react-native';
 import * as UI from '../../components/common';
-import Header from '../../components/Header';
 import Product from '../../components/Product';
 import SearchBar from '../../components/SearchBar';
 import {grayColor, info, primaryColor} from '../../components/common/variables';
@@ -15,6 +14,7 @@ import {
   calculateRatePecentage,
 } from '../../utils/calculations';
 import {formatShortNumber} from '../../utils/numberFormat';
+import ScreenHeaderWithCart from '../../components/ScreenHeaderWithCart';
 
 const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
   const [openReview, setOpenReview] = React.useState(false);
@@ -207,33 +207,13 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
   return (
     <>
       <UI.Loading show={loading || rLoading} />
-      <Header
-        isCart
+
+      <ScreenHeaderWithCart
+        icon="back"
+        navigation={navigation}
         title={s.profile.name}
-        headerLeft={
-          <UI.Link onClick={() => navigation.goBack()}>
-            <UI.Icon name="ios-arrow-back" color="#fff" />
-          </UI.Link>
-        }
-        headerRight={
-          <>
-            <UI.Link
-              onClick={() => navigation.navigate('Cart')}
-              activeOpacity={0.7}>
-              <UI.Icon
-                name="shopping-bag"
-                size={22}
-                type="Feather"
-                color="#fff"
-              />
-            </UI.Link>
-            <UI.Spacer medium />
-            <UI.Link onClick={() => navigation.navigate('Search')}>
-              <UI.Icon name="ios-search" color="#fff" />
-            </UI.Link>
-          </>
-        }
       />
+
       <UI.Layout
         onRefresh={() => refetch()}
         onEndReached={() => fetchMoreProducts()}

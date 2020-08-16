@@ -7,10 +7,11 @@ const Card = ({children, style}) => {
 
 const styles = StyleSheet.create({
   container: {
-    elevation: 1,
+    elevation: 3,
     minHeight: 100,
     borderRadius: 5,
     marginVertical: 10,
+    backgroundColor: '#fff0',
   },
 });
 

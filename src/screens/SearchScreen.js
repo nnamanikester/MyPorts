@@ -35,11 +35,17 @@ const SearchScreen = ({navigation, offline}) => {
   ] = useLazyQuery(GET_PRODUCTS, {
     variables: {
       where: {
+        // OR: {
         name_contains: term,
+        //   description_contains: term,
+        // },
+        // category: {
+        //   name_contains: term,
+        // },
         price_gte: parseInt(priceRange.min),
         price_lte: parseInt(priceRange.max),
       },
-      first: 42,
+      first: 60,
       orderBy: filter.value,
     },
   });
@@ -140,6 +146,7 @@ const SearchScreen = ({navigation, offline}) => {
 
   return (
     <>
+      <UI.Loading show={loading} />
       <Header
         title="Search"
         headerLeft={
