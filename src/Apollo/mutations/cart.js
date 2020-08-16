@@ -18,6 +18,7 @@ export const ADD_ITEM_TO_CART = gql`
       items {
         id
         quantity
+        status
         product {
           id
           images {
@@ -78,6 +79,7 @@ export const ADD_ITEM_TO_CART = gql`
           createdAt
         }
       }
+      status
       createdAt
       updatedAt
     }
@@ -94,6 +96,7 @@ export const REMOVE_CART_ITEM = gql`
       items {
         id
         quantity
+        status
         product {
           id
           images {
@@ -103,6 +106,7 @@ export const REMOVE_CART_ITEM = gql`
           createdAt
           price
           category {
+            id
             name
           }
           vendor {
@@ -153,6 +157,7 @@ export const REMOVE_CART_ITEM = gql`
           createdAt
         }
       }
+      status
       createdAt
       updatedAt
     }
@@ -169,6 +174,7 @@ export const CLEAR_CART = gql`
       items {
         id
         quantity
+        status
         product {
           id
           images {
@@ -178,6 +184,7 @@ export const CLEAR_CART = gql`
           createdAt
           price
           category {
+            id
             name
           }
           vendor {
@@ -228,6 +235,7 @@ export const CLEAR_CART = gql`
           createdAt
         }
       }
+      status
       createdAt
       updatedAt
     }

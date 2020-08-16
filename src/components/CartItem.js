@@ -1,16 +1,14 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {
-  Text,
-  Icon,
-  ListItem,
-  Clickable,
-  TextInput,
-  Column,
-  Row,
-} from './common';
+import {Text, Icon, ListItem, Clickable} from './common';
 import Avater from './Avatar';
-import {info, primaryColor, inactiveColor} from './common/variables';
+import {
+  info,
+  primaryColor,
+  inactiveColor,
+  textColor,
+  danger,
+} from './common/variables';
 import {formatMoney} from '../utils';
 
 const CartItem = ({
@@ -25,35 +23,40 @@ const CartItem = ({
   onCloseButtonClick,
   onQuantityChange,
   quantityError,
+  stock,
 }) => {
   return (
     <View>
       <ListItem
-        onClick={onClick}
+        onClick={stock === 0 ? null : onClick}
         left={<Avater src={image} size={85} />}
         body={
           <>
-            {name && <Text heading>{name}</Text>}
+            {name && (
+              <Text color={stock === 0 ? info : textColor} heading>
+                {name}
+              </Text>
+            )}
             {shipping && (
-              <Text note>
+              <Text color={stock === 0 ? inactiveColor : textColor} note>
                 Shipping:{' '}
-                <Text note color={info}>
+                <Text note color={stock === 0 ? inactiveColor : info}>
                   {parseInt(shipping) === 0 ? 'Free' : formatMoney(shipping)}
                 </Text>
               </Text>
             )}
             {discount && (
-              <Text note>
+              <Text color={stock === 0 ? inactiveColor : textColor} note>
                 Discount:{' '}
-                <Text note color={primaryColor}>
+                <Text note color={stock === 0 ? inactiveColor : primaryColor}>
                   - {formatMoney(discount)}
                 </Text>
               </Text>
             )}
             {quantity && (
-              <Text note>
+              <Text color={stock === 0 ? inactiveColor : textColor} note>
                 Quantity:{' '}
-                <Text note color={info}>
+                <Text note color={stock === 0 ? inactiveColor : info}>
                   {quantity}
                 </Text>
               </Text>
@@ -83,19 +86,26 @@ const CartItem = ({
           <View style={{alignItems: 'flex-end'}}>
             {!hideCloseButton && (
               <Clickable onClick={onCloseButtonClick}>
-                <Icon name="md-close" />
+                <Icon color={stock === 0 ? danger : info} name="md-close" />
               </Clickable>
             )}
             {price && parseInt(discount) > 0 && (
-              <Text textDecoration="lineThrough" note color={primaryColor}>
+              <Text
+                textDecoration="lineThrough"
+                note
+                color={stock === 0 ? inactiveColor : primaryColor}>
                 {formatMoney(price)}
               </Text>
             )}
             {price && parseInt(discount) > 0 && (
-              <Text note>{formatMoney(price - parseInt(discount))}</Text>
+              <Text color={stock === 0 ? inactiveColor : textColor} note>
+                {formatMoney(price - parseInt(discount))}
+              </Text>
             )}
             {price && parseInt(discount) === 0 && (
-              <Text>{formatMoney(price)}</Text>
+              <Text color={stock === 0 ? inactiveColor : textColor}>
+                {formatMoney(price)}
+              </Text>
             )}
           </View>
         }

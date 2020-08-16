@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, ToastAndroid} from 'react-native';
+import {StyleSheet, View, ToastAndroid, Alert} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import CartItem from '../../components/CartItem';
@@ -8,9 +8,13 @@ import {connect} from 'react-redux';
 import {setCartStorage} from '../../redux/actions/CartActions';
 import {setAddress} from '../../redux/actions/AddressActions';
 import {setWallet} from '../../redux/actions/WalletActions';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {useMutation, useQuery, useLazyQuery} from '@apollo/react-hooks';
 import {REMOVE_CART_ITEM} from '../../apollo/mutations';
-import {GET_WALLET, GET_ADDRESSES} from '../../apollo/queries';
+import {
+  GET_WALLET,
+  GET_ADDRESSES,
+  GET_SINGLE_PRODUCT,
+} from '../../apollo/queries';
 import EmptyItem from '../../components/EmptyItem';
 import {info, danger} from '../../components/common/variables';
 import {formatMoney} from '../../utils';
@@ -42,6 +46,10 @@ const CartScreen = ({
       customerId: customer.id,
     },
   });
+
+  const [getProduct, {loading: productLoading}] = useLazyQuery(
+    GET_SINGLE_PRODUCT,
+  );
 
   // const [clearCart, {loading: clearCartLoading}] = useMutation(CLEAR_CART);
 
@@ -143,10 +151,80 @@ const CartScreen = ({
     );
   };
 
+  const checkItemsInStock = () => {
+    // loop through each cart and check if the quantity is greater than or equal to the quantity of product
+    if (cart && cart.items) {
+      let count = 0;
+      cart.items.forEach((i) => {
+        getProduct({
+          variables: {
+            id: i.product.id,
+          },
+        });
+        // if greater, indicate the item and the quantity available, stop the loop and return false.
+        if (i.quantity > i.product.quantity) {
+          count++;
+          const items = cart.items.map((it) => {
+            if (it.id === i.id) {
+              return {...it, status: 0};
+            }
+            return it;
+          });
+          setCartStorage({
+            ...cart,
+            items: [...items],
+          });
+        }
+        if (count > 0) {
+          Alert.alert(
+            'Warning!',
+            'An item in your cart is no longer available! Please remove the item before you proceed',
+          );
+          return false;
+        }
+      });
+      // if equal or less, return true.
+      return true;
+    }
+  };
+
+  const checkBalanceToTotal = () => {
+    // check if the user balance is greater than total amount and notify em to fund wallet.
+    // return true if greater.
+    // return false if less.
+  };
+
+  const handleCreateOrder = () => {
+    // Create order, notification, and transaction.
+  };
+
+  const handleDebitUserWallet = () => {
+    // Debit the amount payable from the user wallet.
+    // if successfull, create and order
+    // if not successful, notify the user of an unknown problem and return.
+  };
+
+  const handlePayment = () => {
+    // Check if the items in the cart are still in stock.
+    checkItemsInStock();
+    // if not instock, notify the user of the item and ask em to remove it. ()
+    // if in stock, Check if the balance is greater that the amount payable. ()
+    // If it's not, notify the user to fund his/her wallet.
+    // If it is, go ahead and reduct the amount payable from the wallet.
+    // If successfull, create an order with the items in the cart.
+    // if not, notify the user of an unknown problem and tell them to try again.
+  };
+
   return (
     <>
       <UI.Loading
-        show={loading || removeItemLoading || walletLoading || addressLoading}
+        show={
+          loading ||
+          removeItemLoading ||
+          walletLoading ||
+          addressLoading ||
+          productLoading
+        }
       />
       <Header
         title="Shopping Bag"
@@ -174,6 +252,7 @@ const CartScreen = ({
           cart.items.map((item, i) => {
             return (
               <CartItem
+                stock={item.status}
                 key={item.id + i}
                 name={item.product.name}
                 shipping={`${item.product.shipping}`}
@@ -281,7 +360,7 @@ const CartScreen = ({
             type={cart && cart.items && cart.items.length > 0 ? '' : 'disabled'}
             showIconDivider
             iconRight={<UI.Icon name="ios-arrow-forward" color="#fff" />}
-            onClick={() => navigation.navigate('ShippingDetails')}>
+            onClick={() => handlePayment()}>
             <UI.Text color="#fff">Pay Now</UI.Text>
           </UI.Button>
 

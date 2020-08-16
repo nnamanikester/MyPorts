@@ -10,6 +10,7 @@ export const CART = gql`
       items {
         id
         quantity
+        status
         product {
           id
           images {
@@ -70,6 +71,7 @@ export const CART = gql`
           createdAt
         }
       }
+      status
       createdAt
       updatedAt
     }
