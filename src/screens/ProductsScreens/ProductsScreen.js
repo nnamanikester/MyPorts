@@ -49,9 +49,12 @@ const ProductsScreen = ({navigation, offline, adverts}) => {
     {loading, data, error, refetch, fetchMore},
   ] = useLazyQuery(GET_PRODUCTS, {
     variables: {
-      first: 42,
+      first: 60,
       where: {
-        status: 1,
+        AND: {
+          status: 1,
+          quantity_gt: 0,
+        },
       },
       orderBy: 'createdAt_DESC',
     },

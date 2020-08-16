@@ -19,10 +19,11 @@ const ProductsByCategoryScreen = ({navigation, offline, route: {params}}) => {
     {loading, data, error, refetch, fetchMore},
   ] = useLazyQuery(GET_PRODUCTS, {
     variables: {
-      first: 42,
+      first: 60,
       where: {
         AND: {
           status: 1,
+          quantity_gt: 0,
           category: {
             id: category.id,
           },

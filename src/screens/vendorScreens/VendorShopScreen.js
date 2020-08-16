@@ -76,11 +76,14 @@ const VendorShopScreen = ({navigation, route: {params}, offline, customer}) => {
     variables: {
       first: 42,
       where: {
-        name_contains: searchText,
-        vendor: {
-          id: s.id,
+        AND: {
+          name_contains: searchText,
+          vendor: {
+            id: s.id,
+          },
+          status: 1,
+          quantity_gt: 0,
         },
-        status: 1,
       },
       orderBy: 'createdAt_DESC',
     },
