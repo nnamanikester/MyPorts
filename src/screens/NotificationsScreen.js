@@ -6,7 +6,7 @@ import {UPDATE_NOTIFICATION} from '../apollo/mutations';
 import {useLazyQuery, useMutation} from '@apollo/react-hooks';
 import {setNotificationsStorage} from '../redux/actions/NotificationsAction';
 import {ToastAndroid, StyleSheet, View} from 'react-native';
-import {primaryColor, success} from '../components/common/variables';
+import {primaryColor, success, danger} from '../components/common/variables';
 import moment from 'moment';
 import ScreenHeaderWithCart from '../components/ScreenHeaderWithCart';
 
@@ -31,7 +31,7 @@ const NotificationsScreen = ({
       },
       orderBy: 'createdAt_DESC',
     },
-    pollInterval: 500,
+    // pollInterval: 500,
   });
 
   const [markAsRead, {loading: marLoading}] = useMutation(UPDATE_NOTIFICATION);
@@ -81,7 +81,7 @@ const NotificationsScreen = ({
       });
   };
 
-  // Fetch more products onEndReach for pagination.
+  // Fetch more notifications onEndReach for pagination.
   const fetchMoreNotifications = () => {
     if (!data) {
       return;
@@ -89,10 +89,10 @@ const NotificationsScreen = ({
     setFetching(true);
     // Check if  there's a next page.
     if (data.notifications.pageInfo.hasNextPage) {
-      // Fetch more products
+      // Fetch more notifications
       fetchMore({
         variables: {
-          after: data.products.pageInfo.endCursor,
+          after: data.notifications.pageInfo.endCursor,
         },
         // Update the cached data with the fetched product
         updateQuery: (prev, {fetchMoreResult}) => {
@@ -144,13 +144,39 @@ const NotificationsScreen = ({
 
             switch (n.type) {
               case 'FUND':
-                ImageIcon = <UI.Icon color="#fff" name="md-card" />;
+                ImageIcon = (
+                  <UI.Icon
+                    type="MaterialIcons"
+                    color={success}
+                    name="call-received"
+                  />
+                );
+                break;
+              case 'CHARGE':
+                ImageIcon = (
+                  <UI.Icon
+                    color={danger}
+                    type="MaterialIcons"
+                    name="call-made"
+                  />
+                );
+                break;
+              case 'ORDER':
+                ImageIcon = (
+                  <UI.Icon
+                    color={primaryColor}
+                    type="MaterialIcons"
+                    name="local-shipping"
+                  />
+                );
                 break;
               case 'OFFER':
-                ImageIcon = <UI.Icon color="#fff" name="ios-gift" />;
+                ImageIcon = <UI.Icon color={primaryColor} name="ios-gift" />;
                 break;
               default:
-                ImageIcon = <UI.Icon color="#fff" name="ios-notifications" />;
+                ImageIcon = (
+                  <UI.Icon color={primaryColor} name="ios-notifications" />
+                );
             }
 
             const d = new Date(n.createdAt).getDate();
@@ -212,7 +238,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: primaryColor,
+    backgroundColor: '#fff',
   },
   rightItem: {
     alignItems: 'center',

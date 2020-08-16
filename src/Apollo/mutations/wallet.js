@@ -10,3 +10,14 @@ export const FUND_WALLET = gql`
     }
   }
 `;
+
+export const CHARGE_WALLET = gql`
+  mutation chargeWallet($amount: Int!, $reference: String!) {
+    chargeWallet(amount: $amount, reference: $reference) {
+      id
+      name
+      cardNo
+      balance
+    }
+  }
+`;

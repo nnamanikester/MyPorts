@@ -166,7 +166,7 @@ export const REMOVE_CART_ITEM = gql`
 
 export const CLEAR_CART = gql`
   mutation clearCart($id: String!) {
-    clearCartItem(id: $id) {
+    clearCart(id: $id) {
       id
       customer {
         id

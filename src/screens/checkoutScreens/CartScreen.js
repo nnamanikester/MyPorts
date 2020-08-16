@@ -9,7 +9,12 @@ import {setCartStorage} from '../../redux/actions/CartActions';
 import {setAddress} from '../../redux/actions/AddressActions';
 import {setWallet} from '../../redux/actions/WalletActions';
 import {useMutation, useQuery, useLazyQuery} from '@apollo/react-hooks';
-import {REMOVE_CART_ITEM} from '../../apollo/mutations';
+import {
+  REMOVE_CART_ITEM,
+  CHARGE_WALLET,
+  CLEAR_CART,
+  CREATE_ORDER,
+} from '../../apollo/mutations';
 import {
   GET_WALLET,
   GET_ADDRESSES,
@@ -18,6 +23,7 @@ import {
 import EmptyItem from '../../components/EmptyItem';
 import {info, danger} from '../../components/common/variables';
 import {formatMoney} from '../../utils';
+import {v4 as uuidv4} from 'uuid';
 
 const CartScreen = ({
   navigation,
@@ -34,6 +40,7 @@ const CartScreen = ({
   const [showFund, setShowFund] = React.useState(false);
   const [amountError, setAmountError] = React.useState(false);
   const [amount, setAmount] = React.useState('');
+  const [orderConfirmed, setOrderConfirmed] = React.useState(false);
 
   const [removeItem, {loading: removeItemLoading}] = useMutation(
     REMOVE_CART_ITEM,
@@ -51,7 +58,11 @@ const CartScreen = ({
     GET_SINGLE_PRODUCT,
   );
 
-  // const [clearCart, {loading: clearCartLoading}] = useMutation(CLEAR_CART);
+  const [chargeWallet, {loading: chargeLoading}] = useMutation(CHARGE_WALLET);
+
+  const [clearCart, {loading: clearCartLoading}] = useMutation(CLEAR_CART);
+
+  const [createOrder, {loading: orderLoading}] = useMutation(CREATE_ORDER);
 
   React.useMemo(() => {
     if (walletData) {
@@ -102,13 +113,13 @@ const CartScreen = ({
       });
   };
 
-  // const handleClearitems = () => {
-  //   clearCart({
-  //     variables: {
-  //       id: cart.id,
-  //     },
-  //   });
-  // };
+  const handleClearitems = () => {
+    clearCart({
+      variables: {
+        id: cart.id,
+      },
+    });
+  };
 
   const calculateOrders = () => {
     let total = 0;
@@ -176,10 +187,6 @@ const CartScreen = ({
           });
         }
         if (count > 0) {
-          Alert.alert(
-            'Message',
-            'An item in your cart is no longer available! Please remove the item before you proceed',
-          );
           return false;
         }
       });
@@ -194,34 +201,116 @@ const CartScreen = ({
       // return true if greater.
       return true;
     }
-    Alert.alert(
-      'Message',
-      'Your MyPorts balance is lesser than the total payable amount. Fund your wallet to continue.',
-      [{text: 'Fund Wallet', onPress: () => setShowFund(true)}],
-    );
     // return false if less.
     return false;
   };
 
   const handleCreateOrder = () => {
-    // Create order, notification, and transaction.
+    // Create order and notification
+    createOrder({
+      variables: {
+        data: {
+          orderNo: uuidv4().replace('-', ''),
+          items: {
+            create: [
+              ...cart.items.map((ca) => {
+                return {
+                  quantity: ca.quantity,
+                  amount: ca.product.price,
+                  address: {
+                    connect: {
+                      id: address.id,
+                    },
+                  },
+                  product: {
+                    connect: {
+                      id: ca.product.id,
+                    },
+                  },
+                  customer: {
+                    connect: {
+                      id: customer.id,
+                    },
+                  },
+                  vendor: {
+                    connect: {
+                      id: ca.product.vendor.id,
+                    },
+                  },
+                };
+              }),
+            ],
+          },
+        },
+        cart: cart.id,
+        products: {
+          info: [
+            ...cart.items.map((it) => {
+              return {
+                id: it.product.id,
+                quantity: it.quantity,
+              };
+            }),
+          ],
+        },
+      },
+    })
+      .then((res) => {
+        // if successful, clear cart items;
+        handleClearitems();
+        setOrderConfirmed(true);
+      })
+      .catch((e) => {
+        // notify use if error
+        Alert.alert(
+          'Error',
+          'Unable to process order! Please contact support.',
+        );
+        console.log(e);
+      });
   };
 
-  const handleDebitUserWallet = () => {
+  const handleChargeWallet = () => {
     // Debit the amount payable from the user wallet.
-    // if successfull, create and order
-    // if not successful, notify the user of an unknown problem and return.
+    chargeWallet({
+      variables: {
+        amount: parseFloat(calculateTotal()),
+        reference: uuidv4(),
+      },
+    })
+      .then((res) => {
+        // if successfull, create and order
+        setWallet(res.data.chargeWallet);
+        handleCreateOrder();
+      })
+      .catch(() => {
+        // if not successful, notify the user of an unknown problem and return.
+        Alert.alert('Error!', 'Unable to place order! Please try again.');
+      });
   };
 
   const handlePayment = () => {
     // Check if the items in the cart are still in stock.
     if (checkItemsInStock()) {
-      // if not instock, notify the user of the item and ask em to remove it. ()
-      // if in stock, Check if the balance is greater that the amount payable. ()
-      checkBalanceToTotal();
+      // if in stock, Check if the balance is greater that the amount payable.
+      if (checkBalanceToTotal()) {
+        // If it is, go ahead and reduct the amount payable from the wallet.
+        handleChargeWallet();
+      } else {
+        // If it's not, notify the user to fund his/her wallet.
+        Alert.alert(
+          'Message',
+          'Your MyPorts balance is lesser than the total payable amount. Fund your wallet to continue.',
+          [{text: 'Fund Wallet', onPress: () => setShowFund(true)}],
+        );
+      }
+    } else {
+      // if not instock, notify the user of the item and ask em to remove it.
+      Alert.alert(
+        'Message',
+        'An item in your cart is no longer available! Please remove the item before you proceed',
+      );
     }
-    // If it's not, notify the user to fund his/her wallet.
-    // If it is, go ahead and reduct the amount payable from the wallet.
     // If successfull, create an order with the items in the cart.
     // if not, notify the user of an unknown problem and tell them to try again.
   };
@@ -234,8 +323,23 @@ const CartScreen = ({
           removeItemLoading ||
           walletLoading ||
           addressLoading ||
-          productLoading
+          productLoading ||
+          chargeLoading ||
+          clearCartLoading ||
+          orderLoading
         }
+      />
+      <UI.Alert
+        show={orderConfirmed}
+        header="Congratulations!"
+        success
+        showBg
+        buttonText="View Order Details"
+        message={'Your Order have been placed and is being processed'}
+        onButtonClick={() => {
+          setOrderConfirmed(false);
+          navigation.navigate('OrderDetails');
+        }}
       />
       <Header
         title="Shopping Bag"
