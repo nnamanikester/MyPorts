@@ -15,7 +15,7 @@ const PasswordResetScreen = ({navigation}) => {
   return (
     <>
       <Layout>
-        <View style={styles.header}></View>
+        <View style={styles.header} />
         <View style={styles.layout}>
           <View style={styles.pageTitle}>
             <Text h1>Password Reset</Text>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   header: {
     height: 60,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     paddingHorizontal: 20,
     alignItems: 'center',
   },

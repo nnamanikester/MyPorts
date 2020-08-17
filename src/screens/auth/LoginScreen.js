@@ -75,9 +75,6 @@ const LoginScreen = ({
       <UI.Loading show={loading} />
       <UI.Layout>
         <View style={styles.header}>
-          <UI.Clickable onClick={() => skipAuthentication()}>
-            <UI.Icon name="md-close" />
-          </UI.Clickable>
           <UI.Link onClick={() => navigation.navigate('Register')}>
             Sign Up
           </UI.Link>
@@ -209,7 +206,7 @@ const styles = StyleSheet.create({
   header: {
     height: 60,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     paddingHorizontal: 20,
     alignItems: 'center',
   },
@@ -222,6 +219,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
 });
+
 const mapStateToProps = (state) => {
   return {
     offline: !state.network.isConnected,

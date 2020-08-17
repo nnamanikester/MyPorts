@@ -16,8 +16,8 @@ const SavedItemsScreen = ({navigation, offline, customer}) => {
   const [getItems, {data, loading, error}] = useLazyQuery(CUSTOMER_SAVES, {
     pollInterval: 500,
   });
-  const [deleteItem] = useMutation(CREATE_SAVE);
-  const [deleteItems] = useMutation(CLEAR_SAVED_ITEMS);
+  const [deleteItem, {loading: deleteLoading}] = useMutation(CREATE_SAVE);
+  const [deleteItems, {loading: clearLoading}] = useMutation(CLEAR_SAVED_ITEMS);
 
   React.useMemo(() => {
     if (!offline) {
@@ -73,7 +73,7 @@ const SavedItemsScreen = ({navigation, offline, customer}) => {
 
   return (
     <>
-      <UI.Loading show={loading} />
+      <UI.Loading show={loading || clearLoading || deleteLoading} />
 
       <ScreenHeaderWithCart
         navigation={navigation}

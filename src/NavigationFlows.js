@@ -6,7 +6,6 @@ import {checkNetworkStatus} from './redux/actions/NetworkActions';
 import MainFlow from './navigation/MainFlow';
 import AuthFlow from './navigation/AuthFlow';
 import VDFlow from './navigation/VDFlow';
-import WelcomeScreen from './screens/WelcomeScreen';
 import LoadingScreen from './screens/LoadingScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import NetworkError from './components/NetworkError';
@@ -46,10 +45,6 @@ const NavigationFlows = ({
     u = JSON.parse(u);
     setStorage(u, t);
   };
-
-  if (isStranger) {
-    return <WelcomeScreen />;
-  }
 
   if (appLoading) {
     setTimeout(() => {

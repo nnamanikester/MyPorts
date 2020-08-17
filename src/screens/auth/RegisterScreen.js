@@ -4,7 +4,7 @@ import {useMutation} from '@apollo/react-hooks';
 import {connect} from 'react-redux';
 import {skipAuthentication, setStorage} from '../../redux/actions/AuthActions';
 import * as UI from '../../components/common';
-import {info, primaryColor, danger} from '../../components/common/variables';
+import {info, danger} from '../../components/common/variables';
 import {SIGNUP} from '../../apollo/mutations';
 import {validateEmail} from '../../utils';
 import {TOKEN_STORAGE, USER_STORAGE} from '../../constants';
@@ -66,9 +66,6 @@ const RegisterScreen = ({skipAuthentication, navigation, setStorage}) => {
       <UI.Loading show={loading} />
       <UI.Layout>
         <View style={styles.header}>
-          <UI.Clickable onClick={() => skipAuthentication()}>
-            <UI.Icon name="md-close" />
-          </UI.Clickable>
           <UI.Link onClick={() => navigation.navigate('Login')}>
             Sign In
           </UI.Link>
@@ -222,7 +219,7 @@ const styles = StyleSheet.create({
   header: {
     height: 60,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     paddingHorizontal: 20,
     alignItems: 'center',
   },
