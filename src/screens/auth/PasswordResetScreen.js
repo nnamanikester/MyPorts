@@ -7,7 +7,6 @@ import {
   Link,
   TextInput,
   Spacer,
-  Clickable,
 } from '../../components/common';
 import {info} from '../../components/common/variables';
 

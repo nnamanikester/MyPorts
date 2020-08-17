@@ -23,7 +23,7 @@ const LoginScreen = ({
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  const [signin, {loading, data, error}] = useMutation(SIGNIN, {
+  const [signin, {loading, data}] = useMutation(SIGNIN, {
     errorPolicy: 'ignore',
   });
 
@@ -36,12 +36,17 @@ const LoginScreen = ({
     setErrors({});
     checkNetworkStatus();
 
-    if (!validateEmail(email))
+    if (!validateEmail(email)) {
       return setErrors({email: 'Invalid email address!'});
+    }
 
-    if (!password) return setErrors({password: 'Password cannot be empty!'});
+    if (!password) {
+      return setErrors({password: 'Password cannot be empty!'});
+    }
 
-    if (offline) return;
+    if (offline) {
+      return;
+    }
 
     return signin({
       variables: {

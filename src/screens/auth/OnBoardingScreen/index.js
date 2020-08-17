@@ -61,7 +61,7 @@ const OnBoardingScreen = ({navigation}) => {
           </View>
         </Swiper>
 
-        <View>
+        <View style={styles.buttonContainer}>
           <UI.Button
             onClick={() => navigation.navigate('Register')}
             type="outline">
@@ -92,6 +92,9 @@ const styles = StyleSheet.create({
     height: 7,
     borderRadius: 10,
     marginHorizontal: 2,
+  },
+  buttonContainer: {
+    paddingHorizontal: 20,
   },
   sliderContainer: {
     flex: 1,
