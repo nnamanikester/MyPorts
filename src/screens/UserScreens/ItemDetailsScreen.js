@@ -1,57 +1,57 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Text, Layout, Icon, Spacer, Clickable} from '../../components/common';
+import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import CartItem from '../../components/CartItem';
 import OrderSummary from '../../components/OrderSummary';
 import {female2} from '../../assets/images';
 
-const OrderDetailsScreen = ({navigation}) => {
+const ItemDetailsScreen = ({navigation}) => {
   return (
     <>
       <Header
         title="Order Details"
         headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.goBack()}>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+          </UI.Clickable>
         }
         headerRight={
           <>
-            <Clickable
+            <UI.Clickable
               onClick={() => navigation.navigate('Search')}
               activeOpacity={0.7}>
-              <Icon name="ios-search" color="#fff" />
-            </Clickable>
+              <UI.Icon name="ios-search" color="#fff" />
+            </UI.Clickable>
           </>
         }
       />
-      <Layout>
-        <Spacer medium />
+      <UI.Layout>
+        <UI.Spacer medium />
 
         <View style={styles.container}>
-          <Text style={styles.title}>Order placed: August 25, 2020</Text>
-          <Text>Order No: 2379758</Text>
+          <UI.Text style={styles.title}>Order placed: August 25, 2020</UI.Text>
+          <UI.Text>Order No: 2379758</UI.Text>
 
-          <Spacer medium />
+          <UI.Spacer medium />
 
-          <Text style={styles.title}>Ship to:</Text>
+          <UI.Text style={styles.title}>Ship to:</UI.Text>
 
-          <Text>Tiana Rosser</Text>
-          <Text>Suit 13 Romchi Plaza, Oneday Road.</Text>
-          <Text>Enugu, Enugu State 400252.</Text>
-          <Text>Nigeria.</Text>
+          <UI.Text>Tiana Rosser</UI.Text>
+          <UI.Text>Suit 13 Romchi Plaza, Oneday Road.</UI.Text>
+          <UI.Text>Enugu, Enugu State 400252.</UI.Text>
+          <UI.Text>Nigeria.</UI.Text>
 
-          <Spacer medium />
+          <UI.Spacer medium />
 
-          <Text style={styles.title}>Payment Method:</Text>
+          <UI.Text style={styles.title}>Payment Method:</UI.Text>
 
-          <Text>Credit Card</Text>
-          <Text>Master Card xxxx6435</Text>
+          <UI.Text>Credit Card</UI.Text>
+          <UI.Text>Master Card xxxx6435</UI.Text>
 
-          <Spacer medium />
+          <UI.Spacer medium />
 
-          <Text style={styles.title}>Items in Order:</Text>
+          <UI.Text style={styles.title}>Items in Order:</UI.Text>
         </View>
 
         <CartItem
@@ -88,12 +88,12 @@ const OrderDetailsScreen = ({navigation}) => {
           hideCloseButton
         />
 
-        <Spacer medium />
+        <UI.Spacer medium />
 
         <View style={styles.container}>
-          <Text style={styles.title}>Order Summary:</Text>
+          <UI.Text style={styles.title}>Order Summary:</UI.Text>
 
-          <Spacer />
+          <UI.Spacer />
 
           <OrderSummary
             order="63,000"
@@ -102,9 +102,9 @@ const OrderDetailsScreen = ({navigation}) => {
             total="66,000"
           />
 
-          <Spacer large />
+          <UI.Spacer large />
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
@@ -119,4 +119,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OrderDetailsScreen;
+export default ItemDetailsScreen;

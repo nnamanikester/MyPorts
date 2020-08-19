@@ -4,3 +4,9 @@ export const setWallet = (wallet) => {
     payload: wallet,
   };
 };
+export const clearWallet = () => {
+  console.log('Clear Wallet');
+  return {
+    type: 'CLEAR_WALLET',
+  };
+};

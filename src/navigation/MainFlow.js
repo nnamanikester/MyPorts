@@ -27,6 +27,7 @@ import ProductComments from '../screens/ProductsScreens/ProductCommentsScreen';
 import Profile from '../screens/UserScreens/ProfileScreen';
 import SavedItems from '../screens/UserScreens/SavedItemsScreen';
 import Orders from '../screens/UserScreens/OrdersScreen';
+import ItemDetails from '../screens/UserScreens/ItemDetailsScreen';
 import OrderDetails from '../screens/UserScreens/OrderDetailsScreen';
 import ReferAndEarn from '../screens/UserScreens/ReferAndEarnScreen';
 
@@ -204,6 +205,7 @@ const StackNavigation = ({
 
         {/* User Screens */}
         <Stack.Screen name="Orders" component={Orders} />
+        <Stack.Screen name="ItemDetails" component={ItemDetails} />
         <Stack.Screen name="OrderDetails" component={OrderDetails} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="ReferAndEarn" component={ReferAndEarn} />

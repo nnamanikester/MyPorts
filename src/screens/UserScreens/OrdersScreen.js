@@ -1,75 +1,144 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Layout, Icon, Spacer, Clickable} from '../../components/common';
+import {View, StyleSheet, Alert} from 'react-native';
+import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import Order from '../../components/Order';
+import {connect} from 'react-redux';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {ORDER_HISTORY} from '../../apollo/queries';
+import moment from 'moment';
+import {info} from '../../components/common/variables';
+import EmptyItem from '../../components/EmptyItem';
 
-const OrdersScreen = ({navigation}) => {
+const OrdersScreen = ({navigation, customer}) => {
+  const [getOrders, {data, loading, error}] = useLazyQuery(ORDER_HISTORY, {
+    variables: {
+      id: customer.id,
+    },
+    pollInterval: 500,
+  });
+
+  React.useEffect(() => {
+    getOrders();
+  }, []);
+
+  React.useMemo(() => {
+    if (error) {
+      Alert.alert('Error', 'Unable to get Orders. Please try again', [
+        {text: 'Try again', onPress: () => getOrders()},
+      ]);
+    }
+  }, [error]);
+
   return (
     <>
+      <UI.Loading show={loading} />
+
       <Header
         isCart
         title="Order History"
         headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.goBack()}>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+          </UI.Clickable>
         }
         headerRight={
           <>
-            <Clickable onClick={() => navigation.navigate('Cart')}>
-              <Icon name="shopping-bag" size={22} type="Feather" color="#fff" />
-            </Clickable>
-            <Spacer medium />
-            <Clickable onClick={() => navigation.navigate('Search')}>
-              <Icon name="ios-search" color="#fff" />
-            </Clickable>
+            <UI.Clickable onClick={() => navigation.navigate('Cart')}>
+              <UI.Icon
+                name="shopping-bag"
+                size={22}
+                type="Feather"
+                color="#fff"
+              />
+            </UI.Clickable>
+            <UI.Spacer medium />
+            <UI.Clickable onClick={() => navigation.navigate('Search')}>
+              <UI.Icon name="ios-search" color="#fff" />
+            </UI.Clickable>
           </>
         }
       />
-      <Layout>
-        <Spacer />
+      <UI.Layout>
+        <UI.Spacer />
         <View style={styles.container}>
-          <Order
-            onClick={() => navigation.navigate('OrderDetails')}
-            status="warning"
-            date="August 29, 2020"
-            orderNo="95793729"
-            itemPrice="23,000"
-          />
+          {data &&
+            data.orderHistory &&
+            data.orderHistory.length > 0 &&
+            data.orderHistory.map((o, i) => {
+              return (
+                <View key={o.id + i}>
+                  <UI.Row style={{justifyContent: 'space-between'}}>
+                    <UI.Text bold>
+                      Order Placed:{' '}
+                      {moment(o.createdAt).format('MMMM, DD, YYYY')}
+                    </UI.Text>
 
-          <Order
-            onClick={() => navigation.navigate('OrderDetails')}
-            status="success"
-            date="August 29, 2020"
-            orderNo="95793729"
-            itemPrice="3,000"
-          />
+                    <UI.Link
+                      onClick={() =>
+                        navigation.navigate('OrderDetails', {order: o.order})
+                      }>
+                      Order Details
+                    </UI.Link>
+                  </UI.Row>
 
-          <Order
-            onClick={() => navigation.navigate('OrderDetails')}
-            status="danger"
-            date="August 29, 2020"
-            orderNo="95793729"
-            itemPrice="23,000"
-          />
+                  {o.items &&
+                    o.items.map((item, index) => {
+                      let status = 'warning';
+                      switch (item.status) {
+                        case 1:
+                          status = 'warning';
+                          break;
+                        case 2:
+                          status = 'waiting';
+                          break;
+                        case 3:
+                          status = 'success';
+                          break;
+                        case 0:
+                          status = 'danger';
+                          break;
+                        default:
+                          status = 'waiting';
+                          break;
+                      }
 
-          <Order
-            onClick={() => navigation.navigate('OrderDetails')}
-            status="waiting"
-            date="August 29, 2020"
-            orderNo="95793729"
-            itemPrice="23,000"
-          />
+                      return (
+                        <Order
+                          key={item + index}
+                          onClick={() =>
+                            navigation.navigate('ItemDetails', {item})
+                          }
+                          status={status}
+                          name={item.product.name}
+                          itemPrice={item.amount}
+                          image={{uri: item.product.images[0].url}}
+                          quantity={item.quantity}
+                        />
+                      );
+                    })}
+                  <UI.Spacer medium />
+                </View>
+              );
+            })}
 
-          <Order
-            onClick={() => navigation.navigate('OrderDetails')}
-            date="August 29, 2020"
-            orderNo="95793729"
-            itemPrice="23,000"
-          />
+          {!loading &&
+            !error &&
+            data &&
+            data.orderHistory &&
+            data.orderHistory.length < 1 && (
+              <>
+                <UI.Spacer large />
+                <EmptyItem
+                  icon={<UI.Icon color={info} size={100} name="ios-basket" />}
+                  show
+                  title="No Orders Found!"
+                  message="You have not place any order yet! All orders will appear here."
+                />
+              </>
+            )}
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
@@ -80,4 +149,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OrdersScreen;
+const mapStateToProps = (state) => {
+  return {
+    customer: state.customer.profile,
+  };
+};
+
+export default connect(mapStateToProps)(OrdersScreen);

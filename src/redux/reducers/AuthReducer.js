@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case 'LOG_USER_OUT':
-      return {...state, user: {}, token: '', isSkipped: false};
+      return {user: {}, token: ''};
     case 'SET_STORAGE':
       return {
         ...state,

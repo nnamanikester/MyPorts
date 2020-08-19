@@ -4,3 +4,10 @@ export const setNotificationsStorage = (notifications) => {
     payload: notifications,
   };
 };
+
+export const clearNotificationsStorage = () => {
+  console.log('Clear Notifications');
+  return {
+    type: 'CLEAR_NOTIFICATIONS',
+  };
+};

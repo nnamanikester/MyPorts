@@ -4,3 +4,10 @@ export const setCustomerProfile = (customer) => {
     payload: customer,
   };
 };
+
+export const clearCustomerProfile = () => {
+  console.log('Customer Profile');
+  return {
+    type: 'CLEAR_CUSTOMER_PROFILE',
+  };
+};

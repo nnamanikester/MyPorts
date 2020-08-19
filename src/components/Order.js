@@ -1,57 +1,39 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {
-  Text,
-  Card,
-  Spacer,
-  Icon,
-  Divider,
-  Row,
-  Clickable,
-  ListItem,
-  Avatar,
-} from './common';
-import {primaryColor, info, success, warning, danger} from './common/variables';
-import {image1} from '../assets/images';
+import {View} from 'react-native';
+import {Text, Spacer, Icon, ListItem, Avatar} from './common';
+import {primaryColor, success, warning, danger} from './common/variables';
+import {formatMoney} from '../utils';
 
-const Order = ({
-  orderNo,
-  vendor,
-  itemPrice,
-  date,
-  quantity,
-  onClick,
-  status,
-}) => {
+const Order = ({name, itemPrice, quantity, onClick, status, image}) => {
   let icon = '';
   let statusColor = success;
-  let statusLabel = 'Delivered';
+  let statusLabel = 'delivered';
 
   switch (status) {
     case 'success':
       icon = 'md-checkmark';
-      statusLabel = 'Delivered';
+      statusLabel = 'delivered';
       statusColor = success;
       break;
     case 'warning':
       icon = 'md-time';
-      statusLabel = 'Pending';
+      statusLabel = 'processing';
       statusColor = warning;
       break;
     case 'danger':
       icon = 'md-close';
-      statusLabel = 'Cancelled';
+      statusLabel = 'declined';
       statusColor = danger;
       break;
     case 'waiting':
       icon = 'ios-more';
-      statusLabel = 'Shipping';
+      statusLabel = 'shipping';
       statusColor = primaryColor;
       break;
     default:
       icon = 'md-checkmark';
       statusColor = success;
-      statusLabel = 'Delivered';
+      statusLabel = 'delivered';
       break;
   }
 
@@ -61,14 +43,15 @@ const Order = ({
         onClick={onClick}
         left={
           <>
-            <Avatar src={image1} large />
+            <Avatar src={image} large />
           </>
         }
         body={
           <>
-            <Text>Order No {orderNo}</Text>
-            <Text note>Value: NGN {itemPrice}</Text>
-            <Text note>Date: {date}</Text>
+            <Text numberOfLines={1}>{name}</Text>
+            <Text note>Value: {formatMoney(itemPrice)}</Text>
+            {/* <Text note>Date: {date}</Text> */}
+            <Text note>Quantity: {quantity}</Text>
           </>
         }
         right={
@@ -82,7 +65,5 @@ const Order = ({
     </>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default Order;

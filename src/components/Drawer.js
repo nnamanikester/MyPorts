@@ -6,6 +6,11 @@ import {Text, Icon, ListItem, Link, Badge, Divider, Spacer} from './common';
 import {profilePhoto} from '../assets/images';
 import {info} from './common/variables';
 import {logUserOut} from '../redux/actions/AuthActions';
+import {clearAddress} from '../redux/actions/AddressActions';
+import {clearCustomerProfile} from '../redux/actions/CustomerActions';
+import {clearCart} from '../redux/actions/CartActions';
+import {clearNotificationsStorage} from '../redux/actions/NotificationsAction';
+import {clearWallet} from '../redux/actions/WalletActions';
 import {danger} from './common/variables';
 import Permissions from './Permissions';
 
@@ -16,6 +21,11 @@ const Drawer = ({
   vendorProfile,
   logUserOut,
   cart,
+  clearAddress,
+  clearWallet,
+  clearNotificationsStorage,
+  clearCart,
+  clearCustomerProfile,
 }) => {
   return (
     <DrawerContentScrollView style={styles.drawer}>
@@ -196,7 +206,14 @@ const Drawer = ({
           <Icon size={size} color={color} name="ios-log-out" />
         )}
         label={({color, focused}) => <Text color={color}>Log Out</Text>}
-        onPress={() => logUserOut()}
+        onPress={() => {
+          clearAddress();
+          clearWallet();
+          clearNotificationsStorage();
+          clearCart();
+          clearCustomerProfile();
+          logUserOut();
+        }}
       />
       <Spacer large />
       <Spacer large />
@@ -234,4 +251,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {logUserOut})(Drawer);
+export default connect(mapStateToProps, {
+  logUserOut,
+  clearAddress,
+  clearWallet,
+  clearNotificationsStorage,
+  clearCart,
+  clearCustomerProfile,
+})(Drawer);

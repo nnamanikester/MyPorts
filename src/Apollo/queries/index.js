@@ -13,3 +13,4 @@ export * from './advert';
 export * from './chat';
 export * from './message';
 export * from './notification';
+export * from './order';

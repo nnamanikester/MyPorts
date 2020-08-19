@@ -23,6 +23,7 @@ import {
 import EmptyItem from '../../components/EmptyItem';
 import {info, danger} from '../../components/common/variables';
 import {formatMoney} from '../../utils';
+import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
 
 const CartScreen = ({
@@ -211,6 +212,11 @@ const CartScreen = ({
       variables: {
         data: {
           orderNo: uuidv4().replace('-', ''),
+          customer: {
+            connect: {
+              id: customer.id,
+            },
+          },
           items: {
             create: [
               ...cart.items.map((ca) => {
