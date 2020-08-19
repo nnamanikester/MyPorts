@@ -4,9 +4,55 @@ import {Text, Layout, Icon, Spacer, Clickable} from '../../components/common';
 import Header from '../../components/Header';
 import CartItem from '../../components/CartItem';
 import OrderSummary from '../../components/OrderSummary';
-import {female2} from '../../assets/images';
+import moment from 'moment';
+import Order from '../../components/Order';
 
-const OrderDetailsScreen = ({navigation}) => {
+const OrderDetailsScreen = ({navigation, route: {params}}) => {
+  const {order} = params;
+
+  const calculateOrders = () => {
+    let total = 0;
+    order.items.forEach((i) => {
+      total += i.product.price * i.quantity;
+    });
+    return total.toString();
+  };
+
+  const calculateShipping = () => {
+    let total = 0;
+    order.items.forEach((i) => {
+      total += i.product.shipping;
+    });
+    return total.toString();
+  };
+
+  const calculatePercentageDiscount = (price, percent) => {
+    return (price / 100) * percent;
+  };
+
+  const calculateDiscount = () => {
+    let total = 0;
+    order.items.forEach((i) => {
+      total +=
+        (i.product.fixedDiscount ||
+          calculatePercentageDiscount(
+            i.product.price,
+            i.product.percentageDiscount,
+          )) * i.quantity;
+    });
+    return total.toString();
+  };
+
+  const calculateTotal = () => {
+    return (
+      parseInt(calculateOrders()) +
+      parseInt(calculateShipping()) -
+      parseInt(calculateDiscount())
+    );
+  };
+
+  console.log(calculateDiscount());
+
   return (
     <>
       <Header
@@ -30,63 +76,68 @@ const OrderDetailsScreen = ({navigation}) => {
         <Spacer medium />
 
         <View style={styles.container}>
-          <Text style={styles.title}>Order placed: August 25, 2020</Text>
-          <Text>Order No: 2379758</Text>
-
-          <Spacer medium />
-
-          <Text style={styles.title}>Ship to:</Text>
-
-          <Text>Tiana Rosser</Text>
-          <Text>Suit 13 Romchi Plaza, Oneday Road.</Text>
-          <Text>Enugu, Enugu State 400252.</Text>
-          <Text>Nigeria.</Text>
-
-          <Spacer medium />
-
-          <Text style={styles.title}>Payment Method:</Text>
-
-          <Text>Credit Card</Text>
-          <Text>Master Card xxxx6435</Text>
+          <Text h3>
+            Order placed:{' '}
+            {moment(new Date(order.createdAt)).format('MMMM, DD, YYYY')}
+          </Text>
+          <Spacer />
+          <Text>
+            Order No: <Text bold>#{order.orderNo}</Text>
+          </Text>
 
           <Spacer medium />
 
           <Text style={styles.title}>Items in Order:</Text>
         </View>
 
-        <CartItem
-          name="Leather Show Bag"
-          color="Red"
-          size="XL"
-          quantity="5"
-          image={female2}
-          price="2,300"
-          onClick={() => navigation.navigate('SingleProduct')}
-          onCloseButtonClick={() => {}}
-          hideCloseButton
-        />
-        <CartItem
-          name="Leather Show Bag"
-          color="Red"
-          size="XL"
-          quantity="5"
-          image={female2}
-          price="2,300"
-          onClick={() => navigation.navigate('SingleProduct')}
-          onCloseButtonClick={() => {}}
-          hideCloseButton
-        />
-        <CartItem
-          name="Leather Show Bag"
-          color="Red"
-          size="XL"
-          quantity="5"
-          image={female2}
-          price="2,300"
-          onClick={() => navigation.navigate('SingleProduct')}
-          onCloseButtonClick={() => {}}
-          hideCloseButton
-        />
+        {order.items &&
+          order.items.length > 0 &&
+          order.items.map((item, i) => {
+            let status = 'warning';
+            let text = 'Processing in 24 hours';
+            switch (item.status) {
+              case 1:
+                status = 'warning';
+                text = 'Processing in 24 hours';
+                break;
+              case 2:
+                status = 'waiting';
+                text = `Arriving by: ${moment(
+                  new Date(item.createdAt).getTime() + 1000 * 3600 * 24 * 7,
+                ).format('MMMM, DD, YYYY')}`;
+                break;
+              case 3:
+                status = 'success';
+                text = `Arrived on: ${moment(new Date(item.updatedAt)).format(
+                  'MMMM, DD, YYYY',
+                )}`;
+                break;
+              case 0:
+                status = 'danger';
+                text = `Declined on: ${moment(new Date(item.updatedAt)).format(
+                  'MMMM, DD, YYYY',
+                )}`;
+                break;
+              default:
+                status = 'warning';
+                text = 'Processing in 24 hours';
+                break;
+            }
+
+            return (
+              <Order
+                key={item + i}
+                onClick={() =>
+                  navigation.navigate('ItemDetails', {item, order})
+                }
+                status={status}
+                name={text}
+                itemPrice={item.amount}
+                image={{uri: item.product.images[0].url}}
+                quantity={item.quantity}
+              />
+            );
+          })}
 
         <Spacer medium />
 
@@ -96,10 +147,10 @@ const OrderDetailsScreen = ({navigation}) => {
           <Spacer />
 
           <OrderSummary
-            order="63,000"
-            shipping="3,000"
-            discount="1,300"
-            total="66,000"
+            order={calculateOrders()}
+            shipping={calculateShipping()}
+            discount={calculateDiscount() === '0' ? null : calculateDiscount()}
+            total={calculateTotal()}
           />
 
           <Spacer large />

@@ -19,6 +19,7 @@ const CartItem = ({
   discount,
   name,
   image,
+  amount,
   hideCloseButton,
   onCloseButtonClick,
   onQuantityChange,
@@ -51,6 +52,11 @@ const CartItem = ({
                 <Text note color={stock === 0 ? inactiveColor : primaryColor}>
                   - {formatMoney(discount)}
                 </Text>
+              </Text>
+            )}
+            {amount && (
+              <Text note>
+                Amount: <Text note>{formatMoney(amount)}</Text>
               </Text>
             )}
             {quantity && (

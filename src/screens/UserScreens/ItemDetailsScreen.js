@@ -3,14 +3,41 @@ import {StyleSheet, View} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import CartItem from '../../components/CartItem';
-import OrderSummary from '../../components/OrderSummary';
-import {female2} from '../../assets/images';
+import moment from 'moment';
+import {primaryColor} from '../../components/common/variables';
 
-const ItemDetailsScreen = ({navigation}) => {
+const ItemDetailsScreen = ({navigation, route: {params}}) => {
+  const {item, order} = params;
+
+  let arrival = 'Processing in 24 hours';
+  switch (item.status) {
+    case 1:
+      arrival = 'Processing in 24 hours';
+      break;
+    case 2:
+      arrival = `Arriving by: ${moment(
+        new Date(item.createdAt).getTime() + 1000 * 3600 * 24 * 7,
+      ).format('MMMM, DD, YYYY')}`;
+      break;
+    case 3:
+      arrival = `Arrived on: ${moment(new Date(item.updatedAt)).format(
+        'MMMM, DD, YYYY',
+      )}`;
+      break;
+    case 0:
+      arrival = `Declined on: ${moment(new Date(item.updatedAt)).format(
+        'MMMM, DD, YYYY',
+      )}`;
+      break;
+    default:
+      arrival = 'Processing in 24 hours';
+      break;
+  }
+
   return (
     <>
       <Header
-        title="Order Details"
+        title="Item Details"
         headerLeft={
           <UI.Clickable onClick={() => navigation.goBack()}>
             <UI.Icon name="ios-arrow-back" color="#fff" />
@@ -26,84 +53,53 @@ const ItemDetailsScreen = ({navigation}) => {
           </>
         }
       />
+
       <UI.Layout>
         <UI.Spacer medium />
 
+        {item && (
+          <CartItem
+            name={item.product.name}
+            quantity={item.quantity}
+            image={{uri: item.product.images[0].url}}
+            shipping={item.product.shipping}
+            amount={item.product.price}
+            onClick={() =>
+              navigation.navigate('SingleProduct', {product: item.product})
+            }
+            hideCloseButton
+          />
+        )}
+
         <View style={styles.container}>
-          <UI.Text style={styles.title}>Order placed: August 25, 2020</UI.Text>
-          <UI.Text>Order No: 2379758</UI.Text>
+          <UI.Spacer />
+
+          <UI.Text bold>{arrival}</UI.Text>
 
           <UI.Spacer medium />
 
-          <UI.Text style={styles.title}>Ship to:</UI.Text>
+          <UI.Text style={styles.title}>Ships to:</UI.Text>
 
-          <UI.Text>Tiana Rosser</UI.Text>
-          <UI.Text>Suit 13 Romchi Plaza, Oneday Road.</UI.Text>
-          <UI.Text>Enugu, Enugu State 400252.</UI.Text>
+          <UI.Text>{item.address.name}</UI.Text>
+          <UI.Text>{item.address.address}</UI.Text>
+          <UI.Text>{`${item.address.city}, ${item.address.state}, ${item.address.postalCode}`}</UI.Text>
           <UI.Text>Nigeria.</UI.Text>
 
-          <UI.Spacer medium />
-
-          <UI.Text style={styles.title}>Payment Method:</UI.Text>
-
-          <UI.Text>Credit Card</UI.Text>
-          <UI.Text>Master Card xxxx6435</UI.Text>
-
-          <UI.Spacer medium />
-
-          <UI.Text style={styles.title}>Items in Order:</UI.Text>
-        </View>
-
-        <CartItem
-          name="Leather Show Bag"
-          color="Red"
-          size="XL"
-          quantity="5"
-          image={female2}
-          price="2,300"
-          onClick={() => navigation.navigate('SingleProduct')}
-          onCloseButtonClick={() => {}}
-          hideCloseButton
-        />
-        <CartItem
-          name="Leather Show Bag"
-          color="Red"
-          size="XL"
-          quantity="5"
-          image={female2}
-          price="2,300"
-          onClick={() => navigation.navigate('SingleProduct')}
-          onCloseButtonClick={() => {}}
-          hideCloseButton
-        />
-        <CartItem
-          name="Leather Show Bag"
-          color="Red"
-          size="XL"
-          quantity="5"
-          image={female2}
-          price="2,300"
-          onClick={() => navigation.navigate('SingleProduct')}
-          onCloseButtonClick={() => {}}
-          hideCloseButton
-        />
-
-        <UI.Spacer medium />
-
-        <View style={styles.container}>
-          <UI.Text style={styles.title}>Order Summary:</UI.Text>
+          <UI.ListItem
+            onClick={() => navigation.navigate('OrderDetails', {order})}
+            body={<UI.Text color={primaryColor}>View Order Details</UI.Text>}
+            right={<UI.Icon size={18} name="ios-arrow-forward" />}
+          />
 
           <UI.Spacer />
 
-          <OrderSummary
-            order="63,000"
-            shipping="3,000"
-            discount="1,300"
-            total="66,000"
+          <UI.ListItem
+            onClick={() => navigation.navigate('ContactSupport')}
+            body={<UI.Text color={primaryColor}>Contact Support</UI.Text>}
+            right={<UI.Icon size={18} name="ios-arrow-forward" />}
           />
-
-          <UI.Spacer large />
         </View>
+        <UI.Spacer medium />
       </UI.Layout>
     </>
   );

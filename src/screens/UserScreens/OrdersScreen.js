@@ -76,7 +76,7 @@ const OrdersScreen = ({navigation, customer}) => {
 
                     <UI.Link
                       onClick={() =>
-                        navigation.navigate('OrderDetails', {order: o.order})
+                        navigation.navigate('OrderDetails', {order: o})
                       }>
                       Order Details
                     </UI.Link>
@@ -107,7 +107,7 @@ const OrdersScreen = ({navigation, customer}) => {
                         <Order
                           key={item + index}
                           onClick={() =>
-                            navigation.navigate('ItemDetails', {item})
+                            navigation.navigate('ItemDetails', {item, order: o})
                           }
                           status={status}
                           name={item.product.name}
