@@ -10,6 +10,7 @@ export const SIGNIN = gql`
         email
         isVendor
         isCustomer
+        status
         customer {
           id
           emailSetting {
@@ -43,6 +44,7 @@ export const SIGNUP = gql`
         email
         isVendor
         isCustomer
+        status
         customer {
           id
           emailSetting {
@@ -62,6 +64,45 @@ export const SIGNUP = gql`
           }
         }
       }
+    }
+  }
+`;
+
+export const VERIFY_EMAIL = gql`
+  mutation verifyEmail($code: String!) {
+    verifyEmail(code: $code) {
+      id
+      username
+      email
+      isVendor
+      isCustomer
+      status
+      customer {
+        id
+        emailSetting {
+          id
+          promotions
+          orders
+          rewards
+        }
+        notificationSetting {
+          id
+          orders
+          promotions
+          rewards
+          reminders
+          inStock
+          newProducts
+        }
+      }
+    }
+  }
+`;
+
+export const RESEND_CODE = gql`
+  mutation resendCode {
+    resendCode {
+      id
     }
   }
 `;

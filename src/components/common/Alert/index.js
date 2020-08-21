@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#fff',
     zIndex: 99999999999,
-    elevation: 15,
+    elevation: 155,
   },
   messageContainer: {
     paddingHorizontal: 30,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 50,
     bottom: 50,
-    elevation: 9999,
+    elevation: 9,
     zIndex: 999999,
   },
 });

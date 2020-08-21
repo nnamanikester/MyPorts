@@ -12,21 +12,15 @@ import NetworkError from './components/NetworkError';
 import CreateProfileFLow from './navigation/CreateProfileFlow';
 import {TOKEN_STORAGE, USER_STORAGE} from './constants';
 import SplashScreen from 'react-native-splash-screen';
+import EmailVerificationScreen from './screens/auth/EmailVerificationScreen';
 
-const NavigationFlows = ({
-  isSkipped,
-  isStranger,
-  user,
-  setStorage,
-  offline,
-  checkNetworkStatus,
-}) => {
+const NavigationFlows = ({user, setStorage, offline, checkNetworkStatus}) => {
   const [appLoading, setAppLoading] = React.useState(false);
 
-  React.useEffect(() => {
+  React.useMemo(() => {
     checkNetworkStatus();
     checkStorage();
-  }, [setStorage]);
+  }, [setStorage, user]);
 
   // Checks the async storage if token and user exists
   const checkStorage = async () => {
@@ -49,7 +43,7 @@ const NavigationFlows = ({
   if (appLoading) {
     setTimeout(() => {
       SplashScreen.hide();
-    }, 5000);
+    }, 3000);
     return <LoadingScreen />;
   }
 
@@ -61,13 +55,13 @@ const NavigationFlows = ({
 
   return (
     <NavigationContainer>
-      {user && user.isCustomer ? (
+      {user.id && user.status != 1 ? (
+        <EmailVerificationScreen />
+      ) : user && user.status == 1 && user.isCustomer ? (
         <MainFlow />
-      ) : user && user.isVendor ? (
+      ) : user && user.status == 1 && user.isVendor ? (
         <VDFlow />
-      ) : isSkipped ? (
-        <MainFlow />
-      ) : user.id && !user.isVendor && !user.isCustomer ? (
+      ) : user.id && user.status == 1 && !user.isVendor && !user.isCustomer ? (
         <CreateProfileFLow />
       ) : (
         <AuthFlow />

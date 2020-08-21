@@ -2,12 +2,12 @@
 export const BASE_URL = '//myports-api.herokuapp.com';
 export const API_URL = `https:${BASE_URL}/api`;
 export const WS_URL = `ws:${BASE_URL}/subscription`;
-export const EMULATOR_WS_URL = 'ws://myports-api.herokuapp.com/subscription';
-export const EMULATOR_API_URL = 'https://myports-api.herokuapp.com/api';
-export const UPLOAD_URL = 'https://myports.destreetboard.com/api';
-// export const EMULATOR_WS_URL = 'ws://192.168.43.164:4000/subscription';
-// export const EMULATOR_API_URL = 'http://192.168.43.164:4000/api';
-// export const UPLOAD_URL = 'http://192.168.43.164:4000/api';
+// export const EMULATOR_WS_URL = 'ws://myports-api.herokuapp.com/subscription';
+// export const EMULATOR_API_URL = 'https://myports-api.herokuapp.com/api';
+// export const UPLOAD_URL = 'https://myports.destreetboard.com/api';
+export const EMULATOR_WS_URL = 'ws://192.168.43.164:4000/subscription';
+export const EMULATOR_API_URL = 'http://192.168.43.164:4000/api';
+export const UPLOAD_URL = 'http://192.168.43.164:4000/api';
 
 // PAYSTACK
 export const PAYSTACK_PUBLIC_KEY =

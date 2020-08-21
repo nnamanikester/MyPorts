@@ -29,6 +29,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'off',
     'react-hooks/rules-of-hooks': 'off',
     radix: 'off',
+    eqeqeq: 'off',
     'no-shadow': 'off',
   },
 };

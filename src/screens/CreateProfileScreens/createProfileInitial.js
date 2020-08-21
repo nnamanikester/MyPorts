@@ -1,10 +1,12 @@
 import React from 'react';
 import * as UI from '../../components/common';
-import { danger, info } from '../../components/common/variables';
-import { StyleSheet, View } from 'react-native';
+import {info} from '../../components/common/variables';
+import {StyleSheet, View} from 'react-native';
 
-const CreateProfileInitial = ({ show, onCustomer, onVendor }) => {
-  if (!show) return null;
+const CreateProfileInitial = ({show, onCustomer, onVendor}) => {
+  if (!show) {
+    return null;
+  }
 
   // CHECK FOR EMAIL VERIFICARTION VEFOR RENDERING MAIN SCREEN
 

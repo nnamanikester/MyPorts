@@ -8,6 +8,7 @@ export const UPDATE_USER_EMAIL = gql`
       email
       isVendor
       isCustomer
+      status
     }
   }
 `;

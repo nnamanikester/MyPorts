@@ -21,6 +21,7 @@ export * from './Modal';
 export * from './Option';
 export * from './Pagination';
 export * from './PieChart';
+export * from './PinInput';
 export * from './ProgressBar';
 export * from './Radio';
 export * from './Rating';
