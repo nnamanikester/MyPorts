@@ -136,13 +136,13 @@ const Drawer = ({
         />
       </Permissions.CustomerAndGuest>
 
-      <DrawerItem
+      {/* <DrawerItem
         icon={({size, color}) => (
           <Icon size={size} color={color} name="ios-gift" />
         )}
         label={({color, focused}) => <Text color={color}>Refer and Earn</Text>}
         onPress={() => navigation.navigate('ReferAndEarn')}
-      />
+      /> */}
 
       {/* <Permissions.CustomerAndGuest>
         <DrawerItem

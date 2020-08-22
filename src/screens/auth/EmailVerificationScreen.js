@@ -77,7 +77,7 @@ const EmailVerificationScreen = ({navigation, setStorage, offline}) => {
               <UI.Spacer medium />
 
               <UI.PinInput
-                autoFocus={false}
+                // autoFocus={false}
                 value={code}
                 onChangeText={(code) => {
                   setError(false);

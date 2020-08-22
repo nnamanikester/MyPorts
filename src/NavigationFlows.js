@@ -17,10 +17,10 @@ import EmailVerificationScreen from './screens/auth/EmailVerificationScreen';
 const NavigationFlows = ({user, setStorage, offline, checkNetworkStatus}) => {
   const [appLoading, setAppLoading] = React.useState(false);
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     checkNetworkStatus();
     checkStorage();
-  }, [setStorage, user]);
+  }, [setStorage]);
 
   // Checks the async storage if token and user exists
   const checkStorage = async () => {
