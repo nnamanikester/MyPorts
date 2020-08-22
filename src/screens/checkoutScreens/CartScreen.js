@@ -295,13 +295,25 @@ const CartScreen = ({
       });
   };
 
+  const handleCheckAddress = () => {
+    if (!address.id) {
+      return false;
+    }
+    return true;
+  };
+
   const handlePayment = () => {
     // Check if the items in the cart are still in stock.
     if (checkItemsInStock()) {
       // if in stock, Check if the balance is greater that the amount payable.
       if (checkBalanceToTotal()) {
-        // If it is, go ahead and reduct the amount payable from the wallet.
-        handleChargeWallet();
+        // Check if the user has address available.
+        if (handleCheckAddress()) {
+          // If it is, go ahead and reduct the amount payable from the wallet.
+          handleChargeWallet();
+        } else {
+          Alert.alert('Message', 'Please add a billing address');
+        }
       } else {
         // If it's not, notify the user to fund his/her wallet.
         Alert.alert(
