@@ -30,6 +30,7 @@ import LegalAndTerms from '../screens/SettingsScreens/LegalAndTermsScreen';
 import ManageWallets from '../screens/SettingsScreens/ManageWalletsScreen';
 import ChangeEmailAddress from '../screens/SettingsScreens/ChangeEmailAddressScreen';
 import ChangePassword from '../screens/SettingsScreens/ChangePasswordScreen';
+import FundWallet from '../screens/SettingsScreens/FundWalletScreen';
 
 // Pages Screen
 import PickupPolicy from '../screens/pages/PickupPolicyScreen';
@@ -53,7 +54,9 @@ const VDFlow = ({offline, setVendorProfile, setVendor}) => {
   ] = useLazyQuery(VENDOR);
 
   useEffect(() => {
-    if (!offline) getVendor();
+    if (!offline) {
+      getVendor();
+    }
 
     if (getVendorData) {
       setVendor(getVendorData.getVendor);
@@ -98,6 +101,7 @@ const VDFlow = ({offline, setVendorProfile, setVendor}) => {
           component={ChangeEmailAddress}
         />
         <Stack.Screen name="ChangePassword" component={ChangePassword} />
+        <Stack.Screen name="FundWallet" component={FundWallet} />
 
         {/* Pages screens */}
         <Stack.Screen name="PickupPolicy" component={PickupPolicy} />

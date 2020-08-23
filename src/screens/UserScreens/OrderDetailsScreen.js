@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text, Layout, Icon, Spacer, Clickable} from '../../components/common';
 import Header from '../../components/Header';
-import CartItem from '../../components/CartItem';
 import OrderSummary from '../../components/OrderSummary';
 import moment from 'moment';
 import Order from '../../components/Order';

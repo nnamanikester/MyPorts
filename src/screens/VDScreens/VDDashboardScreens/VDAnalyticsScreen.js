@@ -5,20 +5,20 @@ import {
   textColor,
   primaryColor,
 } from '../../../components/common/variables';
-import { View, StyleSheet } from 'react-native';
-import { useLazyQuery } from '@apollo/react-hooks';
-import { GET_VENDOR_ANALYTICS } from '../../../apollo/queries/vendor';
-import { connect } from 'react-redux';
+import {View, StyleSheet} from 'react-native';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {GET_VENDOR_ANALYTICS} from '../../../apollo/queries/vendor';
+import {connect} from 'react-redux';
 import Skeleton from 'react-native-skeleton-placeholder';
-import { formatMoney } from '../../../utils';
+import {formatMoney} from '../../../utils';
 
-const VDAnalyticsScreen = ({ navigation, offline }) => {
+const VDAnalyticsScreen = ({navigation, offline}) => {
   const [analytics, setAnalytics] = React.useState({});
 
-  const [getAnalytics, { loading, data, error }] = useLazyQuery(
+  const [getAnalytics, {loading, data, error}] = useLazyQuery(
     GET_VENDOR_ANALYTICS,
     {
-      pollInterval: 1000,
+      pollInterval: 500,
     },
   );
 
@@ -49,7 +49,7 @@ const VDAnalyticsScreen = ({ navigation, offline }) => {
               )
             }
             body={
-              <View style={{ justifyContent: 'center', flex: 1 }}>
+              <View style={{justifyContent: 'center', flex: 1}}>
                 {loading ? (
                   <Skeleton>
                     <Skeleton.Item width="80%" height={10} borderRadius={5} />
@@ -60,7 +60,7 @@ const VDAnalyticsScreen = ({ navigation, offline }) => {
               </View>
             }
             right={
-              <View style={{ flex: 1, justifyContent: 'center' }}>
+              <View style={{flex: 1, justifyContent: 'center'}}>
                 {!loading ? (
                   <UI.Text bold note>
                     {formatMoney(analytics.balance)}
@@ -84,7 +84,7 @@ const VDAnalyticsScreen = ({ navigation, offline }) => {
               )
             }
             body={
-              <View style={{ justifyContent: 'center', flex: 1 }}>
+              <View style={{justifyContent: 'center', flex: 1}}>
                 {loading ? (
                   <Skeleton>
                     <Skeleton.Item width="80%" height={10} borderRadius={5} />
@@ -95,7 +95,7 @@ const VDAnalyticsScreen = ({ navigation, offline }) => {
               </View>
             }
             right={
-              <View style={{ flex: 1, justifyContent: 'center' }}>
+              <View style={{flex: 1, justifyContent: 'center'}}>
                 {!loading ? (
                   <UI.Text bold note>
                     {analytics.products}
@@ -119,7 +119,7 @@ const VDAnalyticsScreen = ({ navigation, offline }) => {
               )
             }
             body={
-              <View style={{ justifyContent: 'center', flex: 1 }}>
+              <View style={{justifyContent: 'center', flex: 1}}>
                 {loading ? (
                   <Skeleton>
                     <Skeleton.Item width="80%" height={10} borderRadius={5} />
@@ -130,7 +130,7 @@ const VDAnalyticsScreen = ({ navigation, offline }) => {
               </View>
             }
             right={
-              <View style={{ flex: 1, justifyContent: 'center' }}>
+              <View style={{flex: 1, justifyContent: 'center'}}>
                 {!loading ? (
                   <UI.Text bold note>
                     {analytics.newOrders}
@@ -154,7 +154,7 @@ const VDAnalyticsScreen = ({ navigation, offline }) => {
               )
             }
             body={
-              <View style={{ justifyContent: 'center', flex: 1 }}>
+              <View style={{justifyContent: 'center', flex: 1}}>
                 {loading ? (
                   <Skeleton>
                     <Skeleton.Item width="80%" height={10} borderRadius={5} />
@@ -165,7 +165,7 @@ const VDAnalyticsScreen = ({ navigation, offline }) => {
               </View>
             }
             right={
-              <View style={{ flex: 1, justifyContent: 'center' }}>
+              <View style={{flex: 1, justifyContent: 'center'}}>
                 {!loading ? (
                   <UI.Text bold note>
                     {analytics.deliveredOrders}
@@ -189,7 +189,7 @@ const VDAnalyticsScreen = ({ navigation, offline }) => {
               )
             }
             body={
-              <View style={{ justifyContent: 'center', flex: 1 }}>
+              <View style={{justifyContent: 'center', flex: 1}}>
                 {loading ? (
                   <Skeleton>
                     <Skeleton.Item width="80%" height={10} borderRadius={5} />
@@ -200,7 +200,7 @@ const VDAnalyticsScreen = ({ navigation, offline }) => {
               </View>
             }
             right={
-              <View style={{ flex: 1, justifyContent: 'center' }}>
+              <View style={{flex: 1, justifyContent: 'center'}}>
                 {!loading ? (
                   <UI.Text bold note>
                     {analytics.transactions}

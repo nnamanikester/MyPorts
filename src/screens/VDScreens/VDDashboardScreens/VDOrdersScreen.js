@@ -1,92 +1,84 @@
 import React from 'react';
-import {
-  Text,
-  Layout,
-  Icon,
-  ListItem,
-  Avatar,
-  Spacer,
-} from '../../../components/common';
-import { View, StyleSheet } from 'react-native';
+import * as UI from '../../../components/common';
+import {View, StyleSheet} from 'react-native';
 import {
   primaryColor,
   success,
   danger,
-  warning,
   info,
 } from '../../../components/common/variables';
-import { food3 } from '../../../assets/images';
+import {food3} from '../../../assets/images';
 
-const VDAccountSettingsScreen = ({ navigation }) => {
+const VDAccountSettingsScreen = ({navigation}) => {
   return (
     <>
-      <Layout>
-        <Spacer />
-        <ListItem
+      <UI.Layout>
+        <UI.Spacer />
+        <UI.ListItem
           marked
           onClick={() => navigation.navigate('VDOrderDetails')}
-          left={<Avatar medium rounded src={food3} />}
+          left={<UI.Avatar medium rounded src={food3} />}
           body={
             <>
-              <Text heading>Order No 9875934734</Text>
-              <Text numberOfLines={1} color="" note>
+              <UI.Text heading>Order No 9875934734</UI.Text>
+              <UI.Text numberOfLines={1} color="" note>
                 Enugu, John Kester.
-              </Text>
+              </UI.Text>
             </>
           }
           right={
-            <View style={{ justifyContent: 'center', flex: 1 }}>
-              <Text color={success} note style={styles.status}>
+            <View style={{justifyContent: 'center', flex: 1}}>
+              <UI.Text color={success} note style={styles.status}>
                 New
-              </Text>
+              </UI.Text>
             </View>
           }
         />
-        <Spacer />
-        <ListItem
+        <UI.Spacer />
+        <UI.ListItem
           onClick={() => navigation.navigate('VDOrderDetails')}
-          left={<Avatar medium rounded src={food3} />}
+          left={<UI.Avatar medium rounded src={food3} />}
           body={
             <>
-              <Text color={info} heading>
+              <UI.Text color={info} heading>
                 Order No 9875934734
-              </Text>
-              <Text numberOfLines={1} color="" note>
+              </UI.Text>
+              <UI.Text numberOfLines={1} color="" note>
                 Benin, Ben Kennedy.
-              </Text>
+              </UI.Text>
             </>
           }
           right={
-            <View style={{ justifyContent: 'center', flex: 1 }}>
-              <Text color={danger} note style={styles.status}>
+            <View style={{justifyContent: 'center', flex: 1}}>
+              <UI.Text color={danger} note style={styles.status}>
                 Cancelled
-              </Text>
+              </UI.Text>
             </View>
           }
         />
-        <Spacer />
-        <ListItem
+        <UI.Spacer />
+        <UI.ListItem
           onClick={() => navigation.navigate('VDOrderDetails')}
-          left={<Avatar medium rounded src={food3} />}
+          left={<UI.Avatar medium rounded src={food3} />}
           body={
             <>
-              <Text color={info} heading>
+              <UI.Text color={info} heading>
                 Order No 9875934734
-              </Text>
-              <Text numberOfLines={1} color="" note>
+              </UI.Text>
+              <UI.Text numberOfLines={1} color="" note>
                 Lagos, Mary Chucks.
-              </Text>
+              </UI.Text>
             </>
           }
           right={
-            <View style={{ justifyContent: 'center', flex: 1 }}>
-              <Text color="" note style={styles.status}>
+            <View style={{justifyContent: 'center', flex: 1}}>
+              <UI.Text color="" note style={styles.status}>
                 Delivered
-              </Text>
+              </UI.Text>
             </View>
           }
         />
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
