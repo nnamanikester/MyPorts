@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Layout, Icon, Text, Clickable} from '../../components/common';
+import * as UI from '../../components/common';
 import Header from '../../components/Header';
 
 const FAQScreen = ({navigation}) => {
@@ -9,29 +9,39 @@ const FAQScreen = ({navigation}) => {
       <Header
         title="FAQ"
         headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.goBack()}>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+          </UI.Clickable>
         }
       />
-      <Layout>
-        <View style={styles.container}>
-          <Text style={styles.title}> FAQ</Text>
-        </View>
-      </Layout>
+      <UI.Layout>
+        <UI.Spacer />
+
+        <UI.Text h3>Frequently Asked Questions</UI.Text>
+
+        <UI.Spacer large />
+
+        <UI.Accordion>
+          <UI.AccordionItem headerText="What is MyPorts?">
+            <UI.Text>Answer goes here</UI.Text>
+          </UI.AccordionItem>
+          <UI.AccordionItem headerText="What is MyPorts?">
+            <UI.Text>Answer goes here</UI.Text>
+          </UI.AccordionItem>
+          <UI.AccordionItem headerText="What is MyPorts?">
+            <UI.Text>Answer goes here</UI.Text>
+          </UI.AccordionItem>
+        </UI.Accordion>
+
+        <UI.Spacer large />
+
+        <UI.Link onClick={() => navigation.navigate('ContactSupport')}>
+          Have a question? Feel free to ask
+        </UI.Link>
+        <UI.Spacer large />
+      </UI.Layout>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 20,
-    paddingHorizontal: 10,
-  },
-  title: {
-    fontSize: 20,
-    fontFamily: 'SFPD-regular',
-  },
-});
 
 export default FAQScreen;

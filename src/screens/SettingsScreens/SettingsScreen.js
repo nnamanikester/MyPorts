@@ -11,7 +11,7 @@ import {
   Row,
 } from '../../components/common';
 import ScreenHeaderWithoutRightIcon from '../../components/ScreenHeaderWithoutRightIcons';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Linking} from 'react-native';
 import {primaryColor, info} from '../../components/common/variables';
 import {logUserOut} from '../../redux/actions/AuthActions';
 
@@ -174,7 +174,7 @@ const SettingsScreen = ({navigation}) => {
           </Text>
 
           <ListItem
-            onClick={() => {}}
+            onClick={() => Linking.openURL('https://twitter.com/destreetboard')}
             body={<Text size={17}>Follow us on Twitter</Text>}
             right={
               <Icon
@@ -189,7 +189,9 @@ const SettingsScreen = ({navigation}) => {
           <Spacer />
 
           <ListItem
-            onClick={() => {}}
+            onClick={() =>
+              Linking.openURL('https://facebook.com/destreetboard')
+            }
             body={<Text size={17}>Like us on Facebook</Text>}
             right={
               <Icon
@@ -204,7 +206,9 @@ const SettingsScreen = ({navigation}) => {
           <Spacer />
 
           <ListItem
-            onClick={() => {}}
+            onClick={() =>
+              Linking.openURL('https://instagram.com/destreetboard')
+            }
             body={<Text size={17}>Follow us on Instagram</Text>}
             right={
               <Icon
@@ -222,7 +226,7 @@ const SettingsScreen = ({navigation}) => {
 
           <View>
             <Text size={20}>Version</Text>
-            <Text note>1.0.0</Text>
+            <Text note>1.0.0 Beta</Text>
           </View>
 
           <Spacer large />
