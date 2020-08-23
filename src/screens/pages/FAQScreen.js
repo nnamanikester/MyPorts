@@ -1,11 +1,32 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
+import {FAQS} from '../../apollo/queries';
+import {useLazyQuery} from '@apollo/react-hooks';
 
 const FAQScreen = ({navigation}) => {
+  const [getFaqs, {data, loading, error, refetch}] = useLazyQuery(FAQS);
+  const [faqs, setFaqs] = React.useState([]);
+
+  React.useEffect(() => {
+    getFaqs();
+  }, []);
+
+  React.useMemo(() => {
+    if (data) {
+      setFaqs(data.faqs);
+    }
+  }, [data]);
+
+  React.useMemo(() => {
+    if (error) {
+      getFaqs();
+    }
+  }, [error]);
+
   return (
     <>
+      <UI.Loading show={loading} />
       <Header
         title="FAQ"
         headerLeft={
@@ -14,24 +35,26 @@ const FAQScreen = ({navigation}) => {
           </UI.Clickable>
         }
       />
-      <UI.Layout>
+      <UI.Layout onRefresh={() => refetch()}>
         <UI.Spacer />
 
         <UI.Text h3>Frequently Asked Questions</UI.Text>
 
         <UI.Spacer large />
 
-        <UI.Accordion>
-          <UI.AccordionItem headerText="What is MyPorts?">
-            <UI.Text>Answer goes here</UI.Text>
-          </UI.AccordionItem>
-          <UI.AccordionItem headerText="What is MyPorts?">
-            <UI.Text>Answer goes here</UI.Text>
-          </UI.AccordionItem>
-          <UI.AccordionItem headerText="What is MyPorts?">
-            <UI.Text>Answer goes here</UI.Text>
-          </UI.AccordionItem>
-        </UI.Accordion>
+        {faqs.length > 0 ? (
+          <UI.Accordion>
+            {faqs.map((f, i) => {
+              return (
+                <UI.AccordionItem key={f.id + i} headerText={f.question}>
+                  <UI.Text>{f.answer}</UI.Text>
+                </UI.AccordionItem>
+              );
+            })}
+          </UI.Accordion>
+        ) : (
+          <UI.Text>No Questions Yet</UI.Text>
+        )}
 
         <UI.Spacer large />
 
