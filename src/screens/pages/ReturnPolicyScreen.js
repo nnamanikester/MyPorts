@@ -1,24 +1,55 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Layout, Icon, Text, Clickable} from '../../components/common';
+import * as UI from '../../components/common';
 import Header from '../../components/Header';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {PAGE} from '../../apollo/queries';
 
 const ReturnPolicyScreen = ({navigation}) => {
+  const [page, setPage] = React.useState({});
+
+  const [getPage, {data, loading, error}] = useLazyQuery(PAGE, {
+    variables: {
+      slug: 'return-policy',
+    },
+  });
+
+  React.useEffect(() => {
+    getPage();
+  }, []);
+
+  React.useMemo(() => {
+    if (error) {
+      getPage();
+    }
+  }, [error]);
+
+  React.useMemo(() => {
+    if (data) {
+      setPage(data.page);
+    }
+  }, [data]);
+
   return (
     <>
+      <UI.Loading show={loading} />
       <Header
         title="Return Policy"
         headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-          </Clickable>
+          <UI.Clickable activeOpacity={0.7} onClick={() => navigation.goBack()}>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+          </UI.Clickable>
         }
       />
-      <Layout>
+      <UI.Layout>
         <View style={styles.container}>
-          <Text style={styles.title}> Return Policy</Text>
+          <UI.Text h2>Return Policy</UI.Text>
+
+          <UI.Spacer large />
+
+          <UI.Text>{page.content}</UI.Text>
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };
@@ -27,10 +58,6 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 20,
     paddingHorizontal: 10,
-  },
-  title: {
-    fontSize: 20,
-    fontFamily: 'SFPD-regular',
   },
 });
 

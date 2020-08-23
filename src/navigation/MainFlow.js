@@ -61,7 +61,6 @@ import CommunityGuidelines from '../screens/pages/CommuinityGuidelinesScreen';
 import CookiePolicy from '../screens/pages/CookiePolicyScreen';
 import CustomerTaxPolicy from '../screens/pages/CustomerTaxPolicyScreen';
 import FAQ from '../screens/pages/FAQScreen';
-import Help from '../screens/pages/HelpScreen';
 import LawEnforcementPolicy from '../screens/pages/LawEnforcementPolicyScreen';
 import PrivacyPolicy from '../screens/pages/PrivacyPolicyScreen';
 import ReturnPolicy from '../screens/pages/ReturnPolicyScreen';
@@ -253,7 +252,6 @@ const StackNavigation = ({
         <Stack.Screen name="CookiePolicy" component={CookiePolicy} />
         <Stack.Screen name="CustomerTaxPolicy" component={CustomerTaxPolicy} />
         <Stack.Screen name="FAQ" component={FAQ} />
-        <Stack.Screen name="Help" component={Help} />
         <Stack.Screen
           name="LawEnforcementPolicy"
           component={LawEnforcementPolicy}

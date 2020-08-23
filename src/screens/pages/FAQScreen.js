@@ -38,7 +38,7 @@ const FAQScreen = ({navigation}) => {
       <UI.Layout onRefresh={() => refetch()}>
         <UI.Spacer />
 
-        <UI.Text h3>Frequently Asked Questions</UI.Text>
+        <UI.Text h2>Frequently Asked Questions</UI.Text>
 
         <UI.Spacer large />
 

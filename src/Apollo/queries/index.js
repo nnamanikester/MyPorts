@@ -15,3 +15,4 @@ export * from './message';
 export * from './notification';
 export * from './order';
 export * from './faq';
+export * from './page';
