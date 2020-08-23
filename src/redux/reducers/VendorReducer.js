@@ -5,9 +5,9 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case 'SET_VENDOR_PROFILE':
-      return { ...state, profile: action.payload };
+      return {...state, profile: action.payload};
     case 'SET_VENDOR':
-      return { ...state, ...action.payload };
+      return {...state, ...action.payload};
     default:
       return state;
   }
