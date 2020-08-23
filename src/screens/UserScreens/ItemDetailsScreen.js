@@ -62,7 +62,7 @@ const ItemDetailsScreen = ({navigation, route: {params}}) => {
             name={item.product.name}
             quantity={item.quantity}
             image={{uri: item.product.images[0].url}}
-            shipping={item.product.shipping}
+            shipping={item.product.shipping > 0 && item.product.shipping}
             amount={item.product.price}
             onClick={() =>
               navigation.navigate('SingleProduct', {product: item.product})

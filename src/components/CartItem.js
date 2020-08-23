@@ -120,6 +120,4 @@ const CartItem = ({
   );
 };
 
-const styles = StyleSheet.create({});
-
 export default CartItem;

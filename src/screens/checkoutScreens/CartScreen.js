@@ -225,7 +225,7 @@ const CartScreen = ({
                   amount: ca.product.price,
                   address: {
                     connect: {
-                      id: address.id,
+                      id: address.id || optAddress.id,
                     },
                   },
                   product: {
@@ -296,7 +296,7 @@ const CartScreen = ({
   };
 
   const handleCheckAddress = () => {
-    if (!address.id) {
+    if (!address.id && !optAddress.id) {
       return false;
     }
     return true;
@@ -352,11 +352,11 @@ const CartScreen = ({
         header="Congratulations!"
         success
         showBg
-        buttonText="View Order Details"
+        buttonText="View Orders"
         message={'Your Order have been placed and is being processed'}
         onButtonClick={() => {
           setOrderConfirmed(false);
-          navigation.navigate('OrderDetails');
+          navigation.navigate('Orders');
         }}
       />
       <Header

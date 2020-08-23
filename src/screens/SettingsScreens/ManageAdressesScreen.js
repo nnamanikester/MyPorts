@@ -20,8 +20,6 @@ const ManageAddressesScreen = ({navigation, offline, customer}) => {
     },
   );
 
-  console.log(customer);
-
   React.useEffect(() => {
     getAddresses();
   }, [getAddresses]);
@@ -42,10 +40,11 @@ const ManageAddressesScreen = ({navigation, offline, customer}) => {
       <Header
         title="Manage Addresses"
         headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
+          <UI.Clickable
+            style={{flexDirection: 'row'}}
+            onClick={() => navigation.goBack()}>
             <UI.Icon name="ios-arrow-back" color="#fff" />
-            <UI.Spacer medium />
-            <UI.Spacer />
+            <UI.Spacer horizontal medium />
           </UI.Clickable>
         }
         headerRight={

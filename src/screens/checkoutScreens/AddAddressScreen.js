@@ -58,8 +58,11 @@ const AddAddressScreen = ({navigation, customer, offline}) => {
       <Header
         title="Add New Address"
         headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
+          <UI.Clickable
+            style={{flexDirection: 'row'}}
+            onClick={() => navigation.goBack()}>
             <UI.Icon name="ios-arrow-back" color="#fff" />
+            <UI.Spacer medium horizontal />
           </UI.Clickable>
         }
       />

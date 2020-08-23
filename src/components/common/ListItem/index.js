@@ -16,9 +16,8 @@ const ListItem = ({children, left, right, body, marked, onClick, style}) => {
 
   return (
     <Clickable
-      style={style}
       onClick={onClick}
-      style={{...styles.container, ...markedStyle}}>
+      style={{...styles.container, ...markedStyle, ...style}}>
       {left && <View style={styles.left}>{left}</View>}
       <View style={styles.body}>{body || children}</View>
       {right && <View style={styles.right}>{right}</View>}
