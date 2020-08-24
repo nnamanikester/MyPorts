@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import {
   Text,
   Layout,
@@ -15,9 +15,9 @@ import {
 import Header from '../../components/Header';
 import CartItem from '../../components/CartItem';
 import OrderSummary from '../../components/OrderSummary';
-import { female2 } from '../../assets/images';
+import {female2} from '../../assets/images';
 
-const VDOrderDetailsScreen = ({ navigation }) => {
+const VDOrderDetailsScreen = ({navigation}) => {
   return (
     <>
       <Header
@@ -31,8 +31,8 @@ const VDOrderDetailsScreen = ({ navigation }) => {
           <Option
             icon={<Icon name="md-more" color="#fff" />}
             options={[
-              { label: 'Mark as Delivered', action: () => {} },
-              { label: 'Report a problem', action: () => {} },
+              {label: 'Mark as Delivered', action: () => {}},
+              {label: 'Report a problem', action: () => {}},
             ]}
           />
         }
@@ -75,7 +75,9 @@ const VDOrderDetailsScreen = ({ navigation }) => {
             />
           </AccordionItem>
 
-          <AccordionItem headerText="Shipping Terms"></AccordionItem>
+          <AccordionItem headerText="Shipping Terms">
+            <Text>Helloe</Text>
+          </AccordionItem>
         </Accordion>
         <Spacer medium />
 

@@ -67,11 +67,15 @@ const NotificationsScreen = ({
       },
     })
       .then((res) => {
-        let notification = notifications.find(
-          (n) => res.data.updateNotification.id === n.id,
-        );
-        notification.status = 2;
-        setNotificationsStorage([...notifications, notification]);
+        setNotificationsStorage([
+          ...notifications.map((n) => {
+            if (res.data.updateNotification.id === n.id) {
+              n.status = 2;
+              return n;
+            }
+            return n;
+          }),
+        ]);
       })
       .catch((e) => {
         ToastAndroid.show(

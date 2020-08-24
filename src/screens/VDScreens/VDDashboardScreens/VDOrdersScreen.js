@@ -14,7 +14,7 @@ import {Alert} from '../../../components/common';
 import {formatMoney} from '../../../utils';
 import EmptyItem from '../../../components/EmptyItem';
 
-const VDAccountSettingsScreen = ({navigation, vendor}) => {
+const VDOrdersScreen = ({navigation, vendor}) => {
   const [orders, setOrders] = React.useState([]);
   const [getOrders, {data, loading, error}] = useLazyQuery(VENDOR_ORDERS, {
     variables: {
@@ -169,4 +169,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(VDAccountSettingsScreen);
+export default connect(mapStateToProps)(VDOrdersScreen);

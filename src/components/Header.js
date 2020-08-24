@@ -38,11 +38,6 @@ const Header = ({
               <Badge style={{elevation: 1, top: 10, left: 26}} color={danger} />
             ) : null}
           </Permissions.Customer>
-          <Permissions.Vendor>
-            {isCart && (
-              <Badge style={{elevation: 0, top: 12, left: 20}} color={danger} />
-            )}
-          </Permissions.Vendor>
         </View>
       )}
     </View>

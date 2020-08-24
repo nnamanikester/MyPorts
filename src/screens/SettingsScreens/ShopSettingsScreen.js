@@ -72,9 +72,12 @@ const ShopSettingsScreen = ({
     <>
       <UI.Loading show={loading} />
       <Header
+        // isCart
         title="Shop Settings"
         headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
+          <UI.Clickable
+            style={{flexDirection: 'row'}}
+            onClick={() => navigation.goBack()}>
             <UI.Icon name="ios-arrow-back" color="#fff" />
             <UI.Spacer medium />
             <UI.Spacer />
@@ -82,7 +85,12 @@ const ShopSettingsScreen = ({
         }
         headerRight={
           <UI.Option
-            icon={<UI.Icon color="#fff" name="md-more" />}
+            icon={
+              <View style={{flexDirection: 'row'}}>
+                <UI.Spacer medium />
+                <UI.Icon color="#fff" name="md-more" />
+              </View>
+            }
             options={[
               {
                 label: 'Preview Changes',

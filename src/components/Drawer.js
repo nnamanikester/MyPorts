@@ -26,6 +26,7 @@ const Drawer = ({
   clearNotificationsStorage,
   clearCart,
   clearCustomerProfile,
+  notifications,
 }) => {
   return (
     <DrawerContentScrollView style={styles.drawer}>
@@ -135,6 +136,20 @@ const Drawer = ({
           onPress={() => navigation.navigate('Orders')}
         />
       </Permissions.CustomerAndGuest>
+      <Permissions.Vendor>
+        <DrawerItem
+          icon={({size, color}) => (
+            <>
+              <Icon size={size} color={color} name="ios-notifications" />
+              {notifications && notifications.length > 0 && (
+                <Badge style={{elevation: 1}} color={danger} />
+              )}
+            </>
+          )}
+          label={({color, focused}) => <Text color={color}>Notifications</Text>}
+          onPress={() => navigation.navigate('VDNotifications')}
+        />
+      </Permissions.Vendor>
 
       {/* <DrawerItem
         icon={({size, color}) => (
@@ -248,6 +263,7 @@ const mapStateToProps = (state) => {
     customer: state.customer.profile,
     vendorProfile: state.vendor.profile,
     cart: state.cart,
+    notifications: state.notifications,
   };
 };
 

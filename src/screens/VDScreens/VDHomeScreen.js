@@ -1,5 +1,4 @@
 import React from 'react';
-import {View} from 'react-native';
 import Header from '../../components/Header';
 import * as UI from '../../components/common';
 import VDAnalyticsScreen from './VDDashboardScreens/VDAnalyticsScreen';
@@ -8,12 +7,31 @@ import VDSettingsScreen from './VDDashboardScreens/VDSettingsScreen';
 import VDMessagingScreen from './VDDashboardScreens/VDMessagingScreen';
 import VDOrdersScreen from './VDDashboardScreens/VDOrdersScreen';
 import {primaryColor, danger} from '../../components/common/variables';
+import {connect} from 'react-redux';
+import {View} from 'react-native';
 
-const VDHome = ({navigation}) => {
+const VDHome = ({navigation, notifications}) => {
+  const [hasNotification, setHasNotification] = React.useState(false);
+
+  React.useMemo(() => {
+    let counter = 0;
+    notifications &&
+      notifications.length > 0 &&
+      notifications.forEach((n) => {
+        if (n.status === 1) {
+          counter++;
+        }
+      });
+    if (counter > 0) {
+      setHasNotification(true);
+    } else {
+      setHasNotification(false);
+    }
+  }, [notifications]);
+
   return (
     <>
       <Header
-        isCart
         style={{elevation: 0}}
         title="Dashboard"
         headerLeft={
@@ -22,17 +40,13 @@ const VDHome = ({navigation}) => {
           </UI.Clickable>
         }
         headerRight={
-          <>
-            <UI.Clickable
-              onClick={() => navigation.navigate('VDNotifications')}>
-              <UI.Icon name="ios-notifications" color="#fff" />
-            </UI.Clickable>
+          <View style={{flexDirection: 'row'}}>
             <UI.Spacer medium />
             <UI.Option
-              icon={<UI.Icon name="ios-more" color="#fff" />}
+              icon={<UI.Icon name="md-more" color="#fff" />}
               options={[{label: 'Report a problem', action: () => {}}]}
             />
-          </>
+          </View>
         }
       />
       <UI.TopTab
@@ -128,4 +142,10 @@ const VDHome = ({navigation}) => {
   );
 };
 
-export default VDHome;
+const mapStateToProps = (state) => {
+  return {
+    notifications: state.notifications,
+  };
+};
+
+export default connect(mapStateToProps)(VDHome);

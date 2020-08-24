@@ -11,6 +11,8 @@ import {useLazyQuery} from '@apollo/react-hooks';
 import * as UI from '../components/common';
 import {Alert} from 'react-native';
 import {CART, ADVERTS} from '../apollo/queries';
+import AsyncStorage from '@react-native-community/async-storage';
+import {CART_STORAGE} from '../constants';
 
 import TabNavigation from './MainFlows/MainTabNavigation';
 import DraweNavigation from './MainFlows/MainDrawerNavigation';
@@ -65,8 +67,6 @@ import LawEnforcementPolicy from '../screens/pages/LawEnforcementPolicyScreen';
 import PrivacyPolicy from '../screens/pages/PrivacyPolicyScreen';
 import ReturnPolicy from '../screens/pages/ReturnPolicyScreen';
 import TermsOfUse from '../screens/pages/TermsOfUseScreen';
-import AsyncStorage from '@react-native-community/async-storage';
-import {CART_STORAGE} from '../constants';
 
 const Stack = createStackNavigator();
 

@@ -3,8 +3,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {setVendor, setVendorProfile} from '../redux/actions/VendorActions';
 import {connect} from 'react-redux';
 import {useLazyQuery} from '@apollo/react-hooks';
-import {VENDOR} from '../apollo/queries/vendor';
+import {VENDOR, NOTIFICATIONS} from '../apollo/queries';
 import * as UI from '../components/common';
+import {setNotificationsStorage} from '../redux/actions/NotificationsAction';
 
 import VDDrawerNavigation from './VDFlows/VendorDrawerNavigation';
 import VDConversation from '../screens/VDScreens/VDConversationScreen';
@@ -47,7 +48,13 @@ import TermsOfUse from '../screens/pages/TermsOfUseScreen';
 
 const Stack = createStackNavigator();
 
-const VDFlow = ({offline, setVendorProfile, setVendor}) => {
+const VDFlow = ({
+  offline,
+  setVendorProfile,
+  setVendor,
+  setNotificationsStorage,
+  user,
+}) => {
   const [
     getVendor,
     {loading: getVendorLoading, data: getVendorData, error: getVendorError},
@@ -64,9 +71,36 @@ const VDFlow = ({offline, setVendorProfile, setVendor}) => {
     }
   }, [getVendorData, getVendorError]);
 
+  const [
+    getNotifications,
+    {loading: notLoading, data: notData, error: notError},
+  ] = useLazyQuery(NOTIFICATIONS, {
+    variables: {
+      first: 60,
+      where: {
+        user: {
+          id: user.id,
+        },
+      },
+      orderBy: 'createdAt_DESC',
+    },
+    pollInterval: 500,
+  });
+
+  React.useMemo(() => {
+    getNotifications();
+  }, [notError]);
+
+  React.useMemo(() => {
+    if (notData) {
+      setNotificationsStorage(notData.notifications.edges.map((n) => n.node));
+    }
+  }, [notData]);
+
   return (
     <>
-      <UI.Loading show={getVendorLoading} />
+      <UI.Loading show={getVendorLoading || notLoading} />
+
       <Stack.Navigator
         screenOptions={{
           header: () => null,
@@ -132,7 +166,13 @@ const VDFlow = ({offline, setVendorProfile, setVendor}) => {
 const mapStateToProps = (state) => {
   return {
     offline: !state.network.isConnected,
+    notifications: state.notifications,
+    user: state.auth.user,
   };
 };
 
-export default connect(mapStateToProps, {setVendor, setVendorProfile})(VDFlow);
+export default connect(mapStateToProps, {
+  setVendor,
+  setVendorProfile,
+  setNotificationsStorage,
+})(VDFlow);
