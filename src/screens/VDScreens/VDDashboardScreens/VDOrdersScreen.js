@@ -75,7 +75,7 @@ const VDOrdersScreen = ({navigation, vendor}) => {
               case 2:
                 stat = (
                   <UI.Text color={primaryColor} note style={styles.status}>
-                    processed
+                    shipping
                   </UI.Text>
                 );
                 break;
@@ -98,7 +98,9 @@ const VDOrdersScreen = ({navigation, vendor}) => {
               <UI.ListItem
                 key={o.id + i}
                 marked={o.status === 1}
-                onClick={() => navigation.navigate('VDOrderDetails')}
+                onClick={() =>
+                  navigation.navigate('VDOrderDetails', {order: o})
+                }
                 left={
                   <UI.Avatar
                     medium

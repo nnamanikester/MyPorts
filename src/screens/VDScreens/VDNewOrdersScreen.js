@@ -115,7 +115,9 @@ const VDNewOrdersScreen = ({navigation, vendor}) => {
               <UI.ListItem
                 key={o.id + i}
                 marked={o.status === 1}
-                onClick={() => navigation.navigate('VDOrderDetails')}
+                onClick={() =>
+                  navigation.navigate('VDOrderDetails', {order: o})
+                }
                 left={
                   <UI.Avatar
                     medium

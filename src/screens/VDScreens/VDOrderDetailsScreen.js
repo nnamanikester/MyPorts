@@ -1,17 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {
-  Text,
-  Layout,
-  Icon,
-  Spacer,
-  Accordion,
-  AccordionItem,
-  Clickable,
-  Button,
-  Column,
-  Option,
-} from '../../components/common';
+import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import CartItem from '../../components/CartItem';
 import OrderSummary from '../../components/OrderSummary';
@@ -23,13 +12,13 @@ const VDOrderDetailsScreen = ({navigation}) => {
       <Header
         title="Order Details"
         headerLeft={
-          <Clickable onClick={() => navigation.goBack()}>
-            <Icon name="ios-arrow-back" color="#fff" />
-          </Clickable>
+          <UI.Clickable onClick={() => navigation.goBack()}>
+            <UI.Icon name="ios-arrow-back" color="#fff" />
+          </UI.Clickable>
         }
         headerRight={
-          <Option
-            icon={<Icon name="md-more" color="#fff" />}
+          <UI.Option
+            icon={<UI.Icon name="md-more" color="#fff" />}
             options={[
               {label: 'Mark as Delivered', action: () => {}},
               {label: 'Report a problem', action: () => {}},
@@ -37,22 +26,22 @@ const VDOrderDetailsScreen = ({navigation}) => {
           />
         }
       />
-      <Layout>
-        <Spacer medium />
+      <UI.Layout>
+        <UI.Spacer medium />
 
         <View style={styles.container}>
-          <Text heading>Order placed: August 25, 2020</Text>
-          <Text style={styles.title}>Order No 2954379758</Text>
+          <UI.Text heading>Order placed: August 25, 2020</UI.Text>
+          <UI.Text style={styles.title}>Order No 2954379758</UI.Text>
         </View>
-        <Accordion>
-          <AccordionItem headerText="Shipping Details">
-            <Text>Tiana Rosser</Text>
-            <Text>Suit 13 Romchi Plaza, Oneday Road.</Text>
-            <Text>Enugu, Enugu State 400252.</Text>
-            <Text>09044758394.</Text>
-          </AccordionItem>
+        <UI.Accordion>
+          <UI.AccordionItem headerText="Shipping Details">
+            <UI.Text>Tiana Rosser</UI.Text>
+            <UI.Text>Suit 13 Romchi Plaza, Oneday Road.</UI.Text>
+            <UI.Text>Enugu, Enugu State 400252.</UI.Text>
+            <UI.Text>09044758394.</UI.Text>
+          </UI.AccordionItem>
 
-          <AccordionItem headerText="Items">
+          <UI.AccordionItem headerText="Items">
             <CartItem
               name="Leather Show Bag"
               color="Red"
@@ -64,40 +53,40 @@ const VDOrderDetailsScreen = ({navigation}) => {
               onCloseButtonClick={() => {}}
               hideCloseButton
             />
-          </AccordionItem>
+          </UI.AccordionItem>
 
-          <AccordionItem headerText="Order Summary">
+          <UI.AccordionItem headerText="Order Summary">
             <OrderSummary
               order="63,000"
               shipping="3,000"
               discount="1,300"
               total="66,000"
             />
-          </AccordionItem>
+          </UI.AccordionItem>
 
-          <AccordionItem headerText="Shipping Terms">
-            <Text>Helloe</Text>
-          </AccordionItem>
-        </Accordion>
-        <Spacer medium />
+          <UI.AccordionItem headerText="Shipping Terms">
+            <UI.Text>Helloe</UI.Text>
+          </UI.AccordionItem>
+        </UI.Accordion>
+        <UI.Spacer medium />
 
         <View style={styles.container}>
           <View style={styles.buttons}>
-            <Column size="6">
-              <Button type="ghost">Cancel</Button>
-            </Column>
-            <Spacer />
-            <Column size="6">
-              <Button>
-                <Text color="#fff">Accept</Text>
-              </Button>
-            </Column>
+            <UI.Column size="6">
+              <UI.Button type="ghost">Cancel</UI.Button>
+            </UI.Column>
+            <UI.Spacer />
+            <UI.Column size="6">
+              <UI.Button>
+                <UI.Text color="#fff">Accept</UI.Text>
+              </UI.Button>
+            </UI.Column>
           </View>
 
-          <Spacer large />
-          <Spacer large />
+          <UI.Spacer large />
+          <UI.Spacer large />
         </View>
-      </Layout>
+      </UI.Layout>
     </>
   );
 };

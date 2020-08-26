@@ -8,6 +8,7 @@ import AdvertReducer from './AdvertReducer';
 import WalletReducer from './WalletReducer';
 import AddressReducer from './AddressReducer';
 import NotificationsReducer from './NotificationsReducer';
+import OrdersReducer from './OrdersReducer';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
   wallet: WalletReducer,
   address: AddressReducer,
   notifications: NotificationsReducer,
+  orders: OrdersReducer,
 });

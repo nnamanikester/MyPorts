@@ -23,6 +23,7 @@ import VDNotifications from '../screens/VDScreens/VDNotificationsScreen';
 import VDAddProduct from '../screens/VDScreens/VDProductsScreens/VDAddProductScreen';
 import VDEditProduct from '../screens/VDScreens/VDProductsScreens/VDEditProductScreen';
 import VDSingleProduct from '../screens/VDScreens/VDProductsScreens/VDSingleProductScreen';
+import ContactSupport from '../screens/ContactSupportScreen';
 
 // Settings Screen
 import AccountSettings from '../screens/SettingsScreens/AccountSettingsScreen';
@@ -124,6 +125,7 @@ const VDFlow = ({
         <Stack.Screen name="VDAddProduct" component={VDAddProduct} />
         <Stack.Screen name="VDEditProduct" component={VDEditProduct} />
         <Stack.Screen name="VDSingleProduct" component={VDSingleProduct} />
+        <Stack.Screen name="ContactSupport" component={ContactSupport} />
 
         {/* Settings Screens */}
         <Stack.Screen name="AccountSettings" component={AccountSettings} />

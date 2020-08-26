@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SFPD-regular',
     paddingHorizontal: 20,
     color: '#fff',
+    fontWeight: 'bold',
   },
 });
 

@@ -6,7 +6,6 @@ export const setAddress = (address) => {
 };
 
 export const clearAddress = () => {
-  console.log('Clear Address');
   return {
     type: 'CLEAR_ADDRESS',
   };

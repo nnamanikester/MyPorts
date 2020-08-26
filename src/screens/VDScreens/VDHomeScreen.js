@@ -10,25 +10,7 @@ import {primaryColor, danger} from '../../components/common/variables';
 import {connect} from 'react-redux';
 import {View} from 'react-native';
 
-const VDHome = ({navigation, notifications}) => {
-  const [hasNotification, setHasNotification] = React.useState(false);
-
-  React.useMemo(() => {
-    let counter = 0;
-    notifications &&
-      notifications.length > 0 &&
-      notifications.forEach((n) => {
-        if (n.status === 1) {
-          counter++;
-        }
-      });
-    if (counter > 0) {
-      setHasNotification(true);
-    } else {
-      setHasNotification(false);
-    }
-  }, [notifications]);
-
+const VDHome = ({navigation}) => {
   return (
     <>
       <Header
@@ -41,10 +23,19 @@ const VDHome = ({navigation, notifications}) => {
         }
         headerRight={
           <View style={{flexDirection: 'row'}}>
-            <UI.Spacer medium />
             <UI.Option
-              icon={<UI.Icon name="md-more" color="#fff" />}
-              options={[{label: 'Report a problem', action: () => {}}]}
+              icon={
+                <>
+                  <UI.Spacer medium />
+                  <UI.Icon name="md-more" color="#fff" />
+                </>
+              }
+              options={[
+                {
+                  label: 'Report a problem',
+                  action: () => navigation.navigate('ContactSupport'),
+                },
+              ]}
             />
           </View>
         }
@@ -100,7 +91,6 @@ const VDHome = ({navigation, notifications}) => {
                     size={focused ? 30 : size}
                     color={color}
                   />
-                  <UI.Badge color={danger} style={{elevation: 0, right: -5}} />
                 </>
               ),
             },

@@ -28,6 +28,24 @@ const Drawer = ({
   clearCustomerProfile,
   notifications,
 }) => {
+  const [hasNotification, setHasNotification] = React.useState(false);
+
+  React.useMemo(() => {
+    let counter = 0;
+    notifications &&
+      notifications.length > 0 &&
+      notifications.forEach((n) => {
+        if (n.status === 1) {
+          counter++;
+        }
+      });
+    if (counter > 0) {
+      setHasNotification(true);
+    } else {
+      setHasNotification(false);
+    }
+  }, [notifications]);
+
   return (
     <DrawerContentScrollView style={styles.drawer}>
       {/* Drawer Header */}
@@ -136,12 +154,13 @@ const Drawer = ({
           onPress={() => navigation.navigate('Orders')}
         />
       </Permissions.CustomerAndGuest>
+
       <Permissions.Vendor>
         <DrawerItem
           icon={({size, color}) => (
             <>
               <Icon size={size} color={color} name="ios-notifications" />
-              {notifications && notifications.length > 0 && (
+              {hasNotification && (
                 <Badge style={{elevation: 1}} color={danger} />
               )}
             </>
@@ -150,6 +169,24 @@ const Drawer = ({
           onPress={() => navigation.navigate('VDNotifications')}
         />
       </Permissions.Vendor>
+
+      <Permissions.Vendor>
+        <DrawerItem
+          icon={({size, color}) => (
+            <Icon size={size} color={color} name="ios-megaphone" />
+          )}
+          label={({color, focused}) => <Text color={color}>Boost Product</Text>}
+          onPress={() => navigation.navigate('VDNotifications')}
+        />
+      </Permissions.Vendor>
+
+      <DrawerItem
+        icon={({size, color}) => (
+          <Icon size={size} color={color} name="ios-card" />
+        )}
+        label={({color, focused}) => <Text color={color}>Wallet</Text>}
+        onPress={() => navigation.navigate('ManageWallets')}
+      />
 
       {/* <DrawerItem
         icon={({size, color}) => (

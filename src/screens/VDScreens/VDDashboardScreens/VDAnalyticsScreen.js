@@ -1,11 +1,7 @@
 import React from 'react';
 import * as UI from '../../../components/common';
-import {
-  inactiveColor,
-  textColor,
-  primaryColor,
-} from '../../../components/common/variables';
-import {View, StyleSheet} from 'react-native';
+import {primaryColor} from '../../../components/common/variables';
+import {View, StyleSheet, Alert} from 'react-native';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_VENDOR_ANALYTICS} from '../../../apollo/queries/vendor';
 import {connect} from 'react-redux';
@@ -23,12 +19,24 @@ const VDAnalyticsScreen = ({navigation, offline}) => {
   );
 
   React.useEffect(() => {
-    if (!offline) getAnalytics();
+    if (!offline) {
+      getAnalytics();
+    }
 
     if (data) {
       setAnalytics(data.vendorAnalytics);
     }
   }, [data]);
+
+  React.useMemo(() => {
+    if (error) {
+      Alert.alert(
+        'Error!',
+        'Unable to get Analytics. Please check your internet connection and try again!',
+        [{text: 'Try again', onPress: () => getAnalytics()}],
+      );
+    }
+  }, [error]);
 
   return (
     <>
@@ -226,7 +234,7 @@ const VDAnalyticsScreen = ({navigation, offline}) => {
                 total: '549',
               },
               {
-                title: 'Transactions(NGN)',
+                title: 'Transactions',
                 today: '22.5k',
                 week: '122k',
                 month: '540k',
@@ -246,18 +254,11 @@ const VDAnalyticsScreen = ({navigation, offline}) => {
                 month: '205',
                 total: '2.3k',
               },
-              {
-                title: 'Views',
-                today: '234',
-                week: '1.1k',
-                month: '23.5k',
-                total: '256.4k',
-              },
             ]}
           />
 
           <UI.Spacer />
-          <UI.Text heading>Weekly Sales Chart</UI.Text>
+          {/* <UI.Text heading>Weekly Sales Chart</UI.Text>
           <UI.Spacer />
           <UI.PieChart
             data={[
@@ -291,7 +292,7 @@ const VDAnalyticsScreen = ({navigation, offline}) => {
               },
             ]}
             bgColor={inactiveColor}
-          />
+          /> */}
           <UI.Spacer large />
         </View>
       </UI.Layout>
