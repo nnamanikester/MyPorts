@@ -3,9 +3,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {setVendor, setVendorProfile} from '../redux/actions/VendorActions';
 import {connect} from 'react-redux';
 import {useLazyQuery} from '@apollo/react-hooks';
-import {VENDOR, NOTIFICATIONS} from '../apollo/queries';
+import {VENDOR, NOTIFICATIONS, VENDOR_ORDERS} from '../apollo/queries';
 import * as UI from '../components/common';
 import {setNotificationsStorage} from '../redux/actions/NotificationsAction';
+import {setVendorOrders} from '../redux/actions/OrderActions';
 
 import VDDrawerNavigation from './VDFlows/VendorDrawerNavigation';
 import VDConversation from '../screens/VDScreens/VDConversationScreen';
@@ -55,11 +56,38 @@ const VDFlow = ({
   setVendor,
   setNotificationsStorage,
   user,
+  vendor,
+  setVendorOrders,
 }) => {
   const [
     getVendor,
     {loading: getVendorLoading, data: getVendorData, error: getVendorError},
   ] = useLazyQuery(VENDOR);
+
+  const [getOrders, {data: orderData, error: orderError}] = useLazyQuery(
+    VENDOR_ORDERS,
+    {
+      variables: {
+        id: vendor.id,
+      },
+    },
+  );
+
+  React.useEffect(() => {
+    getOrders();
+  }, []);
+
+  React.useMemo(() => {
+    if (orderData) {
+      setVendorOrders(orderData.vendorOrders);
+    }
+  }, [orderData]);
+
+  React.useMemo(() => {
+    if (orderError) {
+      getOrders();
+    }
+  }, [orderError]);
 
   useEffect(() => {
     if (!offline) {
@@ -170,6 +198,7 @@ const mapStateToProps = (state) => {
     offline: !state.network.isConnected,
     notifications: state.notifications,
     user: state.auth.user,
+    vendor: state.vendor,
   };
 };
 
@@ -177,4 +206,5 @@ export default connect(mapStateToProps, {
   setVendor,
   setVendorProfile,
   setNotificationsStorage,
+  setVendorOrders,
 })(VDFlow);

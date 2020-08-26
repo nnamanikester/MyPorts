@@ -9,13 +9,13 @@ import {
 } from '../../../components/common/variables';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {VENDOR_ORDERS} from '../../../apollo/queries';
+import {setVendorOrders} from '../../../redux/actions/OrderActions';
 import {connect} from 'react-redux';
 import {Alert} from '../../../components/common';
 import {formatMoney} from '../../../utils';
 import EmptyItem from '../../../components/EmptyItem';
 
-const VDOrdersScreen = ({navigation, vendor}) => {
-  const [orders, setOrders] = React.useState([]);
+const VDOrdersScreen = ({navigation, vendor, orders, setVendorOrders}) => {
   const [getOrders, {data, loading, error}] = useLazyQuery(VENDOR_ORDERS, {
     variables: {
       id: vendor.id,
@@ -28,7 +28,7 @@ const VDOrdersScreen = ({navigation, vendor}) => {
 
   React.useMemo(() => {
     if (data) {
-      setOrders(data.vendorOrders);
+      setVendorOrders(data.vendorOrders);
     }
   }, [data]);
 
@@ -49,7 +49,8 @@ const VDOrdersScreen = ({navigation, vendor}) => {
       <UI.Layout>
         <UI.Spacer />
 
-        {orders.length > 0 &&
+        {orders &&
+          orders.length > 0 &&
           orders.map((o, i) => {
             let stat = (
               <UI.Text color={success} note style={styles.status}>
@@ -131,7 +132,7 @@ const VDOrdersScreen = ({navigation, vendor}) => {
             );
           })}
 
-        {!loading && !error && !orders.length > 0 && (
+        {!loading && !error && orders && !orders.length > 0 && (
           <>
             <UI.Spacer large />
             <EmptyItem
@@ -168,7 +169,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     vendor: state.vendor,
+    orders: state.orders.vendorOrders,
   };
 };
 
-export default connect(mapStateToProps)(VDOrdersScreen);
+export default connect(mapStateToProps, {setVendorOrders})(VDOrdersScreen);

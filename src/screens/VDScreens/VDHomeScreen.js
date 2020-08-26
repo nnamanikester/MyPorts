@@ -10,7 +10,24 @@ import {primaryColor, danger} from '../../components/common/variables';
 import {connect} from 'react-redux';
 import {View} from 'react-native';
 
-const VDHome = ({navigation}) => {
+const VDHome = ({navigation, orders}) => {
+  const [hasNewOrders, setHasNewOrders] = React.useState(false);
+
+  React.useMemo(() => {
+    let count = 0;
+    orders &&
+      orders.forEach((o) => {
+        if (o.status === 1) {
+          count++;
+        }
+      });
+    if (count > 0) {
+      setHasNewOrders(true);
+    } else {
+      setHasNewOrders(false);
+    }
+  }, [orders]);
+
   return (
     <>
       <Header
@@ -107,7 +124,12 @@ const VDHome = ({navigation}) => {
                     color={color}
                     style={{width: 80}}
                   />
-                  <UI.Badge color={danger} style={{elevation: 0, right: -5}} />
+                  {hasNewOrders && (
+                    <UI.Badge
+                      color={danger}
+                      style={{elevation: 0, right: -5}}
+                    />
+                  )}
                 </>
               ),
             },
@@ -135,6 +157,7 @@ const VDHome = ({navigation}) => {
 const mapStateToProps = (state) => {
   return {
     notifications: state.notifications,
+    orders: state.orders.vendorOrders,
   };
 };
 
