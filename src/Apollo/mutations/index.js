@@ -12,5 +12,6 @@ export * from './message';
 export * from './wallet';
 export * from './notification';
 export * from './order';
+export * from './support';
 
 export * from './imageUpload';

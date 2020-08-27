@@ -42,10 +42,10 @@ const VDHome = ({navigation, orders}) => {
           <View style={{flexDirection: 'row'}}>
             <UI.Option
               icon={
-                <>
+                <View style={{flexDirection: 'row'}}>
                   <UI.Spacer medium />
                   <UI.Icon name="md-more" color="#fff" />
-                </>
+                </View>
               }
               options={[
                 {

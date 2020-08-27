@@ -8,7 +8,6 @@ import {setNotificationsStorage} from '../../redux/actions/NotificationsAction';
 import {ToastAndroid, StyleSheet, View} from 'react-native';
 import {primaryColor, success, danger} from '../../components/common/variables';
 import moment from 'moment';
-import ScreenHeaderWithCart from '../../components/ScreenHeaderWithCart';
 
 const VDNotificationsScreen = ({
   navigation,
@@ -175,6 +174,14 @@ const VDNotificationsScreen = ({
                 break;
               case 'OFFER':
                 ImageIcon = <UI.Icon color={primaryColor} name="ios-gift" />;
+                break;
+              case 'SUPPORT':
+                ImageIcon = (
+                  <UI.Icon
+                    color={primaryColor}
+                    name="ios-help-circle-outline"
+                  />
+                );
                 break;
               default:
                 ImageIcon = (

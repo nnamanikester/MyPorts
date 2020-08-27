@@ -177,6 +177,14 @@ const NotificationsScreen = ({
               case 'OFFER':
                 ImageIcon = <UI.Icon color={primaryColor} name="ios-gift" />;
                 break;
+              case 'SUPPORT':
+                ImageIcon = (
+                  <UI.Icon
+                    color={primaryColor}
+                    name="ios-help-circle-outline"
+                  />
+                );
+                break;
               default:
                 ImageIcon = (
                   <UI.Icon color={primaryColor} name="ios-notifications" />
