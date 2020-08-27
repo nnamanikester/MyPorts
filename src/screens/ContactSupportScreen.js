@@ -1,12 +1,12 @@
 import React from 'react';
-import {StyleSheet, View, Alert, Clipboard, ToastAndroid} from 'react-native';
+import {StyleSheet, View, Alert, ToastAndroid} from 'react-native';
 import * as UI from '../components/common';
 import Header from '../components/Header';
 import {SUPPORT_TICKET} from '../apollo/mutations';
 import {useMutation} from '@apollo/react-hooks';
 import {danger} from '../components/common/variables';
 import {connect} from 'react-redux';
-import {Clickable} from '../components/common';
+import Clipboard from '@react-native-community/clipboard';
 
 const ContactSupportScreen = ({navigation, user}) => {
   const [title, setTitle] = React.useState('');
