@@ -61,10 +61,9 @@ const ContactSupportScreen = ({navigation, user}) => {
           [
             {
               text: 'Copy to  clipboard',
-              onPress: async () => {
+              onPress: () => {
                 Clipboard.setString(res.data.supportTicket.ticketNo);
-                const text = await Clipboard.getString();
-                ToastAndroid.show(`Copied ${text} to clipbaord`);
+                ToastAndroid.show('Copied to clipbaord', ToastAndroid.SHORT);
               },
             },
             {text: 'Cancle'},
