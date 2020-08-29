@@ -16,7 +16,9 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
     let count = 0;
     if (orders && orders.length > 0) {
       orders.forEach((o) => {
-        count += o.quantity;
+        if (o.status === 2 || o.status === 3) {
+          count += o.quantity;
+        }
       });
     }
     setSales(count);
@@ -214,7 +216,7 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
                     <Skeleton.Item width="80%" height={10} borderRadius={5} />
                   </Skeleton>
                 ) : (
-                  <UI.Text>Total Sales</UI.Text>
+                  <UI.Text>Items Sold</UI.Text>
                 )}
               </View>
             }
