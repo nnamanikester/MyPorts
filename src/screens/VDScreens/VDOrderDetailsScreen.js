@@ -3,8 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import CartItem from '../../components/CartItem';
-import OrderSummary from '../../components/OrderSummary';
-import {female2} from '../../assets/images';
+import {connect} from 'react-redux';
 
 const VDOrderDetailsScreen = ({navigation}) => {
   return (
@@ -32,42 +31,22 @@ const VDOrderDetailsScreen = ({navigation}) => {
         <View style={styles.container}>
           <UI.Text heading>Order placed: August 25, 2020</UI.Text>
           <UI.Text style={styles.title}>Order No 2954379758</UI.Text>
+          <UI.Text>Tiana Rosser</UI.Text>
+          <UI.Text>Suit 13 Romchi Plaza, Oneday Road.</UI.Text>
+          <UI.Text>Enugu, Enugu State 400252.</UI.Text>
+          <UI.Text>09044758394.</UI.Text>
+          <CartItem
+            name="Leather Show Bag"
+            color="Red"
+            size="XL"
+            quantity="5"
+            // image={female2}
+            price="2,300"
+            onClick={() => navigation.navigate('VDSingleProduct')}
+            onCloseButtonClick={() => {}}
+            hideCloseButton
+          />
         </View>
-        <UI.Accordion>
-          <UI.AccordionItem headerText="Shipping Details">
-            <UI.Text>Tiana Rosser</UI.Text>
-            <UI.Text>Suit 13 Romchi Plaza, Oneday Road.</UI.Text>
-            <UI.Text>Enugu, Enugu State 400252.</UI.Text>
-            <UI.Text>09044758394.</UI.Text>
-          </UI.AccordionItem>
-
-          <UI.AccordionItem headerText="Items">
-            <CartItem
-              name="Leather Show Bag"
-              color="Red"
-              size="XL"
-              quantity="5"
-              image={female2}
-              price="2,300"
-              onClick={() => navigation.navigate('VDSingleProduct')}
-              onCloseButtonClick={() => {}}
-              hideCloseButton
-            />
-          </UI.AccordionItem>
-
-          <UI.AccordionItem headerText="Order Summary">
-            <OrderSummary
-              order="63,000"
-              shipping="3,000"
-              discount="1,300"
-              total="66,000"
-            />
-          </UI.AccordionItem>
-
-          <UI.AccordionItem headerText="Shipping Terms">
-            <UI.Text>Helloe</UI.Text>
-          </UI.AccordionItem>
-        </UI.Accordion>
         <UI.Spacer medium />
 
         <View style={styles.container}>
@@ -105,4 +84,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VDOrderDetailsScreen;
+const mapStateToProps = (state) => {
+  return {
+    orders: state.orders,
+  };
+};
+
+export default connect(mapStateToProps)(VDOrderDetailsScreen);

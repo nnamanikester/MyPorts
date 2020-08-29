@@ -8,8 +8,19 @@ import {connect} from 'react-redux';
 import Skeleton from 'react-native-skeleton-placeholder';
 import {formatMoney} from '../../../utils';
 
-const VDAnalyticsScreen = ({navigation, offline}) => {
+const VDAnalyticsScreen = ({navigation, offline, orders}) => {
   const [analytics, setAnalytics] = React.useState({});
+  const [sales, setSales] = React.useState(0);
+
+  React.useMemo(() => {
+    let count = 0;
+    if (orders && orders.length > 0) {
+      orders.forEach((o) => {
+        count += o.quantity;
+      });
+    }
+    setSales(count);
+  }, [orders]);
 
   const [getAnalytics, {loading, data, error}] = useLazyQuery(
     GET_VENDOR_ANALYTICS,
@@ -192,7 +203,7 @@ const VDAnalyticsScreen = ({navigation, offline}) => {
                 </Skeleton>
               ) : (
                 <View style={styles.list}>
-                  <UI.Icon type="FontAwesome" color="#fff" name="exchange" />
+                  <UI.Icon type="FontAwesome" color="#fff" name="money" />
                 </View>
               )
             }
@@ -203,7 +214,7 @@ const VDAnalyticsScreen = ({navigation, offline}) => {
                     <Skeleton.Item width="80%" height={10} borderRadius={5} />
                   </Skeleton>
                 ) : (
-                  <UI.Text>Total Transactions</UI.Text>
+                  <UI.Text>Total Sales</UI.Text>
                 )}
               </View>
             }
@@ -211,7 +222,7 @@ const VDAnalyticsScreen = ({navigation, offline}) => {
               <View style={{flex: 1, justifyContent: 'center'}}>
                 {!loading ? (
                   <UI.Text bold note>
-                    {analytics.transactions}
+                    {sales}
                   </UI.Text>
                 ) : null}
               </View>
@@ -317,6 +328,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     offline: !state.network.isConnected,
+    orders: state.orders,
   };
 };
 

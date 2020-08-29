@@ -170,7 +170,7 @@ const Drawer = ({
         />
       </Permissions.Vendor>
 
-      <Permissions.Vendor>
+      {/* <Permissions.Vendor>
         <DrawerItem
           icon={({size, color}) => (
             <Icon size={size} color={color} name="ios-megaphone" />
@@ -178,7 +178,7 @@ const Drawer = ({
           label={({color, focused}) => <Text color={color}>Boost Product</Text>}
           onPress={() => navigation.navigate('VDNotifications')}
         />
-      </Permissions.Vendor>
+      </Permissions.Vendor> */}
 
       <DrawerItem
         icon={({size, color}) => (
