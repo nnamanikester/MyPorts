@@ -4,8 +4,10 @@ import * as UI from '../../components/common';
 import Header from '../../components/Header';
 import CartItem from '../../components/CartItem';
 import {connect} from 'react-redux';
+import moment from 'moment';
 
-const VDOrderDetailsScreen = ({navigation}) => {
+const VDOrderDetailsScreen = ({navigation, route: {params}}) => {
+  const {order} = params;
   return (
     <>
       <Header
@@ -29,12 +31,15 @@ const VDOrderDetailsScreen = ({navigation}) => {
         <UI.Spacer medium />
 
         <View style={styles.container}>
-          <UI.Text heading>Order placed: August 25, 2020</UI.Text>
-          <UI.Text style={styles.title}>Order No 2954379758</UI.Text>
+          <UI.Text heading>
+            Order placed: {moment(order.createdAt).format('MMMM DD, YYYY')}
+          </UI.Text>
+
           <UI.Text>Tiana Rosser</UI.Text>
           <UI.Text>Suit 13 Romchi Plaza, Oneday Road.</UI.Text>
           <UI.Text>Enugu, Enugu State 400252.</UI.Text>
           <UI.Text>09044758394.</UI.Text>
+
           <CartItem
             name="Leather Show Bag"
             color="Red"

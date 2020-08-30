@@ -216,7 +216,7 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
                     <Skeleton.Item width="80%" height={10} borderRadius={5} />
                   </Skeleton>
                 ) : (
-                  <UI.Text>Items Sold</UI.Text>
+                  <UI.Text>Sales</UI.Text>
                 )}
               </View>
             }
