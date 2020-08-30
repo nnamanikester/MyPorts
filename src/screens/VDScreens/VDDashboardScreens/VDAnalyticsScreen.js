@@ -18,6 +18,7 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
       orders.forEach((o) => {
         if (o.status === 2 || o.status === 3) {
           count += o.quantity;
+          console.log(o);
         }
       });
     }
@@ -35,11 +36,7 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
     if (!offline) {
       getAnalytics();
     }
-
-    if (data) {
-      setAnalytics(data.vendorAnalytics);
-    }
-  }, [data]);
+  }, []);
 
   React.useMemo(() => {
     if (error) {
@@ -50,6 +47,12 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
       );
     }
   }, [error]);
+
+  React.useMemo(() => {
+    if (data) {
+      setAnalytics(data.vendorAnalytics);
+    }
+  }, [data]);
 
   return (
     <>

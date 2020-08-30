@@ -5,6 +5,8 @@ import Header from '../../components/Header';
 import CartItem from '../../components/CartItem';
 import {connect} from 'react-redux';
 import moment from 'moment';
+import {formatMoney} from '../../utils';
+import {info} from '../../components/common/variables';
 
 const VDOrderDetailsScreen = ({navigation, route: {params}}) => {
   const {order} = params;
@@ -13,17 +15,22 @@ const VDOrderDetailsScreen = ({navigation, route: {params}}) => {
       <Header
         title="Order Details"
         headerLeft={
-          <UI.Clickable onClick={() => navigation.goBack()}>
+          <UI.Clickable
+            style={{flexDirection: 'row'}}
+            onClick={() => navigation.goBack()}>
             <UI.Icon name="ios-arrow-back" color="#fff" />
+            <UI.Spacer medium />
           </UI.Clickable>
         }
         headerRight={
           <UI.Option
-            icon={<UI.Icon name="md-more" color="#fff" />}
-            options={[
-              {label: 'Mark as Delivered', action: () => {}},
-              {label: 'Report a problem', action: () => {}},
-            ]}
+            icon={
+              <View style={{flexDirection: 'row'}}>
+                <UI.Spacer medium />
+                <UI.Icon name="md-more" color="#fff" />
+              </View>
+            }
+            options={[{label: 'Mark as Delivered', action: () => {}}]}
           />
         }
       />
@@ -31,41 +38,72 @@ const VDOrderDetailsScreen = ({navigation, route: {params}}) => {
         <UI.Spacer medium />
 
         <View style={styles.container}>
-          <UI.Text heading>
-            Order placed: {moment(order.createdAt).format('MMMM DD, YYYY')}
+          <UI.Text heading>ORDER PLACED ON: </UI.Text>
+          <UI.Text>{moment(order.createdAt).format('MMMM DD, YYYY')}</UI.Text>
+
+          <UI.Spacer medium />
+
+          <UI.Text heading>AMOUNT PAID: </UI.Text>
+          <UI.Text>PRICE: {formatMoney(order.amount)}</UI.Text>
+          <UI.Text>
+            SHIPPING:{' '}
+            {order.product.shipping > 0
+              ? formatMoney(order.product.shipping)
+              : 'Free'}
+          </UI.Text>
+          <UI.Text bold>
+            TOTAL: {formatMoney(order.product.shipping + order.amount)}
           </UI.Text>
 
-          <UI.Text>Tiana Rosser</UI.Text>
-          <UI.Text>Suit 13 Romchi Plaza, Oneday Road.</UI.Text>
-          <UI.Text>Enugu, Enugu State 400252.</UI.Text>
-          <UI.Text>09044758394.</UI.Text>
+          <UI.Spacer medium />
+
+          <UI.Text heading>LOCATION: </UI.Text>
+          <UI.Text>{order.address.address}</UI.Text>
+          <UI.Text>
+            {order.address.state}, {order.address.postalCode}
+          </UI.Text>
+
+          <UI.Spacer medium />
+
+          <UI.Text heading>ITEM TO SHIP: </UI.Text>
 
           <CartItem
-            name="Leather Show Bag"
-            color="Red"
-            size="XL"
-            quantity="5"
-            // image={female2}
-            price="2,300"
-            onClick={() => navigation.navigate('VDSingleProduct')}
-            onCloseButtonClick={() => {}}
+            name={order.product.name}
+            quantity={order.quantity}
+            image={{uri: order.product.images[0].url}}
+            onClick={() =>
+              navigation.navigate('VDSingleProduct', {product: order.product})
+            }
             hideCloseButton
           />
         </View>
-        <UI.Spacer medium />
+
+        <UI.Spacer large />
 
         <View style={styles.container}>
-          <View style={styles.buttons}>
-            <UI.Column size="6">
-              <UI.Button type="ghost">Cancel</UI.Button>
-            </UI.Column>
-            <UI.Spacer />
-            <UI.Column size="6">
-              <UI.Button>
-                <UI.Text color="#fff">Accept</UI.Text>
-              </UI.Button>
-            </UI.Column>
-          </View>
+          {order.status === 1 ? (
+            <UI.Button>
+              <UI.Text color="#fff">Accept</UI.Text>
+            </UI.Button>
+          ) : null}
+
+          <UI.Spacer />
+
+          {order.status === 1 ? (
+            <UI.Button type="ghost">Decline</UI.Button>
+          ) : null}
+
+          {order.status === 2 ? (
+            <UI.Button>
+              <UI.Text color="#fff">Mark a delivered</UI.Text>
+            </UI.Button>
+          ) : null}
+
+          {order.status === 3 ? (
+            <UI.Button type="disabled">
+              <UI.Text color={info}>Delivered</UI.Text>
+            </UI.Button>
+          ) : null}
 
           <UI.Spacer large />
           <UI.Spacer large />
