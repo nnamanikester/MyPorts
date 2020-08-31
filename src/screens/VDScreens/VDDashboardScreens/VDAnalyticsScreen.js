@@ -12,25 +12,24 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
   const [analytics, setAnalytics] = React.useState({});
   const [sales, setSales] = React.useState(0);
 
-  React.useMemo(() => {
-    let count = 0;
-    if (orders && orders.length > 0) {
-      orders.forEach((o) => {
-        if (o.status === 2 || o.status === 3) {
-          count += o.quantity;
-          console.log(o);
-        }
-      });
-    }
-    setSales(count);
-  }, [orders]);
-
   const [getAnalytics, {loading, data, error}] = useLazyQuery(
     GET_VENDOR_ANALYTICS,
     {
       pollInterval: 500,
     },
   );
+
+  React.useMemo(() => {
+    let count = 0;
+    orders &&
+      orders.length > 0 &&
+      orders.forEach((o) => {
+        if (o.status === 3 || o.status === 3) {
+          count++;
+        }
+      });
+    setSales(count);
+  }, [orders]);
 
   React.useEffect(() => {
     if (!offline) {
@@ -130,7 +129,7 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
           />
 
           <UI.ListItem
-            onClick={() => navigation.navigate('VDNewOrders')}
+            // onClick={() => navigation.navigate('VDNewOrders')}
             left={
               loading ? (
                 <Skeleton>
@@ -165,7 +164,7 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
           />
 
           <UI.ListItem
-            onClick={() => navigation.navigate('VDDeliveredOrders')}
+            // onClick={() => navigation.navigate('VDDeliveredOrders')}
             left={
               loading ? (
                 <Skeleton>
@@ -200,7 +199,7 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
           />
 
           <UI.ListItem
-            onClick={() => navigation.navigate('VDTransactions')}
+            // onClick={() => navigation.navigate('VDTransactions')}
             left={
               loading ? (
                 <Skeleton>
@@ -333,7 +332,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     offline: !state.network.isConnected,
-    orders: state.orders,
+    orders: state.orders.vendorOrders,
   };
 };
 

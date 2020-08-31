@@ -74,8 +74,10 @@ const VDFlow = ({
   );
 
   React.useEffect(() => {
-    getOrders();
-  }, []);
+    if (getVendorData) {
+      getOrders();
+    }
+  }, [getVendorData]);
 
   React.useMemo(() => {
     if (orderData) {
