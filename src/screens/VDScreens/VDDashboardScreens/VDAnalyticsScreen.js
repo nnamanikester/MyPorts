@@ -3,13 +3,17 @@ import * as UI from '../../../components/common';
 import {primaryColor} from '../../../components/common/variables';
 import {View, StyleSheet, Alert} from 'react-native';
 import {useLazyQuery} from '@apollo/react-hooks';
-import {GET_VENDOR_ANALYTICS} from '../../../apollo/queries/vendor';
+import {
+  GET_VENDOR_ANALYTICS,
+  GET_VENDOR_REPORTS,
+} from '../../../apollo/queries/vendor';
 import {connect} from 'react-redux';
 import Skeleton from 'react-native-skeleton-placeholder';
 import {formatMoney} from '../../../utils';
 
 const VDAnalyticsScreen = ({navigation, offline, orders}) => {
   const [analytics, setAnalytics] = React.useState({});
+  const [reports, setReports] = React.useState({});
   const [sales, setSales] = React.useState(0);
 
   const [getAnalytics, {loading, data, error}] = useLazyQuery(
@@ -18,6 +22,12 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
       pollInterval: 500,
     },
   );
+  const [
+    getReports,
+    {loading: reportsLoading, data: reportsData, error: reportsError},
+  ] = useLazyQuery(GET_VENDOR_REPORTS, {
+    pollInterval: 500,
+  });
 
   React.useMemo(() => {
     let count = 0;
@@ -25,7 +35,7 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
       orders.length > 0 &&
       orders.forEach((o) => {
         if (o.status === 3 || o.status === 3) {
-          count++;
+          count += o.quantity;
         }
       });
     setSales(count);
@@ -34,6 +44,7 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
   React.useEffect(() => {
     if (!offline) {
       getAnalytics();
+      getReports();
     }
   }, []);
 
@@ -42,19 +53,31 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
       Alert.alert(
         'Error!',
         'Unable to get Analytics. Please check your internet connection and try again!',
-        [{text: 'Try again', onPress: () => getAnalytics()}],
+        [
+          {
+            text: 'Try again',
+            onPress: () => {
+              getAnalytics();
+              getReports();
+            },
+          },
+        ],
       );
     }
-  }, [error]);
+  }, [error, reportsError]);
 
   React.useMemo(() => {
     if (data) {
       setAnalytics(data.vendorAnalytics);
     }
-  }, [data]);
+    if (reportsData) {
+      setReports(data.vendorReports);
+    }
+  }, [data, reportsData]);
 
   return (
     <>
+      <UI.Loading show={reportsLoading} />
       <UI.Layout>
         <UI.Spacer />
         <View style={styles.container}>
@@ -183,7 +206,7 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
                     <Skeleton.Item width="80%" height={10} borderRadius={5} />
                   </Skeleton>
                 ) : (
-                  <UI.Text>Dellivered Orders</UI.Text>
+                  <UI.Text>Delivered Orders</UI.Text>
                 )}
               </View>
             }

@@ -10,7 +10,12 @@ import {info} from '../../components/common/variables';
 import {UPDATE_ORDER} from '../../apollo/mutations';
 import {useMutation} from '@apollo/react-hooks';
 import {setVendorOrders} from '../../redux/actions/OrderActions';
-const VDOrderDetailsScreen = ({navigation, route: {params}, orders}) => {
+const VDOrderDetailsScreen = ({
+  navigation,
+  route: {params},
+  orders,
+  setVendorOrders,
+}) => {
   const [order, setOrder] = React.useState(params.order);
   const [confirmAccept, setConfirmAccept] = React.useState(false);
   const [confirmDecline, setConfirmDecline] = React.useState(false);
@@ -310,4 +315,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(VDOrderDetailsScreen);
+export default connect(mapStateToProps, {setVendorOrders})(
+  VDOrderDetailsScreen,
+);
