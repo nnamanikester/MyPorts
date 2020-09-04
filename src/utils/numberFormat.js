@@ -6,7 +6,9 @@ export const formatMoney = (amount) => {
     style: 'currency',
     currency: 'NGN',
   });
-  return formatType.format(parseInt(amount));
+  const currency = formatType.format(parseInt(amount));
+
+  return currency.replace('NGN', '\u20A6');
 };
 
 export const formatCardNo = (no) => {
