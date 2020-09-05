@@ -29,18 +29,6 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
     pollInterval: 500,
   });
 
-  React.useMemo(() => {
-    let count = 0;
-    orders &&
-      orders.length > 0 &&
-      orders.forEach((o) => {
-        if (o.status === 3 || o.status === 3) {
-          count += o.quantity;
-        }
-      });
-    setSales(count);
-  }, [orders]);
-
   React.useEffect(() => {
     if (!offline) {
       getAnalytics();
@@ -71,7 +59,8 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
       setAnalytics(data.vendorAnalytics);
     }
     if (reportsData) {
-      setReports(data.vendorReports);
+      setReports(reportsData.vendorReports);
+      setSales(reportsData.vendorReports.sales.total);
     }
   }, [data, reportsData]);
 
@@ -266,31 +255,50 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
             data={[
               {
                 title: 'Orders',
-                today: '10',
-                week: '24',
-                month: '93',
-                total: '549',
+                today: reports && reports.orders ? reports.orders.today : 0,
+                week: reports && reports.orders ? reports.orders.week : 0,
+                month: reports && reports.orders ? reports.orders.month : 0,
+                total: reports && reports.orders ? reports.orders.total : 0,
+              },
+              {
+                title: 'Sales',
+                today: reports && reports.sales ? reports.sales.today : 0,
+                week: reports && reports.sales ? reports.sales.week : 0,
+                month: reports && reports.sales ? reports.sales.month : 0,
+                total: reports && reports.sales ? reports.sales.total : 0,
               },
               {
                 title: 'Transactions',
-                today: '22.5k',
-                week: '122k',
-                month: '540k',
-                total: '3.1m',
+                today:
+                  reports && reports.transactions
+                    ? reports.transactions.today
+                    : 0,
+                week:
+                  reports && reports.transactions
+                    ? reports.transactions.week
+                    : 0,
+                month:
+                  reports && reports.transactions
+                    ? reports.transactions.month
+                    : 0,
+                total:
+                  reports && reports.transactions
+                    ? reports.transactions.total
+                    : 0,
               },
               {
                 title: 'Reviews',
-                today: '2',
-                week: '7',
-                month: '23',
-                total: '102',
+                today: reports && reports.reviews ? reports.reviews.today : 0,
+                week: reports && reports.reviews ? reports.reviews.week : 0,
+                month: reports && reports.reviews ? reports.reviews.month : 0,
+                total: reports && reports.reviews ? reports.reviews.total : 0,
               },
               {
                 title: 'Comments',
-                today: '20',
-                week: '79',
-                month: '205',
-                total: '2.3k',
+                today: reports && reports.comment ? reports.comments.today : 0,
+                week: reports && reports.comment ? reports.comments.week : 0,
+                month: reports && reports.comment ? reports.comments.month : 0,
+                total: reports && reports.comment ? reports.comments.total : 0,
               },
             ]}
           />
