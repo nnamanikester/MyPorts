@@ -1,10 +1,6 @@
 import React from 'react';
 import * as UI from '../../../components/common';
-import {
-  primaryColor,
-  textColor,
-  inactiveColor,
-} from '../../../components/common/variables';
+import {primaryColor} from '../../../components/common/variables';
 import {View, StyleSheet, Alert} from 'react-native';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {
