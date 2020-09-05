@@ -19,6 +19,7 @@ const EmailVerificationScreen = ({navigation, setStorage, offline}) => {
   const [code, setCode] = React.useState('');
   const [success, setSuccess] = React.useState(false);
   const [error, setError] = React.useState(false);
+  const [data, setData] = React.useState({});
 
   const [verifyEmail, {loading}] = useMutation(VERIFY_EMAIL);
   const [resendCode, {loading: resendLoading}] = useMutation(RESEND_CODE);
@@ -29,22 +30,28 @@ const EmailVerificationScreen = ({navigation, setStorage, offline}) => {
     verifyEmail({variables: {code: value}})
       .then(async (res) => {
         setSuccess(true);
+        const user = res.data.verifyEmail;
         const token = await AsyncStorage.getItem(TOKEN_STORAGE);
         await AsyncStorage.setItem(
           USER_STORAGE,
-          JSON.stringify(res.data.verifyEmail),
+          JSON.stringify({...user, status: 1}),
         );
-        setStorage(res.data.verifyEmail, token);
+        setStorage(user, token);
+        setData({user, token});
       })
       .catch((e) => {
         setError(true);
-        console.log(e);
       });
   };
 
-  // const handleUpdateStorage = async () => {
-  //   console.log('clicked');
-  // };
+  React.useMemo(() => {
+    if (success) {
+      setTimeout(() => {
+        setSuccess(false);
+        setStorage({}, data.token);
+      }, 3000);
+    }
+  }, [success]);
 
   return (
     <>
@@ -52,6 +59,7 @@ const EmailVerificationScreen = ({navigation, setStorage, offline}) => {
         showBg
         success
         header="Email Verified Successfully!"
+        message="You will need to login again to continue"
         show={success}
       />
 

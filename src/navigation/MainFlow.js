@@ -88,6 +88,7 @@ const StackNavigation = ({
     getCartItems,
     {loading: itemsLoading, data: items, error: itemsError},
   ] = useLazyQuery(CART);
+
   const [getAdverts, {data: advertsData, error: advertsError}] = useLazyQuery(
     ADVERTS,
     {
