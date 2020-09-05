@@ -1,6 +1,10 @@
 import React from 'react';
 import * as UI from '../../../components/common';
-import {primaryColor} from '../../../components/common/variables';
+import {
+  primaryColor,
+  textColor,
+  inactiveColor,
+} from '../../../components/common/variables';
 import {View, StyleSheet, Alert} from 'react-native';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {
@@ -9,7 +13,7 @@ import {
 } from '../../../apollo/queries/vendor';
 import {connect} from 'react-redux';
 import Skeleton from 'react-native-skeleton-placeholder';
-import {formatMoney} from '../../../utils';
+import {formatMoney, formatShortNumber} from '../../../utils';
 
 const VDAnalyticsScreen = ({navigation, offline, orders}) => {
   const [analytics, setAnalytics] = React.useState({});
@@ -133,7 +137,7 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
               <View style={{flex: 1, justifyContent: 'center'}}>
                 {!loading ? (
                   <UI.Text bold note>
-                    {analytics.products}
+                    {formatShortNumber(analytics.products)}
                   </UI.Text>
                 ) : null}
               </View>
@@ -168,7 +172,7 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
               <View style={{flex: 1, justifyContent: 'center'}}>
                 {!loading ? (
                   <UI.Text bold note>
-                    {analytics.newOrders}
+                    {formatShortNumber(analytics.newOrders)}
                   </UI.Text>
                 ) : null}
               </View>
@@ -203,7 +207,7 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
               <View style={{flex: 1, justifyContent: 'center'}}>
                 {!loading ? (
                   <UI.Text bold note>
-                    {analytics.deliveredOrders}
+                    {formatShortNumber(analytics.deliveredOrders)}
                   </UI.Text>
                 ) : null}
               </View>
@@ -219,7 +223,42 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
                 </Skeleton>
               ) : (
                 <View style={styles.list}>
-                  <UI.Icon type="FontAwesome" color="#fff" name="money" />
+                  <UI.Icon type="FontAwesome" color="#fff" name="exchange" />
+                </View>
+              )
+            }
+            body={
+              <View style={{justifyContent: 'center', flex: 1}}>
+                {loading ? (
+                  <Skeleton>
+                    <Skeleton.Item width="80%" height={10} borderRadius={5} />
+                  </Skeleton>
+                ) : (
+                  <UI.Text>Total Transactions</UI.Text>
+                )}
+              </View>
+            }
+            right={
+              <View style={{flex: 1, justifyContent: 'center'}}>
+                {!loading ? (
+                  <UI.Text bold note>
+                    {formatShortNumber(analytics.transactions)}
+                  </UI.Text>
+                ) : null}
+              </View>
+            }
+          />
+
+          <UI.ListItem
+            // onClick={() => navigation.navigate('VDTransactions')}
+            left={
+              loading ? (
+                <Skeleton>
+                  <Skeleton.Item width={50} height={50} borderRadius={5} />
+                </Skeleton>
+              ) : (
+                <View style={styles.list}>
+                  <UI.Icon type="Fontisto" color="#fff" name="shopping-sale" />
                 </View>
               )
             }
@@ -238,14 +277,14 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
               <View style={{flex: 1, justifyContent: 'center'}}>
                 {!loading ? (
                   <UI.Text bold note>
-                    {sales}
+                    {formatShortNumber(sales)}
                   </UI.Text>
                 ) : null}
               </View>
             }
           />
 
-          <UI.Spacer />
+          <UI.Spacer medium />
 
           <UI.Text heading>Activity Report</UI.Text>
 
@@ -268,7 +307,7 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
                 total: reports && reports.sales ? reports.sales.total : 0,
               },
               {
-                title: 'Transactions',
+                title: 'Transactions (\u20A6)',
                 today:
                   reports && reports.transactions
                     ? reports.transactions.today
@@ -295,51 +334,15 @@ const VDAnalyticsScreen = ({navigation, offline, orders}) => {
               },
               {
                 title: 'Comments',
-                today: reports && reports.comment ? reports.comments.today : 0,
-                week: reports && reports.comment ? reports.comments.week : 0,
-                month: reports && reports.comment ? reports.comments.month : 0,
-                total: reports && reports.comment ? reports.comments.total : 0,
+                today: reports && reports.comments ? reports.comments.today : 0,
+                week: reports && reports.comments ? reports.comments.week : 0,
+                month: reports && reports.comments ? reports.comments.month : 0,
+                total: reports && reports.comments ? reports.comments.total : 0,
               },
             ]}
           />
 
-          <UI.Spacer />
-          {/* <UI.Text heading>Weekly Sales Chart</UI.Text>
-          <UI.Spacer />
-          <UI.PieChart
-            data={[
-              {
-                name: 'Kester',
-                color: primaryColor,
-                population: 20,
-                legendFontColor: textColor,
-                legendFontSize: 15,
-              },
-              {
-                name: 'Kester',
-                color: primaryColor + '99',
-                population: 28,
-                legendFontColor: textColor,
-                legendFontSize: 15,
-              },
-              {
-                name: 'Kester',
-                color: primaryColor + '55',
-                population: 19,
-                legendFontColor: textColor,
-                legendFontSize: 15,
-              },
-              {
-                name: 'Kester',
-                color: primaryColor + '22',
-                population: 26,
-                legendFontColor: textColor,
-                legendFontSize: 15,
-              },
-            ]}
-            bgColor={inactiveColor}
-          /> */}
-          <UI.Spacer large />
+          <UI.Spacer size={100} />
         </View>
       </UI.Layout>
     </>

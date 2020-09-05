@@ -6,6 +6,7 @@ import {Column} from '../Column';
 import {Spacer} from '../Spacer';
 import {primaryColor} from '../variables';
 import PropTypes from 'prop-types';
+import {formatShortNumber} from '../../../utils';
 
 /**
  * A component that displays a report with four colums and labels namely: `today`
@@ -36,7 +37,7 @@ const ReportBoard = ({data, containerStyle, titleStyle}) => {
               <Row>
                 <Column style={{alignItems: 'center'}} size="3">
                   <Text bold color="#fff">
-                    {report.today}
+                    {formatShortNumber(report.today)}
                   </Text>
                   <Text note color="#fff">
                     {report.todayLabel || 'Today'}
@@ -44,7 +45,7 @@ const ReportBoard = ({data, containerStyle, titleStyle}) => {
                 </Column>
                 <Column style={{alignItems: 'center'}} size="3">
                   <Text bold color="#fff">
-                    {report.week}
+                    {formatShortNumber(report.week)}
                   </Text>
                   <Text note color="#fff">
                     {report.weekLabel || 'This Week'}
@@ -52,7 +53,7 @@ const ReportBoard = ({data, containerStyle, titleStyle}) => {
                 </Column>
                 <Column style={{alignItems: 'center'}} size="3">
                   <Text bold color="#fff">
-                    {report.month}
+                    {formatShortNumber(report.month)}
                   </Text>
                   <Text note color="#fff">
                     {report.monthLabel || 'This Month'}
@@ -60,7 +61,7 @@ const ReportBoard = ({data, containerStyle, titleStyle}) => {
                 </Column>
                 <Column style={{alignItems: 'center'}} size="3">
                   <Text bold color="#fff">
-                    {report.total}
+                    {formatShortNumber(report.total)}
                   </Text>
                   <Text note color="#fff">
                     {report.totalLabel || 'Total'}

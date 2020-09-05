@@ -9,7 +9,12 @@ import Skeleton from 'react-native-skeleton-placeholder';
 import EmptyItem from '../../../components/EmptyItem';
 import {formatMoney} from '../../../utils';
 import moment from 'moment';
-import {info} from '../../../components/common/variables';
+import {
+  info,
+  danger,
+  grayColor,
+  textColor,
+} from '../../../components/common/variables';
 
 const VDProductsScreen = ({navigation, offline, vendor}) => {
   const [products, setProducts] = React.useState([]);
@@ -199,16 +204,31 @@ const VDProductsScreen = ({navigation, offline, vendor}) => {
                 left={<UI.Avatar medium src={{uri: item.images[0].url}} />}
                 body={
                   <>
-                    <UI.Text heading>{item.name}</UI.Text>
-                    <UI.Text note color="">
+                    <UI.Text
+                      color={item.quantity === 0 ? grayColor : textColor}
+                      heading>
+                      {item.name}
+                    </UI.Text>
+                    <UI.Text note color={item.quantity === 0 ? grayColor : ''}>
                       {moment(item.createdAt).format('DD/MM/YYYY')}
                     </UI.Text>
+                    {item.quantity === 0 ? (
+                      <UI.Text color={danger}>Out of stock</UI.Text>
+                    ) : (
+                      <UI.Text color="" note>
+                        Qunatity: {item.quantity}
+                      </UI.Text>
+                    )}
                   </>
                 }
                 right={
                   <View style={{alignItems: 'flex-end'}}>
-                    <UI.Text>{formatMoney(item.price)}</UI.Text>
-                    <UI.Text>
+                    <UI.Text
+                      color={item.quantity === 0 ? grayColor : textColor}>
+                      {formatMoney(item.price)}
+                    </UI.Text>
+                    <UI.Text
+                      color={item.quantity === 0 ? grayColor : textColor}>
                       {item.status === 1 ? 'Published' : 'Draft'}
                     </UI.Text>
                   </View>
