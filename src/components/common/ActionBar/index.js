@@ -1,11 +1,24 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Platform,
+  UIManager,
+  LayoutAnimation,
+} from 'react-native';
 import {Text} from '../Text';
 import {Icon} from '../Icon';
 import {Layout} from '../Layout';
 import PropTypes from 'prop-types';
 import {grayColor, primaryColor} from '../variables';
 import {Clickable} from '../Clickable';
+
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 /**
  * A component that given `show` boolean prop with value `true`, displays a bar from
@@ -21,6 +34,10 @@ const ActionBar = ({
   headerTextStyle,
   containerStyle,
 }) => {
+  React.useMemo(() => {
+    LayoutAnimation.spring();
+  }, [show]);
+
   if (!show) {
     return null;
   }
