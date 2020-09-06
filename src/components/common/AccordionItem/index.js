@@ -1,10 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, StyleSheet} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Platform,
+  UIManager,
+  LayoutAnimation,
+} from 'react-native';
 import {Text} from '../Text';
 import {Icon} from '../Icon';
 import {primaryColor} from '../variables';
 import {Clickable} from '../Clickable';
+
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 /**
  * An `AccordionItem`, to be used only inside an Accordion.
@@ -25,6 +38,10 @@ const AccordionItem = ({children, expanded, index, onExpand, props}) => {
       onClick();
     }
   };
+
+  React.useMemo(() => {
+    LayoutAnimation.spring();
+  }, [expanded]);
 
   return (
     <View style={styles.container}>
