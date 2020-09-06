@@ -1,14 +1,27 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Platform,
+  UIManager,
+  LayoutAnimation,
+} from 'react-native';
 import {Text} from '../Text';
 import {primaryColor, inactiveColor, grayColor, textColor} from '../variables';
 import {Clickable} from '../Clickable';
 
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
 let smallStyle = {};
 let color = '#fff';
 let typeStyle = {};
-let disabled = 0.8;
+let disabled = 1;
 
 const Button = ({
   children,
@@ -20,6 +33,8 @@ const Button = ({
   showIconDivider,
   style,
 }) => {
+  const [resize, setResize] = React.useState(size === 'small' ? 140 : '100%');
+
   switch (type) {
     case 'disabled':
       typeStyle = {
@@ -52,26 +67,33 @@ const Button = ({
   switch (size) {
     case 'small':
       smallStyle = {
-        width: 140,
+        width: resize,
       };
       break;
     case 'large':
       smallStyle = {
-        width: '100%',
+        width: resize,
       };
       break;
     default:
       smallStyle = {
-        width: '100%',
+        width: resize,
       };
       break;
   }
 
+  React.useMemo(() => {
+    LayoutAnimation.spring();
+  }, [resize]);
+
   return (
     <Clickable
+      onPressIn={() => setResize(size === 'small' ? 120 : '95%')}
+      onPressOut={() => setResize(size === 'small' ? 140 : '100%')}
       onClick={type === 'disabled' ? null : onClick}
       style={{
         ...styles.button,
+        width: resize,
         ...smallStyle,
         ...typeStyle,
         ...style,
@@ -107,6 +129,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: primaryColor,
     height: 50,
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'space-around',
     elevation: 0,
