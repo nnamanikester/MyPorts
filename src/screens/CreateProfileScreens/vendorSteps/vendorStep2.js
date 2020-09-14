@@ -20,7 +20,6 @@ const VendorStep2 = ({
   location,
   onLocation,
 }) => {
-  const [error, setError] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
 
   if (!show) {
@@ -32,7 +31,7 @@ const VendorStep2 = ({
       if (response.didCancel) {
         return;
       } else if (response.error) {
-        setError(`Error: ${response.error}`);
+        Alert.alert('Error', `Error: ${response.error}`);
       } else {
         try {
           setLoading(true);
@@ -56,7 +55,7 @@ const VendorStep2 = ({
       if (response.didCancel) {
         return;
       } else if (response.error) {
-        setError(`Error: ${response.error}`);
+        Alert.alert('Error', `Error: ${response.error}`);
       } else {
         try {
           setLoading(true);

@@ -3,11 +3,11 @@ import axios from 'axios';
 import * as UI from '../../../components/common';
 import ImagePicker from 'react-native-image-picker';
 import {info, lightColor} from '../../../components/common/variables';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image, Alert} from 'react-native';
 import {UPLOAD_URL} from '../../../constants';
 
 const CustomerStep2 = ({show, onSubmit, onBack, photo, onPhoto}) => {
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   if (!show) {
     return null;
@@ -28,17 +28,20 @@ const CustomerStep2 = ({show, onSubmit, onBack, photo, onPhoto}) => {
       if (response.didCancel) {
         return;
       } else if (response.error) {
-        setError(`Error: ${response.error}`);
+        Alert.alert('Error', `Error: ${response.error}`);
       } else {
         try {
+          setLoading(true);
           const image = `data:${response.type};base64,${response.data}`;
           const res = await axios.post(`${UPLOAD_URL}/upload-image`, {
             image,
           });
 
-          return onPhoto(res.data.data);
+          onPhoto(res.data.data);
+          setLoading(false);
         } catch (e) {
-          console.log(e.response);
+          Alert.alert('Error', 'Unable to upload image. Please try again.');
+          setLoading(false);
         }
       }
     });
@@ -46,6 +49,7 @@ const CustomerStep2 = ({show, onSubmit, onBack, photo, onPhoto}) => {
 
   return (
     <>
+      <UI.Loading show={loading} />
       <UI.Layout style={styles.container}>
         <View style={styles.pageTitle}>
           <UI.Text h1>Upload A Profile Picture</UI.Text>
