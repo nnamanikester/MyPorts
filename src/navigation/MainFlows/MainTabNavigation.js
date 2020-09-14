@@ -39,7 +39,7 @@ const TabNavigation = ({notifications}) => {
         component={VendorsListScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
-            <Icon name="ios-business" color={color} size={focused ? 34 : 28} />
+            <Icon name="ios-business" color={color} size={focused ? 30 : 24} />
           ),
           tabBarLabel: ({color}) => (
             <Text color={color} size={12}>
@@ -53,7 +53,7 @@ const TabNavigation = ({notifications}) => {
         component={CategoriesScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
-            <Icon name="ios-list" color={color} size={focused ? 32 : 28} />
+            <Icon name="ios-list" color={color} size={focused ? 30 : 24} />
           ),
           tabBarLabel: ({color}) => (
             <Text size={12} color={color}>
@@ -71,7 +71,7 @@ const TabNavigation = ({notifications}) => {
               name="opencart"
               type="FontAwesome"
               color={color}
-              size={focused ? 28 : 24}
+              size={focused ? 28 : 22}
             />
           ),
           tabBarLabel: ({color}) => (
@@ -92,7 +92,7 @@ const TabNavigation = ({notifications}) => {
                   focused ? 'ios-notifications' : 'ios-notifications-outline'
                 }
                 color={color}
-                size={focused ? 32 : 28}
+                size={focused ? 30 : 24}
               />
               {hasUnreadNotification && (
                 <Badge
@@ -118,7 +118,7 @@ const TabNavigation = ({notifications}) => {
         component={SettingsScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
-            <Icon name="ios-settings" color={color} size={focused ? 32 : 28} />
+            <Icon name="ios-settings" color={color} size={focused ? 30 : 24} />
           ),
           tabBarLabel: ({color}) => (
             <Text size={12} color={color}>

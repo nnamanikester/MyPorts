@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
+import ImagePicker from 'react-native-image-picker';
 import * as UI from '../../components/common';
-import {View, StyleSheet, ToastAndroid} from 'react-native';
+import {View, StyleSheet, ToastAndroid, Alert} from 'react-native';
 import Avatar from '../../components/Avatar';
 import {profilePhoto} from '../../assets/images';
 import {connect} from 'react-redux';
@@ -9,6 +10,8 @@ import {setCustomerProfile} from '../../redux/actions/CustomerActions';
 import {useMutation} from '@apollo/react-hooks';
 import ScreenHeaderWithoutRightIcon from '../../components/ScreenHeaderWithoutRightIcons';
 import {UPDATE_CUSTOMER} from '../../apollo/mutations';
+import {imagePickerOptions, UPLOAD_URL} from '../../constants';
+import axios from 'axios';
 
 const days = [
   {label: '', value: ''},
@@ -80,8 +83,12 @@ const UpdateProfileScreen = ({
   const [birthDay, setBirthDay] = useState(customer.birthDay);
   const [gender, setGender] = useState(customer.gender);
   const [photo, setPhoto] = useState(customer.photo);
+  const [loading, setLoading] = useState(false);
+  console.log(customer);
 
-  const [updateCustomer, {loading}] = useMutation(UPDATE_CUSTOMER);
+  const [updateCustomer, {loading: updateLoading}] = useMutation(
+    UPDATE_CUSTOMER,
+  );
 
   const handleCustomerUpdate = () => {
     checkNetworkStatus();
@@ -95,6 +102,7 @@ const UpdateProfileScreen = ({
           birthMonth,
           birthDay,
           gender,
+          photo,
         },
       })
         .then((res) => {
@@ -110,9 +118,39 @@ const UpdateProfileScreen = ({
     }
   };
 
+  const handleImageUpload = () => {
+    ImagePicker.showImagePicker(imagePickerOptions, async (response) => {
+      if (response.didCancel) {
+        return;
+      } else if (response.error) {
+        Alert.alert('Error', `Error: ${response.error}`);
+      } else {
+        try {
+          setLoading(true);
+          console.log(response.fileSize);
+
+          if (response.fileSize > 1000000) {
+            setLoading(false);
+            return Alert.alert('Error', 'Image must not be more than 1MB.');
+          }
+          const image = `data:${response.type};base64,${response.data}`;
+          const res = await axios.post(`${UPLOAD_URL}/upload-image`, {
+            image,
+          });
+
+          setPhoto(res.data.data);
+          setLoading(false);
+        } catch (e) {
+          Alert.alert('Error', 'Unable to upload image. Please try again.');
+          setLoading(false);
+        }
+      }
+    });
+  };
+
   return (
     <>
-      <UI.Loading show={loading} />
+      <UI.Loading show={loading || updateLoading} />
 
       <ScreenHeaderWithoutRightIcon
         navigation={navigation}
@@ -128,7 +166,7 @@ const UpdateProfileScreen = ({
               rounded
               src={photo ? {uri: photo} : profilePhoto}
             />
-            <UI.Link>Upload Photo</UI.Link>
+            <UI.Link onClick={handleImageUpload}>Upload Photo</UI.Link>
           </View>
 
           <UI.Spacer large />

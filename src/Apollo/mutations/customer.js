@@ -6,6 +6,7 @@ export const UPDATE_CUSTOMER = gql`
     $firstName: String!
     $lastName: String!
     $phone: String
+    $photo: String
     $gender: String
     $birthMonth: Int
     $birthDay: Int
@@ -15,6 +16,7 @@ export const UPDATE_CUSTOMER = gql`
       firstName: $firstName
       lastName: $lastName
       phone: $phone
+      photo: $photo
       gender: $gender
       birthMonth: $birthMonth
       birthDay: $birthDay

@@ -6,6 +6,8 @@ export const UPDATE_VENDOR_PROFILE = gql`
     $name: String!
     $email: String!
     $phone: String!
+    $logo: String
+    $coverPhoto: String
     $description: String
     $location: String
   ) {
@@ -14,6 +16,8 @@ export const UPDATE_VENDOR_PROFILE = gql`
       name: $name
       email: $email
       phone: $phone
+      coverPhoto: $coverPhoto
+      logo: $logo
       description: $description
       location: $location
     ) {

@@ -111,7 +111,7 @@ const VendorListScreen = ({navigation, offline, adverts}) => {
         onRefresh={() => refetch()}
         refreshing={fetching}>
         {/* ADVERTS */}
-        {adverts && (
+        {adverts ? (
           <View style={styles.container}>
             <Swiper
               paginationStyle={{bottom: 5}}
@@ -133,7 +133,7 @@ const VendorListScreen = ({navigation, offline, adverts}) => {
               })}
             </Swiper>
           </View>
-        )}
+        ) : null}
         {/* /ADVERTS */}
 
         {showTitle && (
