@@ -3,7 +3,9 @@ import * as UI from '../../../components/common';
 import ImagePicker from 'react-native-image-picker';
 import {info, lightColor} from '../../../components/common/variables';
 import {StyleSheet, View, Image} from 'react-native';
-import {imagePickerOptions} from '../../../constants';
+import {imagePickerOptions, UPLOAD_URL} from '../../../constants';
+import axios from 'axios';
+import {Alert} from '../../../components/common';
 
 const VendorStep2 = ({
   show,
@@ -19,36 +21,63 @@ const VendorStep2 = ({
   onLocation,
 }) => {
   const [error, setError] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
+
   if (!show) {
     return null;
   }
 
   const handleLogoUpload = () => {
-    ImagePicker.showImagePicker(imagePickerOptions, (response) => {
+    ImagePicker.showImagePicker(imagePickerOptions, async (response) => {
       if (response.didCancel) {
         return;
       } else if (response.error) {
         setError(`Error: ${response.error}`);
       } else {
-        return onLogo(response);
+        try {
+          setLoading(true);
+          const image = `data:${response.type};base64,${response.data}`;
+          const res = await axios.post(`${UPLOAD_URL}/upload-image`, {
+            image,
+          });
+
+          onLogo(res.data.data);
+          setLoading(false);
+        } catch (e) {
+          Alert.alert('Error', 'Unable to upload image. Please try again.');
+          setLoading(false);
+        }
       }
     });
   };
 
   const handleCoverPhotoUpload = () => {
-    ImagePicker.showImagePicker(imagePickerOptions, (response) => {
+    ImagePicker.showImagePicker(imagePickerOptions, async (response) => {
       if (response.didCancel) {
         return;
       } else if (response.error) {
         setError(`Error: ${response.error}`);
       } else {
-        return onCoverPhoto(response);
+        try {
+          setLoading(true);
+          const image = `data:${response.type};base64,${response.data}`;
+          const res = await axios.post(`${UPLOAD_URL}/upload-image`, {
+            image,
+          });
+
+          onCoverPhoto(res.data.data);
+          setLoading(false);
+        } catch (e) {
+          Alert.alert('Error', 'Unable to upload image. Please try again.');
+          setLoading(false);
+        }
       }
     });
   };
 
   return (
     <>
+      <UI.Loading show={loading} />
       <UI.Layout style={{paddingHorizontal: 10, paddingTop: 10}}>
         <View style={styles.pageTitle}>
           <UI.Text h1>Complete Your Shop Profile</UI.Text>
@@ -64,7 +93,7 @@ const VendorStep2 = ({
           {coverPhoto ? (
             <Image
               style={{width: '100%', height: '100%'}}
-              source={{uri: coverPhoto.uri}}
+              source={{uri: coverPhoto}}
             />
           ) : (
             <>
@@ -79,7 +108,7 @@ const VendorStep2 = ({
             onClick={() => handleLogoUpload()}
             style={styles.logoContainer}>
             {logo ? (
-              <Image style={styles.logo} source={{uri: logo.uri}} />
+              <Image style={styles.logo} source={{uri: logo}} />
             ) : (
               <>
                 <UI.Icon color={lightColor} name="ios-add" size={50} />

@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import axios from 'axios';
 import * as UI from '../../../components/common';
 import ImagePicker from 'react-native-image-picker';
-import { info, lightColor } from '../../../components/common/variables';
-import { StyleSheet, View, Image } from 'react-native';
-import { processImage } from '../../../utils/processFile';
+import {info, lightColor} from '../../../components/common/variables';
+import {StyleSheet, View, Image} from 'react-native';
+import {UPLOAD_URL} from '../../../constants';
 
-const CustomerStep2 = ({ show, onSubmit, onBack, photo, onPhoto }) => {
-  if (!show) return null;
+const CustomerStep2 = ({show, onSubmit, onBack, photo, onPhoto}) => {
   const [error, setError] = useState(null);
+
+  if (!show) {
+    return null;
+  }
 
   const options = {
     title: 'Upload Profile Picture',
@@ -20,14 +24,22 @@ const CustomerStep2 = ({ show, onSubmit, onBack, photo, onPhoto }) => {
   };
 
   const handleImageUpload = () => {
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.showImagePicker(options, async (response) => {
       if (response.didCancel) {
         return;
       } else if (response.error) {
         setError(`Error: ${response.error}`);
       } else {
-        const file = processImage(response);
-        return onPhoto(file);
+        try {
+          const image = `data:${response.type};base64,${response.data}`;
+          const res = await axios.post(`${UPLOAD_URL}/upload-image`, {
+            image,
+          });
+
+          return onPhoto(res.data.data);
+        } catch (e) {
+          console.log(e.response);
+        }
       }
     });
   };
@@ -51,10 +63,7 @@ const CustomerStep2 = ({ show, onSubmit, onBack, photo, onPhoto }) => {
           </UI.Clickable>
         ) : (
           <View style={styles.profilePhoto}>
-            <Image
-              style={{ width: 200, height: 200 }}
-              source={{ uri: photo.uri }}
-            />
+            <Image style={{width: 200, height: 200}} source={{uri: photo}} />
             <UI.Spacer />
             <UI.Link onClick={() => handleImageUpload()}>Change Image</UI.Link>
           </View>
@@ -63,7 +72,7 @@ const CustomerStep2 = ({ show, onSubmit, onBack, photo, onPhoto }) => {
         <UI.Spacer large />
 
         <View style={styles.inputContainer}>
-          <UI.Row style={{ justifyContent: 'space-between' }}>
+          <UI.Row style={{justifyContent: 'space-between'}}>
             <UI.Button
               showIconDivider
               type="outline"
