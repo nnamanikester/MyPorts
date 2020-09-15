@@ -30,6 +30,7 @@ const AccordionItem = ({children, expanded, index, onExpand, props}) => {
     headerContainerStyle,
     bodyStyle,
   } = props;
+  const [anim, setAnim] = React.useState(false);
 
   // Callback functions to be run when the header is clicked.
   const callbacks = () => {
@@ -40,8 +41,14 @@ const AccordionItem = ({children, expanded, index, onExpand, props}) => {
   };
 
   React.useMemo(() => {
-    LayoutAnimation.spring();
+    if (anim) {
+      LayoutAnimation.spring();
+    }
   }, [expanded]);
+
+  React.useEffect(() => {
+    setAnim(true);
+  });
 
   return (
     <View style={styles.container}>
@@ -75,6 +82,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     borderColor: primaryColor,
     borderRadius: 5,
+    overflow: 'hidden',
   },
   header: {
     height: 50,

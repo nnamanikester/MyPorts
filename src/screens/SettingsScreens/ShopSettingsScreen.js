@@ -1,6 +1,7 @@
 import React from 'react';
+import ImagePicker from 'react-native-image-picker';
 import * as UI from '../../components/common';
-import {View, StyleSheet, Image, ToastAndroid} from 'react-native';
+import {View, StyleSheet, Image, ToastAndroid, Alert} from 'react-native';
 import Header from '../../components/Header';
 import {lightColor, info, danger} from '../../components/common/variables';
 import {connect} from 'react-redux';
@@ -8,6 +9,8 @@ import {useMutation} from '@apollo/react-hooks';
 import {UPDATE_VENDOR_PROFILE} from '../../apollo/mutations';
 import {setVendorProfile} from '../../redux/actions/VendorActions';
 import {validateEmail} from '../../utils';
+import {imagePickerOptions, UPLOAD_URL} from '../../constants';
+import axios from 'axios';
 
 const ShopSettingsScreen = ({
   navigation,
@@ -21,6 +24,9 @@ const ShopSettingsScreen = ({
   const [phone, setPhone] = React.useState(profile.phone);
   const [location, setLocation] = React.useState(profile.location);
   const [description, setDescription] = React.useState(profile.description);
+  const [logo, setLogo] = React.useState(profile.logo);
+  const [coverPhoto, setCoverPhoto] = React.useState(profile.coverPhoto);
+  const [load, setLoading] = React.useState(false);
 
   const [updateVendorProfle, {loading}] = useMutation(UPDATE_VENDOR_PROFILE);
 
@@ -42,6 +48,8 @@ const ShopSettingsScreen = ({
           name,
           email,
           phone,
+          logo,
+          coverPhoto,
           location,
           description,
         },
@@ -68,9 +76,65 @@ const ShopSettingsScreen = ({
     }
   };
 
+  const handleLogoUpload = () => {
+    ImagePicker.showImagePicker(imagePickerOptions, async (response) => {
+      if (response.didCancel) {
+        return;
+      } else if (response.error) {
+        Alert.alert('Error', `Error: ${response.error}`);
+      } else {
+        try {
+          setLoading(true);
+          if (response.fileSize > 1000000) {
+            setLoading(false);
+            return Alert.alert('Error', 'Image size must be less than 1MB');
+          }
+          const image = `data:${response.type};base64,${response.data}`;
+          const res = await axios.post(`${UPLOAD_URL}/upload-image`, {
+            image,
+          });
+
+          setLogo(res.data.data);
+          setLoading(false);
+        } catch (e) {
+          Alert.alert('Error', 'Unable to upload image. Please try again.');
+          setLoading(false);
+        }
+      }
+    });
+  };
+
+  const handleCoverPhotoUpload = () => {
+    ImagePicker.showImagePicker(imagePickerOptions, async (response) => {
+      if (response.didCancel) {
+        return;
+      } else if (response.error) {
+        Alert.alert('Error', `Error: ${response.error}`);
+      } else {
+        try {
+          setLoading(true);
+          if (response.fileSize > 1000000) {
+            setLoading(false);
+            return Alert.alert('Error', 'Image size must be less than 1MB');
+          }
+          const image = `data:${response.type};base64,${response.data}`;
+          const res = await axios.post(`${UPLOAD_URL}/upload-image`, {
+            image,
+          });
+
+          setCoverPhoto(res.data.data);
+          setLoading(false);
+        } catch (e) {
+          Alert.alert('Error', 'Unable to upload image. Please try again.');
+          setLoading(false);
+        }
+      }
+    });
+  };
+
   return (
     <>
-      <UI.Loading show={loading} />
+      <UI.Loading show={loading || load} />
       <Header
         // isCart
         title="Shop Settings"
@@ -103,11 +167,13 @@ const ShopSettingsScreen = ({
       <UI.Layout>
         <View style={{flex: 1}}>
           <UI.Spacer size={2} />
-          <UI.Clickable onClick={() => {}} style={styles.coverImage}>
-            {profile.coverPhoto ? (
+          <UI.Clickable
+            onClick={handleCoverPhotoUpload}
+            style={styles.coverImage}>
+            {coverPhoto ? (
               <Image
                 style={{width: '100%', height: '100%'}}
-                source={{uri: profile.coverPhoto}}
+                source={{uri: coverPhoto}}
               />
             ) : (
               <>
@@ -118,9 +184,11 @@ const ShopSettingsScreen = ({
           </UI.Clickable>
 
           <View>
-            <UI.Clickable onClick={() => {}} style={styles.logoContainer}>
-              {profile.logo ? (
-                <Image style={styles.logo} source={{uri: profile.logo}} />
+            <UI.Clickable
+              onClick={handleLogoUpload}
+              style={styles.logoContainer}>
+              {logo ? (
+                <Image style={styles.logo} source={{uri: logo}} />
               ) : (
                 <>
                   <UI.Icon color={lightColor} name="ios-add" size={50} />

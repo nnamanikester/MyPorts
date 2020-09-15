@@ -36,7 +36,7 @@ const VDAddProductScreen = ({navigation, offline}) => {
 
   React.useEffect(() => {
     if (error) {
-      alert('Unable to create product. Please try again!');
+      Alert.alert('Error', 'Unable to create product. Please try again!');
     }
   }, [error]);
 
@@ -88,7 +88,7 @@ const VDAddProductScreen = ({navigation, offline}) => {
         navigation.goBack();
       });
     } else {
-      alert("Please check if you're connected to the internet");
+      Alert.alert('Error', "Please check if you're connected to the internet");
     }
   };
 

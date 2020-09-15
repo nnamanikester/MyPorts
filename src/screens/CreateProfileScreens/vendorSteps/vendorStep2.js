@@ -2,10 +2,9 @@ import React from 'react';
 import * as UI from '../../../components/common';
 import ImagePicker from 'react-native-image-picker';
 import {info, lightColor} from '../../../components/common/variables';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image, Alert} from 'react-native';
 import {imagePickerOptions, UPLOAD_URL} from '../../../constants';
 import axios from 'axios';
-import {Alert} from '../../../components/common';
 
 const VendorStep2 = ({
   show,

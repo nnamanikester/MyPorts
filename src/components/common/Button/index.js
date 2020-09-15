@@ -34,6 +34,7 @@ const Button = ({
   style,
 }) => {
   const [resize, setResize] = React.useState(size === 'small' ? 140 : '100%');
+  const [anim, setAnim] = React.useState(false);
 
   switch (type) {
     case 'disabled':
@@ -83,8 +84,14 @@ const Button = ({
   }
 
   React.useMemo(() => {
-    LayoutAnimation.spring();
+    if (anim) {
+      LayoutAnimation.spring();
+    }
   }, [resize]);
+
+  React.useEffect(() => {
+    setAnim(true);
+  });
 
   return (
     <Clickable
