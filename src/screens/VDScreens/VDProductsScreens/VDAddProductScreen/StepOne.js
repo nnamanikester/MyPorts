@@ -7,8 +7,7 @@ import {
   lightColor,
   primaryColor,
 } from '../../../../components/common/variables';
-import {imagePickerOptions} from '../../../../constants';
-import {processImage} from '../../../../utils';
+import {imagePickerOptions, UPLOAD_URL} from '../../../../constants';
 import axios from 'axios';
 
 const StepOne = ({onContinue, show, images, onImages, onImageClick}) => {
@@ -20,14 +19,25 @@ const StepOne = ({onContinue, show, images, onImages, onImageClick}) => {
 
   console.log(images);
   const handleSelectImage = () => {
-    ImagePicker.showImagePicker(imagePickerOptions, (response) => {
+    ImagePicker.showImagePicker(imagePickerOptions, async (response) => {
       if (response.didCancel) {
         return;
       } else if (response.error) {
         Alert.alert('Error', response.error);
       } else {
-        console.log(response.uri);
-        onImages(response.uri);
+        try {
+          setLoading(true);
+          const image = `data:${response.type};base64,${response.data}`;
+          const res = await axios.post(`${UPLOAD_URL}/upload-image`, {
+            image,
+          });
+
+          onImages(res.data.data);
+          setLoading(false);
+        } catch (e) {
+          Alert.alert('Error', 'Unable to upload image. Please try again.');
+          setLoading(false);
+        }
       }
     });
   };
